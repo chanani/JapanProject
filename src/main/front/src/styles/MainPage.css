@@ -1,0 +1,31 @@
+
+
+
+/* 500 이하 */
+@media(max-width : 500px){
+  img {
+    height: 200px;
+    width: 100%;
+  }
+}
+
+/* 500 이상 */
+@media(min-width : 500px){
+  img {
+    height: 250px;
+    width: 100%;
+  }
+  .image1 {
+    height: 400px;
+  }
+}
+ /* 1000 이상 */
+@media(min-width : 1000px){
+  img {
+    height: 500px;
+    width: 100%;
+  }
+  .image1 {
+    height: 800px;
+  }
+}

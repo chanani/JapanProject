@@ -1,0 +1,70 @@
+.social-join {
+  margin-top: 15px;
+}
+.social-title > p {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.social-join img {
+  width: 40px;
+  height: 40px;
+}
+
+/* 500 이하 */
+@media(max-width : 500px){
+  .social-join {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 15px;
+  }
+  .social-title {margin-bottom: 10px;}
+  
+  .social-logo {
+    margin-left: 10px;
+   }
+  .social-logo img {
+    margin-left: 5px;
+  }
+  .join-btn-box > button{
+    width: 180px; 
+    height: 40px;
+    font-size: 16px;
+  }
+}
+
+/* 500 이상 */
+@media(min-width : 500px){
+  .social-join {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    
+  }
+
+ .social-logo {
+  margin-left: 20px;
+ }
+ .social-logo img {
+  margin-left: 10px;
+}
+.join-btn-box > button {
+  width: 300px; 
+  height: 50px;
+  font-size: 19px;
+}
+}
+
+.join-btn-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 13px;
+}
+
+.join-btn-box > button{
+  border-radius: 10px;
+  background-color: rgb(121 213 99);
+
+}

@@ -1,0 +1,49 @@
+.footer-box {
+  border: 1px solid #777;
+  border-radius: 24px;
+  padding: 15px 30px 15px 30px;
+  margin: 30px;
+  background-color: rgb(121 213 99);
+}
+
+.footer-title h3 {
+  font-size: 35px;
+  margin-bottom: 15px;
+}
+
+.footer-content-box {
+  margin-bottom: 15px;
+  color: #353535;
+}
+
+
+
+.footer-content-box p,
+.footer-info-box p {
+  margin-bottom: 5px;
+}
+
+.footer-info-box{
+  color: #353535;
+}
+
+/* 1000 이상 */
+@media(min-width : 1000px){
+    .footer-box{
+      overflow: hidden;
+    }
+    .footer-title{
+      float: left;
+      width: 85%;
+    }
+    .footer-title h3{
+      font-size: 100px;
+    }
+    .footer-content-box{
+      float: right;
+      margin-top: 16px;
+    }
+    .footer-info-box{
+      float: left;
+    }
+}

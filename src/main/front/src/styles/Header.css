@@ -1,0 +1,139 @@
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+header {
+  background-color: rgb(121 213 99);
+  width: auto;
+  height: 110px;
+}
+.header-box {
+  background-color: transparent;
+  padding: 20px 24px 0 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: auto;
+  z-index: 100;
+  opacity: 0; /* 초기에 투명한 상태 */
+  transition: opacity 1.5s ease; /* 오팩시티 속성에 대한 변화를 0.5초 동안 천천히 진행 */
+}
+
+.header-box.show {
+  opacity: 1; /* 요소가 나타날 때 불투명도를 1(100%)로 설정하여 나타남 */
+}
+
+.header-info{
+  border-radius: 28px;
+  width: auto;
+  height: 65px;
+  background-color: #f9f6ca;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px 0 15px;
+}
+.title-box{
+  display: flex;
+  align-items: center;
+  
+}
+.title-box .logo-image {
+  width: 45px;
+  height: 45px;
+}
+
+.title-box .title {
+  font-size: 20px;
+  font-weight: 650;
+  padding-left: 10px;
+}
+
+.login-box {
+  display: flex;
+  align-items: center;
+}
+.login-box .login-btn {
+  width: 150px;
+  height: 45px;
+  border-radius: 20px;
+  background-color: rgb(121 213 99);
+  border-style: none;
+  color: white;
+  font-size: 22px;
+}
+
+.login-box .menu-btn {
+  width: 30px;
+  height: 45px;
+  font-size: 40px;
+  padding-right: 33px;
+  background-color: transparent;
+  border-style: none;
+}
+
+.menu-open {
+  border-radius: 28px 28px 0 0;
+}
+
+.menu-box{
+  height: 160px;
+  width: auto;
+  background-color: #f9f6ca;
+  border-radius: 0 0 28px 28px;
+  padding: 15px 100px 15px 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+.menu-box .study-title, 
+.menu-box .test-title,
+.menu-box .rank-title {
+  font-size: 22px;
+}
+
+.menu-box div > p {
+  padding-top: 15px;
+  font-size: 17px;
+}
+
+.menu-box div > p:hover{
+  text-decoration: underline;
+  color: skyblue;
+}
+
+/* 500 이하 */
+@media(max-width : 500px){
+  .menu-box {
+    padding: 15px 15px 15px 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+/* 500 이상 */
+@media(min-width : 500px){
+  .menu-box {
+    padding: 15px 100px 15px 70px;
+    display: flex;
+    
+  }
+}
+ /* 1000 이상 */
+@media(min-width : 1000px){
+  .menu-box {
+    padding: 15px 100px 15px 70px;
+    display: flex;
+    justify-content: left;
+  }
+
+  .menu-box .test-box,
+  .menu-box .rank-box {
+    padding-left: 100px;
+  }
+}
