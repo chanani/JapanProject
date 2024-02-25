@@ -3,7 +3,6 @@
   padding: 0;
   list-style: none;
 }
-
 header {
   background-color: rgb(121 213 99);
   width: auto;
@@ -50,6 +49,7 @@ header {
   font-size: 20px;
   font-weight: 650;
   padding-left: 10px;
+  color: black;
 }
 
 .login-box {
@@ -84,7 +84,6 @@ header {
   width: auto;
   background-color: #f9f6ca;
   border-radius: 0 0 28px 28px;
-  padding: 15px 100px 15px 70px;
   display: flex;
   justify-content: space-between;
 }
@@ -97,12 +96,15 @@ header {
   font-size: 22px;
 }
 
-.menu-box div > p {
+.menu-box div a > p {
   padding-top: 15px;
   font-size: 17px;
+  color: black;
 }
-
-.menu-box div > p:hover{
+a {
+  text-decoration: none;
+}
+.menu-box div a > p:hover{
   text-decoration: underline;
   color: skyblue;
 }
@@ -119,7 +121,7 @@ header {
 /* 500 이상 */
 @media(min-width : 500px){
   .menu-box {
-    padding: 15px 100px 15px 70px;
+    padding: 22px 100px 15px 70px;
     display: flex;
     
   }

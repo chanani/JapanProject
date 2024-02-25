@@ -16,7 +16,7 @@ function Join() {
     <div className="loginPage-box">
       <div className="logo-box">
         <img src={Logo} alt="" />
-        <p>The Japen</p>
+        <Link to={"/"}><p>The Japen</p></Link>
         <h5>더재팬</h5>
       </div>
 

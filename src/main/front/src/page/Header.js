@@ -1,7 +1,7 @@
 import '../styles/Header.css';
 import Logo from '../image/logo.png';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Header(){
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ function Header(){
           <div className={"header-info" + (open ? " menu-open" : "")}>
             <div className='title-box'>
               <img src={Logo} alt="로고" className='logo-image'/>
-              <p className='title'>The Japen</p>
+              <Link to={"/"} ><p className='title'>The Japen</p></Link>
             </div>
             <div className='login-box'>
               <button className='menu-btn' onClick={handleToggle}>+</button>
@@ -41,20 +41,20 @@ function Header(){
             <div className='menu-box'>
                 <div className='study-box'>
                     <h3 className='study-title'>단어 학습</h3>
-                    <p>초급 단계</p>
-                    <p>중급 단계</p>
-                    <p>고급 단계</p>
+                    <Link to={"/study/easy"} onClick={handleToggle}><p>초급 단계</p></Link>
+                    <Link onClick={handleToggle}><p>중급 단계</p></Link>
+                    <Link onClick={handleToggle}><p>고급 단계</p></Link>
                 </div>
                 <div className='test-box'>
                     <h3 className='test-title'>단어 테스트</h3>
-                    <p>초급 단계</p>
-                    <p>중급 단계</p>
-                    <p>고급 단계</p>
+                    <Link onClick={handleToggle}><p>초급 단계</p></Link>
+                    <Link onClick={handleToggle}><p>중급 단계</p></Link>
+                    <Link onClick={handleToggle}><p>고급 단계</p></Link>
                 </div>
                 <div className='rank-box'>
                   <h3 className='rank-title'>기록, 랭킹</h3>
-                  <p>학습기록</p>
-                  <p>랭킹</p>
+                    <Link onClick={handleToggle}><p>학습기록</p></Link>
+                    <Link onClick={handleToggle}><p>랭킹</p></Link>
                 </div>
             </div> 
           : ""} 
