@@ -47,7 +47,7 @@ function Header(){
                 </div>
                 <div className='test-box'>
                     <h3 className='test-title'>단어 테스트</h3>
-                    <Link onClick={handleToggle}><p>초급 단계</p></Link>
+                    <Link to={"/test/easy"} onClick={handleToggle}><p>초급 단계</p></Link>
                     <Link onClick={handleToggle}><p>중급 단계</p></Link>
                     <Link onClick={handleToggle}><p>고급 단계</p></Link>
                 </div>

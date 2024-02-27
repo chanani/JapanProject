@@ -1,8 +1,11 @@
+footer {
+  background-color: #f6f7fb;
+}
 .footer-box {
   border: 1px solid #777;
   border-radius: 24px;
   padding: 15px 30px 15px 30px;
-  margin: 30px;
+  margin: 0 30px 30px 30px;
   background-color: rgb(121 213 99);
 }
 

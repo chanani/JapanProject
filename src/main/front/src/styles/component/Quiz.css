@@ -1,0 +1,73 @@
+.study-on-box {
+  transition: transform 0.3s ease; 
+}
+
+.study-on-box.fade-out {
+  transform: rotateX(360deg); 
+}
+
+
+.on-header-box {
+  padding: 13px 15px 0 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.on-word-box{
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.on-click-box {
+  display: flex;
+  justify-content: space-between;
+  border-top: 2px solid #777;
+  padding: 13px 15px 10px 15px;
+  align-items: center;
+}
+.click-mid {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.click-mid > p {
+  margin: 0 10px;
+}
+
+.click-right > a {color: black;}
+
+.click-right > a path {
+  width: 300px;
+}
+
+
+
+/* 500 이하 */
+@media(max-width : 500px){
+  .on-word-box{
+    height: 180px;
+    font-size: 40px;
+    font-weight: 400;
+  }
+}
+
+/* 500 이상 */
+@media(min-width : 500px){
+  .on-word-box{
+    height: 250px;
+    font-size: 45px;
+    font-weight: 400;
+  }
+}
+ /* 1000 이상 */
+@media(min-width : 1000px){
+  .on-word-box{
+    height: 300px;
+    font-size: 50px;
+    font-weight: 400;
+  }
+}

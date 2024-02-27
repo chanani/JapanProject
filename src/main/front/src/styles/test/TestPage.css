@@ -1,4 +1,4 @@
-.study-page-all {
+.test-page-all {
   display: flex;
   justify-content: center;
   padding-top: 60px;
@@ -6,35 +6,35 @@
   padding-bottom: 60px;
 }
 
-.study-page-mid{
+.test-page-mid{
   
   background-color: white;
   box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
 }
 
-.study-off-box{
+.test-off-box{
   display: flex;
   flex-direction:column;
   align-items: center;
   padding: 40px 0 35px 0;
 }
 
-.study-off-info > h5 {
+.test-off-info > h5 {
   padding-bottom: 5px;
 }
 
-.study-off-info {
+.test-off-info {
   margin-bottom: 20px;
 
 }
-.study-off-req-box > input{
+.test-off-req-box > input{
   width: 50px;
   height: 23px;
   text-align: center;
   font-size: 13px;
   margin-right: 5px;
 }
-.study-off-req-box > button{
+.test-off-req-box > button{
   width: 80px;
   height: 40px;
   background-color: #37bd5d;
@@ -44,15 +44,26 @@
   font-weight: 600;
 }
 
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.kind-box {
+  margin-bottom: 20px;
 }
 
+.kind-box > button {
+  width: 70px;
+  height: 35px;
+  border-style: none;
+  border-radius: 6px;
+  margin: 0 5px;
+}
+
+.active{
+  background-color: rgb(89 120 234);
+  color: white;
+}
 
 /* 500 이하 */
 @media(max-width : 600px){
-  .study-page-mid{
+  .test-page-mid{
     width: 80vw;
   }
   .study-off-info {
@@ -62,19 +73,19 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* 500 이상 */
 @media(min-width : 600px){
-  .study-page-mid{
+  .test-page-mid{
     width: 65vw;
   }
-  .study-off-info {
+  .test-off-info {
     font-size: 18px;
   }
 }
  /* 1000 이상 */
 @media(min-width : 1000px){
-  .study-page-mid{
+  .test-page-mid{
     width: 43vw;
   }
-  .study-off-info {
+  .test-off-info {
     font-size: 24px;
   }
 }
