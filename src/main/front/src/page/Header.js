@@ -42,17 +42,18 @@ function Header(){
                 <div className='study-box'>
                     <h3 className='study-title'>단어 학습</h3>
                     <Link to={"/study/easy"} onClick={handleToggle}><p>초급 단계</p></Link>
-                    <Link onClick={handleToggle}><p>중급 단계</p></Link>
-                    <Link onClick={handleToggle}><p>고급 단계</p></Link>
+                    <Link to={"/study/middle"} onClick={handleToggle}><p>중급 단계</p></Link>
+                    <Link to={"/study/hard"} onClick={handleToggle}><p>고급 단계</p></Link>
                 </div>
                 <div className='test-box'>
                     <h3 className='test-title'>단어 테스트</h3>
                     <Link to={"/test/easy"} onClick={handleToggle}><p>초급 단계</p></Link>
-                    <Link onClick={handleToggle}><p>중급 단계</p></Link>
-                    <Link onClick={handleToggle}><p>고급 단계</p></Link>
+                    <Link to={"/test/middle"} onClick={handleToggle}><p>중급 단계</p></Link>
+                    <Link to={"/test/hard"} onClick={handleToggle}><p>고급 단계</p></Link>
                 </div>
                 <div className='rank-box'>
                   <h3 className='rank-title'>기록, 랭킹</h3>
+                    <Link onClick={handleToggle}><p>즐겨찾기 목록</p></Link>
                     <Link onClick={handleToggle}><p>학습기록</p></Link>
                     <Link onClick={handleToggle}><p>랭킹</p></Link>
                 </div>

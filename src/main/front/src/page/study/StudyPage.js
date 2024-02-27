@@ -1,12 +1,23 @@
 import { useState } from "react";
-import "../../styles/study/Easy.css";
+import "../../styles/study/StudyPage.css";
 import Quiz from "../../component/Quiz";
 
 function Easy() {
+  const currentPath = useState(window.location.pathname.substring(7));
   const [pageOn, setPageOn] = useState(true);
+  const [num, setNum] = useState(1);
   const handleToggle = () => {
-    setPageOn((pageOn) => !pageOn);
+    if(num > 0){
+      setPageOn((pageOn) => !pageOn);
+    } else {
+      alert("1이상 입력해주세요.");
+    }
   };
+
+  const handleChangeNum = (event) => {
+      let num = event.target.value;
+      setNum(num);
+  }
 
   return (
     <div className="study-page-all">
@@ -22,13 +33,13 @@ function Easy() {
           </div>
 
           <div className="study-off-req-box">
-            <input type="number" id="num" placeholder="단어 수"/>
+            <input type="number" id="num" placeholder="단어 수" onChange={handleChangeNum} value={num}/>
             <button onClick={handleToggle}>시작하기</button>
           </div>
           
         </div> 
         
-        : <Quiz />
+        : <Quiz currentPath={currentPath} num={num}/>
       }
         </div>
       </div>

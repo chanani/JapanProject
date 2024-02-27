@@ -1,0 +1,88 @@
+.test-on-box {
+  padding: 30px 30px 20px 30px;
+}
+
+.test-on-box .test-on-header-box{
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.test-box-content {
+  border: 1px solid #777;
+  border-radius: 10px;
+  margin-bottom: 30px;
+  padding: 15px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+
+}
+
+.test-on-box .test-on-header-box > p {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.test-header-box{
+  display: flex;
+  justify-content: space-between;
+}
+.test-word-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.test-input-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.test-input-box > input {
+    border-style: none;
+    border-bottom: 1px solid #777;
+    text-align: center;
+    font-size: 20px;
+    padding-bottom : 7px;
+    margin-bottom: 15px;
+    outline: none;
+}
+
+
+
+
+/* 500 이하 */
+@media(max-width : 600px){
+  .test-word-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    font-size: 30px;
+  }
+}
+
+/* 500 이상 */
+@media(min-width : 600px){
+  .test-word-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+    font-size: 40px;
+  }
+}
+
+.submit-box{
+  display: flex;
+  justify-content: center;
+}
+.submit-box > button {
+  height: 50px;
+  width: 110px;
+  border-style: none;
+  border-radius: 10px;
+  background-color: rgb(121 213 99);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+}

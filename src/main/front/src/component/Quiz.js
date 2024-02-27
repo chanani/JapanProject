@@ -12,7 +12,7 @@ import Audio from './Audio';
 
 
 
-function Quiz(){
+function Quiz({currentPath, num}){
   let word = [['家族', '코키'], ['ちた', '치타'], ['しみ', '시미'], ['たりの', '타리노']];
   const [current, setCurrent] = useState(0);
   const [meaning, setMeaning] = useState(false);
@@ -74,7 +74,7 @@ function Quiz(){
          <FaStar size={21} onClick={handleStar}/>}
         
         {meaning ? "" : <Audio inputData={word[current][0]}/>}
-        
+
       </div>
       <div className='on-word-box' onClick={handleMeaning}>
           {meaning ? word[current][1] : word[current][0]}
