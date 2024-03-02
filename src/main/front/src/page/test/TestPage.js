@@ -3,7 +3,7 @@ import "../../styles/test/TestPage.css";
 import Test from "../../component/Test";
 
 function TestPage() {
-  const currentPath = useState(window.location.pathname.substring(6));
+  const [currentPath, setCurrentPath] = useState(window.location.pathname.substring(6));
   const [pageOn, setPageOn] = useState(true);
   const [kind, setKind] = useState(true);
   const handleToggle = () => {

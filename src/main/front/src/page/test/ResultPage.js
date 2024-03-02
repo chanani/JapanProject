@@ -26,15 +26,17 @@ const ResultPage = () => {
       }
     }
     setPoint(newPoint);
+    console.log(answer);
   }, [kind, word, answer]);
-
+  
   return (
     <div className="result-page-all">
       <div className="result-page-mid">
-        {point}
+        
         <div className="result-on-box">
           <div className="result-on-header-box">
-            <p>오답을 확인하세요.</p>
+            <h3>{point * 10}점 입니다.</h3>
+            {point === 10 ? "" : <p>오답을 확인하세요.</p>}
           </div>
           <div className="result-box">
             {word.map((item, index) => (
@@ -58,6 +60,7 @@ const ResultPage = () => {
             ))}
           </div>
           <div className="submit-box">
+              <button >돌아가기</button>
               <button >결과 기록하기</button>
           </div>
         </div>

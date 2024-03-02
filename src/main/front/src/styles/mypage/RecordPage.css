@@ -1,0 +1,73 @@
+.recordPage-page-all {
+  display: flex;
+  justify-content: center;
+  padding-top: 60px;
+  background-color: #f6f7fb;
+  padding-bottom: 60px;
+}
+
+.recordPage-page-mid{
+  background-color: white;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+  padding: 30px;
+}
+
+.recordPage-page-mid .recordPage-info{
+  font-size: 23px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #d2cece;
+  padding-bottom: 10px;
+}
+
+.recordPage-score {
+  border : 1px solid rgb(94 106 245);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 15px;
+  box-shadow: 0 0.125rem 0.25rem #00000014;
+  transition: all .12s cubic-bezier(.47,0,.745,.715);
+  background-color: var(--gray-100-gray-700);
+}
+
+.recordPage-score:hover{
+  background-color: rgb(230 231 246);
+}
+
+.recordPage-score .score-header {
+  display: flex;
+  font-size: 15px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.recordPage-score .score-header > div {
+  margin-right: 3px;
+}
+.recordPage-score .score-content {
+  display: flex;
+  font-size: 20px;
+  justify-content: space-between;
+
+}
+
+/* 500 이하 */
+@media(max-width : 600px){
+  .recordPage-page-mid{
+    width: 80vw;
+  }
+
+}
+
+/* 500 이상 */
+@media(min-width : 600px){
+  .recordPage-page-mid{
+    width: 65vw;
+  }
+
+}
+ /* 1000 이상 */
+@media(min-width : 1000px){
+  .recordPage-page-mid{
+    width: 43vw;
+  }
+
+}

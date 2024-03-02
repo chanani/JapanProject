@@ -9,6 +9,9 @@ import Join from "./page/login/Join";
 import Easy from "./page/study/StudyPage";
 import TestPage from "./page/test/TestPage";
 import ResultPage from "./page/test/ResultPage";
+import RecordPage from "./page/mypage/RecordPage";
+import FavoritesList from "./page/mypage/FavoritesList";
+import Rank from "./page/rankPage/Rank";
 
 function App() {
   return (
@@ -18,9 +21,12 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/join" element={<Join />} />
         <Route path="/" element={<MainPage />} />
-        <Route path="/study/:id" element={<Easy/>} />
-        <Route path="/test/:id" element={<TestPage />}/>
+        <Route path="/study/easy" element={<Easy/>} />
+        <Route path="/test/easy" element={<TestPage />}/>
         <Route path="/result" element={<ResultPage />}/>
+        <Route path="/mypage/record" element={<RecordPage />} />
+        <Route path="/mypage/favorites" element={<FavoritesList />} />
+        <Route path="/rank" element={<Rank />}/>
       </Routes>
 
       <Footer />

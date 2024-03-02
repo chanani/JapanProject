@@ -12,12 +12,11 @@ import Audio from './Audio';
 
 
 
-function Quiz({currentPath, num}){
-  let word = [['家族', '코키'], ['ちた', '치타'], ['しみ', '시미'], ['たりの', '타리노']];
+function Quiz({num, arr}){
+  let [word, setWord] = useState([['家族', '코키', false], ['ちた', '치타', false], ['しみ', '시미', false], ['たりの', '타리노', false]]);
   const [current, setCurrent] = useState(0);
   const [meaning, setMeaning] = useState(false);
   const [play, setPlay] = useState(false);
-  const [star, setStart] = useState(false);
   const handleMeaning = () => {
     setMeaning((meaning) => !meaning);
     setTimeout(() => {
@@ -25,9 +24,17 @@ function Quiz({currentPath, num}){
       box.classList.toggle('fade-out');
     }, 100);
   }
+  
+  
+
   const handleStar = () => {
-    setStart((star) => !star);
+    setWord(prevWord => {
+      const newWord = [...prevWord];
+      newWord[current][2] = !newWord[current][2]; // 현재 단어의 즐겨찾기 상태를 토글
+      return newWord;
+    });
   }
+
   const handleNext = () => {
     setCurrent((current) => current + 1);
   }
@@ -56,20 +63,26 @@ function Quiz({currentPath, num}){
     } else {
       clearInterval(autoPlayInterval); 
     }
-  
+    
     return () => {
       clearInterval(autoPlayInterval);
     };
   }, [play, word.length]);
   
+  useEffect(() => {
+    if(arr.length !== 0){
+      setWord(arr);
+    }
+  }, [arr]);
   
-  
+  console.log(word[current][2]);
 
   return (
     <div className='study-on-box'>
       <div className='on-header-box'>
         
-        {star ? <FaRegStar size={21} onClick={handleStar}/>
+        {word[current][2] === false? 
+        <FaRegStar size={21} onClick={handleStar}/>
          : 
          <FaStar size={21} onClick={handleStar}/>}
         

@@ -126,6 +126,11 @@
 }
 
 
+.result-on-header-box > h3{
+  font-size: 30px;
+}
+
+
 
 
 /* 500 이하 */
@@ -163,6 +168,7 @@
   color: white;
   font-size: 15px;
   font-weight: 600;
+  margin: 0 5px;
 }
 
 .clear {

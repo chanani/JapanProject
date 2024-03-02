@@ -9,7 +9,7 @@ const Test = ({kind, currentPath}) => {
   let [answer, setAnswer] = useState([]);
   const navigate = useNavigate();
   const handleAnswer = (event, index) => {
-    const updatedAnswer = [...answer]; 
+    const updatedAnswer = [...answer, true]; 
     updatedAnswer[index] = event.target.value; 
     setAnswer(updatedAnswer);
   };

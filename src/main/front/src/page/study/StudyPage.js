@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/study/StudyPage.css";
 import Quiz from "../../component/Quiz";
+import { useLocation } from "react-router-dom";
 
 function Easy() {
-  const currentPath = useState(window.location.pathname.substring(7));
+  const location = useLocation();
+  
   const [pageOn, setPageOn] = useState(true);
   const [num, setNum] = useState(1);
+  const [word, setWord] = useState([]);
   const handleToggle = () => {
     if(num > 0){
       setPageOn((pageOn) => !pageOn);
@@ -18,6 +21,16 @@ function Easy() {
       let num = event.target.value;
       setNum(num);
   }
+
+  useEffect(() => {
+    const arr = location.state ? location.state.arr : [];
+    if(arr && arr.length !== 0){
+      setWord(arr);
+      setPageOn(false);
+    }
+  }, [location.state]);
+
+  
 
   return (
     <div className="study-page-all">
@@ -39,7 +52,7 @@ function Easy() {
           
         </div> 
         
-        : <Quiz currentPath={currentPath} num={num}/>
+        : <Quiz num={num} arr={word}/>
       }
         </div>
       </div>
