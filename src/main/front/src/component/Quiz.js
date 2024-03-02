@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import '../styles/component/Quiz.css';
 import { FaPlay } from "react-icons/fa";
 import { GoArrowLeft } from "react-icons/go";
@@ -9,6 +9,8 @@ import { FaStar } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { FaStopCircle } from "react-icons/fa";
 import Audio from './Audio';
+import { tokenInfoContext } from './TokenInfoProvider';
+
 
 
 
@@ -17,6 +19,7 @@ function Quiz({num, arr}){
   const [current, setCurrent] = useState(0);
   const [meaning, setMeaning] = useState(false);
   const [play, setPlay] = useState(false);
+  const { userRole, username } = useContext(tokenInfoContext);
   const handleMeaning = () => {
     setMeaning((meaning) => !meaning);
     setTimeout(() => {
@@ -26,13 +29,17 @@ function Quiz({num, arr}){
   }
   
   
-
+  // 즐겨찾기 핸들러
   const handleStar = () => {
-    setWord(prevWord => {
-      const newWord = [...prevWord];
-      newWord[current][2] = !newWord[current][2]; // 현재 단어의 즐겨찾기 상태를 토글
-      return newWord;
-    });
+    if(userRole !== "none"){
+      setWord(prevWord => {
+        const newWord = [...prevWord];
+        newWord[current][2] = !newWord[current][2]; // 현재 단어의 즐겨찾기 상태를 토글
+        return newWord;
+      });
+    } else {
+      alert("로그인 후 이용해주세요.");
+    }
   }
 
   const handleNext = () => {

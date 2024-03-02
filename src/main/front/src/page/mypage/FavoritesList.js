@@ -1,11 +1,21 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../styles/mypage/FavoritesList.css";
 import { FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import { tokenInfoContext } from "../../component/TokenInfoProvider";
 const FavoritesList = () => {
-  const [data, setData] = useState([['家族', '가족', true], ['ちた', '치타',true], ['しみ', '시미', true], ['たりの', '타리노', true], ['家族', '코키', true], ['ちた', '치타', true], ['しみ', '시미', true], ['たりの', '타리노', true], ['しみ', '시미', true], ['たりの', '타리노', true]]);
-  const username = "CHANHAN_LEE";
+  const {userRole, username} = useContext(tokenInfoContext);
+  const navigate = useNavigate();
 
+  useEffect(() =>{
+    if(userRole === "none"){
+      alert("로그인 후 이용해주세요.");
+      navigate("/login");
+    }
+  });
+
+  const [data, setData] = useState([['家族', '가족', true], ['ちた', '치타',true], ['しみ', '시미', true], ['たりの', '타리노', true], ['家族', '코키', true], ['ちた', '치타', true], ['しみ', '시미', true], ['たりの', '타리노', true], ['しみ', '시미', true], ['たりの', '타리노', true]]);
+  
   const handleFavorite = (index) => {
     const newData = [...data];
     newData[index][2] = !newData[index][2]; 
@@ -14,7 +24,6 @@ const FavoritesList = () => {
       setData(newData);
     }
   }
-  const navigate = useNavigate();
 
   const handleStudy = () => {
     navigate("/study/easy", { state: { arr: data } });

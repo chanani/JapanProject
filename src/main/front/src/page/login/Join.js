@@ -1,11 +1,61 @@
 import '../../styles/login/Join.css'
 import Logo from "../../image/logo.png"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import axios from 'axios';
 
 function Join() {
+  const [form, setForm] = useState(["", "", "", "", ""]);
+  
+  let navigate = useNavigate();
+
   const handleHome = () => {
     window.location.href = "/"
   }
+
+  const handleInfo = (event) => {
+    let eventName = event.target.className;
+    let e_value = event.target.value;
+    let arr = form.slice();  
+    if(eventName === "user_name"){
+      arr[0] = e_value;
+    } else if(eventName === "username"){
+      arr[1] = e_value;
+    } else if(eventName === "password"){
+      arr[2] = e_value;
+    } else if(eventName === "user_email"){
+      arr[3] = e_value;
+    } else if(eventName === "user_phone"){
+      arr[4] = e_value;
+    }
+    setForm(arr);
+  }
+
+
+  const handleJoin = (event) => {
+    event.preventDefault();
+    axios({
+      url : "/join",
+      method : "POST",
+      data : {
+        user_name : form[0],
+        username : form[1],
+        password : form[2],
+        user_email : form[3],
+        user_phone : form[4]
+      }
+    })
+    .then((res) => {
+      if(res.data === '성공'){
+        alert('회원가입을 축하드립니다 *_*');
+        navigate("/login");
+      } else{
+        alert('회원가입에 실패하였습니다.');
+      }
+    })
+  }
+
+
   return (
     <div className="login-all">
     <div className="login-header">
@@ -37,18 +87,33 @@ function Join() {
 
           <div className="login-info">
             <div className="login-input-box">
-              <input type="text" placeholder="이름(실명)" className='name'/>
-              <input type="text" placeholder="아이디" className='username'/>
-              <input type="password" placeholder="비밀번호" className='password'/>
-              <input type="email" placeholder="이메일" className='email'/>
-              <input type="password" placeholder="휴대폰번호" className='phone'/>
+              <input type="text" placeholder="이름(실명)" className='user_name'
+              onChange={handleInfo}
+              value={form[0]}
+              />
+              <input type="text" placeholder="아이디" className='username'
+              onChange={handleInfo}
+              value={form[1]}
+              />
+              <input type="password" placeholder="비밀번호" className='password'
+              onChange={handleInfo}
+              value={form[2]}
+              />
+              <input type="email" placeholder="이메일" className='user_email'
+              onChange={handleInfo}
+              value={form[3]}
+              />
+              <input type="text" placeholder="휴대폰번호" className='user_phone'
+              onChange={handleInfo}
+              value={form[4]}
+              />
             </div>
 
             
           </div>
 
           <div className='join-btn-box'>
-            <button className='join-bnt'>가입하기</button>
+            <button className='join-bnt' onClick={handleJoin}>가입하기</button>
           </div>
          
          

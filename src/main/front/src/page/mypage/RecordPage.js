@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../styles/mypage/RecordPage.css";
+import { tokenInfoContext } from "../../component/TokenInfoProvider";
+import { useNavigate } from "react-router-dom";
 
 const RecordPage = () => {
+
+  const {userRole, username} = useContext(tokenInfoContext);
+  const navigate = useNavigate();
+
+  useEffect(() =>{
+    if(userRole === "none"){
+      alert("로그인 후 이용해주세요.");
+      navigate("/login");
+    }
+  });
+
   const [data, setData] = useState([["Easy", "100", "24/02/29"], ["Easy", "70", "24/02/22"], ["Hard", "70", "24/03/21"]]);
-  const username = "CHANHAN_LEE";
 
   const handleContent = () => {
     // result 페이지로 이동해야됨

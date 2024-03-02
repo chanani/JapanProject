@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../styles/study/StudyPage.css";
 import Quiz from "../../component/Quiz";
 import { useLocation } from "react-router-dom";
+import { tokenInfoContext } from "../../component/TokenInfoProvider";
 
 function Easy() {
   const location = useLocation();
-  
+  const {userRole} = useContext(tokenInfoContext);
   const [pageOn, setPageOn] = useState(true);
   const [num, setNum] = useState(1);
   const [word, setWord] = useState([]);

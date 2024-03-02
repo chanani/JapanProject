@@ -1,16 +1,19 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../../styles/test/ResultPage.css";
 import Audio from "../../component/Audio";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { tokenInfoContext } from "../../component/TokenInfoProvider";
 
 const ResultPage = () => {
   const location = useLocation();
   const { kind, currentPath, word, answer } = location.state;
   const [point, setPoint] = useState(0);
-  console.log("kind", kind);
-  console.log("currentPath", currentPath);
-  console.log("word", word);
-  console.log("answer", answer);
+  const { userRole, username } = useContext(tokenInfoContext);
+  const navigate = useNavigate();
+  // console.log("kind", kind);
+  // console.log("currentPath", currentPath);
+  // console.log("word", word);
+  // console.log("answer", answer);
   
   useEffect(() => {
     let newPoint = 0;
@@ -26,9 +29,19 @@ const ResultPage = () => {
       }
     }
     setPoint(newPoint);
-    console.log(answer);
   }, [kind, word, answer]);
   
+  const handleRecord = () => {
+    if(userRole !== "none"){
+      // 데이터 전달
+    } else {
+      alert("로그인 후 이용해주세요.");
+    }
+  }
+  // 홈으로
+  const handleHome = () => {
+    navigate("/");
+  }
   return (
     <div className="result-page-all">
       <div className="result-page-mid">
@@ -42,7 +55,7 @@ const ResultPage = () => {
             {word.map((item, index) => (
               
               <div className={"result-box-content" + ((kind === true && item[1] === answer[index]) || (kind === false && item[0] === answer[index]) ? " clear" : " fail")} key={index}>
-                {item[1] === answer[index] ? "1" : "2"}
+                {/* {item[1] === answer[index] ? "1" : "2"} */}
                 <div className="result-header-box">
                     {kind ? <Audio inputData={item[0]}/> : <p></p>}
                     <p>{index + 1} / {word.length}</p>
@@ -52,16 +65,14 @@ const ResultPage = () => {
                 </div>
                 <div className="result-input-box">
                   <input type="text" value={answer[index]} className={index} readOnly/>
-                  
                 </div>
-
               </div>
               
             ))}
           </div>
           <div className="submit-box">
-              <button >돌아가기</button>
-              <button >결과 기록하기</button>
+              <button onClick={handleHome}>돌아가기</button>
+              <button onClick={handleRecord}>결과 기록하기</button>
           </div>
         </div>
 
