@@ -27,6 +27,7 @@ function Easy() {
     const arr = location.state ? location.state.arr : [];
     if(arr && arr.length !== 0){
       setWord(arr);
+      setNum(arr.length);
       setPageOn(false);
     }
   }, [location.state]);
@@ -53,7 +54,7 @@ function Easy() {
           
         </div> 
         
-        : <Quiz num={num} arr={word}/>
+        : <Quiz level={1} num={num} arr={word} />
       }
         </div>
       </div>

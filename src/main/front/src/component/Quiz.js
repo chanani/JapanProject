@@ -10,48 +10,66 @@ import { Link } from 'react-router-dom';
 import { FaStopCircle } from "react-icons/fa";
 import Audio from './Audio';
 import { tokenInfoContext } from './TokenInfoProvider';
+import axios from 'axios';
 
 
 
 
-function Quiz({num, arr}){
-  let [word, setWord] = useState([['家族', '코키', false], ['ちた', '치타', false], ['しみ', '시미', false], ['たりの', '타리노', false]]);
+
+const Quiz = ({ level, num, arr }) => {
+  let [word, setWord] = useState([]);
   const [current, setCurrent] = useState(0);
   const [meaning, setMeaning] = useState(false);
   const [play, setPlay] = useState(false);
   const { userRole, username } = useContext(tokenInfoContext);
+
   const handleMeaning = () => {
     setMeaning((meaning) => !meaning);
     setTimeout(() => {
       const box = document.querySelector('.study-on-box');
       box.classList.toggle('fade-out');
     }, 100);
-  }
-  
+  };
   
   // 즐겨찾기 핸들러
   const handleStar = () => {
     if(userRole !== "none"){
       setWord(prevWord => {
         const newWord = [...prevWord];
-        newWord[current][2] = !newWord[current][2]; // 현재 단어의 즐겨찾기 상태를 토글
+        newWord[current].word_favorite = !newWord[current].word_favorite;
         return newWord;
       });
+      changeFavorite();
+      
     } else {
       alert("로그인 후 이용해주세요.");
     }
+    
   }
+  // 즐겨 찾기 백엔드로 전달
+  const changeFavorite = () => {
+    axios({
+      url : "/study/addFavorite/" + word[current].word_num + "/" + !word[current].word_favorite + "/" + username,
+      method : "GET"
+    })
+    .then((res) => {
+      console.log(res.data);
+    })
 
+  }
+  // +1 핸들러
   const handleNext = () => {
     setCurrent((current) => current + 1);
   }
-
+  // -1 핸들러
   const handleBack = () => {
     setCurrent((current) => current - 1);
   }
+  // 자동 넘기기 핸들러
   const handlePlay = () => {
     setPlay((play) => !play);
   }
+  // 자동 넘기기 기능
   useEffect(() => {
     let autoPlayInterval;
   
@@ -76,28 +94,38 @@ function Quiz({num, arr}){
     };
   }, [play, word.length]);
   
+  // 단어 및 즐겨찾기 가져오기
   useEffect(() => {
     if(arr.length !== 0){
       setWord(arr);
+    } else {
+      axios({
+        url : "/study/data/" + level + "/" + num + "/" + username,
+        method : "GET",
+      })
+      .then((res) => {
+        console.log(res.data);
+        setWord(res.data);
+      });
     }
-  }, [arr]);
+  }, [arr, level, num, username]);
   
-  console.log(word[current][2]);
 
   return (
     <div className='study-on-box'>
       <div className='on-header-box'>
         
-        {word[current][2] === false? 
+        {word.length > 0 && current >= 0 && word[current].word_favorite === false? 
         <FaRegStar size={21} onClick={handleStar}/>
          : 
          <FaStar size={21} onClick={handleStar}/>}
         
-        {meaning ? "" : <Audio inputData={word[current][0]}/>}
+        {meaning ? "" : <Audio inputData={word[current]?.word_content} />}
+
 
       </div>
       <div className='on-word-box' onClick={handleMeaning}>
-          {meaning ? word[current][1] : word[current][0]}
+          {meaning ? word[current]?.word_meaning : word[current]?.word_content}
       </div>
       <div className='on-click-box'>
           <div className='click-left'>

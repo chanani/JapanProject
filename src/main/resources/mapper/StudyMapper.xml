@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.thejapenproject.study.service.StudyMapper">
+
+    <select id="getWord" resultType="WordVO">
+        SELECT w.*,
+               CASE
+                   WHEN f.username IS NOT NULL THEN 'true'
+                   ELSE 'false'
+                   END AS word_favorite
+        FROM word w
+                 LEFT JOIN favorites f
+                           ON w.word_num = f.word_num
+                               AND f.username = #{username}
+        WHERE w.word_level = #{level}
+        ORDER BY RAND()
+            LIMIT #{num};
+    </select>
+
+    <insert id="addFavorite">
+        INSERT INTO favorites (username,
+                              word_num,
+                              favorite_regdate)
+        values (#{username},
+                #{word_num},
+                now())
+    </insert>
+
+    <delete id="deleteFavorite">
+        DELETE FROM favorites
+        where username = #{username}
+        AND word_num = #{word_num}
+    </delete>
+
+</mapper>

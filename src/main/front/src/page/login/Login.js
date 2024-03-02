@@ -1,16 +1,25 @@
 import "../../styles/login/Login.css";
 import Logo from "../../image/logo.png"
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { tokenInfoContext } from "../../component/TokenInfoProvider";
 
 function Login() {
+  const navigator = useNavigate();
+  const { userRole } = useContext(tokenInfoContext);
+  // 로그인 되어있을 때 홈으로 리턴
+  useEffect(() => {
+    if(userRole !== "none"){
+      alert("이미 로그인 하셨습니다.");
+      navigator("/");
+    }
+  })
   const savedCheck = localStorage.getItem("check");
-  const savedUsername = localStorage.getItem("username") || '';
+  const savedUsername = localStorage.getItem("remember") || '';
   const [check, setCheck] = useState(savedCheck === "true");
   const [username, setUsername] = useState(savedCheck === "true" ? savedUsername : '');
   const [password, setPassword] = useState("");
-  const navigator = useNavigate();
   // 홈버튼 핸들러
   const handleHome = () => {
     window.location.href = "/"
@@ -19,6 +28,7 @@ function Login() {
   const handleUsername = (event) => {
     let u_value = event.target.value;
     setUsername(u_value);
+    rememberMe(check, u_value);
   }
   // 페스워드 입력 핸들러
   const handlePassword = (event) => {
@@ -40,6 +50,7 @@ function Login() {
       if(res.status === 200){
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", username);
+        alert("반갑습니다 *_*");
         window.location = "/";
       }
     })
@@ -52,12 +63,12 @@ function Login() {
   const handleCheck = (event) => {
     const isChecked = event.target.checked;
     setCheck(isChecked);
-    rememberMe(isChecked);  
+    rememberMe(isChecked, username);  
   }
   // 아이디 유지 local storage에 저장
-  const rememberMe = (isChecked) => {
-    if (isChecked) {
-      localStorage.setItem("username", username);
+  const rememberMe = (isChecked, username) => {
+    if (isChecked && username) {
+      localStorage.setItem("remember", username);
     } else {
       localStorage.removeItem("username");
     }
@@ -76,11 +87,8 @@ function Login() {
           <img src={Logo} alt="" />
           <Link to={"/"}><p>The Japen</p></Link>
           <h5>더재팬</h5>
-          
-          
         </div>
         
-
         <div className="login-info-box">
           <div className="login-info-all">
 
@@ -97,6 +105,7 @@ function Login() {
               </div>
 
               <div className="login-btn-box">
+                
                 <button className="login-btn"
                 onClick={handleLogin}>로그인</button>
               </div>

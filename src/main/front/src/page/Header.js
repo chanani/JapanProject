@@ -1,10 +1,13 @@
 import '../styles/Header.css';
 import Logo from '../image/logo.png';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { tokenInfoContext } from '../component/TokenInfoProvider';
 
 function Header(){
   const navigate = useNavigate();
+  const { userRole, username } = useContext(tokenInfoContext);
+
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -19,6 +22,14 @@ function Header(){
   const handleLogin = () => {
     navigate("/login");
   }
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
+    alert("로그아웃 되었습니다.");
+    window.location = "/";
+  }
+
   if(window.location.pathname === '/login' || window.location.pathname === "/join") return null;
 
   return(
@@ -33,7 +44,12 @@ function Header(){
             </div>
             <div className='login-box'>
               <button className='menu-btn' onClick={handleToggle}>+</button>
-              <button className='login-btn' onClick={handleLogin}>로그인</button>
+              {userRole === "none" ? 
+                <button className='login-btn' onClick={handleLogin}>로그인</button>
+                :
+                <button className='login-btn' onClick={handleLogout}>로그아웃</button>
+              }
+              
             </div>
             
           </div> 

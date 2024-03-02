@@ -6,9 +6,9 @@ import { tokenInfoContext } from "../../component/TokenInfoProvider";
 
 const ResultPage = () => {
   const location = useLocation();
-  const { kind, currentPath, word, answer } = location.state;
+  const { kind, word, answer } = location.state;
   const [point, setPoint] = useState(0);
-  const { userRole, username } = useContext(tokenInfoContext);
+  const { userRole } = useContext(tokenInfoContext);
   const navigate = useNavigate();
   // console.log("kind", kind);
   // console.log("currentPath", currentPath);

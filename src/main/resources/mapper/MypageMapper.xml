@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.thejapenproject.mypage.service.MypageMapper">
+
+    <select id="favoriteList" resultType="WordVO">
+        SELECT *, 'true' as word_favorite FROM word
+        where word_num  in (
+            SELECT word_num FROM favorites
+            where username = #{username}
+            ORDER BY favorite_regdate)
+    </select>
+</mapper>
