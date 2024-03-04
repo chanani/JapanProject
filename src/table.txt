@@ -27,15 +27,17 @@ CREATE TABLE `record` (
 	`username`	VARCHAR(30)	NOT NULL,
 	`record_level`	INT	NOT NULL,
 	`record_date`	TIMESTAMP	NOT NULL	DEFAULT now(),
-	`record_point`	INT	NOT NULL
+	`record_point`	INT	NOT NULL,
+    `record_kind` VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE `record_detail` (
 	`rd_num`	INT	NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`record_num`	INT	NOT NULL,
+    `record_value` VARCHAR(30) NOT NULL,
 	`username`	VARCHAR(30)	NOT NULL,
 	`word_num`	INT	NOT NULL,
-	`rd_check`	VARCHAR(1)	NOT NULL
+	`rd_check`	VARCHAR(30)	NOT NULL,
 );
 
 CREATE TABLE `notice` (

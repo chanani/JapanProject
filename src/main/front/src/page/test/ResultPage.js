@@ -3,37 +3,67 @@ import "../../styles/test/ResultPage.css";
 import Audio from "../../component/Audio";
 import { useContext, useEffect, useState } from "react";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
+import axios from "axios";
 
 const ResultPage = () => {
   const location = useLocation();
-  const { kind, word, answer } = location.state;
+  const { kind, level, word, answer } = location.state;
   const [point, setPoint] = useState(0);
-  const { userRole } = useContext(tokenInfoContext);
   const navigate = useNavigate();
-  // console.log("kind", kind);
-  // console.log("currentPath", currentPath);
-  // console.log("word", word);
-  // console.log("answer", answer);
-  
+  const {userRole, username} = useContext(tokenInfoContext);
+  const[newAnswer, setNewAnswer] = useState(answer);
+
+  // 정답확인 hook
   useEffect(() => {
-    let newPoint = 0;
+    let newPoint = 0;  
+    let newAnswerArray = [...answer]; // 새로운 답변 배열 생성
+  
     for(let i = 0; i < 10; i++) {
-      if (kind) {
-        if (word[i][1] === answer[i]) {
+      if (Array.isArray(answer[i]) && answer[i].length > 0 && kind && word[i]) { // answer[i]가 배열이고, 길이가 0보다 크고, kind와 word[i]가 존재하는지 확인
+        if (word[i].word_meaning === answer[i][0]) {
+          newAnswerArray[i] = answer[i].concat(true); // 정답인 경우 기존 데이터에 true 추가
           newPoint++;
+        } else {
+          newAnswerArray[i] = answer[i].concat(false); // 오답인 경우 기존 데이터에 false 추가
+        }
+      } else if (Array.isArray(answer[i]) && answer[i].length > 0 && !kind && word[i]) { // answer[i]가 배열이고, 길이가 0보다 크고, word[i]가 존재하는지 확인
+        if (word[i].word_content === answer[i][0]) {
+          newAnswerArray[i] = answer[i].concat(true);
+          newPoint++;
+        } else {
+          newAnswerArray[i] = answer[i].concat(false); // undefined인 경우 기존 데이터에 false 추가
         }
       } else {
-        if (word[i][0] === answer[i]) {
-          newPoint++;
-        }
+        newAnswerArray[i] = [" ", word[i].word_num, false]; // answer[i]가 undefined인 경우 기본값으로 false를 추가
       }
     }
-    setPoint(newPoint);
+  
+    setNewAnswer(newAnswerArray); // 새로운 답변 배열로 상태 업데이트
+    setPoint(newPoint); // 포인트 업데이트
   }, [kind, word, answer]);
   
+
+  // 점수 기록 핸들러
   const handleRecord = () => {
     if(userRole !== "none"){
-      // 데이터 전달
+      axios({
+        url : "/test/record",
+        method : "POST",
+        data : {
+          username : username,
+          level : level,
+          point : point * 10,
+          answer : newAnswer,
+          kind : kind
+        }
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error("Error recording result:", error);
+      });
+      console.log(newAnswer)
     } else {
       alert("로그인 후 이용해주세요.");
     }
@@ -54,17 +84,16 @@ const ResultPage = () => {
           <div className="result-box">
             {word.map((item, index) => (
               
-              <div className={"result-box-content" + ((kind === true && item[1] === answer[index]) || (kind === false && item[0] === answer[index]) ? " clear" : " fail")} key={index}>
-                {/* {item[1] === answer[index] ? "1" : "2"} */}
+              <div className={"result-box-content" + ((kind === true && answer[index] && item.word_meaning === answer[index][0]) || (kind === false && answer[index] && item.word_content === answer[index][0]) ? " clear" : " fail")} key={index}>
                 <div className="result-header-box">
                     {kind ? <Audio inputData={item[0]}/> : <p></p>}
                     <p>{index + 1} / {word.length}</p>
                 </div>
                 <div className="result-word-box">
-                    {kind? <p>{item[0]}</p> : <p>{item[1]}</p>}
+                    {kind? <p>{item.word_content}</p> : <p>{item.word_meaning}</p>}
                 </div>
                 <div className="result-input-box">
-                  <input type="text" value={answer[index]} className={index} readOnly/>
+                 <input type="text" value={(answer[index] && answer[index][0]) || ''} className={index} readOnly/>
                 </div>
               </div>
               

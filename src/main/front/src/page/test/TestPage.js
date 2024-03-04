@@ -35,7 +35,7 @@ function TestPage() {
           
         </div> 
         
-        : <Test kind={kind} currentPath={currentPath}/>
+        : <Test level={1} kind={kind} currentPath={currentPath}/>
       }
         </div>
       </div>
