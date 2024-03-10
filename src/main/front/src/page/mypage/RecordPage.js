@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import "../../styles/mypage/RecordPage.css";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const RecordPage = () => {
 
@@ -15,18 +16,61 @@ const RecordPage = () => {
     }
   });
 
-  const [data, setData] = useState([["Easy", "100", "24/02/29"], ["Easy", "70", "24/02/22"], ["Hard", "70", "24/03/21"]]);
+  const [data, setData] = useState([]);
 
-  const handleContent = () => {
-    // result 페이지로 이동해야됨
-  }
+  // 상세페이지로 이동하는 핸들러
+  const handleContent = async(index) => {
+    try{
+      let num = data[index].record_num;
+      let kind = data[index].record_kind;
+      let level = data[index].record_kind;
+      let point = data[index].record_point;
+      const response = await axios({
+        url : "/mypage/recordDetails",
+        method : "POST",
+        data : {
+          username : username,
+          record_num : num
+        }
+      });
+      
+      const answer = response.data;
+      console.log(answer);
+
+      navigate("/recordDetails", {state : { kind, level, answer, point } });
+      window.scrollTo(0, 0);
+    } catch(e) {
+      alert("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
+      console.error(e);
+    }
+  };
+
+   
+  
+  // 데이터 가져오기
+  useEffect(() => {
+     axios({
+      url : "/mypage/record",
+      method : "POST",
+      data : {
+        username : username
+      }
+     })
+     .then((res) => {
+      console.log(res.data);
+      setData(res.data);
+     })
+     .catch((error) => {
+        alert("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
+     });
+  }, [username]);
+
 
   return(
     
     <div className="recordPage-page-all">
       <div className="recordPage-page-mid">
 
-        
         <div className="recordPage-info">
         {data.length === 0 ? 
         <p>학습 기록이 존재하지 않습니다.</p>
@@ -36,15 +80,15 @@ const RecordPage = () => {
         </div>
 
           {data.map((item, index) => (
-            <div className="recordPage-score" key={index} onClick={handleContent}>
+            <div className="recordPage-score" key={index} onClick={(event) =>handleContent(index)}>
               <div className="score-header">
-                <div className="level">{item[0]}</div>
+                <div className="level">{item.record_level}단계</div>
                 <div style={{fontSize : "13px"}}>⏐</div>
                 <div>{username}</div>
               </div>
               <div className="score-content">
-                <div className="point">{item[1]}점</div>
-                <div className="save-date">{item[2]}</div>
+                <div className="point">{item.record_point}점</div>
+                <div className="save-date">{item.record_date}</div>
               </div>
               
             </div>

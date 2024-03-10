@@ -14,6 +14,7 @@ import FavoritesList from "./page/mypage/FavoritesList";
 import Rank from "./page/rankPage/Rank";
 import TokenInfoProvider from "./component/TokenInfoProvider";
 import Quiz from "./component/Quiz";
+import RecordDetails from "./page/test/RecordDetails";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/mypage/favorites" element={<FavoritesList />} />
           <Route path="/rank" element={<Rank />}/>
           <Route path="/quiz" element={<Quiz />} />
+          <Route path="/recordDetails" element={<RecordDetails />}/>
         </Routes>
 
         <Footer />

@@ -30,7 +30,7 @@ const FavoritesList = () => {
 
   const deleteFavorite = (index) => {
     axios({
-      url : "/study/addFavorite/" + word[index].word_num + "/" + !word[index].word_favorite + "/" + username,
+      url : "/study/addFavorite/" + word[index].word_num + "/" + word[index].word_favorite + "/" + username,
       method : "GET"
     })
     .then((res) => {

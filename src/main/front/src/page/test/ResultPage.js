@@ -86,7 +86,7 @@ const ResultPage = () => {
               
               <div className={"result-box-content" + ((kind === true && answer[index] && item.word_meaning === answer[index][0]) || (kind === false && answer[index] && item.word_content === answer[index][0]) ? " clear" : " fail")} key={index}>
                 <div className="result-header-box">
-                    {kind ? <Audio inputData={item[0]}/> : <p></p>}
+                    {kind ? <Audio inputData={item.word_content}/> : <p></p>}
                     <p>{index + 1} / {word.length}</p>
                 </div>
                 <div className="result-word-box">
