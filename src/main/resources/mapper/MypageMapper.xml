@@ -12,4 +12,44 @@
             where username = #{username}
             ORDER BY favorite_regdate)
     </select>
+
+    <select id="recordList" resultType="RecordVO">
+        SELECT * FROM record
+        WHERE username = #{username}
+        ORDER BY record_date ASC
+    </select>
+
+    <select id="recordDetails" resultMap="recordDetailsResultMap">
+        SELECT R.rd_num,
+               R.record_num,
+               R.username,
+               R.word_num,
+               R.rd_check,
+               R.Record_value,
+               W.word_level,
+               W.word_meaning,
+               W.word_content
+        FROM record_detail R
+             JOIN word W
+             ON R.word_num = W.word_num
+        WHERE username = #{username}
+        AND record_num = #{record_num}
+        ORDER BY rd_num
+    </select>
+
+    <resultMap id="recordDetailsResultMap" type="RecordDetailsVO">
+        <id property="rd_num" column="rd_num"/>
+        <result property="record_num" column="record_num"/>
+        <result property="word_num" column="word_num"/>
+        <result property="rd_check" column="rd_check"/>
+        <result property="record_value" column="Record_value"/>
+
+        <association property="wordVO" javaType="WordVO">
+            <id property="word_num" column="word_num"/>
+            <result property="word_level" column="word_level"/>
+            <result property="word_meaning" column="word_meaning"/>
+            <result property="word_content" column="word_content"/>
+        </association>
+    </resultMap>
+
 </mapper>

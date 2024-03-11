@@ -32,6 +32,9 @@ public class StudyController {
     public ResponseEntity<String> changeFavorite(@PathVariable Integer word_num,
                                                  @PathVariable boolean favorite,
                                                  @PathVariable String username){
+        System.out.println("word_num : " + word_num);
+        System.out.println("favorite : " + favorite);
+        System.out.println("username : " + username);
         if(favorite) studyService.addFavorite(word_num, username);
         else studyService.deleteFavorite(word_num, username);
         return ResponseEntity.ok("성공");

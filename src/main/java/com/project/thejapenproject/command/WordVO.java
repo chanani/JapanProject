@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class WordVO {
-
     private Integer word_num;
     private Integer word_level;
     private String word_meaning;
