@@ -27,7 +27,7 @@ const FavoritesList = () => {
     };
     deleteFavorite(index);
   };
-
+  // 즐겨찾기 삭제 기능
   const deleteFavorite = (index) => {
     axios({
       url : "/study/addFavorite/" + word[index].word_num + "/" + word[index].word_favorite + "/" + username,

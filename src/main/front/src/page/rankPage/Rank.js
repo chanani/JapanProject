@@ -13,7 +13,7 @@ const Rank = () => {
       navigate("/login");
     }
   });
-
+  
   return (
     <div>공사중이에요ㅠㅠ</div>
   );

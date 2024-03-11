@@ -17,7 +17,6 @@ const RecordPage = () => {
   });
 
   const [data, setData] = useState([]);
-
   // 상세페이지로 이동하는 핸들러
   const handleContent = async(index) => {
     try{
@@ -33,10 +32,7 @@ const RecordPage = () => {
           record_num : num
         }
       });
-      
       const answer = response.data;
-      console.log(answer);
-
       navigate("/recordDetails", {state : { kind, level, answer, point } });
       window.scrollTo(0, 0);
     } catch(e) {
@@ -45,8 +41,6 @@ const RecordPage = () => {
     }
   };
 
-   
-  
   // 데이터 가져오기
   useEffect(() => {
      axios({
@@ -65,7 +59,6 @@ const RecordPage = () => {
      });
   }, [username]);
 
-
   return(
     
     <div className="recordPage-page-all">
@@ -78,7 +71,7 @@ const RecordPage = () => {
         <p>{username}님의 기록</p>
         }
         </div>
-
+        
           {data.map((item, index) => (
             <div className="recordPage-score" key={index} onClick={(event) =>handleContent(index)}>
               <div className="score-header">

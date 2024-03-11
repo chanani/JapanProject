@@ -12,6 +12,18 @@ const ResultPage = () => {
   const navigate = useNavigate();
   const {userRole, username} = useContext(tokenInfoContext);
   const[newAnswer, setNewAnswer] = useState(answer);
+  const [check, setCheck] = useState([false, false, false, false, false, false, false, false, false, false]);
+
+  // 정답 확인 핸들러
+  const handleCheck = (index) => {
+    let newCheck = [...check];
+    newCheck[index] = !newCheck[index];
+    setCheck(newCheck);
+    setTimeout(() => {
+      const box = document.querySelector('.index' + index);
+      box.classList.toggle('fade-out');
+    }, 100);
+  }
 
   // 정답확인 hook
   useEffect(() => {
@@ -42,7 +54,6 @@ const ResultPage = () => {
     setPoint(newPoint); // 포인트 업데이트
   }, [kind, word, answer]);
   
-
   // 점수 기록 핸들러
   const handleRecord = () => {
     if(userRole !== "none"){
@@ -84,13 +95,17 @@ const ResultPage = () => {
           <div className="result-box">
             {word.map((item, index) => (
               
-              <div className={"result-box-content" + ((kind === true && answer[index] && item.word_meaning === answer[index][0]) || (kind === false && answer[index] && item.word_content === answer[index][0]) ? " clear" : " fail")} key={index}>
+              <div className={"result-box-content index" + (index) + ((kind === true && answer[index] && item.word_meaning === answer[index][0]) || (kind === false && answer[index] && item.word_content === answer[index][0]) ? " clear" : " fail")} key={index}>
                 <div className="result-header-box">
-                    {kind ? <Audio inputData={item.word_content}/> : <p></p>}
+                    <Audio inputData={item.word_content}/>
                     <p>{index + 1} / {word.length}</p>
                 </div>
-                <div className="result-word-box">
-                    {kind? <p>{item.word_content}</p> : <p>{item.word_meaning}</p>}
+                <div className="result-word-box" onClick={(event) => handleCheck(index)}>
+                    {kind ? 
+                    check[index] ? <p>{item.word_meaning}</p> : <p>{item.word_content}</p> 
+                    : 
+                    check[index] ? <p>{item.word_content}</p> : <p>{item.word_meaning}</p> 
+                    }
                 </div>
                 <div className="result-input-box">
                  <input type="text" value={(answer[index] && answer[index][0]) || ''} className={index} readOnly/>

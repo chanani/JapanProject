@@ -7,7 +7,6 @@
 }
 
 .result-page-mid{
-  
   background-color: white;
   box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
 }
@@ -44,6 +43,12 @@
   font-weight: 600;
 }
 
+.result-box-content{
+  transition: transform 0.3s ease; 
+}
+.result-box-content.fade-out {
+  transform: rotateX(360deg); 
+}
 
 /* 500 이하 */
 @media(max-width : 600px){
