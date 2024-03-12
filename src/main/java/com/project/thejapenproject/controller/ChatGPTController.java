@@ -44,7 +44,7 @@ public class ChatGPTController {
         list.add(new Message("user",map.get("message")));
 
 
-        Body body = new Body(model, list);
+        Body body = new Body("gpt-3.5-turbo", list);
 
         RequestEntity<Body> httpEntity = new RequestEntity<>(body, httpHeaders, HttpMethod.POST, uri);
 

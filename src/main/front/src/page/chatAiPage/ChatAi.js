@@ -1,5 +1,4 @@
-import axios from "axios";
-import { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../styles/chatAiPage/ChatAi.css";
 import GptApi from "../../component/GptApi";
 import { FaRegPenToSquare } from "react-icons/fa6";
@@ -8,21 +7,33 @@ import { Link } from 'react-router-dom';
 import { FaQuestion } from "react-icons/fa";
 
 const ChatAi = () => {
-  
-  const[questions, setQuestions] = useState([]);
-  const[answers, setAnswers] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [answers, setAnswers] = useState([]);
+  const textBoxRef = useRef(null);
 
-  const handleQuestion = (question, answer) => {
+  // 질문이 추가될 때마다 스크롤을 최하단으로 이동
+  useEffect(() => {
+    if (textBoxRef.current) {
+      textBoxRef.current.scrollTop = textBoxRef.current.scrollHeight;
+    }
+  }, [questions]); 
+
+  // 질문 받는 핸들러
+  const handleQuestion = (question) => {
     setQuestions([...questions, question]);
-    setAnswers([...answers, answer]);
-  }
+  };
 
+  // 응답 받는 핸들러
+  const handleResponse = (answer) => {
+    setAnswers([...answers, answer]);
+  };
+
+  // 새로운 대화 시작 핸들러
   const handleClear = () => {
-    console.log(questions)
-    console.log(answers);
     setQuestions([]);
     setAnswers([]);
-  }
+  };
+
   return (
     <div className="chat-box-all">
       <div className="chat-box">
@@ -31,7 +42,7 @@ const ChatAi = () => {
           <h4>ChatAi</h4>
           <Link to={"/"}><MdOutlineSensorDoor size={22}/></Link>
         </div>
-        <div className={"text-box" + (questions.length === 0 ? " wait" : "")}>
+        <div className={"text-box" + (questions.length === 0 ? " wait" : "")} ref={textBoxRef}>
         
             {questions.length === 0 ? 
               <div className="wait-question">
@@ -44,21 +55,22 @@ const ChatAi = () => {
                   <h4>You</h4>
                   <p>{item}</p>
                   <h4>ChatAi</h4>
-                  <p>{answers}</p>
+                  <p>{answers[index]}</p>
                 </div>
               ))
           }
-          
-          
+        
         </div>
 
         <div className="input-box">
-          <GptApi handleQuestion={handleQuestion}/>
+          <GptApi 
+          handleQuestion={handleQuestion}
+          handleResponse={handleResponse}
+          />
         </div>
       </div>
     </div>
   );
-
-}
+};
 
 export default ChatAi;

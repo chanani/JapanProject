@@ -2,32 +2,34 @@ import axios from "axios";
 import { useState } from "react";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 
-const GptApi = ({handleQuestion}) => {
+const GptApi = ({handleQuestion, handleResponse}) => {
   const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState('');
   // GptApi 호출
   const handleSubmit = async(e) => {
+    let content = '';
     if(question === '') {
       alert('질문을 입력해주세요.');
       return;
     }
-    // axios({
-    //   url : "/chat-gpt/send",
-    //   method : "POST",
-    //   data : {
-    //     "message" : question
-    //   }
-    // })
-    // .then((res) => {
-    //   let content = res.data.choices[0].message.content;
-    //   setAnswer(content);
-    // })
-    // .catch((error) => {
-    //   alert("오류가 발생하였습니다. 관리자에게 문의해주세요.");
-    // });
-    setAnswer("a");
-    handleQuestion(question, answer);
+    handleQuestion(question); // 질문 전달
     setQuestion('');
+    await axios({
+      url : "/chat-gpt/send",
+      method : "POST",
+      data : {
+        "message" : question
+      }
+    })
+    .then((res) => {
+      content = res.data.choices[0].message.content;
+      console.log(content);
+    })
+    .catch((error) => {
+      alert("오류가 발생하였습니다. 관리자에게 문의해주세요.");
+    });
+    handleQuestion(question);
+    handleResponse(content); // 답변 전달
+    
   }
 
   return (
