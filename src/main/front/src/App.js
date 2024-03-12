@@ -15,6 +15,7 @@ import Rank from "./page/rankPage/Rank";
 import TokenInfoProvider from "./component/TokenInfoProvider";
 import Quiz from "./component/Quiz";
 import RecordDetails from "./page/test/RecordDetails";
+import ChatAi from "./page/chatAiPage/ChatAi";
 
 function App() {
   return (
@@ -33,6 +34,8 @@ function App() {
           <Route path="/rank" element={<Rank />}/>
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/recordDetails" element={<RecordDetails />}/>
+          <Route path="/chatAi" element={<ChatAi/>} />
+          <Route path="/rank" element={<Rank/>} />
         </Routes>
 
         <Footer />

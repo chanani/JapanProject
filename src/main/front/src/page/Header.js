@@ -6,7 +6,7 @@ import { tokenInfoContext } from '../component/TokenInfoProvider';
 
 function Header(){
   const navigate = useNavigate();
-  const { userRole, username } = useContext(tokenInfoContext);
+  const { userRole } = useContext(tokenInfoContext);
 
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -22,7 +22,7 @@ function Header(){
   const handleLogin = () => {
     navigate("/login");
   }
-  
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
@@ -72,6 +72,7 @@ function Header(){
                     <Link onClick={handleToggle} to={"/mypage/favorites"}><p>즐겨찾기 목록</p></Link>
                     <Link onClick={handleToggle} to={"/mypage/record"}><p>학습기록</p></Link>
                     <Link onClick={handleToggle} to={"/rank"}><p>랭킹</p></Link>
+                    <Link onClick={handleToggle} to={"/chatAi"}><p>Ai학습</p></Link>
                 </div>
             </div> 
           : ""} 
