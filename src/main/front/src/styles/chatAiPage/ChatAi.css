@@ -1,13 +1,17 @@
 .chat-box-all {
   padding: 30px 0 30px 0;
+  background-color: #f6f7fb;
 }
 .chat-box{
   margin: 0 auto;
   border: 1px solid #777;
-  width: 350px;
   min-height: 530px;
   padding: 10px;
   border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+
+  
 }
 
 .chat-header {
@@ -46,7 +50,6 @@
 .gpt-form > textarea {
   box-sizing: border-box;
   height: 33px;
-  width: 300px;
   outline: none;
   font-size: 15px;
   resize: none;
@@ -74,4 +77,33 @@
 
 .text-content > p {
   margin-bottom: 20px;
+}
+
+/* 600 이하 */
+@media(max-width : 600px){
+  .chat-box{
+    width: 350px;
+  }
+  .gpt-form > textarea {
+    width: 300px;
+  }
+}
+
+/* 600 이상 */
+@media(min-width : 600px){
+  .chat-box{
+    width: 550px;
+  }
+  .gpt-form > textarea {
+    width: 500px;
+  }
+}
+ /* 1000 이상 */
+@media(min-width : 1000px){
+  .chat-box{
+    width: 950px;
+  }
+  .gpt-form > textarea {
+    width: 900px;
+  }
 }

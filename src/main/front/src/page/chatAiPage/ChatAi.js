@@ -1,12 +1,24 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import "../../styles/chatAiPage/ChatAi.css";
 import GptApi from "../../component/GptApi";
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { MdOutlineSensorDoor } from "react-icons/md";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaQuestion } from "react-icons/fa";
+import { tokenInfoContext } from "../../component/TokenInfoProvider";
 
 const ChatAi = () => {
+
+  const {userRole} = useContext(tokenInfoContext);
+  const navigate = useNavigate();
+
+  useEffect(() =>{
+    if(userRole === "none"){
+      alert("로그인 후 이용해주세요.");
+      navigate("/login");
+    }
+  });
+
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState([]);
   const textBoxRef = useRef(null);
