@@ -71,8 +71,8 @@ function Header(){
                   <h3 className='rank-title'>기록, 랭킹</h3>
                     <Link onClick={handleToggle} to={"/mypage/favorites"}><p>즐겨찾기 목록</p></Link>
                     <Link onClick={handleToggle} to={"/mypage/record"}><p>학습기록</p></Link>
-                    <Link onClick={handleToggle} to={"/rank"}><p>랭킹</p></Link>
                     <Link onClick={handleToggle} to={"/chatAi"}><p>Ai학습</p></Link>
+                    <Link onClick={handleToggle} to={"/rank"}><p>랭킹</p></Link>
                 </div>
             </div> 
           : ""} 

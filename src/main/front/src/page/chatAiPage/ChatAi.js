@@ -6,7 +6,6 @@ import { MdOutlineSensorDoor } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import { FaQuestion } from "react-icons/fa";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
-
 const ChatAi = () => {
 
   const {userRole} = useContext(tokenInfoContext);
@@ -67,7 +66,11 @@ const ChatAi = () => {
                   <h4>You</h4>
                   <p>{item}</p>
                   <h4>ChatAi</h4>
-                  <p>{answers[index]}</p>
+                  <p>{answers[index] === undefined ? 
+                  "답변을 입력 중입니다. 잠시만 기다려주세요 :)"
+                  :
+                  answers[index]
+                }</p>
                 </div>
               ))
           }
