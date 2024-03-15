@@ -16,6 +16,7 @@ import TokenInfoProvider from "./component/TokenInfoProvider";
 import Quiz from "./component/Quiz";
 import RecordDetails from "./page/test/RecordDetails";
 import ChatAi from "./page/chatAiPage/ChatAi";
+import AddWordPage from "./page/amindPage/AddWordPage";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/recordDetails" element={<RecordDetails />}/>
           <Route path="/chatAi" element={<ChatAi/>} />
           <Route path="/rank" element={<Rank/>} />
+          <Route path="/admin/addWord" element={<AddWordPage />} />
         </Routes>
 
         <Footer />

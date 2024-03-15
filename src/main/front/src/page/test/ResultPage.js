@@ -70,11 +70,11 @@ const ResultPage = () => {
       })
       .then((res) => {
         console.log(res.data);
+        navigate("/mypage/record");
       })
       .catch((error) => {
         console.error("Error recording result:", error);
       });
-      console.log(newAnswer)
     } else {
       alert("로그인 후 이용해주세요.");
     }

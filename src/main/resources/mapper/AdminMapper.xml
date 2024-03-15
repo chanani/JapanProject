@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.thejapenproject.admin.service.AdminMapper">
+
+    <insert id="addWordList" parameterType="java.util.List">
+        INSERT INTO word (word_content,
+                                   word_meaning,
+                                   word_level)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.word_content},
+            #{item.word_meaning},
+            #{item.word_level})
+        </foreach>
+    </insert>
+
+</mapper>

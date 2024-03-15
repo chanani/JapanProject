@@ -13,22 +13,22 @@ const GptApi = ({handleQuestion, handleResponse}) => {
     }
     handleQuestion(question); // 질문 전달
     setQuestion('');
-    // await axios({
-    //   url : "/chat-gpt/send",
-    //   method : "POST",
-    //   data : {
-    //     "message" : question
-    //   }
-    // })
-    // .then((res) => {
-    //   content = res.data.choices[0].message.content;
-    // })
-    // .catch((error) => {
-    //   alert("오류가 발생하였습니다. 관리자에게 문의해주세요.");
-    // });
+    await axios({
+      url : "/chat-gpt/send",
+      method : "POST",
+      data : {
+        "message" : question
+      }
+    })
+    .then((res) => {
+      content = res.data.choices[0].message.content;
+    })
+    .catch((error) => {
+      alert("오류가 발생하였습니다. 관리자에게 문의해주세요.");
+    });
     
     handleQuestion(question);
-    handleResponse(undefined); // 답변 전달
+    handleResponse(content); // 답변 전달
     
   }
 

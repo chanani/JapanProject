@@ -54,9 +54,14 @@ public class SecurityConfig {
         // login요청에만 CustomLoginFilter가 실행됩니다.
         http.requestMatchers()
                 .antMatchers("/login")
+                .antMatchers("/")
                 .and()
                 .addFilter(new CustomLoginFilter(authenticationManager));
 
+        http.requestMatchers()
+                .antMatchers("/admin/**")
+                .and()
+                .addFilter(new JwtAuthorizationFilter(authenticationManager));
         return http.build();
     }
 
@@ -65,5 +70,7 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+
 
 }

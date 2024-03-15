@@ -29,7 +29,6 @@ const Test = ({level, kind, currentPath}) => {
       method : "GET"
     })
     .then((res) => {
-      console.log(res.data);
       setWord(res.data);
     })
   }, [level]);

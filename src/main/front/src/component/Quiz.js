@@ -53,7 +53,6 @@ const Quiz = ({ level, num, arr }) => {
       method : "GET"
     })
     .then((res) => {
-      console.log(res.data);
     })
 
   }
@@ -104,7 +103,6 @@ const Quiz = ({ level, num, arr }) => {
         method : "GET",
       })
       .then((res) => {
-        console.log(res.data);
         setWord(res.data);
       });
     }
