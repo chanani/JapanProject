@@ -17,6 +17,7 @@ import Quiz from "./component/Quiz";
 import RecordDetails from "./page/test/RecordDetails";
 import ChatAi from "./page/chatAiPage/ChatAi";
 import AddWordPage from "./page/amindPage/AddWordPage";
+import AddNoticePage from "./page/amindPage/AddNoticePage";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/chatAi" element={<ChatAi/>} />
           <Route path="/rank" element={<Rank/>} />
           <Route path="/admin/addWord" element={<AddWordPage />} />
+          <Route path="/admin/addNotice" element={<AddNoticePage />} />
         </Routes>
 
         <Footer />

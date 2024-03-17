@@ -1,9 +1,21 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "../../styles/adminPage/AddWordPage.css";
 import { FaPlus } from "react-icons/fa6";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
+import { tokenInfoContext } from "../../component/TokenInfoProvider";
 
 const AddWordPage = () => {
+  const navigate = useNavigate();
+  const { userRole } = useContext(tokenInfoContext);
+
+  useEffect(() => {
+    if(userRole !== 'role_admin'){
+      alert('해당 페이지는 관리자 외에는 접근이 불가합니다.');
+      navigate("/");
+    }
+  }, [userRole]);
+
   const [inputCount, setInputCount] = useState(1);
   const [list, setList] = useState([]);
 

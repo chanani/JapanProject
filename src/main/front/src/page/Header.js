@@ -8,13 +8,6 @@ function Header(){
   const navigate = useNavigate();
   const { userRole } = useContext(tokenInfoContext);
 
-  useEffect(() => {
-    if(userRole !== 'role_admin'){
-      alert('해당 페이지는 관리자 외에는 접근이 불가합니다.');
-      navigate("/");
-    }
-  }, [userRole]);
-
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -61,12 +54,13 @@ function Header(){
             
           </div> 
           {open ? 
-            userRole === 'role_user' ? 
+            userRole === 'role_admin' ? 
             <div className='menu-box'>
             
                 <div className='rank-box'>
                   <h3 className='rank-title'>관리</h3>
                     <Link onClick={handleToggle} to={"/admin/addWord"}><p>단어추가</p></Link>
+                    <Link onClick={handleToggle} to={"/admin/addNotice"}><p>공지사항 전달</p></Link>
                 </div>
             </div> 
             
