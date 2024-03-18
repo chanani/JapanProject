@@ -54,9 +54,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
 
-/*    // AWS SDK
-    implementation 'software.amazon.awssdk:aws-sdk-java:2.20.43'
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'*/
+    // Kafka
+    implementation 'org.springframework.kafka:spring-kafka'
 
 }
 
