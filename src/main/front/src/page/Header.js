@@ -1,8 +1,10 @@
 import '../styles/Header.css';
 import Logo from '../image/logo.png';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { tokenInfoContext } from '../component/TokenInfoProvider';
+import { HiOutlineBell } from "react-icons/hi";
+import { GoDotFill } from "react-icons/go";
 
 function Header(){
   const navigate = useNavigate();
@@ -10,19 +12,48 @@ function Header(){
 
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-
+  const alarmRef = useRef(false);
+  const [alarm, setAlarm] = useState(alarmRef.current);
+  
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
+  // 알람 SSE Connection
+  useEffect(() => {
+    if(userRole === 'role_user'){
+      let eventSource = new EventSource('http://localhost:8889/notifications/subscribe/1');
+      eventSource.addEventListener('alarm', async (event) => {
+          const res = await event.data;
+          console.log(res);
+          if (!res.includes("EventStream Created.")) {
+            setAlarm(true); // 아이콘 상태 변경 
+            alarmRef.current = true;
+          }
+      });
+      
+      eventSource.onerror = async (event) => {
+        if (!event.error.message.includes("No activity")) eventSource.close();
+      };
+    }
+  }, [userRole]);
+
+  // 알람 버튼 핸들러
+  const handleAlarm = () => {
+    setAlarm(false);
+    alarmRef.current = false;
+
+  }
+
+  // 메뉴바 상태 핸들러
   const handleToggle = () => {
     setOpen((open) => !open);
   }
-
+  // 로그인 페이지 핸들러
   const handleLogin = () => {
     navigate("/login");
   }
-
+  // 로그아웃 핸들러
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
@@ -43,7 +74,17 @@ function Header(){
               <Link to={"/"} ><p className='title'>The Japen</p></Link>
             </div>
             <div className='login-box'>
+              {userRole === 'role_user' ? 
+              <div className='alarm-box'>
+                <HiOutlineBell size={27} className='alarm-btn' onClick={handleAlarm}/> 
+                {alarm ? <GoDotFill color='red' className='alarm-bot'/> : ""}
+              </div>
+              : 
+              ""
+              }
+
               <button className='menu-btn' onClick={handleToggle}>+</button>
+
               {userRole === "none" ? 
                 <button className='login-btn' onClick={handleLogin}>로그인</button>
                 :

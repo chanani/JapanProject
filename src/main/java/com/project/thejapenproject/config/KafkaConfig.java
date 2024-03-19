@@ -1,38 +1,33 @@
 package com.project.thejapenproject.config;
 
 import lombok.Data;
+import org.apache.kafka.clients.admin.AdminClientConfig;
+import org.apache.kafka.clients.admin.NewTopic;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.core.KafkaAdmin;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
-@ConfigurationProperties("spring.kafka")
-@Data
 public class KafkaConfig {
 
-    private String bootstrapServers;
-    private Producer producer;
-    private Consumer consumer;
-    private Template template;
+    @Value(value = "${spring.kafka.bootstrap-servers}")
+    private String bootstrapAddress;
 
-    @Data
-    public static class Producer {
-        private String keySerializer;
-        private String valueSerializer;
+    @Bean
+    public KafkaAdmin kafkaAdmin() {
+        Map<String, Object> configs = new HashMap<>();
+        configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
+        return new KafkaAdmin(configs);
     }
 
-    @Data
-    public static class Template {
-        private String defaultTopic;
-    }
-
-    @Data
-    public static class Consumer {
-        private String groupId;
-        private String enableAutoCommit;
-        private String autoOffsetReset;
-        private String keyDeserializer;
-        private String valueDeserializer;
-        private String maxPollRecords;
+    @Bean
+    public NewTopic topic1() {
+        return new NewTopic("baeldung", 1, (short) 1);
     }
 
 }

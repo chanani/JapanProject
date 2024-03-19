@@ -17,12 +17,12 @@ header {
   right: 0;
   bottom: auto;
   z-index: 100;
-  opacity: 0; /* 초기에 투명한 상태 */
-  transition: opacity 1.5s ease; /* 오팩시티 속성에 대한 변화를 0.5초 동안 천천히 진행 */
+  opacity: 0;
+  transition: opacity 1.5s ease; 
 }
 
 .header-box.show {
-  opacity: 1; /* 요소가 나타날 때 불투명도를 1(100%)로 설정하여 나타남 */
+  opacity: 1; 
 }
 
 .header-info{
@@ -55,9 +55,10 @@ header {
 .login-box {
   display: flex;
   align-items: center;
+  position: relative;
 }
 .login-box .login-btn {
-  width: 150px;
+  width: 130px;
   height: 45px;
   border-radius: 20px;
   background-color: rgb(121 213 99);
@@ -109,6 +110,26 @@ a {
   color: skyblue;
 }
 
+.alarm-btn {
+  margin-right: 3px;
+
+}
+.alarm-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.alarm-box:hover{
+  box-sizing: border-box;
+  border-radius: 10px;
+  background-color: #d1cfcf;
+  
+}
+.alarm-bot {
+  position: absolute;
+  top: 3px;
+  right: 184px;
+}
 /* 500 이하 */
 @media(max-width : 500px){
   .menu-box {
