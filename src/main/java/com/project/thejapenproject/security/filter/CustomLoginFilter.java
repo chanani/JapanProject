@@ -3,6 +3,10 @@ package com.project.thejapenproject.security.filter;
 
 
 import com.project.thejapenproject.user.service.MyUserDetails;
+import com.project.thejapenproject.user.service.UserMapper;
+import com.project.thejapenproject.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -58,7 +62,6 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         System.out.println("========로그인 성공 핸들러");
         // 토큰 발행 헤더에 담고 클라이언트로 전달
         MyUserDetails principal = (MyUserDetails)authResult.getPrincipal();
-
         String token = JWTService.createToken(principal.getUsername(), principal.getRole());
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Authorization", "Bearer " + token);

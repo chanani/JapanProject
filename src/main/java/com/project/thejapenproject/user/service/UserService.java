@@ -6,5 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 public interface UserService {
 
     public int join(UserVO userVO);
+    public int logDate(String username);
 
 }

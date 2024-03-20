@@ -5,7 +5,8 @@ CREATE TABLE `user` (
 	`user_email`	VARCHAR(30)	NOT NULL,
 	`user_phone`	VARCHAR(30)	NOT NULL,
 	`role`	VARCHAR(20)	NOT NULL,
-	`user_regdate`	TIMESTAMP	NOT NULL	DEFAULT now()
+	`user_regdate`	TIMESTAMP	NOT NULL	DEFAULT now(),
+    `user_logdate` TIMESTAMP
 );
 
 CREATE TABLE `word` (
@@ -37,16 +38,14 @@ CREATE TABLE `record_detail` (
     `record_value` VARCHAR(30) NOT NULL,
 	`username`	VARCHAR(30)	NOT NULL,
 	`word_num`	INT	NOT NULL,
-	`rd_check`	VARCHAR(30)	NOT NULL,
+	`rd_check`	VARCHAR(30)	NOT NULL
 );
 
 CREATE TABLE `notice` (
 	`notice_num`	INT	NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`username`	VARCHAR(30)	NOT NULL,
 	`notice_content`	VARCHAR(500)	NOT NULL,
 	`notice_title`	VARCHAR(30)	NOT NULL,
 	`notice_regdate`	TIMESTAMP	NOT NULL	DEFAULT now(),
-	`notice_check`	VARCHAR(1)	NOT NULL	DEFAULT 'N'
 );
 
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (

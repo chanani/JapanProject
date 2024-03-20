@@ -13,4 +13,9 @@ public class UserServiceImpl implements UserService{
     public int join(UserVO userVO) {
         return usermapper.join(userVO);
     }
+
+    @Override
+    public int logDate(String username) {
+        return usermapper.logDate(username);
+    }
 }

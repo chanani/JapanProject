@@ -1,6 +1,7 @@
 package com.project.thejapenproject.controller;
 
 import com.project.thejapenproject.admin.service.AdminService;
+import com.project.thejapenproject.command.NoticeVO;
 import com.project.thejapenproject.command.WordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,4 +42,12 @@ public class AdminController {
         return ResponseEntity.ok("성공");
     }
 
+    @PostMapping("/addNotice")
+    public ResponseEntity<String> addNotice(@RequestBody Map<String, String> map){
+        adminService.addNotice(NoticeVO.builder()
+                .notice_content(map.get("content"))
+                .notice_title(map.get("title"))
+                .build());
+        return ResponseEntity.ok("성공");
+    }
 }

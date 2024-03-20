@@ -5,6 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { tokenInfoContext } from '../component/TokenInfoProvider';
 import { HiOutlineBell } from "react-icons/hi";
 import { GoDotFill } from "react-icons/go";
+import { BiCaretUp } from "react-icons/bi";
+import { CiMenuKebab } from "react-icons/ci";
 
 function Header(){
   const navigate = useNavigate();
@@ -14,27 +16,31 @@ function Header(){
   const [isVisible, setIsVisible] = useState(false);
   const alarmRef = useRef(false);
   const [alarm, setAlarm] = useState(alarmRef.current);
-  
+  const [alarmOpen, setAlarmOpen] = useState(false);
   useEffect(() => {
     setIsVisible(true);
   }, []);
-
+  
   // 알람 SSE Connection
   useEffect(() => {
+    let eventSource;
     if(userRole === 'role_user'){
-      let eventSource = new EventSource('http://localhost:8889/notifications/subscribe/1');
+      eventSource = new EventSource('http://localhost:8889/notifications/subscribe/1');
       eventSource.addEventListener('alarm', async (event) => {
           const res = await event.data;
           console.log(res);
           if (!res.includes("EventStream Created.")) {
             setAlarm(true); // 아이콘 상태 변경 
-            alarmRef.current = true;
+            alarmRef.current = true; // 랜더링되도 상태 값 유지를 위해
           }
       });
       
-      eventSource.onerror = async (event) => {
-        if (!event.error.message.includes("No activity")) eventSource.close();
+      eventSource.onerror = (event) => {
+        eventSource.close();
       };
+    }
+    return () => {
+      eventSource.close();
     }
   }, [userRole]);
 
@@ -42,7 +48,7 @@ function Header(){
   const handleAlarm = () => {
     setAlarm(false);
     alarmRef.current = false;
-
+    setAlarmOpen((current) => !current);
   }
 
   // 메뉴바 상태 핸들러
@@ -121,15 +127,42 @@ function Header(){
                     <Link to={"/test/hard"} onClick={handleToggle}><p>3단계</p></Link>
                 </div>
                 <div className='rank-box'>
-                  <h3 className='rank-title'>기록, 랭킹</h3>
+                  <h3 className='rank-title'>마이페이지</h3>
                     <Link onClick={handleToggle} to={"/mypage/favorites"}><p>즐겨찾기 목록</p></Link>
                     <Link onClick={handleToggle} to={"/mypage/record"}><p>학습기록</p></Link>
                     <Link onClick={handleToggle} to={"/chatAi"}><p>Ai학습</p></Link>
                     <Link onClick={handleToggle} to={"/rank"}><p>랭킹</p></Link>
+                    <Link onClick={handleToggle} to={"/notice"}><p>공지사항</p></Link>
                 </div>
             </div> 
             
           : ""} 
+
+          {alarmOpen ? 
+          <div>
+            <BiCaretUp size={30} className='alarm-box-arrow'color='#272829'/>
+            <div className='alarm-toggle-all'>
+              <div className='alarm-toggle-title-box'>
+                <p>공지사항</p>
+              </div>
+              <div className='alarm-toggle-content-box'>
+                <CiMenuKebab className='alarm-content-menu'/>
+                <h5>새로운 공지사항이 등록되었습니다 !</h5>
+              </div>
+              <div className='alarm-toggle-content-box'>
+                <CiMenuKebab className='alarm-content-menu'/>
+                <h5>새로운 공지사항이 등록되었습니다 !</h5>
+              </div>
+              <div className='alarm-toggle-content-box'>
+                <CiMenuKebab className='alarm-content-menu'/>
+                <h5>새로운 공지사항이 등록되었습니다 !</h5>
+              </div>
+              
+            </div>
+            </div>
+              :
+            ""
+          }
         </div>
         
       </header>

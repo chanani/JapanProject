@@ -19,6 +19,7 @@ public class UserVO {
     private String user_phone;
     private String role;
     private Timestamp user_regdate;
+    private Timestamp user_logdate;
 
 
 }

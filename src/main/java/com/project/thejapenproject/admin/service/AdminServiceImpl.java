@@ -1,5 +1,6 @@
 package com.project.thejapenproject.admin.service;
 
+import com.project.thejapenproject.command.NoticeVO;
 import com.project.thejapenproject.command.WordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,5 +17,10 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public int addWordList(ArrayList<WordVO> list) {
         return adminMapper.addWordList(list);
+    }
+
+    @Override
+    public int addNotice(NoticeVO VO) {
+        return adminMapper.addNotice(VO);
     }
 }

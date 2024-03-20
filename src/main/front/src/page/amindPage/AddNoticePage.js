@@ -6,31 +6,53 @@ const AddNoticePage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const token = localStorage.getItem("token");
+  
+  // 제목 수정 핸들러
   const handleTitle = (event) =>{
     let input_value = event.target.value;
     setTitle(input_value);
   }
-
+  // 내용 수정 핸들러
   const handleContent = (event) =>{
     let input_value = event.target.value;
     setContent(input_value);
   }
 
+  // 공지사항 등록 핸들러
   const handleSubmit = () => {
-    axios({
-      url : "/kafka/send",
-      method : "POST",
-      data : {
-        message : content
-      },
-      headers : {
-        authorization : token
-      }
-    })
-    .then((res) => {
-      console.log(res);
-    })
+    //　공지사항 등록
+    try{
+      axios({
+        url : "/admin/addNotice",
+        method : "POST",
+        headers : {
+          authorization : token
+        },
+        data : {
+          title : title,
+          content : content
+        }
+      })
+      
+      // 카프카 Topic 등록
+      axios({
+        url : "/kafka/send",
+        method : "POST",
+        data : {
+          message : content
+        },
+        headers : {
+          authorization : token
+        }
+      })
+      alert("정상적으로 등록되었습니다 !");
+      window.location = "/";
+    } catch {
+      alert("등록에 실패하였습니다. 관리자에게 문의해주세요.");
+    }
   }
+
+
   return (
     <div className="notice-box-all">
       <div className="notice-box">

@@ -18,6 +18,7 @@ import RecordDetails from "./page/test/RecordDetails";
 import ChatAi from "./page/chatAiPage/ChatAi";
 import AddWordPage from "./page/amindPage/AddWordPage";
 import AddNoticePage from "./page/amindPage/AddNoticePage";
+import NoticePage from "./page/notice/NoticePage";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/recordDetails" element={<RecordDetails />}/>
           <Route path="/chatAi" element={<ChatAi/>} />
           <Route path="/rank" element={<Rank/>} />
+          <Route path="/notice" element={<NoticePage/>} />
           <Route path="/admin/addWord" element={<AddWordPage />} />
           <Route path="/admin/addNotice" element={<AddNoticePage />} />
         </Routes>

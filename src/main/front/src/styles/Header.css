@@ -34,6 +34,7 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 0 15px 0 15px;
+  position: relative;
 }
 .title-box{
   display: flex;
@@ -81,7 +82,7 @@ header {
 }
 
 .menu-box{
-  height: 175px;
+  height: 218px;
   width: auto;
   background-color: #f9f6ca;
   border-radius: 0 0 28px 28px;
@@ -128,14 +129,68 @@ a {
 .alarm-bot {
   position: absolute;
   top: 3px;
-  right: 184px;
+  right: 162px;
 }
+
+.alarm-box-arrow{
+  position: absolute;
+  z-index: 1;
+}
+.alarm-toggle-all{
+  padding: 10px 3px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #272829;
+  position: absolute;
+  width: 240px;
+  z-index: 1;
+  color: white;
+  height: 160px;
+  overflow-y: scroll;
+  scrollbar-width: none; 
+}
+
+.alarm-toggle-title-box {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #777;
+}
+.alarm-toggle-title-box > p {
+  font-size: 20px;
+}
+.alarm-toggle-content-box {
+  display: flex;
+  margin-bottom: 5px;
+  padding: 10px 10px 10px 5px;
+  border-radius: 10px;
+  background-color: #383c3c;
+  
+}
+.alarm-toggle-content-box > svg{
+  margin-right: 5px;
+  
+}
+
+
+
+
+
+
 /* 500 이하 */
 @media(max-width : 500px){
   .menu-box {
     padding: 15px 15px 15px 15px;
     display: flex;
     justify-content: space-between;
+  }
+  .alarm-toggle-all{
+    top: 85px;
+    right: 80px;
+  }
+  .alarm-box-arrow{
+    top: 67px;
+    right: 203px;
   }
 }
 
@@ -144,7 +199,14 @@ a {
   .menu-box {
     padding: 22px 100px 15px 70px;
     display: flex;
-    
+  }
+  .alarm-toggle-all{
+    top: 85px;
+    right: 110px;
+  }
+  .alarm-box-arrow{
+    top: 67px;
+    right: 203px;
   }
 }
  /* 1000 이상 */

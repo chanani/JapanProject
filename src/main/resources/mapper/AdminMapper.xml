@@ -17,4 +17,9 @@
         </foreach>
     </insert>
 
+    <insert id="addNotice" parameterType="NoticeVO">
+        INSERT INTO notice (notice_title, notice_content)
+        values (#{notice_title}, #{notice_content})
+    </insert>
+
 </mapper>

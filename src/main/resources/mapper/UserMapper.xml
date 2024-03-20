@@ -25,4 +25,9 @@
         select * from user
         where username = #{username}
     </select>
+
+    <update id="logDate">
+        UPDATE user SET user_logdate = now()
+        WHERE username = #{username}
+    </update>
 </mapper>
