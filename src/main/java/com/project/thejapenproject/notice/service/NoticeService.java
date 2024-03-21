@@ -8,4 +8,5 @@ public interface NoticeService {
 
     public ArrayList<NoticeVO> getList();
     public ArrayList<NoticeVO> alarmList(String username);
+    public int noticeCheck(Integer notice_num, String username);
 }

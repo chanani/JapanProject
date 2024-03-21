@@ -29,4 +29,12 @@ public class NoticeController {
     public ResponseEntity<ArrayList<NoticeVO>> alarmList(@PathVariable("username") String username){
         return ResponseEntity.ok(noticeService.alarmList(username));
     }
+
+    @GetMapping("/noticeCheck/{notice_num}/{username}")
+    public ResponseEntity<String> noticeCheck(@PathVariable("notice_num") Integer notice_num,
+                                              @PathVariable("username") String username){
+
+        noticeService.noticeCheck(notice_num, username);
+        return ResponseEntity.ok("성공");
+    }
 }

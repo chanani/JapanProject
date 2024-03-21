@@ -60,15 +60,19 @@ function Header(){
         alert('알람을 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.');
       });
     }
-    
   }, [alarm, username]);
+  // 알람 목록 클릭 
+  const handleAlarmCheck = (notice_num) => {
+    console.log(notice_num);
+    navigate("/notice");
+    setAlarmOpen(false);
+  }
   // 알람 버튼 핸들러
   const handleAlarm = () => {
     setAlarm(false);
     alarmRef.current = false;
     setAlarmOpen((current) => !current);
   }
-
   // 메뉴바 상태 핸들러
   const handleToggle = () => {
     setOpen((open) => !open);
@@ -165,9 +169,9 @@ function Header(){
               </div>
               {noCheckList.length !== 0 ?
               noCheckList.map((item, index) => (
-                <div className='alarm-toggle-content-box' key={index}>
+                <div className='alarm-toggle-content-box' key={index} onClick={(e) => handleAlarmCheck(item.notice_num)}>
                   <CiMenuKebab className='alarm-content-menu'/>
-                  <h5> 확인하지 않은 공지사항이 있습니다.</h5>
+                  <h5> 열람하지 않은 공지사항이 있습니다.</h5>
                 </div>
               ))
                 :

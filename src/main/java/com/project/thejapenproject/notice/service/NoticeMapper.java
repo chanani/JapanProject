@@ -2,6 +2,7 @@ package com.project.thejapenproject.notice.service;
 
 import com.project.thejapenproject.command.NoticeVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
 
@@ -9,4 +10,6 @@ import java.util.ArrayList;
 public interface NoticeMapper {
     public ArrayList<NoticeVO> getList();
     public ArrayList<NoticeVO> alarmList(String username);
+    public int noticeCheck(@Param("notice_num") Integer notice_num, @Param("username") String username);
+    public boolean checkList(@Param("notice_num") Integer notice_num, @Param("username") String username);
 }

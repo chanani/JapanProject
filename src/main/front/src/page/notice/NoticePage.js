@@ -7,13 +7,17 @@ import { TbCircleLetterN } from "react-icons/tb";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
+import { tokenInfoContext } from "../../component/TokenInfoProvider";
+import { useContext } from "react";
 
 const NoticePage = () => {
+  const { userRole, username } = useContext(tokenInfoContext);
   const[notice, setNotice] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [detail, setDetail] = useState(false);
   const noticesPerPage = 5;
-  const [detailIndex, setDetailIndex] = useState(1); //
+  const [detailIndex, setDetailIndex] = useState(1); 
+
   // 현재 페이지의 공지사항 목록 가져오기
   const indexOfLastNotice = currentPage * noticesPerPage;
   const indexOfFirstNotice = indexOfLastNotice - noticesPerPage;
@@ -39,31 +43,35 @@ const NoticePage = () => {
       setNotice(res.data);
     })
   },[])
-
   // 제목 글자 초과할 경우 ...으로 변경
   const truncate = (str, n) => {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
   };
-
   // 날짜가 오늘로부터 1일 이내인지 확인하는 함수
   const isWithinOneDay = (date) => {
     const oneDayAgo = moment().subtract(1, 'day');
     return moment(date).isAfter(oneDayAgo);
   };
-
   // 상세 공지사항 핸들러
   const handleDetail = (index) => {
     let realIndex = (currentPage - 1 )* noticesPerPage + index;
     setDetailIndex(realIndex);
     console.log(notice[realIndex]);
     setDetail((current) => !current);
+    if(username !== null){
+      axios({
+        url : `/notice/noticeCheck/${notice[realIndex].notice_num}/${username}`,
+        method : "GET",
+      })
+      .catch((e) => alert('조회가 정상적으로 이루어지지 않았습니다. 관리자에게 문의해주세요.'));
+    }
+   
   }
-
   // 상세 공지사항 닫기 핸들러
   const handleDetailOut = () => {
     setDetail((current) => !current);
-    
   }
+  
 
   return (
     <div className="user-notice-box-all">

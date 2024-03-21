@@ -21,4 +21,12 @@ public class NoticeServiceImpl implements NoticeService {
     public ArrayList<NoticeVO> alarmList(String username) {
         return noticeMapper.alarmList(username);
     }
+
+    @Override
+    public int noticeCheck(Integer notice_num, String username) {
+        boolean result = noticeMapper.checkList(notice_num, username);
+
+        if (result == false) return noticeMapper.noticeCheck(notice_num, username);
+        else return 0;
+    }
 }

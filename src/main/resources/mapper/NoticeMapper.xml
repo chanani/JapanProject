@@ -20,4 +20,18 @@
                                 WHERE username = #{username})
     </select>
 
+    <select id="checkList">
+        SELECT IF(COUNT(*) = 1, true, false) AS CH FROM notice_check
+        WHERE username = #{username}
+        AND notice_num = #{notice_num}
+    </select>
+    <insert id="noticeCheck">
+        INSERT INTO notice_check (username,
+                                  notice_num,
+                                  check_regdate)
+        VALUES (#{username},
+                #{notice_num},
+                now())
+    </insert>
+
 </mapper>
