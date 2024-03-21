@@ -10,5 +10,14 @@
         ORDER BY notice_regdate DESC
     </select>
 
+    <select id="alarmList" parameterType="NoticeVO">
+        SELECT * FROM notice N
+        WHERE notice_num NOT IN (SELECT notice_num
+                                 FROM notice_check
+                                 WHERE username = #{username})
+        AND N.notice_regdate > (SELECT user_regdate
+                                FROM user
+                                WHERE username = #{username})
+    </select>
 
 </mapper>

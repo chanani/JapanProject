@@ -8,5 +8,5 @@ import java.util.ArrayList;
 @Mapper
 public interface NoticeMapper {
     public ArrayList<NoticeVO> getList();
-
+    public ArrayList<NoticeVO> alarmList(String username);
 }

@@ -7,4 +7,5 @@ import java.util.ArrayList;
 public interface NoticeService {
 
     public ArrayList<NoticeVO> getList();
+    public ArrayList<NoticeVO> alarmList(String username);
 }

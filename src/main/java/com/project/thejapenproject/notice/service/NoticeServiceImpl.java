@@ -16,4 +16,9 @@ public class NoticeServiceImpl implements NoticeService {
     public ArrayList<NoticeVO> getList() {
         return noticeMapper.getList();
     }
+
+    @Override
+    public ArrayList<NoticeVO> alarmList(String username) {
+        return noticeMapper.alarmList(username);
+    }
 }

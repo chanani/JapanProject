@@ -7,16 +7,18 @@ import { HiOutlineBell } from "react-icons/hi";
 import { GoDotFill } from "react-icons/go";
 import { BiCaretUp } from "react-icons/bi";
 import { CiMenuKebab } from "react-icons/ci";
+import axios from "axios";
 
 function Header(){
   const navigate = useNavigate();
-  const { userRole } = useContext(tokenInfoContext);
+  const { userRole, username } = useContext(tokenInfoContext);
 
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const alarmRef = useRef(false);
   const [alarm, setAlarm] = useState(alarmRef.current);
   const [alarmOpen, setAlarmOpen] = useState(false);
+  const [noCheckList, setNoCheckList] = useState([]); // 확인하지 않은 알람 목록
   useEffect(() => {
     setIsVisible(true);
   }, []);
@@ -43,7 +45,23 @@ function Header(){
       eventSource.close();
     }
   }, [userRole]);
-
+  // 확인하지 않은 알람
+  useEffect(() => {
+    if(username !== null){
+      axios({
+        url : `/notice/alarmList/${username}`,
+        method : 'GET'
+      })
+      .then((res) => {
+        console.log(res.data);
+        setNoCheckList(res.data);
+      })
+      .catch((e) => {
+        alert('알람을 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.');
+      });
+    }
+    
+  }, [alarm, username]);
   // 알람 버튼 핸들러
   const handleAlarm = () => {
     setAlarm(false);
@@ -143,24 +161,21 @@ function Header(){
             <BiCaretUp size={30} className='alarm-box-arrow'color='#272829'/>
             <div className='alarm-toggle-all'>
               <div className='alarm-toggle-title-box'>
-                <p>공지사항</p>
+                <p>알림</p>
               </div>
-              <div className='alarm-toggle-content-box'>
-                <CiMenuKebab className='alarm-content-menu'/>
-                <h5>새로운 공지사항이 등록되었습니다 !</h5>
-              </div>
-              <div className='alarm-toggle-content-box'>
-                <CiMenuKebab className='alarm-content-menu'/>
-                <h5>새로운 공지사항이 등록되었습니다 !</h5>
-              </div>
-              <div className='alarm-toggle-content-box'>
-                <CiMenuKebab className='alarm-content-menu'/>
-                <h5>새로운 공지사항이 등록되었습니다 !</h5>
-              </div>
-              
+              {noCheckList.length !== 0 ?
+              noCheckList.map((item, index) => (
+                <div className='alarm-toggle-content-box' key={index}>
+                  <CiMenuKebab className='alarm-content-menu'/>
+                  <h5> 확인하지 않은 공지사항이 있습니다.</h5>
+                </div>
+              ))
+                :
+              "등록된 알람이 없습니다."
+            }
             </div>
-            </div>
-              :
+          </div>
+            :
             ""
           }
         </div>

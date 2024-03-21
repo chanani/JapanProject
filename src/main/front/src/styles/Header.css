@@ -165,11 +165,11 @@ a {
   padding: 10px 10px 10px 5px;
   border-radius: 10px;
   background-color: #383c3c;
+  width: 210px;
   
 }
 .alarm-toggle-content-box > svg{
   margin-right: 5px;
-  
 }
 
 
@@ -192,6 +192,7 @@ a {
     top: 67px;
     right: 203px;
   }
+  
 }
 
 /* 500 이상 */
