@@ -6,22 +6,24 @@ import 'moment/locale/ko';
 import { TbCircleLetterN } from "react-icons/tb";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
+import { IoCloseOutline } from "react-icons/io5";
 
 const NoticePage = () => {
   const[notice, setNotice] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [detail, setDetail] = useState(false);
   const noticesPerPage = 5;
-
+  const [detailIndex, setDetailIndex] = useState(1); //
   // 현재 페이지의 공지사항 목록 가져오기
   const indexOfLastNotice = currentPage * noticesPerPage;
   const indexOfFirstNotice = indexOfLastNotice - noticesPerPage;
   const currentNotices = notice.slice(indexOfFirstNotice, indexOfLastNotice);
 
-  // 페이지 변경 함수
+  // 페이지 변경 핸들러
   const nextPage = () => {
     setCurrentPage(currentPage + 1);
   };
-
+  // 페이지 변경 핸들러
   const prevPage = () => {
     setCurrentPage(currentPage - 1);
   };
@@ -49,6 +51,20 @@ const NoticePage = () => {
     return moment(date).isAfter(oneDayAgo);
   };
 
+  // 상세 공지사항 핸들러
+  const handleDetail = (index) => {
+    let realIndex = (currentPage - 1 )* noticesPerPage + index;
+    setDetailIndex(realIndex);
+    console.log(notice[realIndex]);
+    setDetail((current) => !current);
+  }
+
+  // 상세 공지사항 닫기 핸들러
+  const handleDetailOut = () => {
+    setDetail((current) => !current);
+    
+  }
+
   return (
     <div className="user-notice-box-all">
       <div className="user-notice-box">
@@ -57,7 +73,7 @@ const NoticePage = () => {
           <p>The Japen 공지사항</p>
         </div>
         {currentNotices.map((item, index) => (
-          <div className="user-notice-content-box" key={index}>
+          <div className="user-notice-content-box" key={index} onClick={(e) => handleDetail(index)}>
             <p className="content-box-p-tag">
               {isWithinOneDay(item.notice_regdate) && <TbCircleLetterN color="red"/>}
               {truncate(item.notice_title,14)}
@@ -72,12 +88,34 @@ const NoticePage = () => {
           <FaArrowLeft onClick={prevPage} size={20}/>
           }
            {currentPage * noticesPerPage < notice.length ? 
-          <FaArrowRight onClick={nextPage} size={20}/>
+           <FaArrowRight onClick={nextPage} size={20}/>
            :
            <FaArrowRight color="gray" size={20} />
           }
         </div>
       </div>
+        
+      {detail ? 
+      <div className="notice-detail-box">
+
+        <div className="notice-detail-title">
+          <p>제목 : </p>
+          <div>{notice[detailIndex].notice_title}</div>
+          
+        </div>
+        
+        <div className="notice-detail-content">
+          <p>내용 : </p>
+          <textarea defaultValue={notice[detailIndex].notice_content} readOnly></textarea>
+        </div>
+        <div className="notice-detail-out">
+        <IoCloseOutline size={25} onClick={handleDetailOut}/>
+        </div>
+      </div>
+      :
+      ""
+      }
+      
     </div>
   )
 }

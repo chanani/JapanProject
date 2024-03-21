@@ -15,6 +15,7 @@ const AddWordPage = () => {
       navigate("/");
     }
   }, [userRole]);
+  const token = localStorage.getItem("token");
 
   const [inputCount, setInputCount] = useState(1);
   const [list, setList] = useState([]);
@@ -37,10 +38,15 @@ const AddWordPage = () => {
       method : "POST",
       data : {
         list : list
+      },
+      headers : {
+        authorization : token
       }
     })
     .then((res) => {
       alert(`${list.length}건이 정상적으로 등록되었습니다.`);
+      setList([]);
+      setInputCount(1);
     })
     .catch((e) => {
       alert("등록중 오류가 발생하였습니다.");

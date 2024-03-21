@@ -4,6 +4,9 @@
   align-items: center;
   padding: 30px 10px;
   background-color: #f6f7fb;
+
+}
+.back-toggle{
   
 }
 .user-notice-box{
@@ -22,6 +25,7 @@
   font-size: 25px;
   font-weight: 500;
   margin-bottom: 20px;
+  border-bottom: 1px solid #777;
 }
 
 .user-notice-content-box {
@@ -55,6 +59,46 @@
   margin-top: 10px;
 }
 
+
+/*************상세 공지사항**************/
+.notice-detail-box{
+  padding: 50px 30px;
+  border-radius: 10px;
+  position: absolute;
+  z-index: 2;
+  background-color: rgb(223, 220, 220);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+
+}
+
+.notice-detail-title,
+.notice-detail-content {
+  display: flex;
+}
+
+.notice-detail-title {
+  margin-bottom: 20px;
+  font-size: 17px;
+}
+.notice-detail-title > p {margin-right: 10px;}
+.notice-detail-title > div {border-bottom: 1px solid #777;}
+.notice-detail-content > p {margin-right: 10px;}
+
+.notice-detail-content > textarea{
+  resize: none;
+  outline: none;
+  padding: 5px;
+}
+
+.notice-detail-out > svg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.notice-detail-out > svg:hover {
+  color: blue;
+}
+
 /* 600 이하 */
 @media(max-width : 600px){
   .user-notice-box{
@@ -62,6 +106,14 @@
   }
   .user-notice-content-box {
     width: 280px;
+  }
+  .notice-detail-box{
+    width: 255px;
+    height: 317px;
+  }
+  .notice-detail-content > textarea{
+    width: 190px;
+    height: 250px;
   }
 }
 
@@ -73,6 +125,14 @@
   .user-notice-content-box {
     width: 500px;
   }
+  .notice-detail-box{
+    width: 400px;
+    height: 317px;
+  }
+  .notice-detail-content > textarea{
+    width: 320px;
+    height: 250px;
+  }
 }
  /* 1000 이상 */
 @media(min-width : 1000px){
@@ -81,6 +141,14 @@
   }
   .user-notice-content-box {
     width: 580px;
+  }
+  .notice-detail-box{
+    width: 400px;
+    height: 317px;
+  }
+  .notice-detail-content > textarea{
+    width: 320px;
+    height: 250px;
   }
 }
 
@@ -93,3 +161,4 @@
     width: 580px;
   }
 }
+
