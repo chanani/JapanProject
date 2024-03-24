@@ -27,12 +27,10 @@ public class AdminController {
     public ResponseEntity<String> addWordList(@RequestBody Map<String, Object> map){
         ArrayList<Object> list = (ArrayList<Object>) map.get("list");
         ArrayList<WordVO> resultList = new ArrayList<>();
-        System.out.println(list.toString());
         for(Object x : list){
             String[] str =  String.valueOf(x).replace("{", "").replace("}", "").replaceAll("word=", "")
                     .replace("mean=", "").replaceAll("level=", "")
                     .split(", ");
-            System.out.println(str);
             WordVO vo = WordVO.builder()
                     .word_content(str[0])
                     .word_meaning(str[1])

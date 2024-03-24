@@ -21,7 +21,7 @@ public class JWTService {
         Algorithm alg = Algorithm.HMAC256(secretKey);
 
         // 만료시간
-        long expire = System.currentTimeMillis() + 3600000; // 1시간 뒤
+        long expire = System.currentTimeMillis() + 7200000; // 2시간 뒤
 
         // 토큰생성
         JWTCreator.Builder builder = JWT.create().withSubject(username) // 주제
