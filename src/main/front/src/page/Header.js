@@ -47,6 +47,10 @@ function Header(){
   }, [userRole]);
   // 확인하지 않은 알람
   useEffect(() => {
+    getNoticeList()
+  }, [alarm, username]);
+  // 알랑 목록 조회
+  const getNoticeList = () => {
     if(username !== null){
       axios({
         url : `/notice/alarmList/${username}`,
@@ -60,7 +64,7 @@ function Header(){
         alert('알람을 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.');
       });
     }
-  }, [alarm, username]);
+  }
   // 알람 목록 클릭 
   const handleAlarmCheck = (notice_num) => {
     console.log(notice_num);
