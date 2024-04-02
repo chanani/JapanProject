@@ -12,10 +12,6 @@ import Audio from './Audio';
 import { tokenInfoContext } from './TokenInfoProvider';
 import axios from 'axios';
 
-
-
-
-
 const Quiz = ({ level, num, arr }) => {
   let [word, setWord] = useState([]);
   const [current, setCurrent] = useState(0);

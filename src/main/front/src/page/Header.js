@@ -67,7 +67,7 @@ function Header(){
   }
   // 알람 목록 클릭 
   const handleAlarmCheck = (notice_num) => {
-    console.log(notice_num);
+    setNoCheckList([]);
     navigate("/notice");
     setAlarmOpen(false);
   }

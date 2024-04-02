@@ -1,17 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/test/TestPage.css";
 import Test from "../../component/Test";
+import { useLocation } from "react-router-dom";
 
 function TestPage() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname.substring(6));
   const [pageOn, setPageOn] = useState(true);
   const [kind, setKind] = useState(true);
+  const [level, setLevel] = useState(0);
   const handleToggle = () => {
     setPageOn((pageOn) => !pageOn);
   };
+  console.log(currentPath);
   const handleKind = () => {
     setKind((kind) => !kind);
   }
+
+  useEffect(() => {
+    if(currentPath === 'easy') setLevel(1);
+    else if (currentPath === 'middle') setLevel(2);
+    else if (currentPath === 'hard') setLevel(3);
+  
+  }, [level, currentPath]);
+
   return (
     <div className="test-page-all">
       <div className="test-page-mid">
@@ -35,7 +46,7 @@ function TestPage() {
           
         </div> 
         
-        : <Test level={1} kind={kind} currentPath={currentPath}/>
+        : <Test level={level} kind={kind} currentPath={currentPath}/>
       }
         </div>
       </div>

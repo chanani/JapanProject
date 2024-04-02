@@ -39,10 +39,4 @@ public class MainController {
         return ResponseEntity.ok("성공");
     }
 
-    @PostMapping("/loginDate")
-    public ResponseEntity<String> login(@RequestBody Map<String, String> map){
-        userService.logDate(map.get("username"));
-        return ResponseEntity.ok("성공");
-    }
-
 }

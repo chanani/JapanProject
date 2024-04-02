@@ -29,8 +29,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
           <Route path="/" element={<MainPage />} />
-          <Route path="/study/easy" element={<Easy/>} />
-          <Route path="/test/easy" element={<TestPage />}/>
+          <Route path="/study/:level" element={<Easy/>} />
+          <Route path="/test/:level" element={<TestPage />}/>
           <Route path="/result" element={<ResultPage />}/>
           <Route path="/mypage/record" element={<RecordPage />} />
           <Route path="/mypage/favorites" element={<FavoritesList />} />

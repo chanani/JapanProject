@@ -50,20 +50,6 @@ function Login() {
       if(res.status === 200){
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("username", username);
-
-        axios({
-          url : "/loginDate",
-          method : "POST",
-          data : {
-            username : username
-          }
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((e) => console.log(e));
-       
-
         alert("반갑습니다 *_*");
         window.location = "/";
       }

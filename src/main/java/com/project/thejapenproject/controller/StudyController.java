@@ -24,6 +24,7 @@ public class StudyController {
     @GetMapping("/data/{level}/{num}/{username}")
     public ResponseEntity<ArrayList<WordVO>> getWord(@PathVariable Integer level,
                                                      @PathVariable Integer num, @PathVariable String username){
+        System.out.println("level : " + level);
         ArrayList<WordVO> list = studyService.getWord(level, num, username);
         return ResponseEntity.ok(list);
     }

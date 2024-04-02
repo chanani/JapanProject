@@ -1,27 +1,42 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/study/StudyPage.css";
 import Quiz from "../../component/Quiz";
 import { useLocation } from "react-router-dom";
-import { tokenInfoContext } from "../../component/TokenInfoProvider";
 
 function Easy() {
   const location = useLocation();
-  const {userRole} = useContext(tokenInfoContext);
   const [pageOn, setPageOn] = useState(true);
   const [num, setNum] = useState(1);
   const [word, setWord] = useState([]);
+  const path = useLocation().pathname.substring(7);
+  const [level, setLevel] = useState(0);
+  
   const handleToggle = () => {
     if(num > 0){
-      setPageOn((pageOn) => !pageOn);
+      if(num <= 30){
+        setPageOn((pageOn) => !pageOn);
+      } else {
+        alert("30이하로 입력해주세요.");
+      }
     } else {
       alert("1이상 입력해주세요.");
     }
+
+    
   };
 
   const handleChangeNum = (event) => {
       let num = event.target.value;
       setNum(num);
   }
+
+
+  useEffect(() => {
+    if(path === 'easy') setLevel(1);
+    else if (path === 'middle') setLevel(2);
+    else if (path === 'hard') setLevel(3);
+    console.log(level);
+  }, [level, path]);
 
   useEffect(() => {
     const arr = location.state ? location.state.arr : [];
@@ -54,7 +69,7 @@ function Easy() {
           
         </div> 
         
-        : <Quiz level={1} num={num} arr={word} />
+        : <Quiz level={level} num={num} arr={word} />
       }
         </div>
       </div>
