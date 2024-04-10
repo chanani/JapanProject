@@ -4,10 +4,12 @@ import { FaPlus } from "react-icons/fa6";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
+import {Cookies} from 'react-cookie';
 
 const AddWordPage = () => {
   const navigate = useNavigate();
   const { userRole } = useContext(tokenInfoContext);
+  const cookie = new Cookies();
 
   useEffect(() => {
     if(userRole !== 'role_admin'){
@@ -15,7 +17,7 @@ const AddWordPage = () => {
       navigate("/");
     }
   }, [userRole]);
-  const token = localStorage.getItem("token");
+  const accessToken = cookie.get("accessToken");
 
   const [inputCount, setInputCount] = useState(1);
   const [list, setList] = useState([]);
@@ -32,25 +34,28 @@ const AddWordPage = () => {
     setInputCount(prevCount => prevCount + 1);
   }
 
-  const handleSubmit = () => {
-    axios({
-      url : "/admin/addWordList",
-      method : "POST",
-      data : {
-        list : list
-      },
-      headers : {
-        authorization : token
-      }
-    })
-    .then((res) => {
+  const handleSubmit = async() => {
+    try{
+      const wordResponse = await axios({
+        url : "/admin/addWordList",
+        method : "POST",
+        data : {
+          list : list
+        },
+        headers : {
+          accessToken : accessToken
+        }
+      })
       alert(`${list.length}건이 정상적으로 등록되었습니다.`);
       setList([]);
       setInputCount(1);
-    })
-    .catch((e) => {
-      alert("등록중 오류가 발생하였습니다.");
-    });
+   } catch (error) {
+      if (error.response && error.response.status === 403) {
+        alert("등록에 실패하였습니다. 관리자에게 문의해주세요.");
+      } else {
+        alert("등록에 실패하였습니다. 관리자에게 문의해주세요.");
+      }
+   }
   }
 
   return (
