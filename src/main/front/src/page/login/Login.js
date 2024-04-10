@@ -4,10 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
+import {Cookies} from 'react-cookie';
 
 function Login() {
   const navigator = useNavigate();
   const { userRole } = useContext(tokenInfoContext);
+  const cookies = new Cookies();
   // 로그인 되어있을 때 홈으로 리턴
   useEffect(() => {
     if(userRole !== "none"){
@@ -48,8 +50,7 @@ function Login() {
     })
     .then((res) => {
       if(res.status === 200){
-        localStorage.setItem("token", res.data.token);
-        localStorage.setItem("username", username);
+        setCookies(res.data.token, username);
         alert("반갑습니다 *_*");
         window.location = "/";
       }
@@ -59,6 +60,21 @@ function Login() {
       alert("아이디와 비밀번호를 확인해주세요.");
     });
   } 
+
+  // 쿠키 저장 핸들러
+  const setCookies = (accessToken, username) => {
+    cookies.set('accessToken', accessToken, {
+      path: '/',
+      secure : true,
+      maxAge : 3000
+    });
+    cookies.set('username', username, {
+      path: '/',
+      secure : true,
+      maxAge : 3000
+    })
+  }
+
   // 아이디 유지 핸들러
   const handleCheck = (event) => {
     const isChecked = event.target.checked;

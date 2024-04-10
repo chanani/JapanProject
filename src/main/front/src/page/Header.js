@@ -8,10 +8,11 @@ import { GoDotFill } from "react-icons/go";
 import { BiCaretUp } from "react-icons/bi";
 import { CiMenuKebab } from "react-icons/ci";
 import axios from "axios";
-
+import {Cookies} from 'react-cookie';
 function Header(){
   const navigate = useNavigate();
   const { userRole, username } = useContext(tokenInfoContext);
+  const cookie = new Cookies();
 
   const [open, setOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -87,12 +88,11 @@ function Header(){
   }
   // 로그아웃 핸들러
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("username");
+    cookie.remove('accessToken');
+    cookie.remove('username');
     alert("로그아웃 되었습니다.");
     window.location = "/";
   }
-
   if(window.location.pathname === '/login' || window.location.pathname === "/join") return null;
 
   return(
