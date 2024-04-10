@@ -1,11 +1,12 @@
 import { useState } from "react";
 import "../../styles/adminPage/AddNoticePage.css";
 import axios from "axios";
-
+import {Cookies} from 'react-cookie';
 const AddNoticePage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const token = localStorage.getItem("token");
+  const cookies = new Cookies();
+  const accessToken = cookies.get('accessToken');
   
   // 제목 수정 핸들러
   const handleTitle = (event) =>{
@@ -19,39 +20,43 @@ const AddNoticePage = () => {
   }
 
   // 공지사항 등록 핸들러
-  const handleSubmit = () => {
-    //　공지사항 등록
+  const handleSubmit = async() => {
     try{
-      axios({
-        url : "/admin/addNotice",
-        method : "POST",
-        headers : {
-          authorization : token
+      // 공지사항 등록
+      const noticeResponse = await axios({
+        url: "/admin/addNotice",
+        method: "POST",
+        headers: {
+          accessToken: accessToken
         },
-        data : {
-          title : title,
-          content : content
+        data: {
+          title: title,
+          content: content
         }
-      })
-      
+      });
+
       // 카프카 Topic 등록
-      axios({
-        url : "/kafka/send",
-        method : "POST",
-        data : {
-          message : content
+      await axios({
+        url: "/kafka/send",
+        method: "POST",
+        headers: {
+          accessToken: accessToken
         },
-        headers : {
-          authorization : token
+        data: {
+          message: content
         }
-      })
-      alert("정상적으로 등록되었습니다 !");
+      });
+      
+      alert("정상적으로 등록되었습니다.");
       window.location = "/";
-    } catch {
-      alert("등록에 실패하였습니다. 관리자에게 문의해주세요.");
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        alert("등록에 실패하였습니다. 관리자에게 문의해주세요.");
+      } else {
+        alert("등록에 실패하였습니다. 관리자에게 문의해주세요.");
+      }
     }
   }
-
 
   return (
     <div className="notice-box-all">

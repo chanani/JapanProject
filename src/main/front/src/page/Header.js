@@ -103,7 +103,7 @@ function Header(){
           <div className={"header-info" + (open ? " menu-open" : "")}>
             <div className='title-box'>
               <img src={Logo} alt="로고" className='logo-image'/>
-              <Link to={"/"} ><p className='title'>The Japen</p></Link>
+              <Link to={"/"} ><p className='title'>The Japan</p></Link>
             </div>
             <div className='login-box'>
               {userRole === 'role_user' ? 

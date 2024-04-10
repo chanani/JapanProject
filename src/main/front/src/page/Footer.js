@@ -5,7 +5,7 @@ function Footer(){
     <footer>
         <div className='footer-box'>
           <div className='footer-title'>
-            <h3>The Japen</h3>
+            <h3>The Japan</h3>
           </div>
           <div className='footer-content-box'>
             <p>문의하기</p>

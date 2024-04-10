@@ -45,8 +45,9 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         System.out.println(password);
 
         // 스프링 시큐리티가 로그인에 사용하는 토클객체
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authentication = authenticationManager.authenticate(token);
+        UsernamePasswordAuthenticationToken accessToken = new UsernamePasswordAuthenticationToken(username, password);
+        UsernamePasswordAuthenticationToken refreshToken = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication authentication = authenticationManager.authenticate(accessToken);
 
         System.out.println("내가 실행되었을 경우 로그인 성공 : " + authentication);
 
@@ -62,11 +63,12 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         System.out.println("========로그인 성공 핸들러");
         // 토큰 발행 헤더에 담고 클라이언트로 전달
         MyUserDetails principal = (MyUserDetails)authResult.getPrincipal();
-        String token = JWTService.createToken(principal.getUsername(), principal.getRole());
+        String accessToken = JWTService.createAccessToken(principal.getUsername(), principal.getRole());
+        String refreshToken = JWTService.createRefreshToken(principal.getUsername(), principal.getRole());
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Authorization", "Bearer " + token);
+        // response.setHeader("Authorization", "Bearer " + token); // 해더로 토큰을 전달
 
-        response.getWriter().println("{\"username\":\"" + principal.getUsername() + "\",\"role\":\"" + principal.getRole() + "\", \"token\":\"Bearer " + token + "\" }");
+        response.getWriter().println("{\"username\":\"" + principal.getUsername() + "\",\"role\":\"" + principal.getRole() + "\", \"accessToken\":\"Bearer " + accessToken + "\", \"refreshToken\":\"Bearer " + refreshToken + "\" }");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 

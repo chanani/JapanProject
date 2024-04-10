@@ -50,7 +50,7 @@ function Login() {
     })
     .then((res) => {
       if(res.status === 200){
-        setCookies(res.data.token, username);
+        setCookies(res.data.accessToken, res.data.refreshToken, username);
         alert("반갑습니다 *_*");
         window.location = "/";
       }
@@ -62,17 +62,22 @@ function Login() {
   } 
 
   // 쿠키 저장 핸들러
-  const setCookies = (accessToken, username) => {
+  const setCookies = (accessToken, refreshToken, username) => {
     cookies.set('accessToken', accessToken, {
       path: '/',
       secure : true,
-      maxAge : 3000
+      maxAge : 7200 // 2시간
     });
     cookies.set('username', username, {
       path: '/',
       secure : true,
-      maxAge : 3000
-    })
+      maxAge : 7200
+    });
+    cookies.set('refreshToken', refreshToken, {
+      path: '/',
+      secure : true,
+      maxAge : 1209600 // 2주
+    });
   }
 
   // 아이디 유지 핸들러

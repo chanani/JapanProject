@@ -25,8 +25,8 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
         System.out.println("========JwtAuthorizationFilter실행됨");
         // 헤더의 담긴 토큰이 유효성을 확인하고, 인증된 토큰이면 우리서비스로 연결, 만로 or 위조된 경우에는 error 메시지 반환
-        String headers = request.getHeader("Authorization");
-        
+        String headers = request.getHeader("accessToken");
+
 
         // 헤더가 없거나 Bearer로 시작하지 않으면
         if (headers == null || headers.startsWith("Bearer ") == false){
