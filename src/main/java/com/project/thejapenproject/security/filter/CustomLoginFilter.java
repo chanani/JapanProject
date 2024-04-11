@@ -5,8 +5,10 @@ package com.project.thejapenproject.security.filter;
 import com.project.thejapenproject.user.service.MyUserDetails;
 import com.project.thejapenproject.user.service.UserMapper;
 import com.project.thejapenproject.user.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,7 +22,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
+
 
     // attemptAuthentication을 오버라이딩 하면
     // 클라이언트에서 post형태로 '/login'로 들어오면 실행됩니다.
