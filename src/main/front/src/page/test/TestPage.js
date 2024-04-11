@@ -11,7 +11,7 @@ function TestPage() {
   const handleToggle = () => {
     setPageOn((pageOn) => !pageOn);
   };
-  console.log(currentPath);
+  // console.log(currentPath);
   const handleKind = () => {
     setKind((kind) => !kind);
   }

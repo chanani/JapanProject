@@ -35,7 +35,7 @@ function Easy() {
     if(path === 'easy') setLevel(1);
     else if (path === 'middle') setLevel(2);
     else if (path === 'hard') setLevel(3);
-    console.log(level);
+    // console.log(level);
   }, [level, path]);
 
   useEffect(() => {

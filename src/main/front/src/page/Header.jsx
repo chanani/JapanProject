@@ -31,7 +31,7 @@ function Header(){
       eventSource = new EventSource('http://localhost:8889/notifications/subscribe/1');
       eventSource.addEventListener('alarm', async (event) => {
           const res = await event.data;
-          console.log(res);
+          //console.log(res);
           if (!res.includes("EventStream Created.")) {
             setAlarm(true); // 아이콘 상태 변경 
             alarmRef.current = true; // 랜더링되도 상태 값 유지를 위해
@@ -58,7 +58,7 @@ function Header(){
         method : 'GET'
       })
       .then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         setNoCheckList(res.data);
       })
       .catch((e) => {
@@ -94,6 +94,15 @@ function Header(){
     window.location = "/";
   }
   if(window.location.pathname === '/login' || window.location.pathname === "/join") return null;
+
+  // 학습페이지 Link list
+  const studyLink = [["/study/easy", "1단계"], ["/study/middle", "2단계"], ["/study/hard", "3단계"]];
+  //　테스트 페이지 Link list
+  const testLink = [["/test/easy", "1단계"], ["/test/middle", "2단계"], ["/test/hard", "3단계"]];
+  // 이 외 페이지 Link list
+  const myLink = [["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ["/chatAi", "Ai학습"], ["/rank", "랭킹"], ["/notice", "공지사항"]];
+  // admin 페이지 Link list
+  const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"]];
 
   return(
     
@@ -132,8 +141,7 @@ function Header(){
             
                 <div className='rank-box'>
                   <h3 className='rank-title'>관리</h3>
-                    <Link onClick={handleToggle} to={"/admin/addWord"}><p>단어추가</p></Link>
-                    <Link onClick={handleToggle} to={"/admin/addNotice"}><p>공지사항 전달</p></Link>
+                  {adminLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}><p>{item[1]}</p></Link>)}
                 </div>
             </div> 
             
@@ -141,24 +149,16 @@ function Header(){
              
              <div className='menu-box'>
                 <div className='study-box'>
-                    <h3 className='study-title'>단어 학습</h3>
-                    <Link to={"/study/easy"} onClick={handleToggle}><p>1단계</p></Link>
-                    <Link to={"/study/middle"} onClick={handleToggle}><p>2단계</p></Link>
-                    <Link to={"/study/hard"} onClick={handleToggle}><p>3단계</p></Link>
+                  <h3 className='study-title'>단어 학습</h3>
+                  {studyLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}><p>{item[1]}</p></Link>)}
                 </div>
                 <div className='test-box'>
-                    <h3 className='test-title'>단어 테스트</h3>
-                    <Link to={"/test/easy"} onClick={handleToggle}><p>1단계</p></Link>
-                    <Link to={"/test/middle"} onClick={handleToggle}><p>2단계</p></Link>
-                    <Link to={"/test/hard"} onClick={handleToggle}><p>3단계</p></Link>
+                  <h3 className='test-title'>단어 테스트</h3>
+                  {testLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}><p>{item[1]}</p></Link>)}
                 </div>
                 <div className='rank-box'>
                   <h3 className='rank-title'>마이페이지</h3>
-                    <Link onClick={handleToggle} to={"/mypage/favorites"}><p>즐겨찾기 목록</p></Link>
-                    <Link onClick={handleToggle} to={"/mypage/record"}><p>학습기록</p></Link>
-                    <Link onClick={handleToggle} to={"/chatAi"}><p>Ai학습</p></Link>
-                    <Link onClick={handleToggle} to={"/rank"}><p>랭킹</p></Link>
-                    <Link onClick={handleToggle} to={"/notice"}><p>공지사항</p></Link>
+                  {myLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}><p>{item[1]}</p></Link>)}
                 </div>
             </div> 
             
