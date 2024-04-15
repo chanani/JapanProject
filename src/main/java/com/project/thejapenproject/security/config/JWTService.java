@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -13,18 +14,10 @@ import javax.annotation.Resource;
 import java.util.Date;
 
 
-
 public class JWTService {
 
     @Value("${secretKey}")
-    private static String secretKey = "japen";
-    private static RedisTemplate<String, String> redisTemplate;
-
-    @Resource
-    private ValueOperations<String, String> valueOperations;
-    public JWTService(RedisTemplate<String, String> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
+    private static String secretKey = "japan";
 
     // 엑세스토큰 생성
     public static String createAccessToken(String username, String role){
@@ -63,10 +56,6 @@ public class JWTService {
                 .withIssuer("The Japan"); // 발행자
         // .withClaim("admin", "공개클레임 홍길동 !"); // + 공개 클레임
 
-//        System.out.println("create Refresh Token method");
-//        ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
-//        valueOperations.set(username, builder.sign(alg));
-//        System.out.println("redis에 저장된 토큰 " +valueOperations.get("username"));
         return builder.sign(alg); // 빌더객체 생성
     }
 

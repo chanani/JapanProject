@@ -139,10 +139,10 @@ function Header(){
             userRole === 'role_admin' ? 
             <div className='menu-box'>
             
-                <div className='rank-box'>
-                  <h3 className='rank-title'>관리</h3>
-                  {adminLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}><p>{item[1]}</p></Link>)}
-                </div>
+              <div className='rank-box'>
+                <h3 className='rank-title'>관리</h3>
+                {adminLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}><p>{item[1]}</p></Link>)}
+              </div>
             </div> 
             
              : 

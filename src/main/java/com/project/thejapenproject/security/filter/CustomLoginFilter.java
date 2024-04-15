@@ -5,10 +5,12 @@ package com.project.thejapenproject.security.filter;
 import com.project.thejapenproject.user.service.MyUserDetails;
 import com.project.thejapenproject.user.service.UserMapper;
 import com.project.thejapenproject.user.service.UserService;
+import com.project.thejapenproject.util.redis.RedisProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,6 +18,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.project.thejapenproject.security.config.JWTService;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +37,9 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     private AuthenticationManager authenticationManager;
+
+    private  RedisProvider redisProvider;
+
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
@@ -71,6 +77,12 @@ public class CustomLoginFilter extends UsernamePasswordAuthenticationFilter {
         String refreshToken = JWTService.createRefreshToken(principal.getUsername(), principal.getRole());
         response.setHeader("Access-Control-Allow-Origin", "*");
         // response.setHeader("Authorization", "Bearer " + token); // 해더로 토큰을 전달
+
+        System.out.println("create Refresh Token method");
+        System.out.println("redis valueOperations　생성");
+        redisProvider.setValues(principal.getUsername(), refreshToken);
+        // System.out.println("redis에 저장된 토큰 " +valueOperations.get("username"));
+
 
         response.getWriter().println("{\"username\":\"" + principal.getUsername() + "\",\"role\":\"" + principal.getRole() + "\", \"accessToken\":\"Bearer " + accessToken + "\", \"refreshToken\":\"Bearer " + refreshToken + "\" }");
         response.setContentType("application/json");
