@@ -9,6 +9,12 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     public UserMapper usermapper;
+
+    @Override
+    public UserVO login(UserVO userVO) {
+        return usermapper.login(userVO);
+    }
+
     @Override
     public int join(UserVO userVO) {
         return usermapper.join(userVO);
