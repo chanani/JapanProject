@@ -16,6 +16,13 @@ module.exports = function(app){
     })
   );
   app.use(
+    '/join',
+    createProxyMiddleware({
+      target : 'http://localhost:8889',
+      changeOrigin : true,
+    })
+  );
+  app.use(
     '/admin',
     createProxyMiddleware({
       target : 'http://localhost:8889',

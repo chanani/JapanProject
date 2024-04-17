@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public interface UserService {
 
-    public UserVO login(UserVO userVO);
+    public UserVO login(String username, String password);
     public int join(UserVO userVO);
     public int logDate(String username);
 

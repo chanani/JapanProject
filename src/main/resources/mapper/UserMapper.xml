@@ -23,7 +23,7 @@
     </insert>
     <select id="login" resultType="UserVO">
         select * from user
-        where username = #{userVO.username} and password = #{userVO.password}
+        where username = #{username} and password = #{password}
     </select>
 
     <update id="logDate">

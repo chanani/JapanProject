@@ -28,7 +28,7 @@ public class JWTProvider {
     private Long refreshTokenTime;
 
     public String createAccessToken(UserVO userVO) throws Exception {
-        return Jwts.builder()
+        return "Bearer " + Jwts.builder()
                 .claim("data", objectMapper.writeValueAsString(userVO))
                 .setSubject("Authorize")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
@@ -38,7 +38,7 @@ public class JWTProvider {
     }
 
     public String createRefreshToken(UserVO userVO) throws Exception {
-        return Jwts.builder()
+        return "Bearer " + Jwts.builder()
                 .claim("data", objectMapper.writeValueAsString(userVO))
                 .setSubject("Authorize")
                 .setIssuedAt(new Date(System.currentTimeMillis()))
