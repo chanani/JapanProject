@@ -3,6 +3,7 @@ package com.project.thejapenproject.controller;
 import com.project.thejapenproject.admin.service.AdminService;
 import com.project.thejapenproject.command.NoticeVO;
 import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class AdminController {
     @Qualifier("adminService")
     private AdminService adminService;
 
+    @NoneCheckToken
     @PostMapping("/addWordList")
     public ResponseEntity<String> addWordList(@RequestBody Map<String, Object> map){
         ArrayList<Object> list = (ArrayList<Object>) map.get("list");
@@ -41,7 +43,7 @@ public class AdminController {
         adminService.addWordList(resultList);
         return ResponseEntity.ok("성공");
     }
-
+    @NoneCheckToken
     @PostMapping("/addNotice")
     public ResponseEntity<String> addNotice(@RequestBody Map<String, String> map){
         adminService.addNotice(NoticeVO.builder()

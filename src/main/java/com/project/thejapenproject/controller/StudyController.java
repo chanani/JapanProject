@@ -2,6 +2,8 @@ package com.project.thejapenproject.controller;
 
 
 import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.common.annotation.NoneAuth;
+import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.study.service.StudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,6 +23,7 @@ public class StudyController {
     @Qualifier("studyService")
     public StudyService studyService;
 
+    @NoneAuth
     @GetMapping("/data/{level}/{num}/{username}")
     public ResponseEntity<ArrayList<WordVO>> getWord(@PathVariable Integer level,
                                                      @PathVariable Integer num, @PathVariable String username){
@@ -28,6 +31,7 @@ public class StudyController {
         return ResponseEntity.ok(list);
     }
 
+    @NoneCheckToken
     @GetMapping("/addFavorite/{word_num}/{favorite}/{username}")
     public ResponseEntity<String> changeFavorite(@PathVariable Integer word_num,
                                                  @PathVariable boolean favorite,

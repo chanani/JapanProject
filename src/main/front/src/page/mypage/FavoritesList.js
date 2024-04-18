@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import axios from "axios";
 const FavoritesList = () => {
-  const {userRole, username} = useContext(tokenInfoContext);
+  const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
   const navigate = useNavigate();
 
   useEffect(() =>{
@@ -44,6 +44,9 @@ const FavoritesList = () => {
       method : "POST",
       data : {
         username : username
+      },
+      headers : {
+        Authorization : accessToken
       }
     })
     .then((res) => {

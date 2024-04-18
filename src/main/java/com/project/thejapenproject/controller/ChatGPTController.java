@@ -1,5 +1,6 @@
 package com.project.thejapenproject.controller;
 
+import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +28,7 @@ public class ChatGPTController {
     @Value("{openai.model}")
     private String model;
 
+    @NoneCheckToken
     @PostMapping("/send")
     public ResponseEntity send(@RequestBody Map<String, String> map) {
         RestTemplate restTemplate = new RestTemplate();

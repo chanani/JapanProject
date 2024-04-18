@@ -1,9 +1,12 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaArrowAltCircleUp } from "react-icons/fa";
+import { tokenInfoContext } from "./TokenInfoProvider";
 
 const GptApi = ({handleQuestion, handleResponse}) => {
   const [question, setQuestion] = useState('');
+  const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+
   // GptApi 호출
   const handleSubmit = async(e) => {
     let content = '';
@@ -18,6 +21,9 @@ const GptApi = ({handleQuestion, handleResponse}) => {
       method : "POST",
       data : {
         "message" : question
+      },
+      headers : {
+        Authorization : accessToken
       }
     })
     .then((res) => {

@@ -10,7 +10,7 @@ const ResultPage = () => {
   const { kind, level, word, answer } = location.state;
   const [point, setPoint] = useState(0);
   const navigate = useNavigate();
-  const {userRole, username} = useContext(tokenInfoContext);
+  const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
   const[newAnswer, setNewAnswer] = useState(answer);
   const [check, setCheck] = useState([false, false, false, false, false, false, false, false, false, false]);
 
@@ -66,6 +66,9 @@ const ResultPage = () => {
           point : point * 10,
           answer : newAnswer,
           kind : kind
+        },
+        headers : {
+          Authorization : accessToken
         }
       })
       .then((res) => {

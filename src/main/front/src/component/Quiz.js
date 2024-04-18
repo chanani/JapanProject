@@ -17,7 +17,7 @@ const Quiz = ({ level, num, arr }) => {
   const [current, setCurrent] = useState(0);
   const [meaning, setMeaning] = useState(false);
   const [play, setPlay] = useState(false);
-  const { userRole, username } = useContext(tokenInfoContext);
+  const { userRole, username, accessToken, refreshTokne } = useContext(tokenInfoContext);
 
   const handleMeaning = () => {
     setMeaning((meaning) => !meaning);
@@ -46,7 +46,10 @@ const Quiz = ({ level, num, arr }) => {
   const changeFavorite = () => {
     axios({
       url : "/study/addFavorite/" + word[current].word_num + "/" + !word[current].word_favorite + "/" + username,
-      method : "GET"
+      method : "GET",
+      headers : {
+        Authorization : accessToken
+      }
     })
     .then((res) => {
     })

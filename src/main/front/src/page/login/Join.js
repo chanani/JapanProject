@@ -31,7 +31,7 @@ function Join() {
 
   
 
-
+  // 회원가입 핸들러
   const handleJoin = (event) => {
     event.preventDefault();
 
@@ -78,7 +78,7 @@ function Join() {
       }
     })
     .then((res) => {
-      if(res.data === '성공'){
+      if(res.data.code === 200){
         alert('회원가입을 축하드립니다 *_*');
         navigate("/login");
       } else{

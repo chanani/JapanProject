@@ -2,6 +2,8 @@ package com.project.thejapenproject.controller;
 
 import com.project.thejapenproject.command.TestItemVO;
 import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.common.annotation.NoneAuth;
+import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.test.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -23,13 +25,15 @@ public class TestController {
     @Qualifier("testService")
     public TestService testService;
 
+    @NoneAuth
     @GetMapping("/word/{level}")
     public ResponseEntity<ArrayList<WordVO>> getTestList(@PathVariable Integer level){
         return ResponseEntity.ok(testService.getTestList(level));
     }
 
+    @NoneCheckToken
     @PostMapping("/record")
-    @Transactional(readOnly = true)
+    @Transactional
     public ResponseEntity<String> testResult(@RequestBody Map<String, Object> map){
         ArrayList<Object> list = (ArrayList<Object>) map.get("answer");
         ArrayList<TestItemVO> testList = new ArrayList<>();

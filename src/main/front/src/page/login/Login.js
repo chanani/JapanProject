@@ -49,9 +49,7 @@ function Login() {
       data : formData,
     })
     .then((res) => {
-      console.log(res);
-      console.log(res.data);
-      console.log(res.data.data.accessToken);
+
       if(res.status === 200){
         setCookies(res.data.data.accessToken, res.data.data.refreshToken, username);
         

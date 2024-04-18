@@ -11,7 +11,7 @@ import axios from "axios";
 import {Cookies} from 'react-cookie';
 function Header(){
   const navigate = useNavigate();
-  const { userRole, username } = useContext(tokenInfoContext);
+  const { userRole, username, accessToken, refreshToken } = useContext(tokenInfoContext);
   const cookie = new Cookies();
 
   const [open, setOpen] = useState(false);
@@ -27,6 +27,7 @@ function Header(){
   // 알람 SSE Connection
   useEffect(() => {
     let eventSource;
+    console.log("role : ", userRole);
     if(userRole === 'role_user'){
       eventSource = new EventSource('http://localhost:8889/notifications/subscribe/1');
       eventSource.addEventListener('alarm', async (event) => {
@@ -52,13 +53,15 @@ function Header(){
   }, [alarm, username]);
   // 알랑 목록 조회
   const getNoticeList = () => {
-    if(username !== null){
+    if(userRole === "role_user"){
       axios({
         url : `/notice/alarmList/${username}`,
-        method : 'GET'
+        method : 'GET',
+        headers : {
+          Authorization : accessToken
+        }
       })
       .then((res) => {
-        //console.log(res.data);
         setNoCheckList(res.data);
       })
       .catch((e) => {
@@ -88,10 +91,27 @@ function Header(){
   }
   // 로그아웃 핸들러
   const handleLogout = () => {
-    cookie.remove('accessToken');
-    cookie.remove('username');
-    alert("로그아웃 되었습니다.");
-    window.location = "/";
+
+    axios({
+      url : "/logout",
+      method : "POST",
+      data : {
+        username : username
+      },
+      headers : {
+        Authorization : accessToken
+      }
+    })
+    .then((res) => {
+      if(res.status === 200){
+        cookie.remove('accessToken');
+        cookie.remove('username');
+        alert("로그아웃 되었습니다.");
+        window.location = "/";
+      }
+    })
+    .catch((e) => alert("로그아웃 중 오류가 발생하였습니다."))
+    
   }
   if(window.location.pathname === '/login' || window.location.pathname === "/join") return null;
 

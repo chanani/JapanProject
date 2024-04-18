@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import "../../styles/adminPage/AddNoticePage.css";
 import axios from "axios";
-import {Cookies} from 'react-cookie';
+import { tokenInfoContext } from "../../component/TokenInfoProvider";
 const AddNoticePage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const cookies = new Cookies();
-  const accessToken = cookies.get('accessToken');
+  const { userRole, username, accessToken, refreshToken } = useContext(tokenInfoContext);
+
   
   // 제목 수정 핸들러
   const handleTitle = (event) =>{
@@ -27,12 +27,12 @@ const AddNoticePage = () => {
         url: "/admin/addNotice",
         method: "POST",
         headers: {
-          accessToken: accessToken
+          Authorization: accessToken
         },
         data: {
           title: title,
           content: content
-        }
+        },
       });
 
       // 카프카 Topic 등록
@@ -40,7 +40,7 @@ const AddNoticePage = () => {
         url: "/kafka/send",
         method: "POST",
         headers: {
-          accessToken: accessToken
+          Authorization: accessToken
         },
         data: {
           message: content

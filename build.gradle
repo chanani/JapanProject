@@ -40,8 +40,12 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
 
     // Jwts
-    implementation "io.jsonwebtoken:jjwt:0.9.1"
-    implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
+    // implementation "io.jsonwebtoken:jjwt:0.9.1"
+    // implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.5'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.5'
+    // implementation 'jakarta.security.jacc:jakarta.security.jacc-api:1.6.1'
 
     // jdbc로그
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'

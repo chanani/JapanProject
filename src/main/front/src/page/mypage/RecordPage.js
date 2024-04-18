@@ -6,7 +6,7 @@ import axios from "axios";
 
 const RecordPage = () => {
 
-  const {userRole, username} = useContext(tokenInfoContext);
+  const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
   const navigate = useNavigate();
 
   useEffect(() =>{
@@ -30,6 +30,9 @@ const RecordPage = () => {
         data : {
           username : username,
           record_num : num
+        }, 
+        headers : {
+          Authorization : accessToken
         }
       });
       const answer = response.data;
@@ -48,6 +51,9 @@ const RecordPage = () => {
       method : "POST",
       data : {
         username : username
+      },
+      headers : {
+        Authorization : accessToken
       }
      })
      .then((res) => {

@@ -1,5 +1,7 @@
 package com.project.thejapenproject.controller;
 
+import com.project.thejapenproject.common.annotation.NoneAuth;
+import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.kafka.service.NotificationsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -21,6 +23,8 @@ public class NotificationController {
 
     private final NotificationsService notificationService;
 
+
+    @NoneAuth
     @GetMapping(value = "/subscribe/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> subscribe(@PathVariable Long id) {
         return ResponseEntity.ok(notificationService.subscribe(id));

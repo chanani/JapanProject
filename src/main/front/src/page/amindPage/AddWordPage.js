@@ -2,14 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import "../../styles/adminPage/AddWordPage.css";
 import { FaPlus } from "react-icons/fa6";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
-import {Cookies} from 'react-cookie';
 
 const AddWordPage = () => {
   const navigate = useNavigate();
-  const { userRole } = useContext(tokenInfoContext);
-  const cookie = new Cookies();
+  const { userRole, username, accessToken, refreshToken } = useContext(tokenInfoContext);
 
   useEffect(() => {
     if(userRole !== 'role_admin'){
@@ -17,7 +15,6 @@ const AddWordPage = () => {
       navigate("/");
     }
   }, [userRole]);
-  const accessToken = cookie.get("accessToken");
 
   const [inputCount, setInputCount] = useState(1);
   const [list, setList] = useState([]);
@@ -43,7 +40,7 @@ const AddWordPage = () => {
           list : list
         },
         headers : {
-          accessToken : accessToken
+          Authorization : accessToken
         }
       })
       alert(`${list.length}건이 정상적으로 등록되었습니다.`);
