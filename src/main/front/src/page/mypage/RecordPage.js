@@ -35,6 +35,7 @@ const RecordPage = () => {
           Authorization : accessToken
         }
       });
+      
       const answer = response.data;
       navigate("/recordDetails", {state : { kind, level, answer, point } });
       window.scrollTo(0, 0);
@@ -57,6 +58,7 @@ const RecordPage = () => {
       }
      })
      .then((res) => {
+      console.log(res.data)
       setData(res.data);
      })
      .catch((error) => {

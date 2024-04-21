@@ -4,6 +4,7 @@ import { FaStar } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import axios from "axios";
+import { axiosInstance } from "../../api";
 const FavoritesList = () => {
   const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
   const navigate = useNavigate();
@@ -39,19 +40,22 @@ const FavoritesList = () => {
   };
   // 단어 불러오기
   useEffect(() => {
-    axios({
-      url : "/mypage/favorite",
-      method : "POST",
-      data : {
-        username : username
-      },
-      headers : {
-        Authorization : accessToken
-      }
-    })
+    // axios({
+    //   url : "/mypage/favorite",
+    //   method : "POST",
+    //   data : {
+    //     username : username
+    //   },
+    // })
+    // .then((res) => {
+    //   setWord(res.data);
+    // })
+
+    axiosInstance.post('mypage/favorite', { username })
     .then((res) => {
-      setWord(res.data);
-    })
+        setWord(res.data);
+      })
+    .catch((e) => console.log(e));
   }, [username]);
   // 즐겨찾기 페이지에서 단어 공부 페이지로 이동
   const handleStudy = () => {

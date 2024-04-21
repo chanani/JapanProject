@@ -30,6 +30,7 @@ public class NotificationController {
         return ResponseEntity.ok(notificationService.subscribe(id));
     }
 
+    @NoneAuth
     @PostMapping("/send-data/{id}")
     public void sendData(@PathVariable Long id) {
         System.out.println("send-data : " + id);
@@ -40,6 +41,7 @@ public class NotificationController {
      * kafka topic에 데이터가 추가될 때 데이터 로드
      * @param message
      */
+    @NoneAuth
     @KafkaListener(topics = "dev-topic", groupId = "my-test")
     public void listenGroupFoo(@Header(KafkaHeaders.RECEIVED_TOPIC) String topic, @Payload String message){
         System.out.println(topic + " " + message);

@@ -25,6 +25,7 @@ function App() {
     <TokenInfoProvider>
       <BrowserRouter>
         <Header />
+        
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/join" element={<Join />} />
