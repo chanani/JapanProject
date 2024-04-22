@@ -9,7 +9,6 @@ const RecordDetails = () => {
   const { kind, answer, point } = location.state;
   const navigate = useNavigate();
   const [check, setCheck] = useState([false, false, false, false, false, false, false, false, false, false]);
-  // 홈으로
   const handleHome = () => {
     navigate("/mypage/record");
   }
@@ -35,25 +34,22 @@ const RecordDetails = () => {
           </div>
           <div className="result-box">
             {answer.map((item, index) => (
-              
               <div className={"result-box-content index" + (index) + (item.rd_check ? " clear" : " fail")} key={index} >
-
                 <div className="result-header-box">
-                    {<Audio inputData={item.wordVO.word_content}/>}
+                    {<Audio inputData={item.word_vo.word_content}/>}
                     <p>{index + 1} / {answer.length}</p>
                 </div>
                 <div className="result-word-box" onClick={(event) => handleCheck(index)}>
                     {kind ? 
-                    check[index] ? item.wordVO.word_meaning : item.wordVO.word_content 
+                    check[index] ? item.word_vo.word_meaning : item.word_vo.word_content 
                     : 
-                    check[index] ? item.wordVO.word_content  : item.wordVO.word_meaning
+                    check[index] ? item.word_vo.word_content  : item.word_vo.word_meaning
                     }
                 </div>
                 <div className="result-input-box">
                  <input type="text" value={(answer[index] && item.record_value) || ''} className={index} readOnly/>
                 </div>
-              </div>
-              
+              </div>   
             ))}
           </div>
           <div className="submit-box">

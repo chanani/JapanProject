@@ -18,7 +18,7 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 @RequestMapping("/notifications")
 @RequiredArgsConstructor
 @EnableKafka
-@CrossOrigin("*")
+//@CrossOrigin("*")
 public class NotificationController {
 
     private final NotificationsService notificationService;

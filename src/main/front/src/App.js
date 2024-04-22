@@ -11,7 +11,7 @@ import TestPage from "./page/test/TestPage";
 import ResultPage from "./page/test/ResultPage";
 import RecordPage from "./page/mypage/RecordPage";
 import FavoritesList from "./page/mypage/FavoritesList";
-import Rank from "./page/rankPage/Rank";
+import Search from "./page/searchPage/SearchPage";
 import TokenInfoProvider from "./component/TokenInfoProvider";
 import Quiz from "./component/Quiz";
 import RecordDetails from "./page/test/RecordDetails";
@@ -35,11 +35,10 @@ function App() {
           <Route path="/result" element={<ResultPage />}/>
           <Route path="/mypage/record" element={<RecordPage />} />
           <Route path="/mypage/favorites" element={<FavoritesList />} />
-          <Route path="/rank" element={<Rank />}/>
+          <Route path="/search" element={<Search />}/>
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/recordDetails" element={<RecordDetails />}/>
           <Route path="/chatAi" element={<ChatAi/>} />
-          <Route path="/rank" element={<Rank/>} />
           <Route path="/notice" element={<NoticePage/>} />
           <Route path="/admin/addWord" element={<AddWordPage />} />
           <Route path="/admin/addNotice" element={<AddNoticePage />} />

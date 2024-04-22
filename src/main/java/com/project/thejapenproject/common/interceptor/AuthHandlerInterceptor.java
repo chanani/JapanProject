@@ -46,6 +46,7 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println("preHandle");
         if (handler instanceof HandlerMethod) {
             NoneAuth noneAuth = ((HandlerMethod) handler).getMethodAnnotation(NoneAuth.class);
             if (noneAuth != null) {

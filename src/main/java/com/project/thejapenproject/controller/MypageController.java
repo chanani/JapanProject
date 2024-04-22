@@ -19,7 +19,6 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/mypage")
-@CrossOrigin("http://localhost:3000")
 public class MypageController {
 
     @Autowired

@@ -9,6 +9,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { IoCloseOutline } from "react-icons/io5";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import { useContext } from "react";
+import { axiosInstance } from "../../api";
 
 const NoticePage = () => {
   const { userRole, username } = useContext(tokenInfoContext);
@@ -34,14 +35,8 @@ const NoticePage = () => {
 
   // 공지사항 불러오기
   useEffect(() => {
-    axios({
-      url : '/notice/getList',
-      method : 'GET'
-    })
-    .then((res) => {
-      console.log(res.data);
-      setNotice(res.data);
-    })
+    axiosInstance.get('notice/getList')
+    .then((res) => setNotice(res.data));
   },[])
   // 제목 글자 초과할 경우 ...으로 변경
   const truncate = (str, n) => {
@@ -56,7 +51,6 @@ const NoticePage = () => {
   const handleDetail = (index) => {
     let realIndex = (currentPage - 1 )* noticesPerPage + index;
     setDetailIndex(realIndex);
-    console.log(notice[realIndex]);
     setDetail((current) => !current);
     if(username !== null){
       axios({
@@ -83,8 +77,8 @@ const NoticePage = () => {
         {currentNotices.map((item, index) => (
           <div className="user-notice-content-box" key={index} onClick={(e) => handleDetail(index)}>
             <p className="content-box-p-tag">
-              {isWithinOneDay(item.notice_regdate) && <TbCircleLetterN color="red"/>}
               {truncate(item.notice_title,14)}
+              {isWithinOneDay(item.notice_regdate) && <TbCircleLetterN color="red"/>}
             </p>
             <p>{moment(item.notice_regdate).format('YYYY/MM/DD')}</p>
         </div>

@@ -40,17 +40,6 @@ const FavoritesList = () => {
   };
   // 단어 불러오기
   useEffect(() => {
-    // axios({
-    //   url : "/mypage/favorite",
-    //   method : "POST",
-    //   data : {
-    //     username : username
-    //   },
-    // })
-    // .then((res) => {
-    //   setWord(res.data);
-    // })
-
     axiosInstance.post('mypage/favorite', { username })
     .then((res) => {
         setWord(res.data);

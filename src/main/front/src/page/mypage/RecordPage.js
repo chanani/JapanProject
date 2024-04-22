@@ -3,6 +3,8 @@ import "../../styles/mypage/RecordPage.css";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
+
 
 const RecordPage = () => {
 
@@ -58,7 +60,6 @@ const RecordPage = () => {
       }
      })
      .then((res) => {
-      console.log(res.data)
       setData(res.data);
      })
      .catch((error) => {
@@ -88,7 +89,7 @@ const RecordPage = () => {
               </div>
               <div className="score-content">
                 <div className="point">{item.record_point}점</div>
-                <div className="save-date">{item.record_date}</div>
+                <div className="save-date">{moment(item.record_date).format('YYYY/MM/DD')} </div>
               </div>
               
             </div>
