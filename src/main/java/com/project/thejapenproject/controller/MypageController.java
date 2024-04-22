@@ -25,7 +25,6 @@ public class MypageController {
     @Qualifier("mypageService")
     public MypageService mypageService;
 
-
     @NoneCheckToken
     @PostMapping("/favorite")
     public ResponseEntity<ArrayList<WordVO>> favoriteList(@RequestBody Map<String, String> map){
