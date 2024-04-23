@@ -67,10 +67,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     // elasticsearch
-//    implementation 'org.elasticsearch.client:elasticsearch-rest-client:8.7.1'
     implementation group: 'org.springframework.data', name: 'spring-data-elasticsearch', version: '4.4.6'
     implementation group: 'org.elasticsearch', name: 'elasticsearch', version: '7.17.3'
-//    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
 
 }
 
