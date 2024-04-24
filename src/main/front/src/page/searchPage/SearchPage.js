@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import "../../styles/search/Search.css"
+import "../../styles/search/SearchPage.css"
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { axiosInstance } from "../../api";
+import { FaSearch } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 const Search = () => {
   const {userRole} = useContext(tokenInfoContext);
@@ -14,166 +15,67 @@ const Search = () => {
       navigate("/login");
     }
   });
+  const [wordList, setWordList] = useState([]);
+  const [keyword, setKeyword] = useState("");
 
-  const [esId, setEsId] = useState("");
-  const [name, setName] = useState("");
-  const [keyWord, setKeyWord] = useState("");
-  const [modifyEsId, setModifyEsId] = useState("");
-  const [modifyName, setModifyName] = useState("");
-  const [modifyKeyWord, setModifyKeyWord] = useState("");
-  const [deleteEsId, setDeleteEsId] = useState("");
-  const [esData, setEsData] = useState([]);
-  const nameChange = (event) => {
-    setName(event.target.value);
-  }
-  const keyWordChange = (event) => {
-    setKeyWord(event.target.value);
-  }
-  const esIdChange = (event) => {
-    setEsId(event.target.value);
-  }
-  
-  const modifyNameChange = (event) => {
-    setModifyName(event.target.value);
-  }
-  const modifyKeyWordChange = (event) => {
-    setModifyKeyWord(event.target.value);
-  }
-  const modifyEsIdChange = (event) => {
-    setModifyEsId(event.target.value);
-  }
-  const deleteEsIdChange = (event) => {
-    setDeleteEsId(event.target.value);
+  const keywordChange = (event) => {
+    setKeyword(event.target.value);
   }
 
-  // POST
-  const addDataHandle = () => {
-    if(esId === "" || keyWord === "" || esData === "") return
-    // axiosInstance.get('search/all', { params : {keyWord} })
-    // .then((res) => {
-    //     console.log(res.data)
-    //     setData(res.data);
-    // })
-    // .catch((e) => console.log(e));
-    
-    axios({
-      url : `http://localhost:9200/test_index/_doc/${esId}`,
-      method : "POST",
-      data : {
-        name : name,
-        message : keyWord
+  const submitHandle = (event) => {
+    if(event.key !== 'Enter') return;
+    responseData()
+  }
+
+  // elasticsearch로 데이터 요청
+  const responseData = () => {
+    if(!!!keyword) return alert("검색어를 입력해주세요.");
+    axios.get('http://localhost:9200/word/_search', {
+      params: {
+        size: 1000,
+        q: `word_meaning:${keyword} OR word_content:${keyword}`
       }
     })
     .then((res) => {
-      setEsId("");
-      setKeyWord("");
-      setKeyWord("");
-      console.log(res.data)
+      console.log(res.data.hits.hits);
+      setWordList(res.data.hits.hits);
+      setKeyword("");
     })
-    .catch((e) => console.log(e))
   }
-
-  // GET
-  const searchHandle = () => {
-    
-    axios({
-      url : "http://localhost:9200/test_index/_search",
-      method : "GET",
-      data : {
-        "query" : {
-          "match_all" : {}
-        }
-      }
-    })
-    .then((res) => {
-      console.log(res);
-      setEsData(res.data.hits.hits);
-    })
-    .catch((e) => console.log(e))
-  }
-
-  // PUT
-  const modifyHandle = () => {
-
-      if (!!!esData.length) return alert('데이터를 조회 후 수정해주세요.');
-      if (!esData.some(data => data._id === modifyEsId)) return alert("아이디가 없을 경우 수정이 안됩니다.");
-    
-      axios({
-        url : `http://localhost:9200/test_index/_doc/${modifyEsId}`,
-        method : "PUT",
-        data : {
-          name : modifyName,
-          message : modifyKeyWord
-        }
-      })
-      .then((res) => {
-        console.log(res.data);
-        setModifyEsId("");
-        setModifyName("");
-        setModifyKeyWord("");
-        alert("정상적으로 수정되었습니다.");
-      });
-  }
-  
-  // DELETE
-  const deleteHandle = () => {
-    if (!!!esData.length) return alert('데이터를 조회 후 수정해주세요.');
-    if (!esData.some(data => data._id === deleteEsId)) return alert("아이디가 없을 경우 삭제가 안됩니다.");
-
-    axios({
-      url : `http://localhost:9200/test_index/_doc/${deleteEsId}`,
-      method : 'DELETE'
-    })
-    .then((res) => {
-      console.log(res.data);
-      setDeleteEsId("");
-    })
-    .catch((e) => console.log(e))
-  }
-  
 
   return (
-    <div>
-      <h3>elasticsearch 데이터 추가하기</h3>
-      <div style={{marginBottom : "20px"}}>
-        <input type="text" value={esId} onChange={esIdChange} placeholder="id"/>
-        <input type="text" value={name} onChange={nameChange} placeholder="name"/>
-        <input type="text" value={keyWord} onChange={keyWordChange} placeholder="message"/>
-        <input type="button" onClick={addDataHandle} value="등록"></input>
-      </div>    
-      
-      <h3>elasticsearch 데이터 가져오기</h3>
+    <div className="search-box-all">
+      <div className="search-box">
+        <div className="search-box-title">
+          <p>단어검색</p>
 
-      <div >
-        <input type="button" onClick={searchHandle} value="데이터 가져오기"/>
-      </div>
-     
-      {esData.length === 0 ? "" : 
-        esData.map((item, index) => (
-          <div key={index}>
-            {item._id} / {item._source.name} / {item._source.message}
+          <div className="search-input-box">
+            <input type="text" value={keyword} onChange={keywordChange} onKeyDown={submitHandle}/>
+            <FaSearch onClick={responseData}/>
           </div>
-        ))
-      }
+        </div>
 
-    <h3 style={{marginTop : "20px"}}>elasticsearch 데이터 수정하기</h3>
+        
 
-    <div style={{marginBottom : "20px"}}>
-      <p>데이터를 가져온 뒤 수정할 것</p>
-      <input type="text" value={modifyEsId} onChange={modifyEsIdChange} placeholder="id"/>
-      <input type="text" value={modifyName} onChange={modifyNameChange} placeholder="name"/>
-      <input type="text" value={modifyKeyWord} onChange={modifyKeyWordChange} placeholder="message"/>
-      <input type="button" onClick={modifyHandle} value="수정"></input>
-    </div>    
-
-    <h3 style={{marginTop : "20px"}}>elasticsearch 데이터 삭제하기</h3>
-
-    <div style={{marginBottom : "20px"}}>
-      <p>데이터를 가져온 뒤 삭제할 것</p>
-      <input type="text" value={deleteEsId} onChange={deleteEsIdChange} placeholder="id"/>
-      <input type="button" onClick={deleteHandle} value="삭제"></input>
-    </div>    
-  </div>
+        <div className="search-content-box">
+          {!!!wordList.length ? <p>검색된 항목이 없습니다.</p> : 
+              wordList.map((item, index) => (
+                <div className="search-word-all" key={index}>
+                  <div className="search-word-box">
+                  {/* <div className="favorite-data-star">
+                    <FaStar size={13} onClick={() => handleFavorite(index)}/>
+                  </div> */}
+                  
+                  <div className="search-word-content"><h3>{item._source.word_content}</h3></div>
+                  <div className="search-word-meaning"><p>{item._source.word_meaning}</p></div>
+                  </div>
+                </div>
+              ))
+            }
+        </div>
+      </div>
+      
+    </div>
   );
 }
 
