@@ -98,20 +98,22 @@ const NoticePage = () => {
       </div>
         
       {detail ? 
-      <div className="notice-detail-box">
+      <div className="notice-detail-box-all">
+        <div className="notice-detail-box">
 
-        <div className="notice-detail-title">
-          <p>제목 : </p>
-          <div>{notice[detailIndex].notice_title}</div>
+          <div className="notice-detail-title">
+            <p>제목 : </p>
+            <div>{notice[detailIndex].notice_title}</div>
+            
+          </div>
           
-        </div>
-        
-        <div className="notice-detail-content">
-          <p>내용 : </p>
-          <textarea defaultValue={notice[detailIndex].notice_content} readOnly></textarea>
-        </div>
-        <div className="notice-detail-out">
-        <IoCloseOutline size={25} onClick={handleDetailOut}/>
+          <div className="notice-detail-content">
+            <p>내용 : </p>
+            <textarea defaultValue={notice[detailIndex].notice_content} readOnly></textarea>
+          </div>
+          <div className="notice-detail-out">
+          <IoCloseOutline size={25} onClick={handleDetailOut}/>
+          </div>
         </div>
       </div>
       :

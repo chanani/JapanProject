@@ -6,9 +6,7 @@
   background-color: #f6f7fb;
 
 }
-.back-toggle{
-  
-}
+
 .user-notice-box{
     border: 1px solid #777;
     border-radius: 10px;
@@ -61,14 +59,24 @@
 
 
 /*************상세 공지사항**************/
+.notice-detail-box-all {
+  position: fixed;
+  top:0;
+  right: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #4b4c4c5c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
 .notice-detail-box{
   padding: 50px 30px;
   border-radius: 10px;
-  position: absolute;
-  z-index: 2;
+  position: relative;
   background-color: rgb(223, 220, 220);
   box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
-
 }
 
 .notice-detail-title,
@@ -99,23 +107,7 @@
   color: blue;
 }
 
-/* 600 이하 */
-@media(max-width : 600px){
-  .user-notice-box{
-    width: 268px;
-  }
-  .user-notice-content-box {
-    width: 280px;
-  }
-  .notice-detail-box{
-    width: 255px;
-    height: 317px;
-  }
-  .notice-detail-content > textarea{
-    width: 190px;
-    height: 250px;
-  }
-}
+
 
 /* 600 이상 */
 @media(max-width : 600px){
@@ -126,7 +118,7 @@
     width: 300px;
   }
   .notice-detail-box{
-    width: 400px;
+    width: 300px;
     height: 317px;
   }
   .notice-detail-content > textarea{
@@ -143,7 +135,7 @@
     width: 480px;
   }
   .notice-detail-box{
-    width: 498px;
+    width: 400px;
     height: 317px;
   }
   .notice-detail-content > textarea{

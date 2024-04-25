@@ -27,8 +27,8 @@
 
 .kind-not-check {
   text-align: center;
-  font-size: 20px;
-  padding: 30px;
+  font-size: 17px;
+  padding: 20px 0 12px 0;
 }
 
 
@@ -108,7 +108,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 
 

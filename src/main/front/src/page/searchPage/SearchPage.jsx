@@ -6,7 +6,7 @@ import axios from "axios";
 import { FaSearch } from "react-icons/fa";
 import moment from "moment";
 import 'moment/locale/ko';
-import { TbCircleLetterN } from "react-icons/tb";
+import { IoCloseOutline } from "react-icons/io5";
 
 const Search = () => {
   const {userRole} = useContext(tokenInfoContext);
@@ -63,13 +63,16 @@ const Search = () => {
       setWordList(res.data.hits.hits);
       setWordKeyword("");
     })
+    .catch((e) => {
+      alert("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
+    })
   }
 
   // elasticsearch로 notice 데이터 요청
   const requestNoticeData = () => {
     if(!!!noticeKeyword) return alert("검색어를 입력해주세요.");
     axios.get('http://localhost:9200/notice/_search', {
-      param: {
+      params: {
         size: 1000,
         q: `notice_title:${noticeKeyword} OR notice_content:${noticeKeyword}`
       }
@@ -78,7 +81,9 @@ const Search = () => {
       setNoticeList(res.data.hits.hits);
       setNoticeKeyword("");
     })
-    .catch((e) => console.log(e))
+    .catch((e) => {
+      alert("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
+    })
   }
 
   return (
@@ -133,7 +138,10 @@ const WordComponent = ({wordKeyword, keywordChange, submitHandle, requestWordDat
         </div>
 
         <div className="search-content-box">
-          {!!!wordList.length ? <p>검색된 항목이 없습니다.</p> : 
+          {!!!wordList.length ? 
+            <div className="search-notice-content-box">
+              <p>검색된 항목이 없습니다.</p>
+            </div> : 
               wordList.map((item, index) => (
                 <div className="search-word-all" key={index}>
                   <div className="search-word-box">
@@ -149,6 +157,9 @@ const WordComponent = ({wordKeyword, keywordChange, submitHandle, requestWordDat
 }
 
 const NoticeComponent = ({noticeKeyword, noticeKeywordChange, submitHandle, requestNoticeData, noticeList}) => {
+  const [detail, setDetail] = useState(false);
+  const [detailIndex, setDetailIndex] = useState(0); 
+
   // 제목 글자 초과할 경우 ...으로 변경
   const truncate = (str, n) => {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;
@@ -158,6 +169,20 @@ const NoticeComponent = ({noticeKeyword, noticeKeywordChange, submitHandle, requ
     const oneDayAgo = moment().subtract(1, 'day');
     return moment(date).isAfter(oneDayAgo);
   };
+
+   // 상세 공지사항 핸들러
+  const handleDetail = ({index}) => {
+    console.log(index)
+    setDetailIndex(index);
+    console.log(noticeList[0]._source)
+    setDetail((current) => !current);
+  }
+
+  // 상세 공지사항 닫기 핸들러
+  const handleDetailOut = () => {
+    setDetail((current) => !current);
+  }
+
   return (
     <div>
        <div className="search-box-title">
@@ -172,7 +197,7 @@ const NoticeComponent = ({noticeKeyword, noticeKeywordChange, submitHandle, requ
        <div className="search-notice-content-box">
          {!!!noticeList.length ? <p>검색된 항목이 없습니다.</p> : 
              noticeList.map((item, index) => (
-              <div className="user-notice-content-box" key={index} >
+              <div className="user-notice-content-box" key={index} onClick={(e) => handleDetail({index})}>
                 <p className="content-box-p-tag">
                   {truncate(item._source.notice_title,14)}
                   {isWithinOneDay(item._source.notice_regdate)}
@@ -182,6 +207,26 @@ const NoticeComponent = ({noticeKeyword, noticeKeywordChange, submitHandle, requ
             ))
            }
        </div>
+
+       {!detail ? "" : 
+       <div className="notice-detail-box-all">
+          <div className="notice-detail-box">
+            <div className="notice-detail-title">
+              <p>제목 : </p>
+              <div>{noticeList[detailIndex]._source.notice_title}</div>
+              
+            </div>
+            
+            <div className="notice-detail-content">
+              <p>내용 : </p>
+              <textarea defaultValue={noticeList[detailIndex]._source.notice_content} readOnly></textarea>
+            </div>
+            <div className="notice-detail-out">
+            <IoCloseOutline size={25} onClick={handleDetailOut}/>
+            </div>
+          </div>
+        </div>
+        }
      </div> 
  )
 }
