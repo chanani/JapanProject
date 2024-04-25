@@ -14,7 +14,7 @@
     border-radius: 10px;
     box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
     background-color: white;
-    padding: 28px 50px;
+    padding: 25px 30px 30px 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -118,12 +118,12 @@
 }
 
 /* 600 이상 */
-@media(min-width : 600px){
+@media(max-width : 600px){
   .user-notice-box{
-    width: 468px;
+    width: 330px;
   }
   .user-notice-content-box {
-    width: 500px;
+    width: 300px;
   }
   .notice-detail-box{
     width: 400px;
@@ -135,15 +135,15 @@
   }
 }
  /* 1000 이상 */
-@media(min-width : 1000px){
+@media(min-width : 600px){
   .user-notice-box{
-    width: 600px;
+    width: 500px;
   }
   .user-notice-content-box {
-    width: 580px;
+    width: 480px;
   }
   .notice-detail-box{
-    width: 400px;
+    width: 498px;
     height: 317px;
   }
   .notice-detail-content > textarea{
@@ -153,12 +153,12 @@
 }
 
  /* 1000 이상 */
- @media(min-width : 1200px){
+ @media(min-width : 1000px){
   .user-notice-box{
-    width: 700px;
+    width: 848px;
   }
   .user-notice-content-box {
-    width: 580px;
+    width: 760px;
   }
 }
 
