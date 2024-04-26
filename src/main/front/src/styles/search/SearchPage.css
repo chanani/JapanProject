@@ -23,9 +23,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 55%;
   height: 50px;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 
 .search-all-border > input{
@@ -40,14 +39,14 @@
 }
 
 .search-header-box{
-  font-size: 23px;
+  font-size: 18px;
+  font-weight: 500;
   margin-bottom: 15px;
   border: 1px solid #d2cece;
   border-radius: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
   background-color: #f1f1f9;
 }
 
@@ -67,6 +66,10 @@
   padding: 20px 0 12px 0;
 }
 
+.search-mainAll-box {
+  display: flex;
+  flex-direction: column;
+}
 
 .search-header-box > div {
   width: 50%;
@@ -79,6 +82,16 @@
 .search-header-box > div:hover{
   border-radius: 10px ;
   background-color: #b0b8ff;
+}
+
+.search-box-mainPage-title{
+  font-size: 17px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #d2cece;
+  padding: 0  5px 10px 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 
@@ -156,6 +169,12 @@
   .search-word-all {
     width: 73px;
   }
+  .search-header-box{
+    width: 300px;
+  }
+  .search-all-border{
+    width: 250px;
+  }
 }
 
 /* 600 이상 */
@@ -166,6 +185,12 @@
   .search-word-all {
     width: 98px;
   }
+  .search-header-box{
+    width: 450px;
+  }
+  .search-all-border{
+    width: 350px;
+  }
 }
  /* 1000 이상 */
 @media(min-width : 1000px){
@@ -174,5 +199,11 @@
   }
   .search-word-all {
     width: 114px;
+  }
+  .search-header-box{
+    width: 600px;
+  }
+  .search-all-border{
+    width: 450px;
   }
 }

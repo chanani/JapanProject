@@ -129,7 +129,25 @@ const Search = () => {
         </div>
 
         {searchKind === "전체" ? 
-         <AllComponent />
+         <div className="search-mainAll-box">
+          
+          <WordComponent 
+          wordKeyword={wordKeyword} 
+          keywordChange={keywordChange} 
+          submitHandle={submitHandle} 
+          requestWordData={requestWordData} 
+          wordList={wordList}
+          searchKind={searchKind}
+          /> 
+            <NoticeComponent 
+          noticeKeyword={noticeKeyword} 
+          noticeKeywordChange={noticeKeywordChange} 
+          submitHandle={submitHandle} 
+          requestNoticeData={requestNoticeData} 
+          noticeList={noticeList}
+          searchKind={searchKind}
+          /> 
+        </div>
         : 
         searchKind === "단어" ? 
         <WordComponent 
@@ -138,6 +156,7 @@ const Search = () => {
         submitHandle={submitHandle} 
         requestWordData={requestWordData} 
         wordList={wordList}
+        searchKind={searchKind}
         /> 
         : searchKind === "공지사항" &&  
         <NoticeComponent 
@@ -146,6 +165,7 @@ const Search = () => {
         submitHandle={submitHandle} 
         requestNoticeData={requestNoticeData} 
         noticeList={noticeList}
+        searchKind={searchKind}
         /> 
       }
         
@@ -157,53 +177,67 @@ const Search = () => {
 
 export default Search;
 
-const AllComponent = ({}) => {
-  return (
-    <div>
-      <div className="search-box-title">
-        <p>전체 검색</p>
-      </div>
 
-      <div className="search-content-box">
-       
-      </div>
+const WordComponent = ({wordKeyword, keywordChange, submitHandle, requestWordData, wordList, searchKind}) => {
+  return (
+     <div style={{marginBottom : "15px"}}>
+      {searchKind === "전체" ? 
+        <div>
+          <div className="search-box-mainPage-title">
+            <p>단어 검색({wordList.length})</p>
+          </div>
+
+          <div className="search-content-box">
+            {!!!wordList.length ? 
+              <div className="search-notice-content-box">
+                <p>검색된 항목이 없습니다.</p>
+              </div> : 
+                wordList.slice(0, 6).map((item, index) => (
+                  <div className="search-word-all" key={index}>
+                    <div className="search-word-box">
+                      <div className="search-word-content"><h3>{item._source.word_content}</h3></div>
+                      <div className="search-word-meaning"><p>{item._source.word_meaning}</p></div>
+                    </div>
+                  </div>
+                ))
+              }
+          </div>
+          
+        </div>
+      : 
+        <div>
+          <div className="search-box-title">
+            <p>단어 검색</p>
+
+            <div className="search-input-box">
+              <input type="text" value={wordKeyword} onChange={keywordChange} onKeyDown={submitHandle}/>
+              <FaSearch onClick={requestWordData}/>
+            </div>
+          </div>
+
+          <div className="search-content-box">
+            {!!!wordList.length ? 
+              <div className="search-notice-content-box">
+                <p>검색된 항목이 없습니다.</p>
+              </div> : 
+                wordList.map((item, index) => (
+                  <div className="search-word-all" key={index}>
+                    <div className="search-word-box">
+                      <div className="search-word-content"><h3>{item._source.word_content}</h3></div>
+                      <div className="search-word-meaning"><p>{item._source.word_meaning}</p></div>
+                    </div>
+                  </div>
+                ))
+              }
+          </div>
+       </div>
+      }
+        
     </div> 
   )
 }
 
-
-const WordComponent = ({wordKeyword, keywordChange, submitHandle, requestWordData, wordList}) => {
-  return (
-     <div>
-        <div className="search-box-title">
-          <p>단어 검색</p>
-
-          <div className="search-input-box">
-            <input type="text" value={wordKeyword} onChange={keywordChange} onKeyDown={submitHandle}/>
-            <FaSearch onClick={requestWordData}/>
-          </div>
-        </div>
-
-        <div className="search-content-box">
-          {!!!wordList.length ? 
-            <div className="search-notice-content-box">
-              <p>검색된 항목이 없습니다.</p>
-            </div> : 
-              wordList.map((item, index) => (
-                <div className="search-word-all" key={index}>
-                  <div className="search-word-box">
-                    <div className="search-word-content"><h3>{item._source.word_content}</h3></div>
-                    <div className="search-word-meaning"><p>{item._source.word_meaning}</p></div>
-                  </div>
-                </div>
-              ))
-            }
-        </div>
-      </div> 
-  )
-}
-
-const NoticeComponent = ({noticeKeyword, noticeKeywordChange, submitHandle, requestNoticeData, noticeList}) => {
+const NoticeComponent = ({noticeKeyword, noticeKeywordChange, submitHandle, requestNoticeData, noticeList, searchKind}) => {
   const [detail, setDetail] = useState(false);
   const [detailIndex, setDetailIndex] = useState(0); 
 
@@ -232,48 +266,94 @@ const NoticeComponent = ({noticeKeyword, noticeKeywordChange, submitHandle, requ
 
   return (
     <div>
-       <div className="search-box-title">
-         <p>공지사항 검색</p>
+      {searchKind === "전체" ? 
+        <div>
+          <div className="search-box-mainPage-title">
+            <p>공지사항 검색({noticeList.length})</p>
+          </div>
 
-         <div className="search-input-box">
-           <input type="text" value={noticeKeyword} onChange={noticeKeywordChange} onKeyDown={submitHandle}/>
-           <FaSearch onClick={requestNoticeData}/>
-         </div>
-       </div>
+          <div className="search-notice-content-box">
+          {!!!noticeList.length ? <p>검색된 항목이 없습니다.</p> : 
+              noticeList.slice(0,4).map((item, index) => (
+                <div className="user-notice-content-box" key={index} onClick={(e) => handleDetail({index})}>
+                  <p className="content-box-p-tag">
+                    {truncate(item._source.notice_title,14)}
+                    {isWithinOneDay(item._source.notice_regdate)}
+                  </p>
+                  <p>{moment(item._source.notice_regdate).format('YYYY/MM/DD')}</p>
+              </div>
+              ))
+            }
+        </div>
 
-       <div className="search-notice-content-box">
-         {!!!noticeList.length ? <p>검색된 항목이 없습니다.</p> : 
-             noticeList.map((item, index) => (
-              <div className="user-notice-content-box" key={index} onClick={(e) => handleDetail({index})}>
-                <p className="content-box-p-tag">
-                  {truncate(item._source.notice_title,14)}
-                  {isWithinOneDay(item._source.notice_regdate)}
-                </p>
-                <p>{moment(item._source.notice_regdate).format('YYYY/MM/DD')}</p>
-            </div>
-            ))
-           }
-       </div>
+          {!detail ? "" : 
+          <div className="notice-detail-box-all">
+              <div className="notice-detail-box">
+                <div className="notice-detail-title">
+                  <p>제목 : </p>
+                  <div>{noticeList[detailIndex]._source.notice_title}</div>
+                  
+                </div>
+                
+                <div className="notice-detail-content">
+                  <p>내용 : </p>
+                  <textarea defaultValue={noticeList[detailIndex]._source.notice_content} readOnly></textarea>
+                </div>
+                <div className="notice-detail-out">
+                <IoCloseOutline size={25} onClick={handleDetailOut}/>
+                </div>
+              </div>
+          </div>
+          }
+          
+        </div>
+      : 
+        <div>
+          <div className="search-box-title">
+          <p>공지사항 검색</p>
 
-       {!detail ? "" : 
-       <div className="notice-detail-box-all">
-          <div className="notice-detail-box">
-            <div className="notice-detail-title">
-              <p>제목 : </p>
-              <div>{noticeList[detailIndex]._source.notice_title}</div>
-              
-            </div>
-            
-            <div className="notice-detail-content">
-              <p>내용 : </p>
-              <textarea defaultValue={noticeList[detailIndex]._source.notice_content} readOnly></textarea>
-            </div>
-            <div className="notice-detail-out">
-            <IoCloseOutline size={25} onClick={handleDetailOut}/>
-            </div>
+          <div className="search-input-box">
+            <input type="text" value={noticeKeyword} onChange={noticeKeywordChange} onKeyDown={submitHandle}/>
+            <FaSearch onClick={requestNoticeData}/>
           </div>
         </div>
-        }
+
+        <div className="search-notice-content-box">
+          {!!!noticeList.length ? <p>검색된 항목이 없습니다.</p> : 
+              noticeList.map((item, index) => (
+                <div className="user-notice-content-box" key={index} onClick={(e) => handleDetail({index})}>
+                  <p className="content-box-p-tag">
+                    {truncate(item._source.notice_title,14)}
+                    {isWithinOneDay(item._source.notice_regdate)}
+                  </p>
+                  <p>{moment(item._source.notice_regdate).format('YYYY/MM/DD')}</p>
+              </div>
+              ))
+            }
+        </div>
+
+          {!detail ? "" : 
+          <div className="notice-detail-box-all">
+              <div className="notice-detail-box">
+                <div className="notice-detail-title">
+                  <p>제목 : </p>
+                  <div>{noticeList[detailIndex]._source.notice_title}</div>
+                  
+                </div>
+                
+                <div className="notice-detail-content">
+                  <p>내용 : </p>
+                  <textarea defaultValue={noticeList[detailIndex]._source.notice_content} readOnly></textarea>
+                </div>
+                <div className="notice-detail-out">
+                <IoCloseOutline size={25} onClick={handleDetailOut}/>
+                </div>
+              </div>
+          </div>
+          }
+        </div>
+      }
+       
      </div> 
  )
 }
