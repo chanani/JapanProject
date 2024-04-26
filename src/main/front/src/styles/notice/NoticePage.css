@@ -65,7 +65,7 @@
   right: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #4b4c4c5c;
+  background-color: #00000078;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,7 +75,7 @@
   padding: 50px 30px;
   border-radius: 10px;
   position: relative;
-  background-color: rgb(223, 220, 220);
+  background-color: rgb(231 228 254);
   box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
 }
 

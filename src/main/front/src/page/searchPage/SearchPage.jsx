@@ -19,11 +19,18 @@ const Search = () => {
   });
 
   // 검색 종류
-  const [searchKind, setSearchKind] = useState("");
+  const [searchKind, setSearchKind] = useState("전체");
 
   const kindChangeHandle = (event) => {
     setSearchKind(event.target.innerText);
+    setAllKeyword("");
+    setWordKeyword("");
+    setNoticeKeyword("");
   }
+
+  // 전체검색 리스트, 검색 요청 문구
+  const [allList, setAllList] = useState([]);
+  const [allKeyword, setAllKeyword] = useState("");
 
   // 단어검색 리스트, 검색 요청 단어
   const [wordList, setWordList] = useState([]);
@@ -32,6 +39,13 @@ const Search = () => {
   // 공지사항 검색 리스트, 공지사항 요청 단어
   const [noticeList, setNoticeList] = useState([]);
   const [noticeKeyword, setNoticeKeyword] = useState("");
+
+  // 전체 단어 변경 핸들러
+  const allKeywordChange = (event) => {
+    setAllKeyword(event.target.value);
+    setNoticeKeyword(event.target.value);
+    setWordKeyword(event.target.value);
+  }
 
   // 검색 단어 변경 핸들러
   const keywordChange = (event) => {
@@ -46,13 +60,21 @@ const Search = () => {
   // 검색 버튼 핸들러
   const submitHandle = (event) => {
     if(event.key !== 'Enter') return;
-    if(searchKind === '단어') requestWordData();
+    if(searchKind === '전체') requestAllData();
+    else if(searchKind === '단어') requestWordData();
     else if(searchKind === '공지사항') requestNoticeData();
+  }
+
+  // elasticsearch로 all 데이터 요청
+  const requestAllData = () => {
+    if(!!!allKeyword) return alert("검색어를 입력해주세요.1");
+    requestWordData();
+    requestNoticeData();
   }
 
   // elasticsearch로 word 데이터 요청
   const requestWordData = () => {
-    if(!!!wordKeyword) return alert("검색어를 입력해주세요.");
+    if(!!!wordKeyword) return alert("검색어를 입력해주세요.2");
     axios.get('http://localhost:9200/word/_search', {
       params: {
         size: 1000,
@@ -61,6 +83,7 @@ const Search = () => {
     })
     .then((res) => {
       setWordList(res.data.hits.hits);
+      setAllKeyword("");
       setWordKeyword("");
     })
     .catch((e) => {
@@ -70,7 +93,7 @@ const Search = () => {
 
   // elasticsearch로 notice 데이터 요청
   const requestNoticeData = () => {
-    if(!!!noticeKeyword) return alert("검색어를 입력해주세요.");
+    if(!!!noticeKeyword) return alert("검색어를 입력해주세요.3");
     axios.get('http://localhost:9200/notice/_search', {
       params: {
         size: 1000,
@@ -89,15 +112,24 @@ const Search = () => {
   return (
     <div className="search-box-all">
       <div className="search-box">
-        <div className="search-header-box">
-          <div onClick={kindChangeHandle}>단어</div>
-          <div onClick={kindChangeHandle}>공지사항</div>
+
+        <div className="search-all-box">
+          <div className="search-all-border">
+          <input type="text" value={allKeyword} onChange={allKeywordChange} onKeyDown={submitHandle} disabled={searchKind !== "전체"}/>
+            <FaSearch onClick={requestAllData} size={23}/>
+          </div>
         </div>
 
-        {!!!searchKind ? 
-          <div className="kind-not-check">
-            <p>상단의 버튼을 클릭해주세요.</p>
+        <div className="search-header-center">
+          <div className="search-header-box">
+            <div onClick={kindChangeHandle} className={(searchKind === "전체" ? ' search-header-box-check': "")}>전체</div>
+            <div onClick={kindChangeHandle} className={(searchKind === "단어" ? ' search-header-box-check': "")}>단어</div>
+            <div onClick={kindChangeHandle} className={(searchKind === "공지사항" ? ' search-header-box-check': "")}>공지사항</div>
           </div>
+        </div>
+
+        {searchKind === "전체" ? 
+         <AllComponent />
         : 
         searchKind === "단어" ? 
         <WordComponent 
@@ -124,6 +156,21 @@ const Search = () => {
 }
 
 export default Search;
+
+const AllComponent = ({}) => {
+  return (
+    <div>
+      <div className="search-box-title">
+        <p>전체 검색</p>
+      </div>
+
+      <div className="search-content-box">
+       
+      </div>
+    </div> 
+  )
+}
+
 
 const WordComponent = ({wordKeyword, keywordChange, submitHandle, requestWordData, wordList}) => {
   return (

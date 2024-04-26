@@ -72,7 +72,7 @@ const NoticePage = () => {
       <div className="user-notice-box">
 
         <div className="user-notice-title-box">
-          <p>The Japen 공지사항</p>
+          <p>The Japan 공지사항</p>
         </div>
         {currentNotices.map((item, index) => (
           <div className="user-notice-content-box" key={index} onClick={(e) => handleDetail(index)}>
