@@ -29,7 +29,6 @@ const Search = () => {
   }
 
   // 전체검색 리스트, 검색 요청 문구
-  const [allList, setAllList] = useState([]);
   const [allKeyword, setAllKeyword] = useState("");
 
   // 단어검색 리스트, 검색 요청 단어
@@ -61,8 +60,14 @@ const Search = () => {
   const submitHandle = (event) => {
     if(event.key !== 'Enter') return;
     if(searchKind === '전체') requestAllData();
-    else if(searchKind === '단어') requestWordData();
-    else if(searchKind === '공지사항') requestNoticeData();
+    else if(searchKind === '단어') {
+      requestWordData();
+      setNoticeList([]);
+    }
+    else if(searchKind === '공지사항') {
+      requestNoticeData();
+      setWordList([]);
+    }
   }
 
   // elasticsearch로 all 데이터 요청
@@ -73,9 +78,9 @@ const Search = () => {
   }
 
   // elasticsearch로 word 데이터 요청
-  const requestWordData = () => {
+  const requestWordData = async () => {
     if(!!!wordKeyword) return alert("검색어를 입력해주세요.2");
-    axios.get('http://localhost:9200/word/_search', {
+    await axios.get('http://localhost:9200/word/_search', {
       params: {
         size: 1000,
         q: `word_meaning:${wordKeyword} OR word_content:${wordKeyword}`
@@ -83,8 +88,8 @@ const Search = () => {
     })
     .then((res) => {
       setWordList(res.data.hits.hits);
-      setAllKeyword("");
-      setWordKeyword("");
+      // setAllKeyword("");
+      // setWordKeyword("");
     })
     .catch((e) => {
       alert("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
@@ -92,9 +97,9 @@ const Search = () => {
   }
 
   // elasticsearch로 notice 데이터 요청
-  const requestNoticeData = () => {
+  const requestNoticeData = async () => {
     if(!!!noticeKeyword) return alert("검색어를 입력해주세요.3");
-    axios.get('http://localhost:9200/notice/_search', {
+    await axios.get('http://localhost:9200/notice/_search', {
       params: {
         size: 1000,
         q: `notice_title:${noticeKeyword} OR notice_content:${noticeKeyword}`
@@ -102,7 +107,7 @@ const Search = () => {
     })
     .then((res) => {
       setNoticeList(res.data.hits.hits);
-      setNoticeKeyword("");
+      // setNoticeKeyword("");
     })
     .catch((e) => {
       alert("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
@@ -265,7 +270,7 @@ const NoticeComponent = ({noticeKeyword, noticeKeywordChange, submitHandle, requ
   }
 
   return (
-    <div>
+    <div style={{marginBottom : "15px"}}>
       {searchKind === "전체" ? 
         <div>
           <div className="search-box-mainPage-title">
