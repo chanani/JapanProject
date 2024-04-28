@@ -41,15 +41,10 @@ public class ChatGPTController {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + key);
-
         ArrayList<Message> list = new ArrayList<>();
         list.add(new Message("user",map.get("message")));
-
-
         Body body = new Body("gpt-3.5-turbo", list);
-
         RequestEntity<Body> httpEntity = new RequestEntity<>(body, httpHeaders, HttpMethod.POST, uri);
-
         ResponseEntity<String> exchange = restTemplate.exchange(httpEntity, String.class);
         return exchange;
     }

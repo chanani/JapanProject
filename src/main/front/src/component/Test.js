@@ -3,6 +3,7 @@ import "../styles/component/Test.css";
 import Audio from "./Audio";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { axiosInstance } from "../api";
 
 const Test = ({level, kind, currentPath}) => {
   // kind가 true일 때 뜻 풀이, false일 때 단어 풀이
@@ -23,11 +24,9 @@ const Test = ({level, kind, currentPath}) => {
       window.scrollTo(0, 0);
   };
 
+  // 데이터 불러오는 핸들러
   useEffect(() => {
-    axios({
-      url : "/test/word/" + level,
-      method : "GET"
-    })
+    axiosInstance.get(`/test/word/${level}`)
     .then((res) => {
       setWord(res.data);
     })

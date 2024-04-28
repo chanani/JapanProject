@@ -11,6 +11,7 @@ import { FaStopCircle } from "react-icons/fa";
 import Audio from './Audio';
 import { tokenInfoContext } from './TokenInfoProvider';
 import axios from 'axios';
+import { axiosInstance } from '../api';
 
 const Quiz = ({ level, num, arr }) => {
   let [word, setWord] = useState([]);
@@ -44,16 +45,8 @@ const Quiz = ({ level, num, arr }) => {
   }
   // 즐겨 찾기 백엔드로 전달
   const changeFavorite = () => {
-    axios({
-      url : "/study/addFavorite/" + word[current].word_num + "/" + !word[current].word_favorite + "/" + username,
-      method : "GET",
-      headers : {
-        Authorization : accessToken
-      }
-    })
-    .then((res) => {
-    })
-
+    axiosInstance.get(`study/addFavorite/${word[current].word_num}/${!word[current].word_favorite}/${username}`)
+    .catch((e) => alert('데이터를 저장하는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.'))
   }
   // +1 핸들러
   const handleNext = () => {
@@ -97,13 +90,11 @@ const Quiz = ({ level, num, arr }) => {
     if(arr.length !== 0){
       setWord(arr);
     } else {
-      axios({
-        url : "/study/data/" + level + "/" + num + "/" + username,
-        method : "GET",
-      })
+      axiosInstance(`study/data/${level}/${num}/${username}`)
       .then((res) => {
         setWord(res.data);
-      });
+      })
+      .catch((e) => alert('데이터를 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.'));
     }
   }, [arr, level, num, username]);
   

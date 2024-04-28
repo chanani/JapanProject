@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import {Cookies} from 'react-cookie';
+import { axiosInstance } from "../../api";
 
 function Login() {
   const navigator = useNavigate();
@@ -37,22 +38,28 @@ function Login() {
     let u_value = event.target.value;
     setPassword(u_value);
   }
+  // 로그인 이벤트 
+  const loginKeyDown = (event) => {
+    if(event.key !== 'Enter') return
+    handleLogin(event);
+  }
+
+
   // 로그인 핸들러
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    let formData = new FormData();
-    formData.append("username", username);
-    formData.append("password", password);
+    let formData = new FormData();    
+    formData.append('username', username);
+    formData.append('password', password);
+
     axios({
-      url: "/login",
-      method : "post",
-      data : formData,
+      url : process.env.REACT_APP_URL_JAVA + 'login',
+      method : 'POST',
+      data : formData
     })
     .then((res) => {
-
       if(res.status === 200){
         setCookies(res.data.data.accessToken, res.data.data.refreshToken, username);
-        
         alert("반갑습니다 *_*");
         window.location = "/";
       }
@@ -124,6 +131,7 @@ function Login() {
                 <input type="password" placeholder="비밀번호"
                 onChange={handlePassword}
                 value={password}
+                onKeyDown={loginKeyDown}
                 />
               </div>
 

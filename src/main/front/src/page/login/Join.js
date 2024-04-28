@@ -67,7 +67,7 @@ function Join() {
     }
 
     axios({
-      url : "/join",
+      url : process.env.REACT_APP_URL_JAVA + "join",
       method : "POST",
       data : {
         user_name : form[0],

@@ -4,6 +4,7 @@ import { FaPlus } from "react-icons/fa6";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
+import { axiosInstance } from "../../api";
 
 const AddWordPage = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const AddWordPage = () => {
   const [inputCount, setInputCount] = useState(1);
   const [list, setList] = useState([]);
 
+  // 단어 입력 핸들러
   const handleChangeWord = (event, index) => {
     const { name, value } = event.target;
     const newList = [...list];
@@ -26,23 +28,17 @@ const AddWordPage = () => {
     setList(newList);
   }
 
+  // 단어 목록 추가 핸들러
   const handleAddWord = () => {
     setList(prevList => [...prevList, { word: '', mean: '', level: '' }]);
     setInputCount(prevCount => prevCount + 1);
   }
-
+  
+  // 공지사항 등록 핸들러
   const handleSubmit = async() => {
+    if(inputCount === 1) return alert("등록할 단어를 입력해주세요.");
     try{
-      const wordResponse = await axios({
-        url : "/admin/addWordList",
-        method : "POST",
-        data : {
-          list : list
-        },
-        headers : {
-          Authorization : accessToken
-        }
-      })
+      const wordResponse = await axiosInstance.post('admin/addWordList', {list})
       alert(`${list.length}건이 정상적으로 등록되었습니다.`);
       setList([]);
       setInputCount(1);

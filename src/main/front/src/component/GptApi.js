@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { FaArrowAltCircleUp } from "react-icons/fa";
 import { tokenInfoContext } from "./TokenInfoProvider";
+import { axiosInstance } from "../api";
 
 const GptApi = ({handleQuestion, handleResponse}) => {
   const [question, setQuestion] = useState('');
@@ -16,8 +17,9 @@ const GptApi = ({handleQuestion, handleResponse}) => {
     }
     handleQuestion(question); // 질문 전달
     setQuestion('');
+    //await axiosInstance.post('chat-gpt/send', { message : question })
     await axios({
-      url : "/chat-gpt/send",
+      url : "http://localhost:8889/chat-gpt/send",
       method : "POST",
       data : {
         "message" : question
@@ -27,6 +29,7 @@ const GptApi = ({handleQuestion, handleResponse}) => {
       }
     })
     .then((res) => {
+      console.log(res);
       content = res.data.choices[0].message.content;
     })
     .catch((error) => {

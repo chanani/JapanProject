@@ -9,6 +9,7 @@ import { BiCaretUp } from "react-icons/bi";
 import { CiMenuKebab } from "react-icons/ci";
 import axios from "axios";
 import {Cookies} from 'react-cookie';
+import { axiosInstance } from '../api';
 function Header(){
   const navigate = useNavigate();
   const { userRole, username, accessToken, refreshToken } = useContext(tokenInfoContext);
@@ -52,13 +53,7 @@ function Header(){
   // 알랑 목록 조회
   const getNoticeList = () => {
     if(userRole === "role_user"){
-      axios({
-        url : `/notice/alarmList/${username}`,
-        method : 'GET',
-        headers : {
-          Authorization : accessToken
-        }
-      })
+      axiosInstance.get(`notice/alarmList/${username}`)
       .then((res) => {
         setNoCheckList(res.data);
       })
@@ -89,17 +84,7 @@ function Header(){
   }
   // 로그아웃 핸들러
   const handleLogout = () => {
-
-    axios({
-      url : "/logout",
-      method : "POST",
-      data : {
-        username : username
-      },
-      headers : {
-        Authorization : accessToken
-      }
-    })
+    axiosInstance.post('logout', {username : username})
     .then((res) => {
       if(res.status === 200){
         cookie.remove('accessToken');

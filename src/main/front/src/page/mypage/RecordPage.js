@@ -4,6 +4,7 @@ import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
+import { axiosInstance } from "../../api";
 
 
 const RecordPage = () => {
@@ -26,17 +27,7 @@ const RecordPage = () => {
       let kind = data[index].record_kind;
       let level = data[index].record_kind;
       let point = data[index].record_point;
-      const response = await axios({
-        url : "/mypage/recordDetails",
-        method : "POST",
-        data : {
-          username : username,
-          record_num : num
-        }, 
-        headers : {
-          Authorization : accessToken
-        }
-      });
+      const response = await axiosInstance.post('mypage/recordDetails', { username : username, record_num : num })
       
       const answer = response.data;
       navigate("/recordDetails", {state : { kind, level, answer, point } });
@@ -49,16 +40,7 @@ const RecordPage = () => {
 
   // 데이터 가져오기
   useEffect(() => {
-     axios({
-      url : "/mypage/record",
-      method : "POST",
-      data : {
-        username : username
-      },
-      headers : {
-        Authorization : accessToken
-      }
-     })
+    axiosInstance.post('mypage/record', {username})
      .then((res) => {
       setData(res.data);
      })

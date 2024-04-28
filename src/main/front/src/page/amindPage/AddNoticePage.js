@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import "../../styles/adminPage/AddNoticePage.css";
 import axios from "axios";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
+import { axiosInstance } from "../../api";
 const AddNoticePage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -23,30 +24,9 @@ const AddNoticePage = () => {
   const handleSubmit = async() => {
     try{
       // 공지사항 등록
-      const noticeResponse = await axios({
-        url: "/admin/addNotice",
-        method: "POST",
-        headers: {
-          Authorization: accessToken
-        },
-        data: {
-          title: title,
-          content: content
-        },
-      });
-
+      const noticeResponse = await axiosInstance.post('admin/addNotice', {title : title, content : content})
       // 카프카 Topic 등록
-      await axios({
-        url: "/kafka/send",
-        method: "POST",
-        headers: {
-          Authorization: accessToken
-        },
-        data: {
-          message: content
-        }
-      });
-      
+      await axiosInstance.post('kafka/send', {message : content})  
       alert("정상적으로 등록되었습니다.");
       window.location = "/";
     } catch (error) {
