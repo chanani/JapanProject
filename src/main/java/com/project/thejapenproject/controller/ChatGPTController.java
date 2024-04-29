@@ -3,6 +3,7 @@ package com.project.thejapenproject.controller;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -20,17 +21,16 @@ import java.util.Map;
 
 @Controller
 @RequestMapping(value = "/chat-gpt")
+@RequiredArgsConstructor
 public class ChatGPTController {
 
     @Value("${openai.secret-key}")
     private String key;
 
-    @Value("{openai.model}")
-    private String model;
 
     @NoneCheckToken
     @PostMapping("/send")
-    public ResponseEntity send(@RequestBody Map<String, String> map) {
+    public ResponseEntity<String> send(@RequestBody Map<String, String> map) {
         RestTemplate restTemplate = new RestTemplate();
 
         URI uri = UriComponentsBuilder
@@ -38,7 +38,6 @@ public class ChatGPTController {
                 .build()
                 .encode()
                 .toUri();
-
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + key);
         ArrayList<Message> list = new ArrayList<>();
@@ -46,8 +45,10 @@ public class ChatGPTController {
         Body body = new Body("gpt-3.5-turbo", list);
         RequestEntity<Body> httpEntity = new RequestEntity<>(body, httpHeaders, HttpMethod.POST, uri);
         ResponseEntity<String> exchange = restTemplate.exchange(httpEntity, String.class);
-        return exchange;
+
+        return ResponseEntity.ok(exchange.getBody());
     }
+
 
     @AllArgsConstructor
     @Data

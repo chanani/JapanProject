@@ -7,7 +7,7 @@ import { axiosInstance } from "../api";
 const GptApi = ({handleQuestion, handleResponse}) => {
   const [question, setQuestion] = useState('');
   const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
-
+  console.log(accessToken);
   // GptApi 호출
   const handleSubmit = async(e) => {
     let content = '';
@@ -19,17 +19,16 @@ const GptApi = ({handleQuestion, handleResponse}) => {
     setQuestion('');
     //await axiosInstance.post('chat-gpt/send', { message : question })
     await axios({
-      url : "http://localhost:8889/chat-gpt/send",
+      url : 'http://localhost:8889/chat-gpt/send',
       method : "POST",
-      data : {
-        "message" : question
-      },
       headers : {
         Authorization : accessToken
+      },
+      data : {
+        message : question
       }
     })
     .then((res) => {
-      console.log(res);
       content = res.data.choices[0].message.content;
     })
     .catch((error) => {
