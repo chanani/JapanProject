@@ -53,10 +53,7 @@ const NoticePage = () => {
     setDetailIndex(realIndex);
     setDetail((current) => !current);
     if(username !== null){
-      axios({
-        url : `/notice/noticeCheck/${notice[realIndex].notice_num}/${username}`,
-        method : "GET",
-      })
+      axiosInstance.get(`notice/noticeCheck/${notice[realIndex].notice_num}/${username}`)
       .catch((e) => alert('조회가 정상적으로 이루어지지 않았습니다. 관리자에게 문의해주세요.'));
     }
    

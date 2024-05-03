@@ -4,6 +4,7 @@ import Audio from "../../component/Audio";
 import { useContext, useEffect, useState } from "react";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import axios from "axios";
+import { axiosInstance } from "../../api";
 
 const ResultPage = () => {
   const location = useLocation();
@@ -57,20 +58,21 @@ const ResultPage = () => {
   // 점수 기록 핸들러
   const handleRecord = () => {
     if(userRole !== "none"){
-      axios({
-        url : "/test/record",
-        method : "POST",
-        data : {
-          username : username,
-          level : level,
-          point : point * 10,
-          answer : newAnswer,
-          kind : kind
-        },
-        headers : {
-          Authorization : accessToken
-        }
-      })
+      axiosInstance.post(`test/record`, {username, level, point : point * 10, answer : newAnswer, kind})
+      // axios({
+      //   url : "/test/record",
+      //   method : "POST",
+      //   data : {
+      //     username : username,
+      //     level : level,
+      //     point : point * 10,
+      //     answer : newAnswer,
+      //     kind : kind
+      //   },
+      //   headers : {
+      //     Authorization : accessToken
+      //   }
+      // })
       .then((res) => {
         console.log(res.data);
         navigate("/mypage/record");

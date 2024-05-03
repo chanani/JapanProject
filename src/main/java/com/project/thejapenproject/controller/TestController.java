@@ -56,7 +56,7 @@ public class TestController {
         int b = testService.recordData(testList,
                 (String) map.get("username"));
 
-        if(a == 1 && b ==1) return ResponseEntity.ok("성공");
+        if(a == 1 && b == 10) return ResponseEntity.ok("성공");
         else return ResponseEntity.ok("실패");
     }
 

@@ -6,7 +6,6 @@ import { useEffect } from 'react'
 function MainPage(){
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_URL_JAVA);
   }, [])
 
   return (

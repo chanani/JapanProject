@@ -1,12 +1,11 @@
 CREATE TABLE `user` (
 	`username`	VARCHAR(30)	NOT NULL,
-	`password`	VARCHAR(80)	NOT NULL,
+	`password`	VARCHAR(300)	NOT NULL,
 	`user_name`	VARCHAR(20)	NOT NULL,
 	`user_email`	VARCHAR(30)	NOT NULL,
 	`user_phone`	VARCHAR(30)	NOT NULL,
 	`role`	VARCHAR(20)	NOT NULL,
-	`user_regdate`	TIMESTAMP	NOT NULL	DEFAULT now(),
-    `user_logdate` TIMESTAMP
+	`user_regdate`	TIMESTAMP	NOT NULL	DEFAULT now()
 );
 
 CREATE TABLE `word` (
@@ -45,7 +44,7 @@ CREATE TABLE `notice` (
 	`notice_num`	INT	NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`notice_content`	VARCHAR(500)	NOT NULL,
 	`notice_title`	VARCHAR(30)	NOT NULL,
-	`notice_regdate`	TIMESTAMP	NOT NULL	DEFAULT now(),
+	`notice_regdate`	TIMESTAMP	NOT NULL	DEFAULT now()
 );
 
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (

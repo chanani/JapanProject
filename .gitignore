@@ -39,3 +39,4 @@ out/
 node_modules/
 application.properties
 application.yml
+application-server.yml

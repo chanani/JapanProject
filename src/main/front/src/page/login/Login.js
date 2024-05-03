@@ -75,16 +75,19 @@ function Login() {
     cookies.set('accessToken', accessToken, {
       path: '/',
       secure : true,
+      httpOnly : false,
       maxAge : 7200 // 2시간
     });
     cookies.set('username', username, {
       path: '/',
       secure : true,
-      maxAge : 7200
+      httpOnly : false,
+      maxAge : 7200 // 2시간
     });
     cookies.set('refreshToken', refreshToken, {
       path: '/',
       secure : true,
+      httpOnly : false,
       maxAge : 1209600 // 2주
     });
   }

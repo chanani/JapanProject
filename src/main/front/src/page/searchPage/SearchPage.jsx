@@ -69,17 +69,28 @@ const Search = () => {
       setWordList([]);
     }
   }
-
+  // 공지사항, 단어 모두 검색하는 핸들러 당장 사용하지 않을 예정
+  const doubleRequest = async() => {
+    await axios.get('http://localhost:9200/notice,word/_search', {
+      params: {
+        size: 1000,
+        q: `word_meaning:${allKeyword} OR word_content:${allKeyword} OR notice_title:${allKeyword} OR notice_content:${allKeyword}`
+      }
+    })
+    .then((res) => {
+      console.log(res);
+    })
+  }
   // elasticsearch로 all 데이터 요청
   const requestAllData = () => {
-    if(!!!allKeyword) return alert("검색어를 입력해주세요.1");
+    if(!!!allKeyword) return alert("검색어를 입력해주세요.");
     requestWordData();
     requestNoticeData();
   }
 
   // elasticsearch로 word 데이터 요청
   const requestWordData = async () => {
-    if(!!!wordKeyword) return alert("검색어를 입력해주세요.2");
+    if(!!!wordKeyword) return alert("검색어를 입력해주세요.");
     await axios.get('http://localhost:9200/word/_search', {
       params: {
         size: 1000,
@@ -88,8 +99,6 @@ const Search = () => {
     })
     .then((res) => {
       setWordList(res.data.hits.hits);
-      // setAllKeyword("");
-      // setWordKeyword("");
     })
     .catch((e) => {
       alert("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
@@ -98,7 +107,7 @@ const Search = () => {
 
   // elasticsearch로 notice 데이터 요청
   const requestNoticeData = async () => {
-    if(!!!noticeKeyword) return alert("검색어를 입력해주세요.3");
+    if(!!!noticeKeyword) return alert("검색어를 입력해주세요.");
     await axios.get('http://localhost:9200/notice/_search', {
       params: {
         size: 1000,
@@ -107,7 +116,6 @@ const Search = () => {
     })
     .then((res) => {
       setNoticeList(res.data.hits.hits);
-      // setNoticeKeyword("");
     })
     .catch((e) => {
       alert("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");

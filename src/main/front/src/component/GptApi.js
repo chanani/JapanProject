@@ -7,7 +7,6 @@ import { axiosInstance } from "../api";
 const GptApi = ({handleQuestion, handleResponse}) => {
   const [question, setQuestion] = useState('');
   const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
-  console.log(accessToken);
   // GptApi 호출
   const handleSubmit = async(e) => {
     let content = '';
