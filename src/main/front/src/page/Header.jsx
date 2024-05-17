@@ -29,7 +29,7 @@ function Header(){
   useEffect(() => {
     let eventSource;
     if(userRole === 'role_user'){
-      eventSource = new EventSource('http://localhost:8889/notifications/subscribe/1');
+      eventSource = new EventSource('https://localhost:8889/notifications/subscribe/1');
       eventSource.addEventListener('alarm', async (event) => {
           const res = await event.data;
           if (!res.includes("EventStream Created.")) {

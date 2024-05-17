@@ -112,7 +112,7 @@
 /* 600 이상 */
 @media(max-width : 600px){
   .user-notice-box{
-    width: 330px;
+    width: 310px;
   }
   .user-notice-content-box {
     width: 300px;
@@ -122,7 +122,7 @@
     height: 317px;
   }
   .notice-detail-content > textarea{
-    width: 320px;
+    width: 230px;
     height: 250px;
   }
 }

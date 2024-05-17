@@ -9,15 +9,6 @@ import 'moment/locale/ko';
 import { IoCloseOutline } from "react-icons/io5";
 
 const Search = () => {
-  const {userRole} = useContext(tokenInfoContext);
-  const navigate = useNavigate();
-  useEffect(() =>{
-    if(userRole === "none"){
-      alert("로그인 후 이용해주세요.");
-      navigate("/login");
-    }
-  });
-
   // 검색 종류
   const [searchKind, setSearchKind] = useState("전체");
 
@@ -71,10 +62,14 @@ const Search = () => {
   }
   // 공지사항, 단어 모두 검색하는 핸들러 당장 사용하지 않을 예정
   const doubleRequest = async() => {
-    await axios.get('http://localhost:9200/notice,word/_search', {
+    await axios.get(`${process.env.REACT_APP_URL_ELASTICSEARCH}notice,word/_search`, {
       params: {
         size: 1000,
         q: `word_meaning:${allKeyword} OR word_content:${allKeyword} OR notice_title:${allKeyword} OR notice_content:${allKeyword}`
+      },
+      auth: {
+        username : 'elastic',
+        password : 'thejapan'
       }
     })
     .then((res) => {
@@ -91,10 +86,14 @@ const Search = () => {
   // elasticsearch로 word 데이터 요청
   const requestWordData = async () => {
     if(!!!wordKeyword) return alert("검색어를 입력해주세요.");
-    await axios.get('http://localhost:9200/word/_search', {
+    await axios.get(`${process.env.REACT_APP_URL_ELASTICSEARCH}word/_search`, {
       params: {
         size: 1000,
         q: `word_meaning:${wordKeyword} OR word_content:${wordKeyword}`
+      },
+      auth: {
+        username : 'elastic',
+        password : 'thejapan'
       }
     })
     .then((res) => {
@@ -108,10 +107,14 @@ const Search = () => {
   // elasticsearch로 notice 데이터 요청
   const requestNoticeData = async () => {
     if(!!!noticeKeyword) return alert("검색어를 입력해주세요.");
-    await axios.get('http://localhost:9200/notice/_search', {
+    await axios.get(`${process.env.REACT_APP_URL_ELASTICSEARCH}notice/_search`, {
       params: {
         size: 1000,
         q: `notice_title:${noticeKeyword} OR notice_content:${noticeKeyword}`
+      },
+      auth: {
+        username : 'elastic',
+        password : 'thejapan'
       }
     })
     .then((res) => {
@@ -122,8 +125,26 @@ const Search = () => {
     })
   }
 
+  const testBtn =  async () => {
+    await axios.get(`${process.env.REACT_APP_URL_ELASTICSEARCH}univ/_search`, {
+      params: {
+        size: 1000,
+      },
+      auth: {
+        username : 'elastic',
+        password : 'thejapan'
+      }
+    })
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch((e) => {
+      alert("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
+    })
+  }
   return (
     <div className="search-box-all">
+    <input type="button" onClick={testBtn} value="asd"/>
       <div className="search-box">
 
         <div className="search-all-box">

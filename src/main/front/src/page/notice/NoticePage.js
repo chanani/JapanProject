@@ -36,8 +36,10 @@ const NoticePage = () => {
   // 공지사항 불러오기
   useEffect(() => {
     axiosInstance.get('notice/getList')
-    .then((res) => setNotice(res.data));
+    .then((res) => setNotice(res.data))
+    .catch((e) => console.log('error message : ', e));
   },[])
+  
   // 제목 글자 초과할 경우 ...으로 변경
   const truncate = (str, n) => {
     return str?.length > n ? str.substr(0, n - 1) + "..." : str;

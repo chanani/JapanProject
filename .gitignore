@@ -37,6 +37,9 @@ out/
 .vscode/
 
 node_modules/
+.env
+.envl
 application.properties
 application.yml
 application-server.yml
+application-local.yml

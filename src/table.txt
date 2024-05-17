@@ -5,7 +5,8 @@ CREATE TABLE `user` (
 	`user_email`	VARCHAR(30)	NOT NULL,
 	`user_phone`	VARCHAR(30)	NOT NULL,
 	`role`	VARCHAR(20)	NOT NULL,
-	`user_regdate`	TIMESTAMP	NOT NULL	DEFAULT now()
+	`user_regdate`	TIMESTAMP	NOT NULL	DEFAULT now(),
+    `user_logdate` TIMESTAMP
 );
 
 CREATE TABLE `word` (
@@ -46,6 +47,14 @@ CREATE TABLE `notice` (
 	`notice_title`	VARCHAR(30)	NOT NULL,
 	`notice_regdate`	TIMESTAMP	NOT NULL	DEFAULT now()
 );
+
+CREATE TABLE `TheJapen`.`notice_check` (
+  `check_num` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `notice_num` INT NOT NULL,
+  `check_regdate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+  );
+
 
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
 	`username`

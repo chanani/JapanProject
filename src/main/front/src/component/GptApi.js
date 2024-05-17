@@ -7,18 +7,17 @@ import { axiosInstance } from "../api";
 const GptApi = ({handleQuestion, handleResponse}) => {
   const [question, setQuestion] = useState('');
   const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+
   // GptApi 호출
-  const handleSubmit = async(e) => {
+  const handleSubmit = async() => {
     let content = '';
-    if(question === '') {
-      alert('질문을 입력해주세요.');
-      return;
-    }
+    if(question === '') return alert('질문을 입력해주세요.');
+    
     handleQuestion(question); // 질문 전달
     setQuestion('');
-    //await axiosInstance.post('chat-gpt/send', { message : question })
+
     await axios({
-      url : 'http://localhost:8889/chat-gpt/send',
+      url : `${process.env.REACT_APP_URL_JAVA}chat-gpt/send`,
       method : "POST",
       headers : {
         Authorization : accessToken
@@ -39,12 +38,18 @@ const GptApi = ({handleQuestion, handleResponse}) => {
     
   }
 
+  const enterHandle = (event) => {
+    if(event.key !== 'Enter') return
+    // handleSubmit();
+  }
+
   return (
     <div className="gpt-box-all">
       <form className="gpt-form">
         <textarea type="text" 
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
+        onKeyDown={enterHandle}
         placeholder="질문을 해주세요 :)"
         />
 

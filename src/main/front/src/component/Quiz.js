@@ -94,7 +94,10 @@ const Quiz = ({ level, num, arr }) => {
       .then((res) => {
         setWord(res.data);
       })
-      .catch((e) => alert('데이터를 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.'));
+      .catch((e) => {
+        alert('데이터를 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.');
+        console.log('error message : ', e);
+      });
     }
   }, [arr, level, num, username]);
   
