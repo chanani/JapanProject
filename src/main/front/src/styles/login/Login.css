@@ -177,6 +177,11 @@
 }
 
 .id_pw_find > Link {
-  
   text-decoration: none;
 }
+
+.id_pw_find > Link,
+.id_pw_find > div :hover{
+  color: rgb(247, 63, 63);
+}
+

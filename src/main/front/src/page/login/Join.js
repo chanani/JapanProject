@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from 'react';
 import axios from 'axios';
 function Join() {
-  const [form, setForm] = useState(["", "", "", "", ""]);
+  const [form, setForm] = useState(["", "", "", "", "", ""]);
   let navigate = useNavigate();
 
   const handleHome = () => {
@@ -25,6 +25,8 @@ function Join() {
       arr[3] = e_value;
     } else if(eventName === "user_phone"){
       arr[4] = e_value;
+    } else if(eventName === "password_check"){
+      arr[5] = e_value;
     }
     setForm(arr);
   }
@@ -36,35 +38,25 @@ function Join() {
     event.preventDefault();
 
     if (form[0].trim() === "" || form[1].trim() === "" || form[2].trim() === "" || form[3].trim() === "" || form[4].trim() === "") {
-      alert('모든 항목를 입력하세요.');
-      return;
+      return alert('모든 항목를 입력하세요.');
     }
     // 아이디 유효성 : 영어, 숫자 6글자 이상
     const usernameRegex = /^[a-zA-Z0-9]{6,}$/;
-    if (!usernameRegex.test(form[1])) {
-      alert('아이디는 영문자와 숫자로만 구성되어야 하고 최소 6글자 이상이어야 합니다.');
-      return;
-    }
+    if (!usernameRegex.test(form[1])) return alert('아이디는 영문자와 숫자로만 구성되어야 하고 최소 6글자 이상이어야 합니다.');
 
     // 비밀번호 유효성 : 영어, 숫자 포함 8글자 이상
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (!passwordRegex.test(form[2])) {
-      alert('비밀번호는 영어, 숫자를 포함하여 8글자 이상이어야 합니다.');
-      return;
-    }
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(form[2])) return alert('비밀번호는 영어, 숫자, 특수문자를 포함하여 8글자 이상이어야 합니다.');
+
+    // 비밀번호 일치 여부 확인
+    if(form[2] !== form[5]) return alert('비밀번호가 일치하지 않습니다.');
 
     // 이메일 유효성
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(form[3])) {
-      alert('유효한 이메일을 입력하세요.');
-      return;
-    }
+    if (!emailRegex.test(form[3])) return alert('유효한 이메일을 입력하세요.');
 
     // 전화번호 유효성
-    if (form[4].length !== 11) {
-      alert('전화번호는 11자리여야 합니다.');
-      return;
-    }
+    if (form[4].length !== 11) return alert('전화번호는 11자리여야 합니다.');
 
     axios({
       url : process.env.REACT_APP_URL_JAVA + "join",
@@ -130,6 +122,10 @@ function Join() {
               <input type="password" placeholder="비밀번호" className='password'
               onChange={handleInfo}
               value={form[2]}
+              />
+              <input type="password" placeholder="비밀번호　확인" className='password_check'
+              onChange={handleInfo}
+              value={form[5]}
               />
               <input type="email" placeholder="이메일" className='user_email'
               onChange={handleInfo}

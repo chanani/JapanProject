@@ -5,12 +5,14 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import {Cookies} from 'react-cookie';
-import { axiosInstance } from "../../api";
+import FindInfo from "../../component/FindInfo";
 
 function Login() {
   const navigator = useNavigate();
   const { userRole } = useContext(tokenInfoContext);
   const cookies = new Cookies();
+  const [find_check, setFind_check] = useState("");
+  const [info, setInfo] = useState("");
   // 로그인 되어있을 때 홈으로 리턴
   useEffect(() => {
     if(userRole !== "none"){
@@ -108,6 +110,11 @@ function Login() {
     localStorage.setItem("check", isChecked);
   }
 
+  // 비밀번호 찾기 핸들러
+  const findHandle = (event) => {
+    setInfo(event.target.className);
+    setFind_check((current) => setFind_check(!current));
+  }
   return (
     <div className="login-all">
       <div className="login-header">
@@ -164,12 +171,12 @@ function Login() {
             </div>
 
             <div className="id_pw_find">
-                <Link style={{textDecoration : "none", color : "rgb(107, 107, 107)"}}><p>아이디 찾기</p></Link>
-                <Link style={{textDecoration : "none", color : "rgb(107, 107, 107)"}}><p>비밀번호 찾기</p></Link>
+                <div style={{textDecoration : "none", color : "rgb(107, 107, 107)"}} onClick={findHandle}><p className="ID">아이디 찾기</p></div>
+                <div style={{textDecoration : "none", color : "rgb(107, 107, 107)"}} onClick={findHandle}><p className="PW">비밀번호 찾기</p></div>
                 <Link style={{textDecoration : "none", color : "#0057ff"} } to="/join"><p>회원가입</p></Link>
             </div>
-          </div>
-
+          </div>  
+          {find_check ? <FindInfo info={info}/> : ""}
         </div>
       </div>
     </div>
