@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "../../styles/study/StudyPage.css";
 import Quiz from "../../component/Quiz";
 import { useLocation } from "react-router-dom";
+import {toast} from "react-toastify";
 
 function Easy() {
   const location = useLocation();
@@ -16,10 +17,10 @@ function Easy() {
       if(num <= 30){
         setPageOn((pageOn) => !pageOn);
       } else {
-        alert("30이하로 입력해주세요.");
+        toast.error("30이하로 입력해주세요.");
       }
     } else {
-      alert("1이상 입력해주세요.");
+      toast.error("1이상 입력해주세요.");
     }
 
     

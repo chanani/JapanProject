@@ -6,7 +6,17 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
-    public UserVO login(@Param("username")String username, @Param("password") String password);
+    public UserVO login(@Param("username") String username, @Param("password") String password);
+
     public int join(UserVO userVO);
+
     public int logDate(String username);
+
+    public boolean emailAuth(String email);
+
+    public String findId(String email);
+
+    public int passwordChange(@Param("email") String email, @Param("password") String password);
+
+
 }

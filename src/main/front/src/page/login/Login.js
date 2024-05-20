@@ -6,6 +6,7 @@ import axios from "axios";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import {Cookies} from 'react-cookie';
 import FindInfo from "../../component/FindInfo";
+import {toast} from "react-toastify";
 
 function Login() {
   const navigator = useNavigate();
@@ -16,7 +17,7 @@ function Login() {
   // 로그인 되어있을 때 홈으로 리턴
   useEffect(() => {
     if(userRole !== "none"){
-      alert("이미 로그인 하셨습니다.");
+      toast.error("이미 로그인 하셨습니다.");
       navigator("/");
     }
   })
@@ -62,13 +63,13 @@ function Login() {
     .then((res) => {
       if(res.status === 200){
         setCookies(res.data.data.accessToken, res.data.data.refreshToken, username);
-        alert("반갑습니다 *_*");
+        toast.success("반갑습니다 *_*");
         window.location = "/";
       }
     })
     .catch((error) => {
-      console.error("로그인 실패:", error);
-      alert("아이디와 비밀번호를 확인해주세요.");
+      toast.error("로그인 실패:", error);
+      toast.error("아이디와 비밀번호를 확인해주세요.");
     });
   } 
 
@@ -115,6 +116,7 @@ function Login() {
     setInfo(event.target.className);
     setFind_check((current) => setFind_check(!current));
   }
+
   return (
     <div className="login-all">
       <div className="login-header">
@@ -176,7 +178,7 @@ function Login() {
                 <Link style={{textDecoration : "none", color : "#0057ff"} } to="/join"><p>회원가입</p></Link>
             </div>
           </div>  
-          {find_check ? <FindInfo info={info}/> : ""}
+          <FindInfo info={info} find_check={find_check} setFind_check={setFind_check} />
         </div>
       </div>
     </div>

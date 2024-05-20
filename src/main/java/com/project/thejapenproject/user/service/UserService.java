@@ -8,5 +8,8 @@ public interface UserService {
     public UserVO login(String username, String password);
     public int join(UserVO userVO);
     public int logDate(String username);
+    public boolean emailAuth(String email);
+    public String findId(String email);
+    public int passwordChange(String email, String password);
 
 }

@@ -6,6 +6,7 @@ import { MdOutlineSensorDoor } from "react-icons/md";
 import { Link, useNavigate } from 'react-router-dom';
 import { FaQuestion } from "react-icons/fa";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
+import {toast} from "react-toastify";
 const ChatAi = () => {
 
   const {userRole} = useContext(tokenInfoContext);
@@ -13,7 +14,7 @@ const ChatAi = () => {
 
   useEffect(() =>{
     if(userRole === "none"){
-      alert("로그인 후 이용해주세요.");
+      toast.error("로그인 후 이용해주세요.");
       navigate("/login");
     }
   });

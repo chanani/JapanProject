@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.util.StringUtils;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 @RequestMapping("/")
@@ -34,10 +33,10 @@ public class MainController {
     @PostMapping("/login")
     public Object login(UserVO userVO) throws Exception {
 
-        if(Objects.isNull(userVO)){
+        if (Objects.isNull(userVO)) {
             throw new Exception();
         }
-        if (!StringUtils.hasText(userVO.getUsername()) || !StringUtils.hasText(userVO.getPassword())){
+        if (!StringUtils.hasText(userVO.getUsername()) || !StringUtils.hasText(userVO.getPassword())) {
             throw new Exception();
         }
         UserAccessToken userAccessToken = authService.token(userVO);
@@ -52,7 +51,7 @@ public class MainController {
     @NoneCheckToken
     @PostMapping("/logout")
     public Object logout(@RequestBody Map<String, String> map) throws Exception {
-        if(!StringUtils.hasText(map.get("username"))){
+        if (!StringUtils.hasText(map.get("username"))) {
             throw new Exception();
         }
         authService.logout(map.get("username"));
@@ -73,13 +72,13 @@ public class MainController {
         UserVO userVO = UserVO.builder()
                 .user_name(map.get("user_name"))
                 .username(map.get("username"))
-                .password(SHA512.encrypt( map.get("password")))
+                .password(SHA512.encrypt(map.get("password")))
                 .user_email(map.get("user_email"))
                 .user_phone(map.get("user_phone"))
                 .role("role_user")
                 .build();
         int success = userService.join(userVO);
-        if (success <= 0){
+        if (success <= 0) {
             throw new Exception();
         }
         return ResponseData.builder()
@@ -88,4 +87,50 @@ public class MainController {
                 .build();
     }
 
+    @NoneAuth
+    @PostMapping("/emailAuth")
+    public ResponseEntity<String> emailAuth(@RequestBody Map<String, String> data) {
+        boolean result = userService.emailAuth(data.get("email"));
+        if (result) {
+            Random random = new Random();
+
+            List<String> list = new ArrayList<>();
+            for (int i = 0; i < 3; i++) list.add(String.valueOf(random.nextInt(10)));
+
+            for (int i = 0; i < 3; i++) list.add(String.valueOf((char) (random.nextInt(26) + 65)));
+
+            Collections.shuffle(list);
+            String authToken = "";
+            for(String item : list) authToken += item;
+            return ResponseEntity.ok(authToken);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email authentication failed");
+        }
+    }
+
+    @NoneAuth
+    @PostMapping("/findId")
+    public ResponseEntity<String> findId(@RequestBody Map<String, String> data){
+        System.out.println(data.get("email"));
+        String username = userService.findId(data.get("email"));
+        System.out.println(username);
+        if(!StringUtils.isEmpty(username)){
+            return ResponseEntity.ok(username);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not find username");
+        }
+
+    }
+
+    @NoneAuth
+    @PostMapping("/passwordChange")
+    public ResponseEntity<String> passwordChange(@RequestBody Map<String, String> data) throws NoSuchAlgorithmException {
+        int result = userService.passwordChange(data.get("email"), SHA512.encrypt(data.get("password")));
+        System.out.println("result : " + result);
+        if(result != 0){
+            return ResponseEntity.ok("비밀번호 변경 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not change password");
+        }
+    }
 }

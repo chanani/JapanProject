@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import "../../styles/mypage/RecordPage.css";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import moment from "moment";
 import { axiosInstance } from "../../api";
+import {toast} from "react-toastify";
 
 
 const RecordPage = () => {
@@ -14,7 +14,7 @@ const RecordPage = () => {
 
   useEffect(() =>{
     if(userRole === "none"){
-      alert("로그인 후 이용해주세요.");
+      toast.error("로그인 후 이용해주세요.");
       navigate("/login");
     }
   });
@@ -33,7 +33,7 @@ const RecordPage = () => {
       navigate("/recordDetails", {state : { kind, level, answer, point } });
       window.scrollTo(0, 0);
     } catch(e) {
-      alert("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
+      toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
       console.error(e);
     }
   };
@@ -45,7 +45,7 @@ const RecordPage = () => {
       setData(res.data);
      })
      .catch((error) => {
-        alert("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
+       toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
      });
   }, [username]);
 

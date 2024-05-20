@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import { axiosInstance } from "../../api";
+import {toast} from "react-toastify";
 
 const AddWordPage = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const AddWordPage = () => {
 
   useEffect(() => {
     if(userRole !== 'role_admin'){
-      alert('해당 페이지는 관리자 외에는 접근이 불가합니다.');
+      toast.error('해당 페이지는 관리자 외에는 접근이 불가합니다.');
       navigate("/");
     }
   }, [userRole]);
@@ -36,17 +37,17 @@ const AddWordPage = () => {
   
   // 공지사항 등록 핸들러
   const handleSubmit = async() => {
-    if(inputCount === 1) return alert("등록할 단어를 입력해주세요.");
+    if(inputCount === 1) return toast.error("등록할 단어를 입력해주세요.");
     try{
       const wordResponse = await axiosInstance.post('admin/addWordList', {list})
-      alert(`${list.length}건이 정상적으로 등록되었습니다.`);
+      toast.success(`${list.length}건이 정상적으로 등록되었습니다.`);
       setList([]);
       setInputCount(1);
    } catch (error) {
       if (error.response && error.response.status === 403) {
-        alert("등록에 실패하였습니다. 관리자에게 문의해주세요.");
+        toast.error("등록에 실패하였습니다. 관리자에게 문의해주세요.");
       } else {
-        alert("등록에 실패하였습니다. 관리자에게 문의해주세요.");
+        toast.error("등록에 실패하였습니다. 관리자에게 문의해주세요.");
       }
    }
   }

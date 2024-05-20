@@ -3,6 +3,7 @@ import "../../styles/adminPage/AddNoticePage.css";
 import axios from "axios";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import { axiosInstance } from "../../api";
+import {toast} from "react-toastify";
 const AddNoticePage = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -26,14 +27,14 @@ const AddNoticePage = () => {
       // 공지사항 등록
       const noticeResponse = await axiosInstance.post('admin/addNotice', {title : title, content : content})
       // 카프카 Topic 등록
-      await axiosInstance.post('kafka/send', {message : content})  
-      alert("정상적으로 등록되었습니다.");
+      await axiosInstance.post('kafka/send', {message : content})
+      toast.success("정상적으로 등록되었습니다.");
       window.location = "/";
     } catch (error) {
       if (error.response && error.response.status === 403) {
-        alert("등록에 실패하였습니다. 관리자에게 문의해주세요.");
+        toast.error("등록에 실패하였습니다. 관리자에게 문의해주세요.");
       } else {
-        alert("등록에 실패하였습니다. 관리자에게 문의해주세요.");
+        toast.error("등록에 실패하였습니다. 관리자에게 문의해주세요.");
       }
     }
   }

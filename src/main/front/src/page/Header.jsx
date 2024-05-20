@@ -10,6 +10,7 @@ import { CiMenuKebab } from "react-icons/ci";
 import axios from "axios";
 import {Cookies} from 'react-cookie';
 import { axiosInstance } from '../api';
+import {toast} from "react-toastify";
 function Header(){
   const navigate = useNavigate();
   const { userRole, username, accessToken, refreshToken } = useContext(tokenInfoContext);
@@ -58,7 +59,7 @@ function Header(){
         setNoCheckList(res.data);
       })
       .catch((e) => {
-        alert('알람을 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.');
+        toast.error('알람을 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.');
       });
     }
   }
@@ -89,11 +90,11 @@ function Header(){
       if(res.status === 200){
         cookie.remove('accessToken');
         cookie.remove('username');
-        alert("로그아웃 되었습니다.");
+        toast.success("로그아웃 되었습니다.");
         window.location = "/";
       }
     })
-    .catch((e) => alert("로그아웃 중 오류가 발생하였습니다."))
+    .catch((e) => toast.error("로그아웃 중 오류가 발생하였습니다."))
     
   }
   if(window.location.pathname === '/login' || window.location.pathname === "/join") return null;

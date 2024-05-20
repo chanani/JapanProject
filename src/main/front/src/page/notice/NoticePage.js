@@ -10,6 +10,7 @@ import { IoCloseOutline } from "react-icons/io5";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import { useContext } from "react";
 import { axiosInstance } from "../../api";
+import {toast} from "react-toastify";
 
 const NoticePage = () => {
   const { userRole, username } = useContext(tokenInfoContext);
@@ -56,7 +57,7 @@ const NoticePage = () => {
     setDetail((current) => !current);
     if(username !== null){
       axiosInstance.get(`notice/noticeCheck/${notice[realIndex].notice_num}/${username}`)
-      .catch((e) => alert('조회가 정상적으로 이루어지지 않았습니다. 관리자에게 문의해주세요.'));
+      .catch((e) => toast.error('조회가 정상적으로 이루어지지 않았습니다. 관리자에게 문의해주세요.'));
     }
    
   }

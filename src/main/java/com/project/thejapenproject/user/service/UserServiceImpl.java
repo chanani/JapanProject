@@ -10,6 +10,10 @@ public class UserServiceImpl implements UserService{
     @Autowired
     public UserMapper usermapper;
 
+    public UserServiceImpl(UserMapper usermapper) {
+        this.usermapper = usermapper;
+    }
+
     @Override
     public UserVO login(String username, String password) {
         return usermapper.login(username, password);
@@ -24,4 +28,20 @@ public class UserServiceImpl implements UserService{
     public int logDate(String username) {
         return usermapper.logDate(username);
     }
+
+    @Override
+    public boolean emailAuth(String email) {
+        return usermapper.emailAuth(email);
+    }
+
+    @Override
+    public String findId(String email) {
+        return usermapper.findId(email);
+    }
+
+    @Override
+    public int passwordChange(String email, String password) {
+        return usermapper.passwordChange(email, password);
+    }
+
 }

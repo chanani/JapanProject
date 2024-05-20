@@ -30,4 +30,20 @@
         UPDATE user SET user_logdate = now()
         WHERE username = #{username}
     </update>
+
+    <select id="emailAuth" resultType="boolean">
+        select IF(count(*) > 0, true, false)
+        from user
+        where user_email = #{email}
+    </select>
+
+    <select id="findId" resultType="String">
+        select username from user
+        where user_email = #{email}
+    </select>
+
+    <update id="passwordChange">
+        update user set password = (#{password})
+        where user_email = #{email}
+    </update>
 </mapper>

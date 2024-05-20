@@ -89,3 +89,52 @@
   color: white;
   font-weight: 500;
 }
+
+
+/* 아이디 확인 페이지*/
+.id_find_content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 215px;
+}
+
+.id_find_title_box {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  position: relative;
+}
+
+.id_find_title_box > svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.id_find_title_box > p {
+  border-bottom: 1px solid #777;
+  padding-bottom: 14px;
+
+}
+
+/* 비밀번호 재설정 페이지*/
+.pw_find_btn_box {
+  text-align: center;
+
+}
+
+.pw_find_btn_box > button {
+  margin-top: 35px;
+  height: 40px;
+  width: 100px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgb(121 213 99);
+  color: white;
+  font-weight: 500;
+}
+.id_find_content > p {
+  font-size: 20px;
+}

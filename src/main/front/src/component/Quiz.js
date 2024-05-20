@@ -12,6 +12,7 @@ import Audio from './Audio';
 import { tokenInfoContext } from './TokenInfoProvider';
 import axios from 'axios';
 import { axiosInstance } from '../api';
+import {toast} from "react-toastify";
 
 const Quiz = ({ level, num, arr }) => {
   let [word, setWord] = useState([]);
@@ -39,14 +40,14 @@ const Quiz = ({ level, num, arr }) => {
       changeFavorite();
       
     } else {
-      alert("로그인 후 이용해주세요.");
+      toast.error("로그인 후 이용해주세요.");
     }
     
   }
   // 즐겨 찾기 백엔드로 전달
   const changeFavorite = () => {
     axiosInstance.get(`study/addFavorite/${word[current].word_num}/${!word[current].word_favorite}/${username}`)
-    .catch((e) => alert('데이터를 저장하는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.'))
+    .catch((e) => toast.error('데이터를 저장하는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.'))
   }
   // +1 핸들러
   const handleNext = () => {
@@ -95,7 +96,7 @@ const Quiz = ({ level, num, arr }) => {
         setWord(res.data);
       })
       .catch((e) => {
-        alert('데이터를 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.');
+        toast.error('데이터를 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.');
         console.log('error message : ', e);
       });
     }

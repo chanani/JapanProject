@@ -5,13 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
 import axios from "axios";
 import { axiosInstance } from "../../api";
+import {toast} from "react-toastify";
 const FavoritesList = () => {
   const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
   const navigate = useNavigate();
 
   useEffect(() =>{
     if(userRole === "none"){
-      alert("로그인 후 이용해주세요.");
+      toast.error("로그인 후 이용해주세요.");
       navigate("/login");
     }
   });
