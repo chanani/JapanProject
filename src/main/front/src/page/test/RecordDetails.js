@@ -34,7 +34,7 @@ const RecordDetails = () => {
           </div>
           <div className="result-box">
             {answer.map((item, index) => (
-              <div className={"result-box-content index" + (index) + (item.rd_check ? " clear" : " fail")} key={index} >
+              <div className={"result-box-content index" + (index) + (item.rd_check ? " success" : " fail")} key={index} >
                 <div className="result-header-box">
                     {<Audio inputData={item.word_vo.word_content}/>}
                     <p>{index + 1} / {answer.length}</p>

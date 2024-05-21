@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "../../styles/notice/NoticePage.css";
-import axios from "axios";
 import moment from "moment";
 import 'moment/locale/ko';
 import { TbCircleLetterN } from "react-icons/tb";

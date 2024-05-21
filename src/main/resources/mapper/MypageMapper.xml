@@ -16,7 +16,7 @@
     <select id="recordList" resultType="RecordVO">
         SELECT * FROM record
         WHERE username = #{username}
-        ORDER BY record_date ASC
+        ORDER BY record_date DESC
     </select>
 
     <select id="recordDetails" resultMap="recordDetailsResultMap">

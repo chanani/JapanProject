@@ -3,15 +3,15 @@ import "../../styles/test/ResultPage.css";
 import Audio from "../../component/Audio";
 import { useContext, useEffect, useState } from "react";
 import { tokenInfoContext } from "../../component/TokenInfoProvider";
-import axios from "axios";
 import { axiosInstance } from "../../api";
+import {toast} from "react-toastify";
 
 const ResultPage = () => {
   const location = useLocation();
   const { kind, level, word, answer } = location.state;
   const [point, setPoint] = useState(0);
   const navigate = useNavigate();
-  const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+  const {userRole, username} = useContext(tokenInfoContext);
   const[newAnswer, setNewAnswer] = useState(answer);
   const [check, setCheck] = useState([false, false, false, false, false, false, false, false, false, false]);
 
@@ -33,12 +33,21 @@ const ResultPage = () => {
   
     for(let i = 0; i < 10; i++) {
       if (Array.isArray(answer[i]) && answer[i].length > 0 && kind && word[i]) { // answer[i]가 배열이고, 길이가 0보다 크고, kind와 word[i]가 존재하는지 확인
-        if (word[i].word_meaning === answer[i][0]) {
-          newAnswerArray[i] = answer[i].concat(true); // 정답인 경우 기존 데이터에 true 추가
-          newPoint++;
-        } else {
-          newAnswerArray[i] = answer[i].concat(false); // 오답인 경우 기존 데이터에 false 추가
-        }
+        let sliceWord = word[i].word_meaning.replaceAll(" ", "").split(",");
+        let foundCorrectAnswer = false;
+
+        sliceWord.map((item, index) => {
+          if (item === answer[i][0]) {
+            newAnswerArray[i] = answer[i].concat(true); // 정답인 경우 기존 데이터에 true 추가
+            newPoint++;
+            foundCorrectAnswer = true;
+
+          }
+
+          if(!foundCorrectAnswer){
+            newAnswerArray[i] = answer[i].concat(false); // 오답인 경우 기존 데이터에 false 추가
+          }
+        });
       } else if (Array.isArray(answer[i]) && answer[i].length > 0 && !kind && word[i]) { // answer[i]가 배열이고, 길이가 0보다 크고, word[i]가 존재하는지 확인
         if (word[i].word_content === answer[i][0]) {
           newAnswerArray[i] = answer[i].concat(true);
@@ -59,20 +68,6 @@ const ResultPage = () => {
   const handleRecord = () => {
     if(userRole !== "none"){
       axiosInstance.post(`test/record`, {username, level, point : point * 10, answer : newAnswer, kind})
-      // axios({
-      //   url : "/test/record",
-      //   method : "POST",
-      //   data : {
-      //     username : username,
-      //     level : level,
-      //     point : point * 10,
-      //     answer : newAnswer,
-      //     kind : kind
-      //   },
-      //   headers : {
-      //     Authorization : accessToken
-      //   }
-      // })
       .then((res) => {
         console.log(res.data);
         navigate("/mypage/record");
@@ -81,9 +76,22 @@ const ResultPage = () => {
         console.error("Error recording result:", error);
       });
     } else {
-      alert("로그인 후 이용해주세요.");
+      toast.error("로그인 후 이용해주세요.");
     }
   }
+
+  // 정답 확인 핸들러(result-box-content 색상관련)
+  const checkAnswer = (word, answer) => {
+    let sliceWord = word.replaceAll(" ", "").split(",");
+    let foundCorrectAnswer = false;
+    sliceWord.map((item, index) => {
+      if(item === answer) {
+        foundCorrectAnswer = true;
+      }
+    });
+    return foundCorrectAnswer;
+  }
+
   // 홈으로
   const handleHome = () => {
     navigate("/");
@@ -100,7 +108,7 @@ const ResultPage = () => {
           <div className="result-box">
             {word.map((item, index) => (
               
-              <div className={"result-box-content index" + (index) + ((kind === true && answer[index] && item.word_meaning === answer[index][0]) || (kind === false && answer[index] && item.word_content === answer[index][0]) ? " clear" : " fail")} key={index}>
+              <div className={"result-box-content index" + (index) + ((kind && answer[index] && checkAnswer(item.word_meaning, answer[index][0])) || (!kind && answer[index] && item.word_content === answer[index][0]) ? " success" : " fail")} key={index}>
                 <div className="result-header-box">
                     <Audio inputData={item.word_content}/>
                     <p>{index + 1} / {word.length}</p>

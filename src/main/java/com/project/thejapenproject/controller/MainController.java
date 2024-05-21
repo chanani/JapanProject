@@ -8,6 +8,7 @@ import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.jwt.SHA512;
 import com.project.thejapenproject.common.jwt.service.AuthService;
 import com.project.thejapenproject.user.service.UserService;
+import com.project.thejapenproject.util.MailSend;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -87,9 +88,12 @@ public class MainController {
                 .build();
     }
 
+    /**
+     * @param 
+     * */
     @NoneAuth
     @PostMapping("/emailAuth")
-    public ResponseEntity<String> emailAuth(@RequestBody Map<String, String> data) {
+    public ResponseEntity<String> emailAuth(@RequestBody Map<String, String> data) throws Exception {
         boolean result = userService.emailAuth(data.get("email"));
         if (result) {
             Random random = new Random();
@@ -102,6 +106,13 @@ public class MainController {
             Collections.shuffle(list);
             String authToken = "";
             for(String item : list) authToken += item;
+
+            MailSend send = new MailSend();
+            send.setAuthNum(authToken);
+            String mailResult = send.welcomeMailSend(data.get("email"), send.getAuthNum());
+            if(!mailResult.equals("인증번호 발송에 성공하였습니다.")) {
+                throw new Exception();
+            }
             return ResponseEntity.ok(authToken);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email authentication failed");
@@ -111,9 +122,7 @@ public class MainController {
     @NoneAuth
     @PostMapping("/findId")
     public ResponseEntity<String> findId(@RequestBody Map<String, String> data){
-        System.out.println(data.get("email"));
         String username = userService.findId(data.get("email"));
-        System.out.println(username);
         if(!StringUtils.isEmpty(username)){
             return ResponseEntity.ok(username);
         } else {
@@ -130,7 +139,7 @@ public class MainController {
         if(result != 0){
             return ResponseEntity.ok("비밀번호 변경 성공");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not change password");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not changed password");
         }
     }
 }

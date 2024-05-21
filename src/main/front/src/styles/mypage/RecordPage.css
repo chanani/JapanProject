@@ -49,6 +49,18 @@
 
 }
 
+/* 페이지 네이션*/
+.data-detail-box-all {
+  display: flex;
+  justify-content: center;
+}
+.data-pageNation {
+  width: 100px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
 /* 500 이하 */
 @media(max-width : 600px){
   .recordPage-page-mid{
