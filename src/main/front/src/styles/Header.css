@@ -82,15 +82,13 @@ header {
 }
 
 .menu-box{
-  height: 218px;
+  height: 248px;
   width: auto;
   background-color: #f9f6ca;
   border-radius: 0 0 28px 28px;
   display: flex;
   justify-content: space-between;
 }
-
-
 
 .menu-box .study-title, 
 .menu-box .test-title,

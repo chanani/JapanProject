@@ -26,9 +26,11 @@ function Login() {
   const [check, setCheck] = useState(savedCheck === "true");
   const [username, setUsername] = useState(savedCheck === "true" ? savedUsername : '');
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
   // 홈버튼 핸들러
   const handleHome = () => {
-    window.location.href = "/"
+    navigator("/");
   }
   // 아이디 입력 핸들러
   const handleUsername = (event) => {
@@ -46,7 +48,10 @@ function Login() {
     if(event.key !== 'Enter') return
     handleLogin(event);
   }
-
+  // 회원가입 페이지로 이동
+  const handleJoin = () => {
+    navigate("/join");
+  }
 
   // 로그인 핸들러
   const handleLogin = async (event) => {
@@ -64,6 +69,7 @@ function Login() {
       if(res.status === 200){
         setCookies(res.data.data.accessToken, res.data.data.refreshToken, username);
         toast.success("반갑습니다 *_*");
+        //navigate("/");
         window.location = "/";
       }
     })
@@ -127,7 +133,7 @@ function Login() {
       <div className="loginPage-box">
         <div className="logo-box">
           <img src={Logo} alt="" />
-          <Link to={"/"}><p>The Japen</p></Link>
+          <p onClick={handleHome}>The Japen</p>
           <h5>더재팬</h5>
         </div>
         
@@ -175,7 +181,7 @@ function Login() {
             <div className="id_pw_find">
                 <div style={{textDecoration : "none", color : "rgb(107, 107, 107)"}} onClick={findHandle}><p className="ID">아이디 찾기</p></div>
                 <div style={{textDecoration : "none", color : "rgb(107, 107, 107)"}} onClick={findHandle}><p className="PW">비밀번호 찾기</p></div>
-                <Link style={{textDecoration : "none", color : "#0057ff"} } to="/join"><p>회원가입</p></Link>
+                <div style={{textDecoration : "none", color : "rgb(107, 107, 107)"} } onClick={handleJoin}><p>회원가입</p></div>
             </div>
           </div>  
           <FindInfo info={info} find_check={find_check} setFind_check={setFind_check} />

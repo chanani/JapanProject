@@ -15,8 +15,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  height: 270px;
-  width: 500px;
+  height: 280px;
   padding: 25px;
   border-radius: 10px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
@@ -43,7 +42,7 @@
 }
 
 .find_box {
-  margin: 25px 0 15px 0;
+  margin: 25px 0 5px 0;
 }
 
 .find_input_box {
@@ -53,8 +52,10 @@
 }
 
 .find_input_box > input {
-  height: 30px;
+  height: 38px;
   margin-bottom: 5px;
+  padding-left: 8px;
+  font-size: 14px;
 }
 
 .find_btn_box {
@@ -96,7 +97,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 215px;
+  height: 233px;
 }
 
 .id_find_title_box {
@@ -137,4 +138,25 @@
 }
 .id_find_content > p {
   font-size: 20px;
+}
+
+
+/* 600 이상 */
+@media(max-width : 500px){
+  .find_box_all{
+    width: 300px;
+  }
+}
+/* 1000 이상 */
+@media(min-width : 500px){
+  .find_box_all{
+    width: 400px;
+  }
+}
+
+/* 1000 이상 */
+@media(min-width : 1000px){
+  .find_box_all{
+    width: 500px;
+  }
 }

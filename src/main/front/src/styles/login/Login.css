@@ -27,10 +27,7 @@
   align-items: center;
   padding-bottom: 30px;
 }
-.loginPage-box .logo-box a{
-    text-decoration: none;
-    color: black;
-}
+
 
 /* 500 이하 */
 @media(max-width : 500px){
@@ -41,7 +38,7 @@
     width: 50px;
     height: 50px;
   }
-  .loginPage-box .logo-box a > p {
+  .loginPage-box .logo-box > p {
     font-size: 30px;
     font-weight: 600;
     padding-left: 5px;
@@ -76,7 +73,7 @@
     width: 70px;
     height: 70px;
   }
-  .loginPage-box .logo-box a > p {
+  .loginPage-box .logo-box > p {
     font-size: 50px;
     font-weight: 600;
     padding-left: 5px;
@@ -176,12 +173,7 @@
   justify-content: space-between;
 }
 
-.id_pw_find > Link {
-  text-decoration: none;
-}
-
-.id_pw_find > Link,
 .id_pw_find > div :hover{
-  color: rgb(247, 63, 63);
+  color: #0057ff;
 }
 

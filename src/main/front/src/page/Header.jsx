@@ -104,9 +104,9 @@ function Header(){
   //　테스트 페이지 Link list
   const testLink = [["/test/easy", "1단계"], ["/test/middle", "2단계"], ["/test/hard", "3단계"]];
   // 이 외 페이지 Link list
-  const myLink = [["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ["/chatAi", "Ai학습"], ["/search", "통합검색"], ["/notice", "공지사항"]];
+  const myLink = [["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ["/chatAi", "Ai학습"], ["/search", "통합검색"], ["/notice", "공지사항"], ["/mypage", "나의정보"]];
   // admin 페이지 Link list
-  const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"]];
+  const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"], ["/mypage", "나의정보"]];
 
   return(
     

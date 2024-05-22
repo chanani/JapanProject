@@ -30,12 +30,21 @@ const RecordPage = () => {
     setCurrentPage(currentPage - 1);
   };
 
+  // 페이지 권한 및 데이터 가져오기
   useEffect(() =>{
     if(userRole === "none"){
       toast.error("로그인 후 이용해주세요.");
       navigate("/login");
+    } else {
+      axiosInstance.post('mypage/record', {username})
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((error) => {
+        toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
+      });
     }
-  });
+  }, []);
 
   // 상세페이지로 이동하는 핸들러
   const handleContent = async(index) => {
@@ -54,17 +63,6 @@ const RecordPage = () => {
       console.error(e);
     }
   };
-
-  // 데이터 가져오기
-  useEffect(() => {
-    axiosInstance.post('mypage/record', {username})
-     .then((res) => {
-      setData(res.data);
-     })
-     .catch((error) => {
-       toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
-     });
-  }, [username]);
 
   return(
 

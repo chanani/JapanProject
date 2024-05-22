@@ -9,7 +9,7 @@ function Join() {
   let navigate = useNavigate();
 
   const handleHome = () => {
-    window.location.href = "/"
+    navigate("/");
   }
 
   const handleInfo = (event) => {
@@ -91,7 +91,7 @@ function Join() {
     <div className="loginPage-box">
       <div className="logo-box">
         <img src={Logo} alt="" />
-        <Link to={"/"}><p>The Japen</p></Link>
+          <p onClick={handleHome}>The Japen</p>
         <h5>더재팬</h5>
       </div>
 

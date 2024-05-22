@@ -22,6 +22,7 @@ import ChatAi from "./page/chatAiPage/ChatAi";
 import AddWordPage from "./page/amindPage/AddWordPage";
 import AddNoticePage from "./page/amindPage/AddNoticePage";
 import NoticePage from "./page/notice/NoticePage";
+import Mypage from "./page/mypage/Mypage";
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
           <Route path="/notice" element={<NoticePage/>} />
           <Route path="/admin/addWord" element={<AddWordPage />} />
           <Route path="/admin/addNotice" element={<AddNoticePage />} />
+          <Route path="/mypage" element={<Mypage />} />
         </Routes>
 
         <Footer />
