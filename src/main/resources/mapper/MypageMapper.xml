@@ -4,6 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.project.thejapenproject.mypage.service.MypageMapper">
+    <select id="myInfo" resultType="UserVO">
+        SELECT username,
+               user_name,
+               user_email,
+               user_phone
+        FROM user
+        WHERE username = #{username}
+    </select>
+
+    <update id="modifyInfo" parameterType="UserVO">
+        update user
+        set user_name = #{user_name}, user_email = #{user_email}, user_phone = #{user_phone}
+        where username = #{username}
+    </update>
 
     <select id="favoriteList" resultType="WordVO">
         SELECT *, 'true' as word_favorite FROM word
@@ -36,6 +50,8 @@
         AND record_num = #{record_num}
         ORDER BY rd_num
     </select>
+
+
 
     <resultMap id="recordDetailsResultMap" type="RecordDetailsVO">
         <id property="rd_num" column="rd_num"/>

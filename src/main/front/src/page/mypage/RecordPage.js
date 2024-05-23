@@ -36,7 +36,11 @@ const RecordPage = () => {
       toast.error("로그인 후 이용해주세요.");
       navigate("/login");
     } else {
-      axiosInstance.post('mypage/record', {username})
+      axiosInstance.get('mypage/record', {
+        params : {
+          username : username
+        }
+      })
       .then((res) => {
         setData(res.data);
       })

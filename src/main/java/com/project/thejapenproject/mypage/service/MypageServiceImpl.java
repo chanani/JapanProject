@@ -2,6 +2,7 @@ package com.project.thejapenproject.mypage.service;
 
 import com.project.thejapenproject.command.RecordDetailsVO;
 import com.project.thejapenproject.command.RecordVO;
+import com.project.thejapenproject.command.UserVO;
 import com.project.thejapenproject.command.WordVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,15 @@ public class MypageServiceImpl implements MypageService{
         return mypageMapper.recordDetails(username, record_num);
     }
 
+    @Override
+    public UserVO myInfo(String username) {
+        return mypageMapper.myInfo(username);
+    }
+
+    @Override
+    public int modifyInfo(UserVO userVO) {
+        return mypageMapper.modifyInfo(userVO);
+    }
 
 
 }

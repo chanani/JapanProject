@@ -1,9 +1,9 @@
 .test-page-all {
   display: flex;
   justify-content: center;
-  padding-top: 60px;
+  padding: 40px 0;
   background-color: #f6f7fb;
-  padding-bottom: 60px;
+
 }
 
 .test-page-mid{

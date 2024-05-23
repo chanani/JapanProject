@@ -1,7 +1,7 @@
 .recordPage-page-all {
   display: flex;
   justify-content: center;
-  padding-top: 60px;
+  padding-top: 40px;
   background-color: #f6f7fb;
   padding-bottom: 60px;
 }
@@ -64,7 +64,7 @@
 /* 500 이하 */
 @media(max-width : 600px){
   .recordPage-page-mid{
-    width: 80vw;
+    width: 300px;
   }
 
 }
@@ -72,14 +72,14 @@
 /* 500 이상 */
 @media(min-width : 600px){
   .recordPage-page-mid{
-    width: 65vw;
+    width: 500px;
   }
 
 }
  /* 1000 이상 */
 @media(min-width : 1000px){
   .recordPage-page-mid{
-    width: 43vw;
+    width: 850px;
   }
 
 }

@@ -106,6 +106,7 @@ export default FindInfo
 
 export const IdFind = ({email, setFind_check, setResult, setEmail, setAuthToken, setAuthTokenCheck}) => {
     const [username, setUsername] = useState("");
+    // 창 닫기 핸들러
     const closeHandle = () => {
         setFind_check("");
         setResult("");
@@ -113,6 +114,7 @@ export const IdFind = ({email, setFind_check, setResult, setEmail, setAuthToken,
         setAuthToken("");
         setAuthTokenCheck("");
     }
+    // 아이디 조회 API
     useEffect(() => {
         axiosInstance.post('/findId', {email})
             .then(res => {
@@ -140,12 +142,17 @@ export const PwReset = ({email, setFind_check, setResult, setEmail, setAuthToken
     const [password, setPassword] = useState("");
     const [passwordCheck, setPasswordCheck] = useState("");
 
+    // 비밀번호 변경 핸들러
     const pwChangeHandle = () => {
         const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!password) return toast.error("변경할 비밀번호를 입력해주세요.");
         if (!passwordRegex.test(password)) return toast.error('비밀번호는 영어, 숫자, 특수문자를 포함하여 8글자 이상이어야 합니다.');
         if (password !== passwordCheck) return toast.error("비밀번호가 일치하지 않습니다.");
-        changePasswordApi();
+        let check = window.confirm('정말 변경하시겠습니까?');
+        if(check){
+            changePasswordApi();
+        }
+
     }
 
     // 비밀번호 변경 API
@@ -162,6 +169,7 @@ export const PwReset = ({email, setFind_check, setResult, setEmail, setAuthToken
                 toast.error("비밀번호 변경 중 오류가 발생하였습니다. 관리자에게 문의해주세요.")
             })
     }
+    // 창 닫기 핸들러
     const closeHandle = () => {
         setFind_check("");
         setResult("");

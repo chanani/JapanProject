@@ -1,7 +1,7 @@
 .favorite-page-all {
   display: flex;
   justify-content: center;
-  padding-top: 60px;
+  padding-top: 40px;
   background-color: #f6f7fb;
   padding-bottom: 60px;
 }

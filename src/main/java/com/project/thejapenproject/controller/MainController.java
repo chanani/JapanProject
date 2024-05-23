@@ -88,9 +88,7 @@ public class MainController {
                 .build();
     }
 
-    /**
-     * @param 
-     * */
+
     @NoneAuth
     @PostMapping("/emailAuth")
     public ResponseEntity<String> emailAuth(@RequestBody Map<String, String> data) throws Exception {
@@ -107,12 +105,12 @@ public class MainController {
             String authToken = "";
             for(String item : list) authToken += item;
 
-//            MailSend send = new MailSend();
-//            send.setAuthNum(authToken);
-//            String mailResult = send.welcomeMailSend(data.get("email"), send.getAuthNum());
-//            if(!mailResult.equals("인증번호 발송에 성공하였습니다.")) {
-//                throw new Exception();
-//            }
+            MailSend send = new MailSend();
+            send.setAuthNum(authToken);
+            String mailResult = send.welcomeMailSend(data.get("email"), send.getAuthNum());
+            if(!mailResult.equals("인증번호 발송에 성공하였습니다.")) {
+                throw new Exception();
+            }
             System.out.println("authToken : " + authToken);
             return ResponseEntity.ok(authToken);
         } else {

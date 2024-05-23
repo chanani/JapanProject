@@ -38,7 +38,7 @@ function Join() {
   const handleJoin = (event) => {
     event.preventDefault();
 
-    if (form[0].trim() === "" || form[1].trim() === "" || form[2].trim() === "" || form[3].trim() === "" || form[4].trim() === "") {
+    if (form[0].trim() === "" || form[1].trim() === "" || form[2].trim() === "" || form[3].trim() === "" || form[4].trim() === "" || form[5].trim() === "") {
       return toast.error('모든 항목를 입력하세요.');
     }
     // 아이디 유효성 : 영어, 숫자 6글자 이상

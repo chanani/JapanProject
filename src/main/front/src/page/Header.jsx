@@ -25,7 +25,7 @@ function Header(){
   useEffect(() => {
     setIsVisible(true);
   }, []);
-  
+
   // 알람 SSE Connection
   useEffect(() => {
     let eventSource;
@@ -34,11 +34,11 @@ function Header(){
       eventSource.addEventListener('alarm', async (event) => {
           const res = await event.data;
           if (!res.includes("EventStream Created.")) {
-            setAlarm(true); // 아이콘 상태 변경 
+            setAlarm(true); // 아이콘 상태 변경
             alarmRef.current = true; // 랜더링되도 상태 값 유지를 위해
           }
       });
-      
+
       eventSource.onerror = (event) => {
         eventSource.close();
       };
@@ -51,6 +51,7 @@ function Header(){
   useEffect(() => {
     getNoticeList()
   }, [alarm, username]);
+
   // 알랑 목록 조회
   const getNoticeList = () => {
     if(userRole === "role_user"){
