@@ -39,5 +39,10 @@ public class MypageServiceImpl implements MypageService{
         return mypageMapper.modifyInfo(userVO);
     }
 
+    @Override
+    public int withdrawal(String username) {
+        return mypageMapper.withdrawal(username);
+    }
+
 
 }

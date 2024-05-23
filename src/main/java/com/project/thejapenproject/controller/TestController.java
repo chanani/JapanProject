@@ -27,17 +27,17 @@ public class TestController {
 
     @NoneAuth
     @GetMapping("/word/{level}")
-    public ResponseEntity<ArrayList<WordVO>> getTestList(@PathVariable Integer level){
+    public ResponseEntity<ArrayList<WordVO>> getTestList(@PathVariable Integer level) {
         return ResponseEntity.ok(testService.getTestList(level));
     }
 
     @NoneCheckToken
     @PostMapping("/record")
     @Transactional
-    public ResponseEntity<String> testResult(@RequestBody Map<String, Object> map){
+    public ResponseEntity<String> testResult(@RequestBody Map<String, Object> map) {
         ArrayList<Object> list = (ArrayList<Object>) map.get("answer");
         ArrayList<TestItemVO> testList = new ArrayList<>();
-        for(Object x : list){
+        for (Object x : list) {
             String[] str = String.valueOf(x).replace("[", "").replace("]", "")
                     .replaceAll(",", "_").split("_ ");
             TestItemVO vo = TestItemVO.builder()
@@ -56,7 +56,7 @@ public class TestController {
         int b = testService.recordData(testList,
                 (String) map.get("username"));
 
-        if(a == 1 && b == 10) return ResponseEntity.ok("성공");
+        if (a == 1 && b == 10) return ResponseEntity.ok("성공");
         else return ResponseEntity.ok("실패");
     }
 

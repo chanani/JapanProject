@@ -44,4 +44,19 @@ public class UserServiceImpl implements UserService{
         return usermapper.passwordChange(email, password);
     }
 
+    @Override
+    public boolean checkId(String username) {
+        return usermapper.checkId(username);
+    }
+
+    @Override
+    public boolean checkEmail(String user_email) {
+        return usermapper.checkEmail(user_email);
+    }
+
+    @Override
+    public boolean checkPhone(String user_phone) {
+        return usermapper.checkPhone(user_phone);
+    }
+
 }

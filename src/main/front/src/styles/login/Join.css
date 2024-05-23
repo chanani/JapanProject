@@ -1,70 +1,135 @@
 .social-join {
-  margin-top: 15px;
+    margin-top: 15px;
 }
+
 .social-title > p {
-  font-size: 20px;
-  font-weight: 600;
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .social-join img {
-  width: 40px;
-  height: 40px;
-}
-
-/* 500 이하 */
-@media(max-width : 500px){
-  .social-join {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 15px;
-  }
-  .social-title {margin-bottom: 10px;}
-  
-  .social-logo {
-    margin-left: 10px;
-   }
-  .social-logo img {
-    margin-left: 5px;
-  }
-  .join-btn-box > button{
-    width: 180px; 
+    width: 40px;
     height: 40px;
-    font-size: 16px;
-  }
 }
 
-/* 500 이상 */
-@media(min-width : 500px){
-  .social-join {
+.join-input-box {
+    height: auto;
     display: flex;
-    align-items: center;
-    margin-top: 15px;
-    
-  }
+    flex-direction: column;
+    margin-top: 20px;
+}
 
- .social-logo {
-  margin-left: 5px;
- }
- .social-logo img {
-  margin-left: 10px;
+.join-input-box > input,
+.join-input-box > div > input{
+    height: 50px;
+    margin-top: 5px;
+    padding-left: 10px;
+    border-radius: 10px;
+    border: 1px solid #777;
+    font-size: 16px;
 }
-.join-btn-box > button {
-  width: 300px; 
-  height: 50px;
-  font-size: 19px;
+.join-input-box > div > input {
+    margin-right: 5px;
 }
+
+.join-input-box > div > button {
+    height: 49px;
+    border-radius: 5px;
+    border: none;
+    background-color: #e1e1e1;
+    color: #575656;
 }
 
 .join-btn-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 13px;
 }
 
-.join-btn-box > button{
-  border-radius: 10px;
-  background-color: rgb(121 213 99);
-
+.join-btn-box > button {
+    border-radius: 10px;
+    background-color: rgb(121 213 99);
+    border: none;
+    color: white;
 }
+
+#check_true {
+    background-color: #4cd964;
+    color: white;
+}
+
+/* 500 이하 */
+@media (max-width: 600px) {
+    .social-join {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 15px;
+    }
+
+    .social-title {
+        margin-bottom: 10px;
+    }
+
+    .social-logo {
+        margin-left: 10px;
+    }
+
+    .social-logo img {
+        margin-left: 5px;
+    }
+
+    .join-btn-box > button {
+        width: 180px;
+        height: 50px;
+        font-size: 18px;
+    }
+    .join-input-box > input {
+        width: 340px;
+    }
+    .join-input-box > div > input {
+        width: 250px;
+    }
+    .join-input-box > div > button {
+        width: 85px;
+        font-size: 14px;
+    }
+}
+
+/* 500 이상 */
+@media (min-width: 600px) {
+    .social-join {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+
+    }
+
+    .social-logo {
+        margin-left: 5px;
+    }
+
+    .social-logo img {
+        margin-left: 10px;
+    }
+
+    .join-btn-box > button {
+        width: 300px;
+        height: 50px;
+        font-size: 19px;
+    }
+
+    .join-input-box > input {
+        width: 500px;
+    }
+    .join-input-box > div > input {
+        width: 400px;
+    }
+    .join-input-box > div > button {
+        width: 95px;
+        font-size: 15px;
+    }
+}
+
+

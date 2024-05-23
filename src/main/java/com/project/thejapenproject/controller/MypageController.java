@@ -10,6 +10,7 @@ import com.project.thejapenproject.mypage.service.MypageService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +65,24 @@ public class MypageController {
                 throw new Exception();
             }
             return ResponseEntity.ok("성공");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 회원 탈퇴 컨트롤러
+     * */
+    @NoneCheckToken
+    @PostMapping("/withdrawal")
+    public ResponseEntity<String> withdrawal(@RequestBody Map<String, String> data){
+        try {
+            int result = mypageService.withdrawal(data.get("username"));
+            if (result > 0){
+                return ResponseEntity.ok("정상적으로 탈퇴 되었습니다.");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 중 오류가 발생하였습니다.");
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

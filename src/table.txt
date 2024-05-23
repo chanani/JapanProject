@@ -1,12 +1,13 @@
 CREATE TABLE `user` (
 	`username`	VARCHAR(30)	NOT NULL,
-	`password`	VARCHAR(300)	NOT NULL,
+	`password`	VARCHAR(80)	NOT NULL,
 	`user_name`	VARCHAR(20)	NOT NULL,
 	`user_email`	VARCHAR(30)	NOT NULL,
 	`user_phone`	VARCHAR(30)	NOT NULL,
 	`role`	VARCHAR(20)	NOT NULL,
 	`user_regdate`	TIMESTAMP	NOT NULL	DEFAULT now(),
-    `user_logdate` TIMESTAMP
+    `user_logdate` TIMESTAMP,
+    `user_status` INT DEFAULT 0
 );
 
 CREATE TABLE `word` (

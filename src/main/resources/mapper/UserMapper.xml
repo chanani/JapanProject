@@ -21,9 +21,26 @@
                'role_user',
                now())
     </insert>
+
+    <!-- 아이디 중복 확인 -->
+    <select id="checkId" parameterType="String">
+        select IF(COUNT(*) > 0, true, false) from user
+        where username = #{username}
+    </select>
+    <!-- 이메일 중복 확인 -->
+    <select id="checkEmail" parameterType="String">
+        select IF(COUNT(*) > 0, true, false) from user
+        where user_email = #{user_email}
+    </select>
+    <!-- 휴대폰 중복 확인 -->
+    <select id="checkPhone" parameterType="String">
+        select IF(COUNT(*) > 0, true, false) from user
+        where user_phone = #{user_phone}
+    </select>
+
     <select id="login" resultType="UserVO">
         select * from user
-        where username = #{username} and password = #{password}
+        where username = #{username} and password = #{password} and user_status = 0
     </select>
 
     <update id="logDate">

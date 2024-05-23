@@ -18,5 +18,10 @@ public interface UserMapper {
 
     public int passwordChange(@Param("email") String email, @Param("password") String password);
 
+    public boolean checkId(String username);
+    public boolean checkEmail(String user_email);
+    public boolean checkPhone(String user_phone);
+
+
 
 }

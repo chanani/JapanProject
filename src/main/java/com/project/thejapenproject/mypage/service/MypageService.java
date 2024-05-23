@@ -13,4 +13,5 @@ public interface MypageService {
     public ArrayList<RecordDetailsVO> recordDetails(String username, Integer record_num);
     public UserVO myInfo(String username);
     public int modifyInfo(UserVO userVO);
+    public int withdrawal(String username);
 }

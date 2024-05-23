@@ -40,8 +40,7 @@ function Login() {
   }
   // 페스워드 입력 핸들러
   const handlePassword = (event) => {
-    let u_value = event.target.value;
-    setPassword(u_value);
+    setPassword(event.target.value);
   }
   // 로그인 이벤트 
   const loginKeyDown = (event) => {
@@ -52,11 +51,9 @@ function Login() {
   const handleJoin = () => {
     navigate("/join");
   }
-
   // 로그인 핸들러
   const handleLogin = async (event) => {
-    event.preventDefault();
-    let formData = new FormData();    
+    let formData = new FormData();
     formData.append('username', username);
     formData.append('password', password);
 
@@ -77,8 +74,7 @@ function Login() {
       console.log("로그인 실패:", error);
       toast.error("아이디와 비밀번호를 확인해주세요.");
     });
-  } 
-
+  }
   // 쿠키 저장 핸들러
   const setCookies = (accessToken, refreshToken, username) => {
     cookies.set('accessToken', accessToken, {
@@ -100,7 +96,6 @@ function Login() {
       maxAge : 1209600 // 2주
     });
   }
-
   // 아이디 유지 핸들러
   const handleCheck = (event) => {
     const isChecked = event.target.checked;
@@ -109,14 +104,10 @@ function Login() {
   }
   // 아이디 유지 local storage에 저장
   const rememberMe = (isChecked, username) => {
-    if (isChecked && username) {
-      localStorage.setItem("remember", username);
-    } else {
-      localStorage.removeItem("username");
-    }
+    if (isChecked && username) localStorage.setItem("remember", username);
+    else localStorage.removeItem("username");
     localStorage.setItem("check", isChecked);
   }
-
   // 비밀번호 찾기 핸들러
   const findHandle = (event) => {
     setInfo(event.target.className);
@@ -133,7 +124,7 @@ function Login() {
       <div className="loginPage-box">
         <div className="logo-box">
           <img src={Logo} alt="" />
-          <p onClick={handleHome}>The Japen</p>
+          <p onClick={handleHome}>The Japan</p>
           <h5>더재팬</h5>
         </div>
         

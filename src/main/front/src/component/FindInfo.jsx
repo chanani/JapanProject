@@ -3,6 +3,7 @@ import {IoCloseOutline} from "react-icons/io5";
 import {useEffect, useState} from "react";
 import {axiosInstance} from "../api";
 import {toast} from "react-toastify";
+import {Overlap} from "../hook/Overlap";
 
 const FindInfo = ({info, find_check, setFind_check}) => {
     const [result, setResult] = useState(""); // 다음페이지로 넘어가는 정보
@@ -15,19 +16,15 @@ const FindInfo = ({info, find_check, setFind_check}) => {
         if (authToken !== authTokenCheck) return toast.error("인증번호가 일치하지 않습니다.");
         setResult(info);
     }
-
     // 인증번호 전송 API
     const emailAuthAPI = () => {
         if (!email) return toast.error("이메일을 입력해주세요.");
         axiosInstance.post('emailAuth', {email})
             .then((res) => {
-                // console.log(res.data);
                 setAuthToken(res.data);
                 toast.success("인증번호가 발송되었습니다.");
             })
-            .catch(err => {
-                toast.error("등록되지 않은 이메일입니다.");
-            })
+            .catch(err => toast.error("등록되지 않은 이메일입니다."))
     }
     // 창 닫기 핸들러
     const closeHandle = () => {
@@ -121,9 +118,7 @@ export const IdFind = ({email, setFind_check, setResult, setEmail, setAuthToken,
                 setUsername(res.data);
                 toast.success('아이디 조회에 성공하였습니다.');
             })
-            .catch(err => {
-                toast.error("확인 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
-            })
+            .catch(err => toast.error("확인 중 오류가 발생하였습니다. 관리자에게 문의해주세요."))
     }, []);
     return (
         <div>
@@ -144,26 +139,21 @@ export const PwReset = ({email, setFind_check, setResult, setEmail, setAuthToken
 
     // 비밀번호 변경 핸들러
     const pwChangeHandle = () => {
-        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
         if (!password) return toast.error("변경할 비밀번호를 입력해주세요.");
-        if (!passwordRegex.test(password)) return toast.error('비밀번호는 영어, 숫자, 특수문자를 포함하여 8글자 이상이어야 합니다.');
+        Overlap('password', password);
         if (password !== passwordCheck) return toast.error("비밀번호가 일치하지 않습니다.");
-        let check = window.confirm('정말 변경하시겠습니까?');
-        if(check){
-            changePasswordApi();
-        }
-
+        if (window.confirm('정말 변경하시겠습니까?')) changePasswordApi();
     }
 
     // 비밀번호 변경 API
     const changePasswordApi = () => {
         axiosInstance.post('/passwordChange', {email, password})
             .then(res => {
-                if (res.status === 200) {
+                if (res.status !== 200) toast.error("비밀번호 변경 중 오류가 발생하였습니다. 관리자에게 문의해주세요.")
+                else {
                     toast.success('비밀번호가 정상적으로 변경되었습니다.');
                     closeHandle();
                 }
-                else toast.error("비밀번호 변경 중 오류가 발생하였습니다. 관리자에게 문의해주세요.")
             })
             .catch(err => {
                 toast.error("비밀번호 변경 중 오류가 발생하였습니다. 관리자에게 문의해주세요.")

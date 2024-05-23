@@ -51,6 +51,9 @@
         ORDER BY rd_num
     </select>
 
+    <update id="withdrawal" parameterType="String">
+        update user set user_status = 1 where username = #{username};
+    </update>
 
 
     <resultMap id="recordDetailsResultMap" type="RecordDetailsVO">

@@ -26,7 +26,7 @@ public class StudyController {
     @NoneAuth
     @GetMapping("/data/{level}/{num}/{username}")
     public ResponseEntity<ArrayList<WordVO>> getWord(@PathVariable Integer level,
-                                                     @PathVariable Integer num, @PathVariable String username){
+                                                     @PathVariable Integer num, @PathVariable String username) {
         ArrayList<WordVO> list = studyService.getWord(level, num, username);
         return ResponseEntity.ok(list);
     }
@@ -35,8 +35,8 @@ public class StudyController {
     @GetMapping("/addFavorite/{word_num}/{favorite}/{username}")
     public ResponseEntity<String> changeFavorite(@PathVariable Integer word_num,
                                                  @PathVariable boolean favorite,
-                                                 @PathVariable String username){
-        if(favorite) studyService.addFavorite(word_num, username);
+                                                 @PathVariable String username) {
+        if (favorite) studyService.addFavorite(word_num, username);
         else studyService.deleteFavorite(word_num, username);
         return ResponseEntity.ok("성공");
     }

@@ -8,19 +8,19 @@ function TestPage() {
   const [pageOn, setPageOn] = useState(true);
   const [kind, setKind] = useState(true);
   const [level, setLevel] = useState(0);
+  // 페이지 on, off 핸들러
   const handleToggle = () => {
     setPageOn((pageOn) => !pageOn);
   };
-  // console.log(currentPath);
+  // 테스트 종류 저장 핸들러
   const handleKind = () => {
     setKind((kind) => !kind);
   }
-
+  // 현재 페이지의 단계 저장하는 hook
   useEffect(() => {
     if(currentPath === 'easy') setLevel(1);
     else if (currentPath === 'middle') setLevel(2);
     else if (currentPath === 'hard') setLevel(3);
-  
   }, [level, currentPath]);
 
   return (

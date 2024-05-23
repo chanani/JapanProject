@@ -16,5 +16,6 @@ public interface MypageMapper {
     public ArrayList<RecordDetailsVO> recordDetails(@Param("username") String username, @Param("record_num") Integer record_num);
     public UserVO myInfo(String username);
     public int modifyInfo(UserVO userVO);
+    public int withdrawal(String username);
 
 }

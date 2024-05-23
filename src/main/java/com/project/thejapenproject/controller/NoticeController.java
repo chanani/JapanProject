@@ -35,10 +35,7 @@ public class NoticeController {
     @GetMapping("/noticeCheck/{notice_num}/{username}")
     public ResponseEntity<String> noticeCheck(@PathVariable("notice_num") Integer notice_num,
                                               @PathVariable("username") String username){
-        System.out.println(notice_num);
-        if(!username.equals("undefined")){
-            noticeService.noticeCheck(notice_num, username);
-        }
+        if(!username.equals("undefined"))noticeService.noticeCheck(notice_num, username);
         return ResponseEntity.ok("성공");
     }
 }

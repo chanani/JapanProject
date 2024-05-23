@@ -12,9 +12,6 @@ const FavoritesList = () => {
     const navigate = useNavigate();
     const [word, setWord] = useState([]);
 
-
-
-
     // 즐겨찾기 버튼 클릭 핸들러
     const handleFavorite = (index) => {
         const newData = [...word];
@@ -23,7 +20,6 @@ const FavoritesList = () => {
             newData.splice(index, 1);
             setWord(newData);
         }
-        ;
         deleteFavorite(index);
     };
     // 즐겨찾기 삭제 기능
@@ -31,12 +27,10 @@ const FavoritesList = () => {
         axiosInstance.get(`study/addFavorite/${word[index].word_num}/${word[index].word_favorite}/${username}`)
             .catch(err => toast.error("데이터 삭제 중 오류가 발생하였습니다. 관리자에게 문의해주세요."))
     };
-
     // 즐겨찾기 페이지에서 단어 공부 페이지로 이동
     const handleStudy = () => {
         navigate("/study/easy", {state: {arr: word}});
     };
-
     // 페이지 권한 설정 및 데이터 불러오기
     useEffect(() => {
         if (userRole === "none") {

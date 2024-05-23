@@ -11,5 +11,8 @@ public interface UserService {
     public boolean emailAuth(String email);
     public String findId(String email);
     public int passwordChange(String email, String password);
+    public boolean checkId(String username);
+    public boolean checkEmail(String user_email);
+    public boolean checkPhone(String user_phone);
 
 }
