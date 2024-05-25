@@ -6,6 +6,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background: #3535359e;
+  z-index: 1000;
 }
 
 .find_box_all {
@@ -69,7 +70,7 @@
   font-size: 14px;
   border-radius: 5px;
   border: none;
-  background-color: rgb(121 213 99);
+  background-color: #9DDE8B;
   color: white;
   font-weight: 500;
 }
@@ -86,7 +87,7 @@
   font-size: 14px;
   border-radius: 5px;
   border: none;
-  background-color: #4e61ff;
+  background-color: #40A578;
   color: white;
   font-weight: 500;
 }
@@ -132,7 +133,7 @@
   font-size: 14px;
   border-radius: 5px;
   border: none;
-  background-color: rgb(121 213 99);
+  background-color: #9DDE8B;
   color: white;
   font-weight: 500;
 }

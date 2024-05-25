@@ -25,7 +25,7 @@
 }
 
 .user-notice-content-box {
-  border: 1px solid #777;
+  border: 1px solid #40A578;
   border-radius: 10px;
   margin-bottom: 15px;
   padding: 15px;
@@ -33,11 +33,10 @@
   justify-content: space-between;
   box-shadow: 0 0.125rem 0.25rem #00000014;
   transition: all .12s cubic-bezier(.47,0,.745,.715);
-  background-color: var(--gray-100-gray-700);
 }
 
 .user-notice-content-box:hover {
-  background-color: rgb(230 231 246);
+  background-color: #9dde8b59;
 }
 .content-box-p-tag {
   display: flex;
@@ -67,13 +66,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 2;
+  z-index: 100;
 }
 .notice-detail-box{
   padding: 50px 30px;
   border-radius: 10px;
   position: relative;
-  background-color: rgb(220 235 255);
+  background-color: #9DDE8B;
   box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
 }
 

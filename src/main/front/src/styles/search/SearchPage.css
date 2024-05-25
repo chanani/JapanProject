@@ -34,7 +34,7 @@
   height: 40px;
   margin-right: 5px;
   padding-left: 18px;
-  border: 1.5px solid #828282;
+  border: 2px solid #9DDE8B;
   font-size: 17px;
   
 }
@@ -52,7 +52,7 @@
 }
 
 .search-header-box-check{
-  background-color: #b0b8ff;
+  background-color: #9DDE8B;
   border-radius: 10px ;
 }
 
@@ -82,7 +82,7 @@
 }
 .search-header-box > div:hover{
   border-radius: 10px ;
-  background-color: #b0b8ff;
+  background-color: #9DDE8B;
 }
 
 .search-box-mainPage-title{
@@ -126,12 +126,11 @@
 }
 
 .search-word-all {
-  border : 1px solid rgb(94 106 245);
+  border : 1px solid #40A578;
   border-radius: 8px;
   padding: 5px 10px 10px 5px;
   box-shadow: 0 0.125rem 0.25rem #00000014;
   transition: all .12s cubic-bezier(.47,0,.745,.715);
-  background-color: var(--gray-100-gray-700);
   height: 80px;
   margin-right: 10px; 
   margin-bottom: 10px; 
@@ -139,7 +138,7 @@
 }
 
 .search-word-all:hover{
-  background-color: rgb(230 231 246);
+  background-color: #9dde8b59;
 }
 
 .search-word-content {

@@ -20,17 +20,16 @@
 }
 
 .recordPage-score {
-  border : 1px solid rgb(94 106 245);
+  border : 1px solid #40A578;
   border-radius: 8px;
   padding: 10px;
   margin-bottom: 15px;
   box-shadow: 0 0.125rem 0.25rem #00000014;
   transition: all .12s cubic-bezier(.47,0,.745,.715);
-  background-color: var(--gray-100-gray-700);
 }
 
 .recordPage-score:hover{
-  background-color: rgb(230 231 246);
+  background-color: #9dde8b59;
 }
 
 .recordPage-score .score-header {

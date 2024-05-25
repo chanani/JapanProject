@@ -135,7 +135,7 @@
 .login-btn-box > button {
   width: 100px;
   border-radius: 10px;
-  background-color: rgb(121 213 99);
+  background-color: #9DDE8B;
   color: white;
   font-size: 20px;
   font-weight: 600;
@@ -174,6 +174,6 @@
 }
 
 .id_pw_find > div :hover{
-  color: #0057ff;
+  color: #006769;
 }
 
