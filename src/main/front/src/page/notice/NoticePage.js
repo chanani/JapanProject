@@ -10,12 +10,13 @@ import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {useContext} from "react";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
+import NoticeDetail from "../../component/NoticeDetail";
 
 const NoticePage = () => {
     const {userRole, username} = useContext(tokenInfoContext);
     const [notice, setNotice] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [detail, setDetail] = useState(false);
+    const [detailToggle, setDetailToggle] = useState(false);
     const noticesPerPage = 5;
     const [detailIndex, setDetailIndex] = useState(1);
 
@@ -45,7 +46,7 @@ const NoticePage = () => {
     const handleDetail = (index) => {
         let realIndex = (currentPage - 1) * noticesPerPage + index;
         setDetailIndex(realIndex);
-        setDetail((current) => !current);
+        setDetailToggle((current) => !current);
         if (username !== null) {
             axiosInstance.get(`notice/noticeCheck/${notice[realIndex].notice_num}/${username}`)
                 .catch((e) => toast.error('조회가 정상적으로 이루어지지 않았습니다. 관리자에게 문의해주세요.'));
@@ -54,7 +55,7 @@ const NoticePage = () => {
     }
     // 상세 공지사항 닫기 핸들러
     const handleDetailOut = () => {
-        setDetail((current) => !current);
+        setDetailToggle((current) => !current);
     }
 
     // 공지사항 불러오기
@@ -94,27 +95,14 @@ const NoticePage = () => {
                 </div>
             </div>
 
-            {detail ?
-                <div className="notice-detail-box-all">
-                    <div className="notice-detail-box">
-
-                        <div className="notice-detail-title">
-                            <p>제목 : </p>
-                            <div>{notice[detailIndex].notice_title}</div>
-
-                        </div>
-
-                        <div className="notice-detail-content">
-                            <p>내용 : </p>
-                            <textarea defaultValue={notice[detailIndex].notice_content} readOnly></textarea>
-                        </div>
-                        <div className="notice-detail-out">
-                            <IoCloseOutline size={25} onClick={handleDetailOut}/>
-                        </div>
-                    </div>
-                </div>
-                :
-                ""
+            {detailToggle &&
+                <NoticeDetail
+                    setDetailToggle={setDetailToggle}
+                    notice={notice[detailIndex]}
+                    username={username}
+                    handleDetailOut={handleDetailOut}
+                    kind="notice"
+                />
             }
 
         </div>

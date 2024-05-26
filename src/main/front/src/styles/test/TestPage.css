@@ -37,7 +37,7 @@
 .test-off-req-box > button{
   width: 80px;
   height: 40px;
-  background-color: #40A578;
+  background-color: #6CC4A1;
   border-style: none;
   border-radius: 5px;
   color: white;
@@ -57,7 +57,7 @@
 }
 
 .active{
-  background-color: #9DDE8B;
+  background-color: #A0D995;
   color: white;
 }
 

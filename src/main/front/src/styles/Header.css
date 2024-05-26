@@ -4,7 +4,7 @@
   list-style: none;
 }
 header {
-  background-color: #9DDE8B;
+  background-color: #A0D995;
   width: auto;
   height: 110px;
 }
@@ -29,7 +29,7 @@ header {
   border-radius: 28px;
   width: auto;
   height: 65px;
-  background-color: #E6FF94;
+  background-color: #F5F0BB;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -62,7 +62,7 @@ header {
   width: 130px;
   height: 45px;
   border-radius: 20px;
-  background-color: #40A578;
+  background-color: #A0D995;
   border-style: none;
   color: white;
   font-size: 22px;
@@ -84,7 +84,7 @@ header {
 .menu-box{
   height: 248px;
   width: auto;
-  background-color: #E6FF94;
+  background-color: #F5F0BB;
   border-radius: 0 0 28px 28px;
   display: flex;
   justify-content: space-between;

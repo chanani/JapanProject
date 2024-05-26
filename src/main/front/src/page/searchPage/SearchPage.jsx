@@ -8,6 +8,7 @@ import moment from "moment";
 import 'moment/locale/ko';
 import {IoCloseOutline} from "react-icons/io5";
 import {toast} from "react-toastify";
+import NoticeDetail from "../../component/NoticeDetail";
 
 const Search = () => {
     // 검색 종류
@@ -275,7 +276,7 @@ const NoticeComponent = ({
                              noticeList,
                              searchKind
                          }) => {
-    const [detail, setDetail] = useState(false);
+    const [detailToggle, setDetailToggle] = useState(false);
     const [detailIndex, setDetailIndex] = useState(0);
 
     // 제목 글자 초과할 경우 ...으로 변경
@@ -290,15 +291,13 @@ const NoticeComponent = ({
 
     // 상세 공지사항 핸들러
     const handleDetail = ({index}) => {
-        console.log(index)
         setDetailIndex(index);
-        console.log(noticeList[0]._source)
-        setDetail((current) => !current);
+        setDetailToggle((current) => !current);
     }
 
     // 상세 공지사항 닫기 핸들러
     const handleDetailOut = () => {
-        setDetail((current) => !current);
+        setDetailToggle((current) => !current);
     }
 
     return (
@@ -324,25 +323,14 @@ const NoticeComponent = ({
                         }
                     </div>
 
-                    {!detail ? "" :
-                        <div className="notice-detail-box-all">
-                            <div className="notice-detail-box">
-                                <div className="notice-detail-title">
-                                    <p>제목 : </p>
-                                    <div>{noticeList[detailIndex]._source.notice_title}</div>
-
-                                </div>
-
-                                <div className="notice-detail-content">
-                                    <p>내용 : </p>
-                                    <textarea defaultValue={noticeList[detailIndex]._source.notice_content}
-                                              readOnly></textarea>
-                                </div>
-                                <div className="notice-detail-out">
-                                    <IoCloseOutline size={25} onClick={handleDetailOut}/>
-                                </div>
-                            </div>
-                        </div>
+                    {detailToggle &&
+                        <NoticeDetail
+                            setDetailToggle={setDetailToggle}
+                            detailIndex={detailIndex}
+                            notice={noticeList[detailIndex]._source}
+                            handleDetailOut={handleDetailOut}
+                            kind="searchPage"
+                        />
                     }
 
                 </div>
@@ -373,25 +361,13 @@ const NoticeComponent = ({
                         }
                     </div>
 
-                    {!detail ? "" :
-                        <div className="notice-detail-box-all">
-                            <div className="notice-detail-box">
-                                <div className="notice-detail-title">
-                                    <p>제목 : </p>
-                                    <div>{noticeList[detailIndex]._source.notice_title}</div>
-
-                                </div>
-
-                                <div className="notice-detail-content">
-                                    <p>내용 : </p>
-                                    <textarea defaultValue={noticeList[detailIndex]._source.notice_content}
-                                              readOnly></textarea>
-                                </div>
-                                <div className="notice-detail-out">
-                                    <IoCloseOutline size={25} onClick={handleDetailOut}/>
-                                </div>
-                            </div>
-                        </div>
+                    { detailToggle &&
+                        <NoticeDetail
+                            setDetailToggle={setDetailToggle}
+                            notice={noticeList[detailIndex]._source}
+                            handleDetailOut={handleDetailOut}
+                            kind="searchPage"
+                        />
                     }
                 </div>
             }

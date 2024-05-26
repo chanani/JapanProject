@@ -52,7 +52,7 @@
 }
 
 .search-header-box-check{
-  background-color: #9DDE8B;
+  background-color: #A0D995;
   border-radius: 10px ;
 }
 
@@ -82,7 +82,7 @@
 }
 .search-header-box > div:hover{
   border-radius: 10px ;
-  background-color: #9DDE8B;
+  background-color: #A0D995;
 }
 
 .search-box-mainPage-title{
@@ -126,7 +126,7 @@
 }
 
 .search-word-all {
-  border : 1px solid #40A578;
+  border : 1px solid #6CC4A1;
   border-radius: 8px;
   padding: 5px 10px 10px 5px;
   box-shadow: 0 0.125rem 0.25rem #00000014;
@@ -138,7 +138,7 @@
 }
 
 .search-word-all:hover{
-  background-color: #9dde8b59;
+  background-color: rgb(156 255 137 / 22%);
 }
 
 .search-word-content {
