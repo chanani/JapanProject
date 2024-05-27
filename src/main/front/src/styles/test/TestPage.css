@@ -64,7 +64,7 @@
 /* 500 이하 */
 @media(max-width : 600px){
   .test-page-mid{
-    width: 80vw;
+    width: 350px;
   }
   .study-off-info {
     font-size: 15px;
@@ -74,7 +74,7 @@
 /* 500 이상 */
 @media(min-width : 600px){
   .test-page-mid{
-    width: 65vw;
+    width: 500px;
   }
   .test-off-info {
     font-size: 18px;
@@ -83,9 +83,9 @@
  /* 1000 이상 */
 @media(min-width : 1000px){
   .test-page-mid{
-    width: 43vw;
+    width: 48vw;
   }
   .test-off-info {
-    font-size: 24px;
+    font-size: 20px;
   }
 }
