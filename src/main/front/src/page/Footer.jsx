@@ -1,6 +1,11 @@
 import '../styles/Footer.css';
+import {useNavigate} from "react-router-dom";
 
 function Footer(){
+  const navigator = useNavigate();
+  const policyHandle = () => {
+      navigator('/policy')
+  }
   return(
     <footer>
         <div className='footer-box'>
@@ -10,7 +15,7 @@ function Footer(){
           <div className='footer-content-box'>
             <p>문의하기</p>
             <p>브랜드 스토리</p>
-            <p>서비스 이용약관</p>
+            <p onClick={policyHandle}>서비스 이용약관</p>
             <p>개인정보 처리 방침</p>
             <p>사용자 후기</p>
             <p>언론보도</p>

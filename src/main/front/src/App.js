@@ -24,6 +24,7 @@ import AddNoticePage from "./page/amindPage/AddNoticePage";
 import NoticePage from "./page/notice/NoticePage";
 import Mypage from "./page/mypage/Mypage";
 import Withdrawal from "./page/mypage/Withdrawal";
+import Policy from "./page/policy/Policy";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
           <Route path="/admin/addNotice" element={<AddNoticePage />} />
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/withdrawal" element={<Withdrawal />} />
+          <Route path="/policy" element={<Policy />} />
         </Routes>
 
         <Footer />
