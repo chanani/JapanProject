@@ -120,6 +120,7 @@ public class MainController {
             System.out.println("authToken : " + authToken);
             return ResponseEntity.ok(authToken);
         } else {
+
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email authentication failed");
         }
     }
