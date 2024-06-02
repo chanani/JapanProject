@@ -17,11 +17,11 @@ const Policy = () => {
                 <div className="policy-content">
                     <div>
                         <div>
-                            <p className="policy-detail-title">제 1장 총칙</p>
+                            <p className="policy-detail-title">● 제 1장 총칙</p>
                         </div>
                         <div>
                             <div>
-                                <p className="policy-detail-subTitle">제 1조 (목적)</p>
+                                <p className="policy-detail-subTitle">◇ 제 1조 (목적)</p>
                             </div>
                             <div>
                                 <p className="policy-detail-content">이 약관은 전기통신사업법, 전기통신기본법, 정보통신 윤리위원회 심의규정, 정보통신 윤리강령, 프로그램 보호법 및 관계규정에 의거 (주)The Japan이
@@ -33,7 +33,7 @@ const Policy = () => {
 
                         <div>
                             <div>
-                                <p className="policy-detail-subTitle">제 2조 (약관의 효력 및 변경)</p>
+                                <p className="policy-detail-subTitle">◇ 제 2조 (약관의 효력 및 변경)</p>
                             </div>
                             <div className="policy-detail-box">
                                 <p>1. 이 약관의 내용은 이용자가 정해진 등록절차를 거쳐 등록을 완료하면 이 약관에 동의한 것으로 간주합니다.</p>
@@ -44,7 +44,7 @@ const Policy = () => {
 
                         <div>
                             <div>
-                                <p className="policy-detail-subTitle">제 3조 (약관의 수정)</p>
+                                <p className="policy-detail-subTitle">◇ 제 3조 (약관의 수정)</p>
                             </div>
                             <div>
                                 <p className="policy-detail-content">The Japan은 합리적 사유가 발생했을 경우 서비스 약관의 내용을 변경할 수 있습니다. 다만 변경된 내용은 이용자에게 공지함으로써 효력을 발생합니다.
@@ -57,7 +57,7 @@ const Policy = () => {
 
                         <div>
                             <div>
-                                <p className="policy-detail-subTitle">제 4조 (약관 외 준칙)</p>
+                                <p className="policy-detail-subTitle">◇ 제 4조 (약관 외 준칙)</p>
                             </div>
                             <div>
                                 <p className="policy-detail-content">이 약관에 명시되지 않은 사항은 관계 법령에 규정되어 있을 경우 그 규정에 따르며, 그렇지 않은 경우에는 일반적인 관례에 따릅니다.</p>
@@ -66,7 +66,7 @@ const Policy = () => {
 
                         <div>
                             <div>
-                                <p className="policy-detail-subTitle">제 5조 (용어의 정의)</p>
+                                <p className="policy-detail-subTitle">◇ 제 5조 (용어의 정의)</p>
                             </div>
                             <div className="policy-detail-box">
                                 <p>1. 홈페이지 회원 : The Japan에서 회원가입을 통하여 ID를 발급받은 자</p>
@@ -84,10 +84,10 @@ const Policy = () => {
 
                     <div>
                         <div>
-                            <p className="policy-detail-title">제 2장 서비스의 이용</p>
+                            <p className="policy-detail-title">● 제 2장 서비스의 이용</p>
                         </div>
                         <div>
-                            <div className="policy-detail-subTitle">제 1조 (서비스 이용시간)</div>
+                            <div className="policy-detail-subTitle">◇ 제 1조 (서비스 이용시간)</div>
                             <div>
                                 <p className="policy-detail-content">서비스의 이용 시간은 The Japan의 업무 및 기술상 특별한 지장이 없는 한 연중무휴, 1일 24시간(00:00-24:00)을 원칙으로 합니다.
                                     다만, 정기 점검 등의 필요로 The Japan이 정한 날이나 시간은 그러하지 아니합니다. 이 경우는 The Japan의 공지사항을 통하여
@@ -96,7 +96,7 @@ const Policy = () => {
                         </div>
                         <div>
                             <div>
-                                <p className="policy-detail-subTitle">제 2조 (이용자 번호 등)</p>
+                                <p className="policy-detail-subTitle">◇ 제 2조 (이용자 번호 등)</p>
                             </div>
                             <div className="policy-detail-box">
                                 <p>1. 이용자번호 및 비밀번호에 대한 모든 관리책임은 이용자에게 있습니다.</p>
@@ -106,7 +106,7 @@ const Policy = () => {
                         </div>
                         <div>
                             <div>
-                                <p className="policy-detail-subTitle">제 3조 (서비스 이용의 제한 및 이용계약의 해지)</p>
+                                <p className="policy-detail-subTitle">◇ 제 3조 (서비스 이용의 제한 및 이용계약의 해지)</p>
                             </div>
                             <div className="policy-detail-box">
 
@@ -131,7 +131,7 @@ const Policy = () => {
 
                         <div>
                             <div>
-                                <p className="policy-detail-subTitle">제 3조 (이용자 게시물의 삭제 및 서비스 이용 제한)</p>
+                                <p className="policy-detail-subTitle">◇ 제 3조 (이용자 게시물의 삭제 및 서비스 이용 제한)</p>
                             </div>
                             <div className="policy-detail-box">
 
@@ -155,7 +155,7 @@ const Policy = () => {
 
                         <div>
                             <div>
-                                <p className="policy-detail-subTitle">제 4조 (서비스 제공의 중지 및 제한)</p>
+                                <p className="policy-detail-subTitle">◇ 제 4조 (서비스 제공의 중지 및 제한)</p>
                             </div>
                             <div className="policy-detail-box">
                                 <p>
