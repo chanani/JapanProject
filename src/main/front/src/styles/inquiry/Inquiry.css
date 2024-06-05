@@ -1,0 +1,63 @@
+.inquiry-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: #f6f7fb;
+}
+
+.inquiry-box{
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+    background-color: white;
+    padding: 25px 30px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.inquiry-title-box > h2 {
+    font-size: 35px;
+    font-weight: 500;
+    margin-bottom: 30px;
+}
+
+.inquiry-content-title {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+/* 반응형 */
+/* 600 까지 */
+@media(max-width : 600px){
+    .inquiry-box-box{
+        width: 300px;
+    }
+    .inquiry-content-box {
+        width: 300px;
+    }
+
+}
+/* 600 이상 */
+@media(min-width : 600px){
+    .inquiry-box{
+        width: 500px;
+    }
+    .inquiry-content-box {
+        width: 480px;
+    }
+
+}
+
+/* 1000 이상 */
+@media(min-width : 1000px){
+    .inquiry-box{
+        width: 848px;
+    }
+    .inquiry-content-box {
+        width: 760px;
+    }
+}
