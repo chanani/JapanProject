@@ -56,6 +56,21 @@ CREATE TABLE `TheJapen`.`notice_check` (
   `check_regdate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
   );
 
+CREATE TABLE `TheJapen`.`inquiry` (
+  `inquiry_num` INT NOT NULL AUTO_INCREMENT,
+  `inquiry_title` VARCHAR(100) NOT NULL,
+  `inquiry_content` VARCHAR(500) NOT NULL,
+  `inquiry_writer` VARCHAR(45) NOT NULL,
+  `inquiry_password` VARCHAR(45) NULL,
+  `inquiry_secret` VARCHAR(1) NOT NULL,
+  `inquiry_comment` VARCHAR(500) NULL,
+  `inquiry_regdate` TIMESTAMP NOT NULL DEFAULT NOW(),
+  `inquiry_recoment_regdate` TIMESTAMP NULL,
+  `inquiry_kind` VARCHAR(45) NOT NULL,
+  `inquiry_email` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`inquiry_num`)
+);
+
 
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
 	`username`

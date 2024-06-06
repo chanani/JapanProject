@@ -19,16 +19,95 @@
 
 .inquiry-title-box > h2 {
     font-size: 35px;
-    font-weight: 500;
-    margin-bottom: 30px;
+    font-weight: 600;
+    margin-bottom: 20px;
 }
 
 .inquiry-content-title {
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid #777;
+    padding : 13px;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 500;
 }
 
+/* 목록 없을 때 */
+.inquiry-notData-box {
+    height: 200px;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+/* 목록 있을 때 */
+.inquiry-inData-box {
+
+}
+
+.inquiry-data-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px 13px;
+    border-bottom: 1px solid #777;
+}
+
+.inquiry_title {
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.inquiry_title > svg {
+    width: 10px;
+    height: 11px;
+    margin-right: 5px;
+}
+
+/* 검색, 버튼 */
+.inquiry-search-button-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+.inquiry-search-box {
+    display: flex;
+    align-items: center;
+}
+.inquiry-search-box > input{
+    width: 160px;
+    border-radius: 7px;
+    height: 30px;
+    margin-right: 5px;
+    padding-left: 18px;
+    border: 2px solid #9DDE8B;
+    font-size: 17px;
+}
+
+.inquiry-button-box > button{
+    border-radius: 10px;
+    background-color: #A0D995;
+    border: none;
+    color: white;
+    width: 90px;
+    height: 35px;
+    font-size: 16px;
+}
+
+.inquiry_title{
+    padding-left : 20px;
+    width: 50%;
+}
+.inquiry_writer {
+    width: 13%;
+}
 
 /* 반응형 */
 /* 600 까지 */
@@ -39,7 +118,23 @@
     .inquiry-content-box {
         width: 300px;
     }
-
+    .inquiry-content-title,
+    .inquiry_num,
+    .inquiry_kind{
+        display: none;
+    }
+    .inquiry-data-box {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+    }
+    .inquiry_title {
+        padding :0;
+        width: 100%;
+    }
+    .inquiry_writer {
+        width: auto;
+    }
 }
 /* 600 이상 */
 @media(min-width : 600px){
