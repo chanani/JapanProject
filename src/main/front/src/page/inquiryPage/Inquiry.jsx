@@ -2,12 +2,13 @@ import "../../styles/inquiry/Inquiry.css";
 import {useEffect, useState} from "react";
 import {FaLock, FaSearch} from "react-icons/fa";
 import { FaLockOpen } from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
 
 const Inquiry = () => {
 
     // 문의사항 목록
     const [data, setData] = useState([]);
-
+    const navigator = useNavigate();
 
     // 작성자 이름 처리 함수
     const formatWriterName = (name) => {
@@ -18,6 +19,11 @@ const Inquiry = () => {
         }
     };
 
+    // 글쓰기 페이지로 이동
+    const writeHandle = () => {
+        navigator("/inquiryWrite");
+        window.scrollTo(0, 0);
+    }
     useEffect(() => {
         let newData = [
             {
@@ -103,7 +109,7 @@ const Inquiry = () => {
                         </div>
 
                         <div className="inquiry-button-box">
-                            <button>글쓰기</button>
+                            <button onClick={writeHandle}>글쓰기</button>
                         </div>
                     </div>
 

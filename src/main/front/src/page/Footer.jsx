@@ -19,7 +19,7 @@ function Footer() {
                     <h3>The Japan</h3>
                 </div>
                 <div className='footer-content-box'>
-                    <p onClick={navHandle} className="Inquiry">문의하기</p>
+                    <p onClick={navHandle} className="inquiry">문의하기</p>
                     <p>브랜드 스토리</p>
                     <p onClick={navHandle} className="policy">서비스 이용약관</p>
                     <p>개인정보 처리 방침</p>

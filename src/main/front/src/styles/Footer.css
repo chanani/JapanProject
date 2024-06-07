@@ -1,52 +1,59 @@
 footer {
-  background-color: #f6f7fb;
+    background-color: #f6f7fb;
 }
+
 .footer-box {
-  border: 1px solid #777;
-  border-radius: 24px;
-  padding: 15px 30px 15px 30px;
-  margin: 0 30px 30px 30px;
-  background-color: #A0D995;
+    border: 1px solid #777;
+    border-radius: 24px;
+    padding: 15px 30px 15px 30px;
+    margin: 0 30px 30px 30px;
+    background-color: #A0D995;
 }
 
 .footer-title h3 {
-  font-size: 35px;
-  margin-bottom: 15px;
+    font-size: 35px;
+    margin-bottom: 55px;
+    color: #ffffff;
 }
 
 .footer-content-box {
-  margin-bottom: 15px;
-  color: #353535;
+    margin-bottom: 15px;
+    color: #353535;
 }
-
 
 
 .footer-content-box p,
 .footer-info-box p {
-  margin-bottom: 5px;
+    margin-bottom: 5px;
+    line-height: 25px;
+    color: #888888;
 }
 
-.footer-info-box{
-  color: #353535;
+.footer-info-box {
+    color: #353535;
 }
 
 /* 1000 이상 */
-@media(min-width : 1000px){
-    .footer-box{
-      overflow: hidden;
+@media (min-width: 1000px) {
+    .footer-box {
+        overflow: hidden;
     }
-    .footer-title{
-      float: left;
-      width: 85%;
+
+    .footer-title {
+        float: left;
+        width: 85%;
     }
-    .footer-title h3{
-      font-size: 100px;
+
+    .footer-title h3 {
+        font-size: 100px;
     }
-    .footer-content-box{
-      float: right;
-      margin-top: 16px;
+
+    .footer-content-box {
+        float: right;
+        margin-top: 16px;
     }
-    .footer-info-box{
-      float: left;
+
+    .footer-info-box {
+        float: left;
     }
 }

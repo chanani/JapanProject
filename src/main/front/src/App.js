@@ -26,6 +26,7 @@ import Mypage from "./page/mypage/Mypage";
 import Withdrawal from "./page/mypage/Withdrawal";
 import Policy from "./page/policy/Policy";
 import Inquiry from "./page/inquiryPage/Inquiry";
+import InquiryWrite from "./page/inquiryPage/InquiryWrite";
 
 function App() {
   return (
@@ -63,7 +64,8 @@ function App() {
           <Route path="/mypage" element={<Mypage />} />
           <Route path="/withdrawal" element={<Withdrawal />} />
           <Route path="/policy" element={<Policy />} />
-          <Route path="/Inquiry" element={<Inquiry />} />
+          <Route path="/inquiry" element={<Inquiry />} />
+          <Route path="/inquiryWrite" element={<InquiryWrite />} />
         </Routes>
 
         <Footer />
