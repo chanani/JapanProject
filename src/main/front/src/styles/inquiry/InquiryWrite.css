@@ -19,8 +19,7 @@
 .inquiry-write-box  p {
     margin: 14px 0 10px 0;
 }
-.inquiry-write-box input,
-.inquiry-write-box select{
+.inquiry-write-box input{
     height: 45px;
     padding-left: 7px;
     border-radius: 4px;
@@ -28,10 +27,34 @@
     font-size: 14px;
 }
 
-.inquiry-write-box select,
 .inquiry-write-box input {
     width: 100%;
 }
+
+/* check box */
+.inquiry-checkbox {
+    width: 100%;
+}
+.inquiry-checkbox > label {
+    display: flex;
+    margin-top: 20px;
+}
+
+.inquiry-checkbox > label > input {
+    width: 20px;
+    height: 20px;
+}
+
+.inquiry-checkbox > label > span {
+    margin-left: 6px;
+}
+
+.inquiry-checkbox strong {
+    color: #40A578;
+}
+
+
+
 
 
 
@@ -58,7 +81,6 @@
         width: 97%;
     }
     .inquiry-write-box select{
-        width: 103%;
     }
 }
 /* 600 이상 */
@@ -76,17 +98,18 @@
         justify-content: space-between;
     }
 
-    .inquiry-write-kind-detail {
-        width: 90px;
-    }
+
     .inquiry-write-title-detail {
-        width: 360px;
+        width: 416px;
     }
     .inquiry-write-writer-detail,
     .inquiry-write-email-detail,
     .inquiry-write-password-detail,
     .inquiry-write-password-check-detail {
-        width: 220px;
+        width: 200px;
+    }
+    .inquiry-write-content-box {
+        width: 100%;
     }
 }
 
@@ -95,16 +118,17 @@
     .inquiry-write-box {
         width: 760px;
     }
-    .inquiry-write-kind-detail {
-        width: 150px;
-    }
+
     .inquiry-write-title-detail {
-        width: 580px;
+        width: 698px;
     }
     .inquiry-write-writer-detail,
     .inquiry-write-email-detail,
     .inquiry-write-password-detail,
     .inquiry-write-password-check-detail {
-        width: 365px;
+        width: 340px;
+    }
+    .inquiry-write-content-box {
+        width: 100%;
     }
 }

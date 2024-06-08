@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.project.thejapenproject.inquiry.service.InquiryMapper">
+
+    <insert id="insertData" parameterType="InquiryVO">
+        insert into inquiry (inquiry_title,
+                             inquiry_content,
+                             inquiry_writer,
+                             inquiry_password,
+                             inquiry_secret,
+                             inquiry_regdate,
+                             inquiry_email
+                             )
+        values (#{inquiry_title},
+                #{inquiry_content},
+                #{inquiry_writer},
+                #{inquiry_password},
+                'y',
+                now(),
+                #{inquiry_email})
+    </insert>
+
+</mapper>
