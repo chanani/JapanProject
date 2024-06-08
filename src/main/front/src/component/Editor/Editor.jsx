@@ -18,6 +18,7 @@ import FloatingTextFormatToolbarPlugin from "../../component/CustomNodes/CustomP
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
 import {Overlap} from "../../hook/Overlap";
+import {useNavigate} from "react-router-dom";
 
 function LexicalEditorWrapper({
                                   inquiryTitle,
@@ -28,45 +29,54 @@ function LexicalEditorWrapper({
                                   infoCheck
                               }) {
     const [editorContent, setEditorContent] = useState("");
+    const navigator = useNavigate();
 
     const onChange = (editorState) => {
-
         editorState.read(() => {
-            // Read the contents of the EditorState here.
             const root = $getRoot();
-            const selection = $getSelection();
-
+            //const selection = $getSelection();
             const jsonString = JSON.stringify(root);
             setEditorContent(jsonString);
         });
     }
+
+
+
+
+    // 목록으로 가기
+    const listHandle = () => {
+        navigator("/inquiry");
+        window.scroll(0, 0);
+    }
     // 글 등록하기 API
     const inquirySaveAPI = () => {
         axiosInstance.post("inquiry/insertData", {
-            inquiry_title : inquiryTitle,
+            inquiry_title: inquiryTitle,
             inquiry_content: editorContent,
-            inquiry_writer : inquiryWriter,
-            inquiry_email : inquiryEmail,
-            inquiry_password : inquiryPassword,
+            inquiry_writer: inquiryWriter,
+            inquiry_email: inquiryEmail,
+            inquiry_password: inquiryPassword,
         })
             .then((res) => {
                 toast.success("정상적으로 글이 등록되었습니다.");
+                navigator("/inquiry");
             })
             .catch(e => toast.error("글 등록 중 에러가 발생하였습니다."))
     }
-
+    // 글쓰기 핸들러
     const submitHandler = () => {
-        if(!inquiryTitle) return toast.error("제목을 입력해주세요.");
-        if(!inquiryWriter) return toast.error("작성자를 입력해주세요.");
-        if(!inquiryEmail) return toast.error("이메일을 입력해주세요.");
-        if(!inquiryPassword) return toast.error("비밀번호를 입력해주세요.");
-        if(!inquiryPasswordCheck) return toast.error("비밀번호 확인란을 입력해주세요.");
-        if(!infoCheck) return toast.error("개인정보 수집 및 이용에 동의해주세요.");
-        if(!Overlap("email", inquiryEmail)) return;
-        if(inquiryPassword.length !== 4) return toast.error("비밀번호는 4자리에 맞춰 입력해주세요.");
-        if(inquiryPassword !== inquiryPasswordCheck) return toast.error("비밀번호가 일치하지 않습니다.");
+        if (!inquiryTitle) return toast.error("제목을 입력해주세요.");
+        if (!inquiryWriter) return toast.error("작성자를 입력해주세요.");
+        if (!inquiryEmail) return toast.error("이메일을 입력해주세요.");
+        if (!inquiryPassword) return toast.error("비밀번호를 입력해주세요.");
+        if (!inquiryPasswordCheck) return toast.error("비밀번호 확인란을 입력해주세요.");
+        if (!infoCheck) return toast.error("개인정보 수집 및 이용에 동의해주세요.");
+        if (!Overlap("email", inquiryEmail)) return;
+        if (inquiryPassword.length !== 4) return toast.error("비밀번호는 4자리에 맞춰 입력해주세요.");
+        if (inquiryPassword !== inquiryPasswordCheck) return toast.error("비밀번호가 일치하지 않습니다.");
         inquirySaveAPI();
     }
+
     return (
         <LexicalComposer initialConfig={lexicalEditorConfig}>
             <LexicalEditorTopBar/>
@@ -74,15 +84,31 @@ function LexicalEditorWrapper({
             <Box sx={{position: "relative", background: "white"}}>
                 <RichTextPlugin // #312D4B
                     contentEditable={<MuiContentEditable/>}
-                    placeholder={<Box sx={placeHolderSx}>Enter some text...</Box>}
+                    placeholder={<Box sx={placeHolderSx}>내용 입력...</Box>}
                     ErrorBoundary={LexicalErrorBoundary}
+
                 />
                 <OnChangePlugin onChange={onChange}/>
                 <HistoryPlugin/>
                 <ListPlugin/>
                 <LinkPlugin/>
                 <FloatingTextFormatToolbarPlugin/>
-                <Box style={{textAlign: "center"}}>
+                <TreeViewPlugin />
+                <Box style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    borderTop: "1px solid rgb(0, 0, 0, 0.12)",
+                    paddingTop: "15px"
+                }}>
+                    <Button onClick={listHandle}
+                            style={{
+                                background: "#f2f4f7",
+                                color: "#667085",
+                                width: "110px",
+                                height: "40px",
+                                fontSize: "16px",
+                                borderRadius: "8px"
+                            }}>목록으로 가기</Button>
                     <Button onClick={submitHandler}
                             style={{
                                 background: "#A0D995",

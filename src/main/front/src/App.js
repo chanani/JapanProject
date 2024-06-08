@@ -28,54 +28,12 @@ import Withdrawal from "./page/mypage/Withdrawal";
 import Policy from "./page/policy/Policy";
 import Inquiry from "./page/inquiryPage/Inquiry";
 import InquiryWrite from "./page/inquiryPage/InquiryWrite";
-import "ress";
 import theme from "./component/theme";
 import EditorWrapper from "./component/Editor/Editor";
+import InquiryDetail from "./page/inquiryPage/InquiryDetail";
 
 function App() {
   return (
-    // <TokenInfoProvider>
-    //   <BrowserRouter>
-    //     <Header />
-    //     <ToastContainer
-    //         position="top-right" // 알람 위치 지정
-    //         autoClose={3000} // 자동 off 시간
-    //         hideProgressBar={false} // 진행시간바 숨김
-    //         closeOnClick // 클릭으로 알람 닫기
-    //         rtl={false} // 알림 좌우 반전
-    //         pauseOnFocusLoss // 화면을 벗어나면 알람 정지
-    //         draggable // 드래그 가능
-    //         pauseOnHover // 마우스를 올리면 알람 정지
-    //         theme="light"
-    //         // limit={1} // 알람 개수 제한
-    //     />
-    //     <Routes>
-    //       <Route path="/login" element={<Login />} />
-    //       <Route path="/join" element={<Join />} />
-    //       <Route path="/" element={<MainPage />} />
-    //       <Route path="/study/:level" element={<Easy/>} />
-    //       <Route path="/test/:level" element={<TestPage />}/>
-    //       <Route path="/result" element={<ResultPage />}/>
-    //       <Route path="/mypage/record" element={<RecordPage />} />
-    //       <Route path="/mypage/favorites" element={<FavoritesList />} />
-    //       <Route path="/search" element={<Search />}/>
-    //       <Route path="/quiz" element={<Quiz />} />
-    //       <Route path="/recordDetails" element={<RecordDetails />}/>
-    //       <Route path="/chatAi" element={<ChatAi/>} />
-    //       <Route path="/notice" element={<NoticePage/>} />
-    //       <Route path="/admin/addWord" element={<AddWordPage />} />
-    //       <Route path="/admin/addNotice" element={<AddNoticePage />} />
-    //       <Route path="/mypage" element={<Mypage />} />
-    //       <Route path="/withdrawal" element={<Withdrawal />} />
-    //       <Route path="/policy" element={<Policy />} />
-    //       <Route path="/inquiry" element={<Inquiry />} />
-    //       <Route path="/inquiryWrite" element={<InquiryWrite />} />
-    //     </Routes>
-    //
-    //     <Footer />
-    //   </BrowserRouter>
-    // </TokenInfoProvider>
-
       <TokenInfoProvider>
         <ThemeProvider theme={theme}>
           <CssBaseline />
@@ -115,6 +73,7 @@ function App() {
               <Route path="/policy" element={<Policy />} />
               <Route path="/inquiry" element={<Inquiry />} />
               <Route path="/inquiryWrite" element={<InquiryWrite />} />
+              <Route path="/inquiryDetail" element={<InquiryDetail />} />
             </Routes>
             <Footer />
           </BrowserRouter>

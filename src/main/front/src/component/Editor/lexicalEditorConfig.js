@@ -30,5 +30,6 @@ export const lexicalEditorConfig = {
         TableRowNode,
         AutoLinkNode,
         LinkNode,
+
     ],
 };

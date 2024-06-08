@@ -1,57 +1,49 @@
 import "../../styles/inquiry/Inquiry.css";
 import {useEffect, useState} from "react";
 import {FaLock, FaSearch} from "react-icons/fa";
-import { FaLockOpen } from "react-icons/fa";
+import {FaLockOpen} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
+import {axiosInstance} from "../../api";
+import moment from "moment";
+import CheckPassword from "../../component/CheckPassword";
 
 const Inquiry = () => {
 
     // 문의사항 목록
     const [data, setData] = useState([]);
+    const [checkPassword, setCheckPassword] = useState(false);
+    const [nowNumber, setNowNumber] = useState(0);
     const navigator = useNavigate();
-
     // 작성자 이름 처리 함수
     const formatWriterName = (name) => {
         if (name.length > 3) {
-            return `${name[0] }**..`;
+            return `${name[0]}**..`;
         } else {
             return `${name[0]}${'**'.repeat(name.length - 2)}`;
         }
     };
-
     // 글쓰기 페이지로 이동
     const writeHandle = () => {
         navigator("/inquiryWrite");
         window.scrollTo(0, 0);
     }
+    // 목록 조회 API
+    const getListAPI = () => {
+        axiosInstance.get(`inquiry/getList`)
+            .then((res) => {
+                setData(res.data);
+            })
+    }
+    // 비밀번호 모달 핸들러
+    const CheckPasswordHandle = (event) => {
+
+        setNowNumber(event.target.id);
+        setCheckPassword((prev) => !prev);
+    }
+
+    // 목록 불러오기
     useEffect(() => {
-        let newData = [
-            {
-                "inquiry_num": 1,
-                "inquiry_title": "문의 제목 테스트합니다 !",
-                "inquiry_content": "문의 내용을 테스트합니다~",
-                "inquiry_writer": "차나니",
-                "inquiry_password": "1234",
-                "inquiry_secret": "y",
-                "inquiry_regdate": "24.04.05",
-                "inquiry_kind": "기타",
-                "inquiry_comment" : "안녕하십니까~"
-            }, {
-                "inquiry_num": 2,
-                "inquiry_title": "문의 제목 테스트2",
-                "inquiry_content": "문의 내용을 테스트합니다2~",
-                "inquiry_writer": "맹구영",
-                "inquiry_password": "12345",
-                "inquiry_secret": "n",
-                "inquiry_regdate": "24.04.05",
-                "inquiry_kind": "기타",
-                "inquiry_comment" : ""
-
-            }
-
-        ];
-
-        setData(newData);
+        getListAPI();
     }, []);
 
 
@@ -67,7 +59,7 @@ const Inquiry = () => {
 
                     <div className="inquiry-content-title">
                         <p style={{width: "7%"}}>번호</p>
-                        <p style={{width: "10%"}}>분류</p>
+                        <p style={{width: "10%"}}>답변</p>
                         <p style={{width: "50%"}}>제목</p>
                         <p style={{width: "13%"}}>글쓴이</p>
                         <p style={{width: "20%"}}>등록일</p>
@@ -81,21 +73,28 @@ const Inquiry = () => {
                             :
                             <div className="inquiry-inData-box">
                                 {data.map((item, index) => (
+                                    item.inquiry_state === 'y' &&
                                     <div className="inquiry-data-box" key={index}>
-                                        <p style={{width: "7%", textAlign : "center"}}
-                                        className="inquiry_num">{item.inquiry_num}</p>
-                                        <p style={{width: "10%", textAlign : "center"}}
-                                        className="inquiry_kind">{item.inquiry_kind}</p>
-                                        <p
-                                        className="inquiry_title">
-                                            {item.inquiry_secret === 'y' ? <FaLock /> : <FaLockOpen /> }
-                                            {item.inquiry_comment !== "" ? <span style={{marginRight : "5px"}}>[답변완료]</span> : ""}
-                                            {item.inquiry_title}
+                                        <p style={{width: "7%", textAlign: "center"}}
+                                           className="inquiry_num">{item.inquiry_num}</p>
+                                        <p style={{width: "10%", textAlign: "center"}}
+                                           className="inquiry_kind">
+                                            {item.inquiry_comment !== null ?
+                                                <span>답변완료</span> : <span>미완료</span>}
                                         </p>
-                                        <p style={{ textAlign : "center"}}
-                                        className="inquiry_writer">{formatWriterName(item.inquiry_writer)}</p>
-                                        <p style={{width: "20%", textAlign : "center"}}
-                                        className="inquiry_regdate">{item.inquiry_regdate}</p>
+                                        <p
+                                            className="inquiry_title"
+                                            onClick={CheckPasswordHandle}
+                                            id={item.inquiry_num}
+                                        >
+                                            {item.inquiry_secret === 'y' ? <FaLock/> : <FaLockOpen/>}
+                                            {item.inquiry_title}
+
+                                        </p>
+                                        <p style={{textAlign: "center"}}
+                                           className="inquiry_writer">{formatWriterName(item.inquiry_writer)}</p>
+                                        <p style={{width: "20%", textAlign: "center"}}
+                                           className="inquiry_regdate">{moment(item.inquiry_regdate).format('YY/MM/DD')}</p>
                                     </div>
                                 ))}
                             </div>
@@ -113,6 +112,10 @@ const Inquiry = () => {
                         </div>
                     </div>
 
+                    {checkPassword && <CheckPassword
+                        setCheckPassword={setCheckPassword}
+                        nowNumber={nowNumber}
+                    />}
                 </div>
             </div>
         </div>

@@ -81,7 +81,7 @@
 /* 600 이상 */
 @media(max-width : 600px){
     .mypage-box {
-        width: 300px;
+        width: 360px;
     }
     .mypage-content, .mypage-btn-box {
         width: 285px;
@@ -103,7 +103,7 @@
 /* 1000 이상 */
 @media(min-width : 600px){
     .mypage-box {
-        width: 500px;
+        width: 560px;
     }
     .mypage-content{
         width: 400px;
@@ -126,7 +126,7 @@
 /* 1000 이상 */
 @media(min-width : 1000px){
     .mypage-box {
-        width: 850px;
+        width: 910px;
     }
     .mypage-content{
         width: 600px;

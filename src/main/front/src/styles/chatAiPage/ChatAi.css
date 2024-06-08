@@ -80,7 +80,7 @@
 /* 600 이하 */
 @media(max-width : 600px){
   .chat-box{
-    width: 350px;
+    width: 370px;
   }
   .gpt-form > textarea {
     width: 300px;
@@ -90,7 +90,7 @@
 /* 600 이상 */
 @media(min-width : 600px){
   .chat-box{
-    width: 550px;
+    width: 570px;
   }
   .gpt-form > textarea {
     width: 500px;
@@ -99,7 +99,7 @@
  /* 1000 이상 */
 @media(min-width : 1000px){
   .chat-box{
-    width: 950px;
+    width: 970px;
   }
   .gpt-form > textarea {
     width: 900px;

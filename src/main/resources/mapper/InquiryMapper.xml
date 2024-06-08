@@ -23,4 +23,25 @@
                 #{inquiry_email})
     </insert>
 
+    <select id="getList" resultType="InquiryVO">
+        select inquiry_num,
+               inquiry_title,
+               inquiry_writer,
+               inquiry_secret,
+               inquiry_regdate,
+               inquiry_state
+        from inquiry
+        order by inquiry_num DESC
+    </select>
+
+    <select id="checkPassword" resultType="Boolean">
+        select IF(COUNT(*) = 1, true, false)
+        from inquiry
+        where inquiry_num = #{inquiry_num} and
+              inquiry_password = #{inquiry_password}
+    </select>
+
+    <select id="getDetails" resultType="InquiryVO">
+        select * from inquiry where inquiry_num = #{inquiry_num}
+    </select>
 </mapper>

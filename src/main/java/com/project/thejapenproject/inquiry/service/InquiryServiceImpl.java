@@ -4,6 +4,8 @@ import com.project.thejapenproject.command.InquiryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class InquiryServiceImpl implements InquiryService {
 
@@ -13,5 +15,20 @@ public class InquiryServiceImpl implements InquiryService {
     @Override
     public int insertData(InquiryVO vo) {
         return inquiryMapper.insertData(vo);
+    }
+
+    @Override
+    public ArrayList<InquiryVO> getList() {
+        return inquiryMapper.getList();
+    }
+
+    @Override
+    public Boolean checkPassword(InquiryVO vo) {
+        return inquiryMapper.checkPassword(vo);
+    }
+
+    @Override
+    public InquiryVO getDetails(int inquiry_num) {
+        return inquiryMapper.getDetails(inquiry_num);
     }
 }

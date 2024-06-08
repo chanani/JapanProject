@@ -88,6 +88,7 @@ const InquiryWrite = () => {
                                 inquiryPassword={inquiryPassword}
                                 inquiryPasswordCheck={inquiryPasswordCheck}
                                 infoCheck={infoCheck}
+
                             />
                         </Grid>
                     </Grid>

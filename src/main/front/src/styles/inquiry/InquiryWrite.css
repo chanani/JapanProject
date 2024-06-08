@@ -34,6 +34,9 @@
 /* check box */
 .inquiry-checkbox {
     width: 100%;
+    border-bottom: 1px solid rgb(0, 0, 0, 0.12);
+    z-index: 1;
+    padding-bottom: 15px;
 }
 .inquiry-checkbox > label {
     display: flex;

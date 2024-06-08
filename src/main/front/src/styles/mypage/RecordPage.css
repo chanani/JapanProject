@@ -63,7 +63,7 @@
 /* 500 이하 */
 @media(max-width : 600px){
   .recordPage-page-mid{
-    width: 300px;
+    width: 360px;
   }
 
 }
@@ -71,14 +71,14 @@
 /* 500 이상 */
 @media(min-width : 600px){
   .recordPage-page-mid{
-    width: 500px;
+    width: 560px;
   }
 
 }
  /* 1000 이상 */
 @media(min-width : 1000px){
   .recordPage-page-mid{
-    width: 850px;
+    width: 910px;
   }
 
 }

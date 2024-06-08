@@ -3,16 +3,16 @@ footer {
 }
 
 .footer-box {
-    border: 1px solid #777;
-    border-radius: 24px;
+
+    border-radius: 10px;
     padding: 15px 30px 15px 30px;
     margin: 0 30px 30px 30px;
     background-color: #A0D995;
 }
 
 .footer-title h3 {
-    font-size: 35px;
-    margin-bottom: 55px;
+    font-size: 58px;
+    margin-bottom: 10px;
     color: #ffffff;
 }
 
@@ -26,7 +26,7 @@ footer {
 .footer-info-box p {
     margin-bottom: 5px;
     line-height: 25px;
-    color: #888888;
+    color: #707070;
 }
 
 .footer-info-box {
@@ -46,6 +46,7 @@ footer {
 
     .footer-title h3 {
         font-size: 100px;
+        margin-bottom: 55px;
     }
 
     .footer-content-box {

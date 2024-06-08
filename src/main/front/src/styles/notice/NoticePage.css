@@ -57,20 +57,20 @@
 /* 600 까지 */
 @media(max-width : 600px){
   .user-notice-box{
-    width: 300px;
+    width: 360px;
   }
   .user-notice-content-box {
-    width: 300px;
+    width: 332px;
   }
 
 }
  /* 600 이상 */
 @media(min-width : 600px){
   .user-notice-box{
-    width: 500px;
+    width: 560px;
   }
   .user-notice-content-box {
-    width: 480px;
+    width: 512px;
   }
 
 }
@@ -78,10 +78,10 @@
  /* 1000 이상 */
  @media(min-width : 1000px){
   .user-notice-box{
-    width: 848px;
+    width: 908px;
   }
   .user-notice-content-box {
-    width: 760px;
+    width: 792px;
   }
 }
 

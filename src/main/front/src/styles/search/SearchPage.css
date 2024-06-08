@@ -131,7 +131,7 @@
   padding: 5px 10px 10px 5px;
   box-shadow: 0 0.125rem 0.25rem #00000014;
   transition: all .12s cubic-bezier(.47,0,.745,.715);
-  height: 80px;
+  height: 97px;
   margin-right: 10px; 
   margin-bottom: 10px; 
   float: left;
@@ -164,10 +164,10 @@
 /* 600 이하 */
 @media(max-width : 600px){
   .search-box{
-    width: 300px;
+    width: 360px;
   }
   .search-word-all {
-    width: 73px;
+    width: 90px;
   }
   .search-header-box{
     width: 300px;
@@ -180,10 +180,10 @@
 /* 600 이상 */
 @media(min-width : 600px){
   .search-box{
-    width: 500px;
+    width: 560px;
   }
   .search-word-all {
-    width: 98px;
+    width: 115px;
   }
   .search-header-box{
     width: 450px;
@@ -195,10 +195,10 @@
  /* 1000 이상 */
 @media(min-width : 1000px){
   .search-box{
-    width: 850px;
+    width: 910px;
   }
   .search-word-all {
-    width: 114px;
+    width: 131px;
   }
   .search-header-box{
     width: 600px;

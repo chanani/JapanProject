@@ -22,4 +22,5 @@ public class InquiryVO {
     private Timestamp inquiry_regdate;
     private Timestamp inquiry_comment_regdate;
     private String inquiry_email;
+    private String inquiry_state;
 }
