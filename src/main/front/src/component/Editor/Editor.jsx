@@ -11,7 +11,6 @@ import {MuiContentEditable, placeHolderSx} from "./styles";
 import {Box, Button, Divider} from "@mui/material";
 import {lexicalEditorConfig} from "../Editor/lexicalEditorConfig";
 import LexicalEditorTopBar from "../LexicalEditorTopBar";
-import TreeViewPlugin from "../CustomNodes/CustomPlugins/TreeViewPlugin";
 import {ListPlugin} from "@lexical/react/LexicalListPlugin";
 import {LinkPlugin} from "@lexical/react/LexicalLinkPlugin";
 import FloatingTextFormatToolbarPlugin from "../../component/CustomNodes/CustomPlugins/FloatingTextFormatPlugin";
@@ -19,6 +18,7 @@ import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
 import {Overlap} from "../../hook/Overlap";
 import {useNavigate} from "react-router-dom";
+import {$generateHtmlFromNodes} from '@lexical/html';
 
 function LexicalEditorWrapper({
                                   inquiryTitle,
@@ -31,15 +31,15 @@ function LexicalEditorWrapper({
     const [editorContent, setEditorContent] = useState("");
     const navigator = useNavigate();
 
-    const onChange = (editorState) => {
-        editorState.read(() => {
-            const root = $getRoot();
-            //const selection = $getSelection();
-            const jsonString = JSON.stringify(root);
-            setEditorContent(jsonString);
+    // 입력 핸들러
+    const onChange = (editorState, editor) => {
+        editor.update(() => {
+            const rawHTML = $generateHtmlFromNodes(editor, null)
+            const editorStateTextString = editorState.read(() => $getRoot().getTextContent());
+            //console.log("rawHTML : ", rawHTML);
+            setEditorContent(rawHTML);
         });
     }
-
 
 
 
@@ -93,7 +93,6 @@ function LexicalEditorWrapper({
                 <ListPlugin/>
                 <LinkPlugin/>
                 <FloatingTextFormatToolbarPlugin/>
-                <TreeViewPlugin />
                 <Box style={{
                     display: "flex",
                     justifyContent: "space-between",
