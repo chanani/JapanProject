@@ -70,6 +70,13 @@ CREATE TABLE `TheJapen`.`inquiry` (
   PRIMARY KEY (`inquiry_num`)
 );
 
+CREATE TABLE `TheJapen`.`school` (
+  `school_num` INT NOT NULL AUTO_INCREMENT,
+  `school_week` INT NOT NULL,
+  `school_meaning` VARCHAR(45) NOT NULL,
+  `school_content` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`shool_num`));
+
 
 ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
 	`username`

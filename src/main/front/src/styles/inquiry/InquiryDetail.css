@@ -22,10 +22,16 @@
     margin-bottom: 20px;
     font-family: Sandoll GyeokdongGothic, sans-serif;
 }
+
+.inquiry-detail-content-container {
+    border: 1px solid rgb(206 205 205);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 30px 0 #aec1d033;
+
+}
+
 .inquiry-detail-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -39,31 +45,47 @@
     display: flex;
     align-items: center;
 }
+
 .inquiry-detail-info-title2 > p {
-    padding-top: 3px;
+    padding-top: 5px;
 }
 
 .inquiry-detail-info-title2 > svg {
     margin-left: 5px;
-
 }
 
-.inquiry-detail-info-title > .inquiry-title {
-    font-size: 23px;
+.inquiry-detail-info-title2 > svg:hover {
+    color: #f75757bf;
 }
+.inquiry-title {
+    padding-top: 3px;
+    word-break: break-word; /* 긴 단어가 있을 경우 줄바꿈 처리 */
+    white-space: normal; /* 텍스트가 줄바꿈 되도록 설정 */
+}
+
 .comment-result {
-    border: 1px solid #777;
     margin: 0 5px;
-    padding : 2px 5px;
+    padding: 4px 5px 2px 5px;
     font-size: 12px;
     border-radius: 3px;
+    box-shadow: 0 4px 30px 0 #aec1d033;
 }
+
+.comment-result-y {
+    background-color: #a0d995;
+    color: white;
+}
+.comment-result-n {
+    background-color: #f75757bf;
+    color: white;
+}
+
 .inquiry-detail-content-box {
-    padding: 10px;
+    padding: 20px 10px 0 10px;
 }
 
 .inquiry-detail-comment-box {
-    border: 1px solid #777;
+    border: 1px solid rgb(206 205 205);
     border-radius: 5px;
     padding: 20px;
     margin-top: 20px;
@@ -79,11 +101,26 @@
     font-size: 18px;
     resize: none;
     overflow: hidden;
-    border : none;
+    border: none;
     outline: none;
 }
 
+.inquiry-detail-comment-box > p {
+    font-size: 20px;
+    font-weight: 500;
+    margin-left: 5px;
+}
 
+.inquiry-detail-button-box > button {
+    background: #A0D995;
+    color: white;
+    width: 110px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 8px;
+    border :none ;
+    margin-top: 30px;
+}
 
 /* 반응형 */
 /* 600 까지 */
@@ -92,13 +129,25 @@
         width: 360px;
     }
 
-    .inquiry-detail-content-box,
-    .inquiry-detail-comment-box,
-    .inquiry-detail-info{
+    .inquiry-detail-content-container,
+    .inquiry-detail-comment-box {
         width: 300px;
     }
 
+    .inquiry-detail-info {
+        width: 255px;
+    }
 
+    .inquiry-detail-info-title > .inquiry-title {
+        font-size: 15px;
+    }
+    .inquiry-detail-comment-box > p {
+        font-size: 11px;
+        margin: 0;
+    }
+    .inquiry-detail-comment-box > svg {
+        height: 15px;
+    }
 }
 
 /* 600 이상 */
@@ -107,13 +156,18 @@
         width: 560px;
     }
 
-    .inquiry-detail-content-box,
-    .inquiry-detail-comment-box,
-    .inquiry-detail-info{
+    .inquiry-detail-content-container,
+    .inquiry-detail-comment-box {
         width: 480px;
     }
 
+    .inquiry-detail-info {
+        width: 435px;
+    }
 
+    .inquiry-detail-info-title > .inquiry-title {
+        font-size: 18px;
+    }
 }
 
 /* 1000 이상 */
@@ -122,11 +176,21 @@
         width: 908px;
     }
 
-    .inquiry-detail-content-box,
-    .inquiry-detail-comment-box,
-    .inquiry-detail-info{
+    .inquiry-detail-content-container,
+    .inquiry-detail-comment-box {
         width: 760px;
     }
 
+    .inquiry-detail-info {
+        width: 715px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
+    .inquiry-detail-info-title > .inquiry-title {
+        font-size: 23px;
+        width: 410px;
+        height: auto;
+    }
 }

@@ -11,4 +11,8 @@ public interface InquiryMapper {
     public ArrayList<InquiryVO> getList();
     public Boolean checkPassword(InquiryVO vo);
     public InquiryVO getDetails(int inquiry_num);
+    public int deleteData(int inquiry_num);
+    public ArrayList<InquiryVO> searchInquiry(String word);
+    public int addComment(InquiryVO vo);
+
 }

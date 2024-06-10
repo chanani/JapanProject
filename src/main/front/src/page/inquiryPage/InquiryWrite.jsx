@@ -1,8 +1,10 @@
 import "../../styles/inquiry/InquiryWrite.css"
 import EditorWrapper, {Editor} from "../../component/Editor/Editor";
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 import {ThemeProvider, CssBaseline, Grid, Typography, createTheme} from '@mui/material';
+import {tokenInfoContext} from "../../component/TokenInfoProvider";
+import {axiosInstance} from "../../api";
 
 
 const InquiryWrite = () => {
@@ -12,6 +14,25 @@ const InquiryWrite = () => {
     const [inquiryPassword, setInquiryPassword] = useState("");
     const [inquiryPasswordCheck, setInquiryPasswordCheck] = useState("");
     const [infoCheck, setInfoCheck] = useState(false);
+    const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+
+    // 로그인한 유저가 접속하였을 경우 정보 가져오는 API
+    const getUserAPI = () => {
+        axiosInstance.get('mypage/data', {
+            params : {
+                username : username
+            }
+        })
+            .then((res) => {
+                setInquiryWriter(res.data.user_name);
+                setInquiryEmail(res.data.user_email);
+            })
+    }
+
+    useEffect(() => {
+        console.log(userRole)
+        if(userRole !== 'none') getUserAPI();
+    }, [userRole]);
     return (
         <div className="inquiry-write-container">
             <div className="inquiry-write-box">
@@ -30,12 +51,14 @@ const InquiryWrite = () => {
                     </div>
                 </div>
                 <div className="inquiry-write-writer-box">
-                    <div className="inquiry-write-writer-detail">
+                    <div className='inquiry-write-writer-detail' >
                         <p>글쓴이</p>
                         <input type="text"
                                placeholder="이름을 입력해주세요."
                                value={inquiryWriter}
                                onChange={(e) => setInquiryWriter(e.target.value)}
+                               readOnly={userRole !== 'none' ? true : false}
+                               className={userRole !== 'none' && "input-backGround"}
                         />
                     </div>
                     <div className="inquiry-write-email-detail">

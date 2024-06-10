@@ -1,12 +1,9 @@
 import {useContext, useEffect, useState} from "react";
 import "../../styles/search/SearchPage.css"
-import {tokenInfoContext} from "../../component/TokenInfoProvider";
-import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {FaSearch} from "react-icons/fa";
 import moment from "moment";
 import 'moment/locale/ko';
-import {IoCloseOutline} from "react-icons/io5";
 import {toast} from "react-toastify";
 import NoticeDetail from "../../component/NoticeDetail";
 

@@ -31,4 +31,19 @@ public class InquiryServiceImpl implements InquiryService {
     public InquiryVO getDetails(int inquiry_num) {
         return inquiryMapper.getDetails(inquiry_num);
     }
+
+    @Override
+    public int deleteData(int inquiry_num) {
+        return inquiryMapper.deleteData(inquiry_num);
+    }
+
+    @Override
+    public ArrayList<InquiryVO> searchInquiry(String word) {
+        return inquiryMapper.searchInquiry(word);
+    }
+
+    @Override
+    public int addComment(InquiryVO vo) {
+        return inquiryMapper.addComment(vo);
+    }
 }

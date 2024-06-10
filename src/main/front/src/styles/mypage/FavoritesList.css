@@ -64,9 +64,6 @@
   color: white;
 }
 
-.study-play-btn > button:hover{
-  color: red;
-}
 
 /* 600 이하 */
 @media(max-width : 600px){

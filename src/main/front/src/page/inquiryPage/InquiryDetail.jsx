@@ -2,38 +2,77 @@ import React from "react";
 import {useEffect, useState} from "react";
 import {axiosInstance} from "../../api";
 import moment from "moment";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import "../../styles/inquiry/InquiryDetail.css";
 import {TbSquareRoundedLetterAFilled} from "react-icons/tb";
-import { TbSquareRoundedLetterQ } from "react-icons/tb";
-import { FaRegTrashAlt } from "react-icons/fa";
+import {TbSquareRoundedLetterQ} from "react-icons/tb";
+import {FaRegTrashAlt} from "react-icons/fa";
+import { PiChatCircleTextBold } from "react-icons/pi";
+import {toast} from "react-toastify";
 
 const InquiryDetail = () => {
     const [data, setData] = useState([]);
-    // inquiry_num 가져오기
+    const [textareaHeight, setTextareaHeight] = useState('auto');
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const inquiryNum = queryParams.get('inquiry_num');
-    const [textareaHeight, setTextareaHeight] = useState('auto');
-
+    const navigator = useNavigate();
     const handleChange = (event) => {
         setTextareaHeight(`${event.target.scrollHeight}px`);
     };
-    // 공지사항 상세정보 불러오는 API
-    const getDetails = () => {
-        axiosInstance.get('inquiry/getDetails', {
-            params: {
-                inquiry_num: inquiryNum
+
+    // 문의 삭제 핸들러
+    const deleteHandle = () => {
+        if(window.confirm("문의내역을 삭제하시겠습니까?")){
+            deleteAPI();
+        }
+    }
+
+    // 문의 삭제 API
+    const deleteAPI = () => {
+        axiosInstance.get("inquiry/deleteData",{
+            params : {
+                inquiry_num : inquiryNum
             }
         })
             .then((res) => {
-                setData(res.data);
+                if(res.status === 200) {
+                    toast.success("문의내역에 삭제되었습니다.");
+                    navigator("/inquiry");
+                }
             })
+            .catch(e => toast.error('문의내역 삭제중 오류가 발생하였습니다. 관리자에게 문의해주세요.'));
+    }
+
+    // 목록으로 가는 핸들러
+    const listHandle = () => {
+        navigator('/inquiry');
     }
 
     useEffect(() => {
+        const getDetails = () => {
+            axiosInstance.get('inquiry/getDetails', {
+                params: {
+                    inquiry_num: inquiryNum
+                }
+            })
+                .then((res) => {
+                    setData(res.data);
+                })
+        }
+
         getDetails();
-    }, []);
+    }, [inquiryNum]);
+
+    useEffect(() => {
+        if (data.inquiry_comment) {
+            const textarea = document.querySelector('.inquiry-detail-comment-text > textarea');
+            if (textarea) {
+                textarea.style.height = 'auto';
+                textarea.style.height = `${textarea.scrollHeight}px`;
+            }
+        }
+    }, [data.inquiry_comment]);
 
     return (
         <div className="inquiry-detail-container">
@@ -41,41 +80,47 @@ const InquiryDetail = () => {
                 <div className="inquiry-detail-title">
                     <p>문의내역</p>
                 </div>
-                <div className="inquiry-detail-info">
-                    <div className="inquiry-detail-info-title">
-                        <TbSquareRoundedLetterQ size={35}/>
-                        {!data.inquiry_comment ?
-                            <p className="comment-result">답변대기</p> :
-                            <p className="comment-result">답변완료</p>
-                        }
-                        <p className="inquiry-title">{data.inquiry_title}</p>
+                <div className="inquiry-detail-content-container">
+                    <div className="inquiry-detail-info">
+                        <div className="inquiry-detail-info-title">
+                            <TbSquareRoundedLetterQ size={35}/>
+                            {!data.inquiry_comment ?
+                                <p className="comment-result comment-result-n">답변대기</p> :
+                                <p className="comment-result comment-result-y">답변완료</p>
+                            }
+                            <p className="inquiry-title">{data.inquiry_title}</p>
+                        </div>
+                        <div className="inquiry-detail-info-title2">
+                            <p>{data.inquiry_writer} / {moment(data.inquiry_regdate).format('YYYY.MM.DD HH:mm')}</p>
+                            <FaRegTrashAlt size={18} onClick={deleteHandle}/>
+                        </div>
                     </div>
-                    <div className="inquiry-detail-info-title2">
-                        <p>{data.inquiry_writer} / {moment(data.inquiry_regdate).format('YYYY.MM.DD HH:mm')}</p>
-                        <FaRegTrashAlt size={18}/>
-
+                    <div>
+                        <div className="inquiry-detail-content-box">
+                            <div dangerouslySetInnerHTML={{__html: data.inquiry_content}}/>
+                        </div>
                     </div>
-
                 </div>
-                <div>
-                <div className="inquiry-detail-content-box">
-                        <div dangerouslySetInnerHTML={{__html: data.inquiry_content}}/>
+                {!data.inquiry_comment ?
+                    <div className="inquiry-detail-comment-box">
+                        <PiChatCircleTextBold size={27}/><p>순차적으로 답변 중 입니다. 잠시만 기다려주세요 ! </p>
                     </div>
-                </div>
-
-                <div className="inquiry-detail-comment-box">
-                    <div className="inquiry-detail-comment-image">
-                        <TbSquareRoundedLetterAFilled size={35}/>
+                    :
+                    <div className="inquiry-detail-comment-box">
+                        <div className="inquiry-detail-comment-image">
+                            <TbSquareRoundedLetterAFilled size={35}/>
+                        </div>
+                        <div className="inquiry-detail-comment-text">
+                            <textarea
+                                onChange={handleChange}
+                                style={{height: textareaHeight}}
+                                value={data.inquiry_comment}
+                            />
+                        </div>
                     </div>
-                    <div className="inquiry-detail-comment-text">
-                        <textarea
-                            onChange={handleChange}
-                            style={{height: textareaHeight}}
-                            value="asdkajdasd
-                            asdasdlhasld
-                            asdasdasd"
-                        />
-                    </div>
+                }
+                <div className="inquiry-detail-button-box">
+                    <button onClick={listHandle}>목록으로 가기</button>
                 </div>
             </div>
         </div>

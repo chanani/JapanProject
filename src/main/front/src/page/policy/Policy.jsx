@@ -9,7 +9,7 @@ const Policy = () => {
 
                 <div className="policy-title">
                     <h2>서비스 이용약관</h2>
-                    <p className="policy-detail-box"><b>(주)차나니 코리아</b>는 회원님들의 권익을 보호하고, 회원님들의 개인정보 보호에 만전을 기하고자 관계법령의
+                    <p className="policy-detail-box"><b>(주)The Japan</b>은 회원님들의 권익을 보호하고, 회원님들의 개인정보 보호에 만전을 기하고자 관계법령의
                         규정을 반영하여
                         약관을 규정하였습니다.</p>
                 </div>

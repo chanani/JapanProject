@@ -92,7 +92,8 @@ header {
 
 .menu-box .study-title, 
 .menu-box .test-title,
-.menu-box .rank-title {
+.menu-box .rank-title,
+.otherWise-title{
   font-size: 22px;
 }
 
@@ -190,13 +191,21 @@ a {
     top: 67px;
     right: 203px;
   }
-  
+  .menu-box .study-title,
+  .menu-box .test-title,
+  .menu-box .rank-title,
+  .otherWise-title{
+    font-size: 16px;
+  }
+  .menu-box div a > p {
+    font-size: 15px;
+  }
 }
 
 /* 500 이상 */
 @media(min-width : 500px){
   .menu-box {
-    padding: 22px 100px 15px 70px;
+    padding: 22px 50px 15px 50px;
     display: flex;
   }
   .alarm-toggle-all{
@@ -206,6 +215,15 @@ a {
   .alarm-box-arrow{
     top: 67px;
     right: 203px;
+  }
+  .menu-box .study-title,
+  .menu-box .test-title,
+  .menu-box .rank-title,
+  .otherWise-title{
+    font-size: 19px;
+  }
+  .menu-box div a > p {
+    font-size: 16px;
   }
 }
  /* 1000 이상 */
@@ -220,4 +238,15 @@ a {
   .menu-box .rank-box {
     padding-left: 100px;
   }
+  .menu-box .study-title,
+  .menu-box .test-title,
+  .menu-box .rank-title,
+  .otherWise-title{
+    font-size: 22px;
+  }
+
+  .menu-box div a > p {
+    font-size: 17px;
+  }
+
 }

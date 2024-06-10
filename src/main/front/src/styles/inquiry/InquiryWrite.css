@@ -57,8 +57,11 @@
 }
 
 
-
-
+/* 로그인한 상태일 때 background 색상 변경*/
+.input-backGround{
+    background-color: #e8e8e8a6;
+    outline: none;
+}
 
 
 /* 반응형 */

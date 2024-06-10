@@ -29,7 +29,8 @@
                inquiry_writer,
                inquiry_secret,
                inquiry_regdate,
-               inquiry_state
+               inquiry_state,
+               inquiry_comment
         from inquiry
         order by inquiry_num DESC
     </select>
@@ -44,4 +45,27 @@
     <select id="getDetails" resultType="InquiryVO">
         select * from inquiry where inquiry_num = #{inquiry_num}
     </select>
+
+    <update id="deleteData" parameterType="int">
+        update inquiry set inquiry_state = 'n'
+        where inquiry_num = #{inquiry_num}
+    </update>
+
+    <select id="searchInquiry" resultType="InquiryVO">
+        select inquiry_num,
+               inquiry_title,
+               inquiry_writer,
+               inquiry_secret,
+               inquiry_regdate,
+               inquiry_state,
+               inquiry_comment
+        from inquiry
+        where inquiry_title like CONCAT('%', #{word}, '%')
+        order by inquiry_num DESC
+    </select>
+
+    <update id="addComment" parameterType="InquiryVO">
+        update inquiry set inquiry_comment = #{inquiry_comment}, inquiry_regdate = now()
+        where inquiry_num = #{inquiry_num}
+    </update>
 </mapper>

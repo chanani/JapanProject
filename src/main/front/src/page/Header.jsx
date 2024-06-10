@@ -28,10 +28,12 @@ function Header() {
     const studyLink = [["/study/easy", "1단계"], ["/study/middle", "2단계"], ["/study/hard", "3단계"]];
     //　테스트 페이지 Link list
     const testLink = [["/test/easy", "1단계"], ["/test/middle", "2단계"], ["/test/hard", "3단계"]];
-    // 이 외 페이지 Link list
-    const myLink = [["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ["/chatAi", "Ai학습"], ["/search", "통합검색"], ["/notice", "공지사항"], ["/mypage", "나의정보"]];
+    // 마이페이지 Link list
+    const myLink = [["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ["/mypage", "나의정보"]];
+    // 그 외 페이지 Link list
+    const otherWise = [["/chatAi", "Ai학습"],["/search", "통합검색"], ["/notice", "공지사항"], ["/inquiry", '문의사항']]
     // admin 페이지 Link list
-    const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"], ["/mypage", "나의정보"]];
+    const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"], ["/mypage", "나의정보"], ["/addInquiryComment", '문의사항']];
 
     // 알랑 목록 조회 API
     const getNoticeList = () => {
@@ -169,6 +171,11 @@ function Header() {
                                 {myLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}>
                                     <p>{item[1]}</p></Link>)}
                             </div>
+                            <div className='rank-box'>
+                                <h3 className='otherWise-title'>기타페이지</h3>
+                                {otherWise.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}>
+                                    <p>{item[1]}</p></Link>)}
+                            </div>
                         </div>
 
                     : ""}
@@ -178,7 +185,7 @@ function Header() {
                         <BiCaretUp size={30} className='alarm-box-arrow' color='#272829'/>
                         <div className='alarm-toggle-all'>
                             <div className='alarm-toggle-title-box'>
-                                <p>알림</p>
+                            <p>알림</p>
                             </div>
                             {noCheckList.length !== 0 ?
                                 noCheckList.map((item, index) => (
