@@ -1,9 +1,13 @@
 import "../../styles/schoolPage/SchoolPage.css";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {FaStar} from "react-icons/fa";
 import {axiosInstance} from "../../api";
 import Audio from "../../component/Audio";
 import {toast} from "react-toastify";
+import {TbCircleLetterN} from "react-icons/tb";
+import moment from "moment/moment";
+import {tokenInfoContext} from "../../component/TokenInfoProvider";
+import {useNavigate} from "react-router-dom";
 
 const SchoolPage = () => {
     const [mode, setMode] = useState(1);
@@ -12,7 +16,8 @@ const SchoolPage = () => {
     const [nowWeek, setNowWeek] = useState(1);
     const [check, setCheck] = useState([]);
     const [animateIndex, setAnimateIndex] = useState(null); // 애니메이션 인덱스 상태 추가
-
+    const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+    const navigator = useNavigate();
     // 목록 불러오는 API
     const getListAPI = () => {
         axiosInstance.get('mypage/getSchoolList', {
@@ -51,16 +56,25 @@ const SchoolPage = () => {
     const weekChangeHandle = (event) => {
         setNowWeek(event.target.value);
     }
-
+    // 모드 변경 핸들러
+    const modeChangeHandle = () => {
+        if (mode === 1) setMode(2);
+        else if (mode === 2) setMode(1);
+    }
+    useEffect(() => {
+        if (userRole === "none") {
+            toast.error("로그인 후 이용해주세요.");
+            navigator("/login");
+        } else {
+            // 주차 목록 불러오기
+            getWeekAPI();
+        }
+    }, []);
     // 목록 불러오기
     useEffect(() => {
         getListAPI();
     }, [nowWeek]);
 
-    // 주차 목록 불러오기
-    useEffect(() => {
-        getWeekAPI();
-    }, [])
 
     return (
         <div className='school-container'>
@@ -78,10 +92,16 @@ const SchoolPage = () => {
                 </div>
 
                 <div className='school-mode-box'>
-                    <div>
+                    <div className={mode === 1 ? 'mode-back-ground-color' : ""}
+                         style={{borderRadius: "15px 0 0 0"}}
+                         onClick={modeChangeHandle}
+                    >
                         <p>단어형</p>
                     </div>
-                    <div>
+                    <div className={mode === 2 ? 'mode-back-ground-color' : ""}
+                         style={{borderRadius: "0 15px 0 0"}}
+                         onClick={modeChangeHandle}
+                    >
                         <p>리스트형</p>
                     </div>
                 </div>
@@ -105,7 +125,19 @@ const SchoolPage = () => {
                     </div>
                     :
                     <div className="school-mode-two-box">
-
+                        {word.map((item, index) => (
+                            <div className="school-content-box" key={index} onClick={(e) => (index)}>
+                                <p className="content-box-p-tag"　style={{paddingTop: "1px"}}>
+                                    {item.school_content}
+                                </p>
+                                <p style={{paddingTop: "1px"}}>
+                                    {item.school_meaning}
+                                </p>
+                                <p className="school-audio">
+                                    <Audio inputData={item.school_content}/>
+                                </p>
+                            </div>
+                        ))}
                     </div>
                 }
             </div>
