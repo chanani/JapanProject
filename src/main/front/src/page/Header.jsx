@@ -31,7 +31,7 @@ function Header() {
     // 마이페이지 Link list
     const myLink = [["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ["/mypage", "나의정보"]];
     // 그 외 페이지 Link list
-    const otherWise = [["/chatAi", "Ai학습"],["/search", "통합검색"], ["/notice", "공지사항"], ["/inquiry", '문의사항']]
+    const otherWise = [["/chatAi", "Ai학습"],["/search", "통합검색"], ["/notice", "공지사항"], ["/inquiry", '문의사항'], , ["/schoolPage" , '단계별학습']]
     // admin 페이지 Link list
     const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"], ["/mypage", "나의정보"], ["/addInquiryComment", '문의사항']];
 

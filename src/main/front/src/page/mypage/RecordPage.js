@@ -39,7 +39,7 @@ const RecordPage = () => {
             const response = await axiosInstance.post('mypage/recordDetails', {username: username, record_num: num})
 
             const answer = response.data;
-            navigate("/recordDetails", {state: {kind, level, answer, point}});
+            navigate("/recordDetails", {state: {kind, level, answer, point, num}});
             window.scrollTo(0, 0);
         } catch (e) {
             toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");

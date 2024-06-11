@@ -1,9 +1,6 @@
 package com.project.thejapenproject.mypage.service;
 
-import com.project.thejapenproject.command.RecordDetailsVO;
-import com.project.thejapenproject.command.RecordVO;
-import com.project.thejapenproject.command.UserVO;
-import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.command.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,5 +14,8 @@ public interface MypageMapper {
     public UserVO myInfo(String username);
     public int modifyInfo(UserVO userVO);
     public int withdrawal(String username);
+    public int deleteRecord(int record_num);
+    public ArrayList<SchoolVO> getSchoolList(int school_week);
+    public ArrayList getWeekList();
 
 }

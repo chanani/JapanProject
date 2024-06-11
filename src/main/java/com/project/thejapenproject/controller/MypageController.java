@@ -1,13 +1,12 @@
 package com.project.thejapenproject.controller;
 
-import com.project.thejapenproject.command.RecordDetailsVO;
-import com.project.thejapenproject.command.RecordVO;
-import com.project.thejapenproject.command.UserVO;
-import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.command.*;
+import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.jwt.SHA512;
 import com.project.thejapenproject.mypage.service.MypageService;
 import org.apache.coyote.Response;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -72,13 +71,13 @@ public class MypageController {
 
     /**
      * 회원 탈퇴 컨트롤러
-     * */
+     */
     @NoneCheckToken
     @PostMapping("/withdrawal")
-    public ResponseEntity<String> withdrawal(@RequestBody Map<String, String> data){
+    public ResponseEntity<String> withdrawal(@RequestBody Map<String, String> data) {
         try {
             int result = mypageService.withdrawal(data.get("username"));
-            if (result > 0){
+            if (result > 0) {
                 return ResponseEntity.ok("정상적으로 탈퇴 되었습니다.");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 중 오류가 발생하였습니다.");
@@ -88,22 +87,78 @@ public class MypageController {
         }
     }
 
+    /**
+     * 즐겨찾기 목록 API
+     * @Param map : username을 통해 목록 조회
+     * **/
     @NoneCheckToken
     @PostMapping("/favorite")
-    public ResponseEntity<ArrayList<WordVO>> favoriteList(@RequestBody Map<String, String> map) {
-        return ResponseEntity.ok(mypageService.favoriteList(map.get("username")));
+    public ResponseEntity<ArrayList<WordVO>> favoriteList(@RequestBody Map<String, String> map) throws Exception {
+        ArrayList<WordVO> list = mypageService.favoriteList(map.get("username"));
+        if(list.isEmpty()) throw new Exception();
+        return ResponseEntity.ok(list);
     }
 
+    /**
+     * 학습 기록 조회 API
+     * @Param username : username을 통해 목록 조회
+     * **/
     @NoneCheckToken
     @GetMapping("/record")
-    public ResponseEntity<ArrayList<RecordVO>> recordList(@RequestParam String username) {
-        return ResponseEntity.ok(mypageService.recordList(username));
+    public ResponseEntity<ArrayList<RecordVO>> recordList(@RequestParam String username) throws Exception {
+        ArrayList<RecordVO> list = mypageService.recordList(username);
+        if(list.isEmpty()) throw new Exception();
+        return ResponseEntity.ok(list);
     }
 
+    /**
+     * 학습 기록 상세 조회 API
+     * @Param map : username과 record 테이블의 PK를 통해 조회
+     * **/
     @NoneCheckToken
     @PostMapping("/recordDetails")
-    public ResponseEntity<ArrayList<RecordDetailsVO>> recordDetailList(@RequestBody Map<String, String> map) {
-        return ResponseEntity.ok(mypageService.recordDetails(map.get("username"), Integer.valueOf(map.get("record_num"))));
+    public ResponseEntity<ArrayList<RecordDetailsVO>> recordDetailList(@RequestBody Map<String, String> map) throws Exception {
+        ArrayList<RecordDetailsVO> list = mypageService.recordDetails(map.get("username"), Integer.valueOf(map.get("record_num")));
+        if(list.isEmpty()) throw new Exception();
+        return ResponseEntity.ok(list);
+    }
+
+    /**
+     * 학습 기록 삭제 API
+     * @Param record_num : record 테이블의 PK를 통해 삭제
+     * **/
+    @NoneCheckToken
+    @GetMapping("/deleteRecord")
+    public ResponseEntity<String> deleteRecord(@Param("record_num") int record_num) throws Exception {
+        int result = mypageService.deleteRecord(record_num);
+        if (result != 1) throw new Exception();
+        return ResponseEntity.ok("성공");
+    }
+
+    /**
+     * 단계별 학습 API
+     * **/
+    @NoneAuth
+    @GetMapping("/getSchoolList")
+    public ResponseEntity<ArrayList<SchoolVO>> getSchoolList(@Param("school_week") int school_week) throws Exception {
+        ArrayList<SchoolVO> list = mypageService.getSchoolList(school_week);
+        if(list.isEmpty()) throw new Exception();
+        return ResponseEntity.ok(list);
+    }
+
+    /**
+     * 단계별 학습의 주차 조회 API
+     * **/
+    @NoneAuth
+    @GetMapping("/getWeekList")
+    public ResponseEntity<Object> getWeekList() throws Exception {
+        try {
+            ArrayList<Integer> list = mypageService.getWeekList();
+            if (list.isEmpty()) return ResponseEntity.ok(HttpStatus.NOT_FOUND);
+            return ResponseEntity.ok(list);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

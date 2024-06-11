@@ -2,11 +2,13 @@ import {useContext, useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import Audio from "../../component/Audio";
+import {axiosInstance} from "../../api";
+import {toast} from "react-toastify";
 
 
 const RecordDetails = () => {
     const location = useLocation();
-    const {kind, answer, point} = location.state;
+    const {kind, answer, point, num} = location.state;
     const navigate = useNavigate();
     const [check, setCheck] = useState([false, false, false, false, false, false, false, false, false, false]);
     // 학습 기록 페이지로 이동하는 핸들러
@@ -23,7 +25,23 @@ const RecordDetails = () => {
             box.classList.toggle('fade-out');
         }, 100);
     }
-
+    // 삭제 핸들러
+    const deleteHandle = () => {
+        if (!window.confirm('기록을 삭제하시겠습니까 ?')) return;
+        deleteAPI();
+    }
+    const deleteAPI = () => {
+        axiosInstance.get('mypage/deleteRecord', {
+            params: {
+                record_num : num
+            }
+        })
+            .then((res) => {
+                if(res.status !== 200) return toast.error('기록 삭제 중 오류가 발생하였습니다. 관리자에게 문의해주세요.');
+                toast.success('정상적으로 기록이 삭제되었습니다.');
+                navigate("/mypage/record");
+            })
+    }
     return (
         <div className="result-page-all">
             <div className="result-page-mid">
@@ -58,6 +76,7 @@ const RecordDetails = () => {
                     </div>
                     <div className="submit-box">
                         <button onClick={handleHome}>돌아가기</button>
+                        <button onClick={deleteHandle}>삭제하기</button>
                     </div>
                 </div>
 

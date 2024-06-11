@@ -29,10 +29,10 @@ import Policy from "./page/policy/Policy";
 import Inquiry from "./page/inquiryPage/Inquiry";
 import InquiryWrite from "./page/inquiryPage/InquiryWrite";
 import theme from "./component/theme";
-import EditorWrapper from "./component/Editor/Editor";
 import InquiryDetail from "./page/inquiryPage/InquiryDetail";
 import AddInquiryComment from "./page/amindPage/AddInquiryComment";
 import AddInquiryCommentWrite from "./page/amindPage/AddInquiryCommentWrite";
+import SchoolPage from "./page/schoolPage/SchoolPage";
 
 function App() {
   return (
@@ -78,6 +78,7 @@ function App() {
               <Route path="/inquiryDetail" element={<InquiryDetail />} />
               <Route path="/addInquiryComment" element={<AddInquiryComment />} />
               <Route path="/AddInquiryCommentWrite" element={<AddInquiryCommentWrite />} />
+              <Route path="/schoolPage" element={<SchoolPage />} />
             </Routes>
             <Footer />
           </BrowserRouter>

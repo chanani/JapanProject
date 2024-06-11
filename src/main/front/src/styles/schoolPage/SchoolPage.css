@@ -1,0 +1,138 @@
+.school-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: #f6f7fb;
+}
+
+.school-box{
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+    background-color: white;
+    padding: 25px 30px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.school-box-title {
+    font-size: 32px;
+    font-weight: 800;
+}
+
+.school-select-box {
+    margin-top: 15px;
+}
+.school-select-box > select {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+}
+.school-mode-box {
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+}
+.school-mode-box > div {
+    width: 50%;
+    text-align: center;
+    font-size: 20px;
+}
+/**/
+.school-data-box {
+    border : 1px solid #6CC4A1;
+    border-radius: 8px;
+    padding: 5px 10px 10px 5px;
+    box-shadow: 0 0.125rem 0.25rem #00000014;
+    transition: all .12s cubic-bezier(.47,0,.745,.715);
+    height: 97px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    float: left;
+
+}
+.school-data-star svg {
+    width: 20px;
+}
+
+.school-word-content {
+    transition: transform 0.3s ease;
+    backface-visibility: hidden;
+}
+.school-word-content.fade-out {
+    transform: rotateX(360deg);
+}
+
+
+
+
+.school-data-box:hover{
+    background-color: #9dde8b59;
+}
+
+.school-data-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center; /* 텍스트를 가운데 정렬 */
+}
+
+.school-word-content {
+    width: 100%;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center; /* 텍스트를 가운데 정렬 */
+}
+
+/* 반응형 */
+/* 600 까지 */
+@media(max-width : 600px){
+    .school-box{
+        width: 360px;
+    }
+    .school-mode-box,
+    .school-mode-one-box,
+    .school-mode-two-box  {
+        width: 300px;
+    }
+    .school-select-box {
+        width: 80px;
+    }
+
+    .school-data-box {
+        width: 90px;
+    }
+}
+/* 600 이상 */
+@media(min-width : 600px){
+    .school-box{
+        width: 560px;
+    }
+    .school-mode-box,
+    .school-mode-one-box,
+    .school-mode-two-box  {
+        width: 500px;
+    }
+    .school-select-box {
+        width: 100px;
+    }
+    .school-data-box {
+        width: 115px;
+    }
+}
+
+/* 1000 이상 */
+@media(min-width : 1000px){
+    .school-box{
+        width: 908px;
+    }
+    .school-mode-box,
+    .school-mode-one-box,
+    .school-mode-two-box {
+        width: 850px;
+    }
+    .school-data-box {
+        width: 131px;
+    }
+}

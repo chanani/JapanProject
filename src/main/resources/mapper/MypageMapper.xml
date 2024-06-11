@@ -29,7 +29,7 @@
 
     <select id="recordList" resultType="RecordVO">
         SELECT * FROM record
-        WHERE username = #{username}
+        WHERE username = #{username} and record_state = 'y'
         ORDER BY record_date DESC
     </select>
 
@@ -55,6 +55,18 @@
         update user set user_status = 1 where username = #{username};
     </update>
 
+    <update id="deleteRecord" parameterType="int">
+        update record set record_state = 'n'
+        where record_num = #{record_num}
+    </update>
+
+    <select id="getSchoolList" resultType="SchoolVO">
+        select * from school where school_week = #{school_week}
+    </select>
+
+    <select id="getWeekList" resultType="int">
+        select distinct school_week from school
+    </select>
 
     <resultMap id="recordDetailsResultMap" type="RecordDetailsVO">
         <id property="rd_num" column="rd_num"/>

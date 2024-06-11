@@ -1,9 +1,6 @@
 package com.project.thejapenproject.mypage.service;
 
-import com.project.thejapenproject.command.RecordDetailsVO;
-import com.project.thejapenproject.command.RecordVO;
-import com.project.thejapenproject.command.UserVO;
-import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.command.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +39,21 @@ public class MypageServiceImpl implements MypageService{
     @Override
     public int withdrawal(String username) {
         return mypageMapper.withdrawal(username);
+    }
+
+    @Override
+    public int deleteRecord(int record_num) {
+        return mypageMapper.deleteRecord(record_num);
+    }
+
+    @Override
+    public ArrayList<SchoolVO> getSchoolList(int school_week) {
+        return mypageMapper.getSchoolList(school_week);
+    }
+
+    @Override
+    public ArrayList getWeekList() {
+        return mypageMapper.getWeekList();
     }
 
 

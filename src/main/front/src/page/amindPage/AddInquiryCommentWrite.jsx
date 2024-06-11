@@ -42,7 +42,7 @@ const AddInquiryCommentWrite = () => {
                 getDetails();
             })
     }
-    
+
     // 문의내역 조회 API
     const getDetails = () => {
         axiosInstance.get('inquiry/getDetails', {
