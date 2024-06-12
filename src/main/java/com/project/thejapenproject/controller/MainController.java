@@ -8,12 +8,10 @@ import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.jwt.SHA512;
 import com.project.thejapenproject.common.jwt.service.AuthService;
 import com.project.thejapenproject.user.service.UserService;
-import com.project.thejapenproject.util.MailSend;
-import com.sun.mail.iap.Response;
+import com.project.thejapenproject.utils.MailSend;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import reactor.util.StringUtils;
 

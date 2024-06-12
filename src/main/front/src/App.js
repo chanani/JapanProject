@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
-import { toast, ToastContainer } from 'react-toastify';
+import {  ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { ThemeProvider, CssBaseline, Grid, Typography, createTheme } from '@mui/material';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 
 import Header from "./page/Header";
 import Footer from "./page/Footer";
@@ -33,6 +33,7 @@ import InquiryDetail from "./page/inquiryPage/InquiryDetail";
 import AddInquiryComment from "./page/amindPage/AddInquiryComment";
 import AddInquiryCommentWrite from "./page/amindPage/AddInquiryCommentWrite";
 import SchoolPage from "./page/schoolPage/SchoolPage";
+import TranslatorPage from "./page/translatorPage/TranslatorPage";
 
 function App() {
   return (
@@ -79,6 +80,7 @@ function App() {
               <Route path="/addInquiryComment" element={<AddInquiryComment />} />
               <Route path="/AddInquiryCommentWrite" element={<AddInquiryCommentWrite />} />
               <Route path="/schoolPage" element={<SchoolPage />} />
+              <Route path="/translator" element={<TranslatorPage />}/>
             </Routes>
             <Footer />
           </BrowserRouter>

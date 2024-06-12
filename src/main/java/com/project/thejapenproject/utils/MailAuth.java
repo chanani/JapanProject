@@ -1,4 +1,4 @@
-package com.project.thejapenproject.util;
+package com.project.thejapenproject.utils;
 
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;

@@ -70,6 +70,10 @@ dependencies {
     implementation group: 'org.springframework.data', name: 'spring-data-elasticsearch', version: '4.4.6'
     implementation group: 'org.elasticsearch', name: 'elasticsearch', version: '7.17.3'
 
+    // Translator
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+    implementation("com.google.code.gson:gson:2.9.0")
+
 }
 
 tasks.named('test') {

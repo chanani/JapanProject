@@ -65,7 +65,7 @@
     </select>
 
     <select id="getWeekList" resultType="int">
-        select distinct school_week from school
+        select distinct school_week from school order by school_week asc
     </select>
 
     <resultMap id="recordDetailsResultMap" type="RecordDetailsVO">

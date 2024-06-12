@@ -16,8 +16,6 @@ const SchoolPage = () => {
     const [nowWeek, setNowWeek] = useState(1);
     const [check, setCheck] = useState([]);
     const [animateIndex, setAnimateIndex] = useState(null); // 애니메이션 인덱스 상태 추가
-    const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
-    const navigator = useNavigate();
     // 목록 불러오는 API
     const getListAPI = () => {
         axiosInstance.get('mypage/getSchoolList', {
@@ -61,20 +59,28 @@ const SchoolPage = () => {
         if (mode === 1) setMode(2);
         else if (mode === 2) setMode(1);
     }
-    useEffect(() => {
-        if (userRole === "none") {
-            toast.error("로그인 후 이용해주세요.");
-            navigator("/login");
-        } else {
-            // 주차 목록 불러오기
-            getWeekAPI();
-        }
-    }, []);
+
     // 목록 불러오기
     useEffect(() => {
         getListAPI();
     }, [nowWeek]);
+    // 주차 목록 불러오기
 
+    // 주차 목록 불러오기
+    useEffect(() => {
+        // 일본어 : ja, 영어 : en, 한국어 : ko, 이탈리아어 : it
+        axiosInstance.get('translator/changeWord', {
+            params : {
+                word : "엔지니어",
+                from : "ko",
+                to : "ja"
+            }
+        })
+            .then((res) => {
+                console.log(res.data)
+            })
+        getWeekAPI();
+    }, [])
 
     return (
         <div className='school-container'>
@@ -119,6 +125,7 @@ const SchoolPage = () => {
                                             {!check[index] ? item.school_content : item.school_meaning}
                                         </p>
                                     </div>
+
                                 </div>
                             ))}
                         </div>
@@ -128,7 +135,7 @@ const SchoolPage = () => {
                         {word.map((item, index) => (
                             <div className="school-content-box" key={index} onClick={(e) => (index)}>
                                 <p className="content-box-p-tag"　style={{paddingTop: "1px"}}>
-                                    {item.school_content}
+                                    {item.school_content} {item.school_chinese ? `/ ${item.school_chinese}` : ""}
                                 </p>
                                 <p style={{paddingTop: "1px"}}>
                                     {item.school_meaning}

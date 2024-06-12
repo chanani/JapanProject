@@ -11,8 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 @AllArgsConstructor
 @Builder
 public class SchoolVO {
-    private int School_num;
-    private int School_week;
-    private String School_meaning;
-    private String School_content;
+    private int school_num;
+    private int school_week;
+    private String school_meaning;
+    private String school_content;
+    private String school_chinese;
 }
