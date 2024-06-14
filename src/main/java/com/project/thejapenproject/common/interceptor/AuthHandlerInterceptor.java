@@ -57,15 +57,11 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
                 String accessToken = this.getBearerToken(request);
                 if (StringUtils.hasText(accessToken)) {
                     NoneCheckToken nonCheckToken = ((HandlerMethod) handler).getMethodAnnotation(NoneCheckToken.class);
-                    if (nonCheckToken == null) {
+                    if (nonCheckToken != null) {
                         // 로그아웃이 아닌 경우만 Access Token을 검사하도록 한다.
                         jwtProvider.verifyToken(TokenType.ACCESS_TOKEN, accessToken);
                     }
-
                     try {
-
-
-
                         // Payload 가져오는 기능
                         String payload = jwtProvider.getPayload(accessToken);
                         if (!StringUtils.hasText(payload)) {
@@ -76,7 +72,7 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
                         if (!StringUtils.hasText(jwtPayload.getData())) {
                             throw new Exception();
                         }
-
+                        System.out.println("payload : " );
                         UserVO userVO = objectMapper.readValue(jwtPayload.getData(), UserVO.class);
                         request.setAttribute("username", userVO.getUsername());
                         request.setAttribute("Role", userVO.getRole());

@@ -6,6 +6,7 @@ import {useEffect, useRef, useState} from "react";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
 import Audio from "../../component/Audio";
+import {CopyToClipboard} from "react-copy-to-clipboard/src";
 
 const TranslatorPage = (props) => {
     const [fromValue, setFromValue] = useState([{value: 'ko', label: '한국어'}]);
@@ -87,7 +88,7 @@ const TranslatorPage = (props) => {
     // timeoutRef kill 하는 useEffect
     useEffect(() => {
         return () => {
-            if(timeoutRef.current !== null) {
+            if (timeoutRef.current !== null) {
                 clearTimeout(timeoutRef.current);
                 timeoutRef.current = null;
             }
@@ -121,7 +122,7 @@ const TranslatorPage = (props) => {
                     <div className='translator-icon-box'>
                         <FaExchangeAlt onClick={changeFromToHandle}/>
                     </div>
-                    <div className="translator-select-box" style={{width : "auto", display : "none"}}>
+                    <div className="translator-select-box" style={{width: "auto", display: "none"}}>
                         <Select
                             defaultValue={options[1]}
                             isClearable={false}
@@ -154,7 +155,9 @@ const TranslatorPage = (props) => {
                         </div>
                         <div className="translator-button-other-copy-box">
                             <div>
-                                <GrCopy/>
+                                <CopyToClipboard text={inputFromValue} onCopy={() => toast.success("클립보드에 복사되었습니다.")}>
+                                    <GrCopy/>
+                                </CopyToClipboard>
                             </div>
                         </div>
                     </div>
@@ -196,7 +199,9 @@ const TranslatorPage = (props) => {
                         </div>
                         <div className="translator-button-other-copy-box">
                             <div>
-                                <GrCopy/>
+                                <CopyToClipboard text={inputToValue} onCopy={() => toast.success("클립보드에 복사되었습니다.")}>
+                                    <GrCopy/>
+                                </CopyToClipboard>
                             </div>
                         </div>
                     </div>

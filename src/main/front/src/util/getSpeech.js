@@ -18,7 +18,7 @@ export const getSpeech = (text: any) => {
     const utterThis = new SpeechSynthesisUtterance(txt);
 
     utterThis.lang = lang;
-    utterThis.rate = 0.15;
+    utterThis.rate = 0.5;
     /* 
       일본어 voice 찾기
       디바이스 별로 일본어는 ja-JP 또는 ja_JP로 voice가 정의되어 있다.

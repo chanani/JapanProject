@@ -1,8 +1,11 @@
 package com.project.thejapenproject.controller;
 
+import com.project.thejapenproject.command.RequestUserLogin;
 import com.project.thejapenproject.command.ResponseData;
 import com.project.thejapenproject.command.UserAccessToken;
 import com.project.thejapenproject.command.UserVO;
+import com.project.thejapenproject.command.exception.RequestParameterException;
+import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.jwt.SHA512;
@@ -79,6 +82,21 @@ public class MainController {
     }
 
     @NoneAuth
+    @PostMapping("/refresh")
+    public Object refresh(@RequestBody RequestUserLogin requestUserLogin) throws Exception {
+        if (Objects.isNull(requestUserLogin)) {
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
+        }
+
+        if (!org.springframework.util.StringUtils.hasText(requestUserLogin.getRefreshToken())) {
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
+        }
+
+        UserAccessToken userAccessToken = authService.refresh(UserVO.builder().username(requestUserLogin.getUsername()).build(), requestUserLogin.getRefreshToken());
+        return ResponseData.builder().code(HttpStatus.OK.value()).message(ErrorCode.SUCCESS.getMessage()).data(userAccessToken).build();
+    }
+
+    @NoneAuth
     @GetMapping("/check/{kind}/{attribute}")
     public ResponseEntity<String> checkEmail(@PathVariable("kind") String kind,
                                              @PathVariable("attribute") String attribute) throws Exception {
@@ -94,7 +112,7 @@ public class MainController {
         }
     }
 
-    @NoneAuth
+    @NoneCheckToken
     @PostMapping("/emailAuth")
     public ResponseEntity<String> emailAuth(@RequestBody Map<String, String> data) throws Exception {
         boolean result = userService.emailAuth(data.get("email"));

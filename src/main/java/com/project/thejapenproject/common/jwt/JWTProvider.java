@@ -1,7 +1,10 @@
 package com.project.thejapenproject.common.jwt;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.thejapenproject.command.UserVO;
+import com.project.thejapenproject.command.exception.RequestParameterException;
+import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.TokenType;
 import io.jsonwebtoken.*;
 
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
+import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;
 
@@ -33,6 +37,7 @@ public class JWTProvider {
     private Long refreshTokenTime;
 
     public String createAccessToken(UserVO userVO) throws Exception {
+        System.out.println("access Token");
         return "Bearer " + Jwts.builder()
                 .claim("data", objectMapper.writeValueAsString(userVO))
                 .setSubject("Authorize")
@@ -66,7 +71,7 @@ public class JWTProvider {
         } catch (ExpiredJwtException e) {
             log.error(e.getMessage(), e);
             if (tokenType == TokenType.ACCESS_TOKEN) {
-                throw new Exception();
+                throw new RequestParameterException(ErrorCode.ACCESS_TOKEN_EXPIRED);
             } else {
                 throw new Exception();
             }

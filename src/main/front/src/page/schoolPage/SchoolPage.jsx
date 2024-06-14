@@ -1,13 +1,9 @@
 import "../../styles/schoolPage/SchoolPage.css";
-import {useContext, useEffect, useState} from "react";
-import {FaStar} from "react-icons/fa";
+import {useEffect, useState} from "react";
 import {axiosInstance} from "../../api";
 import Audio from "../../component/Audio";
 import {toast} from "react-toastify";
-import {TbCircleLetterN} from "react-icons/tb";
-import moment from "moment/moment";
-import {tokenInfoContext} from "../../component/TokenInfoProvider";
-import {useNavigate} from "react-router-dom";
+
 
 const SchoolPage = () => {
     const [mode, setMode] = useState(1);
