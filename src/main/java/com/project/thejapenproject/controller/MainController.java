@@ -29,12 +29,18 @@ public class MainController {
     private final UserService userService;
     private final AuthService authService;
 
+    /**
+     * @param userVO : 로그인 요청 정보
+     **/
     @NoneAuth
     @PostMapping("/login")
     public Object login(UserVO userVO) throws Exception {
 
-        if (Objects.isNull(userVO)) throw new Exception();
-        if (!StringUtils.hasText(userVO.getUsername()) || !StringUtils.hasText(userVO.getPassword())) throw new Exception();
+        if (Objects.isNull(userVO)) {
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
+        }
+        if (!StringUtils.hasText(userVO.getUsername()) || !StringUtils.hasText(userVO.getPassword()))
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
 
         try {
             UserAccessToken userAccessToken = authService.token(userVO);
@@ -44,16 +50,18 @@ public class MainController {
                     .data(userAccessToken)
                     .build();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RequestParameterException(ErrorCode.DO_NOT_USER_MATCHING);
         }
     }
 
     @NoneCheckToken
     @PostMapping("/logout")
-    public Object logout(@RequestBody Map<String, String> map) throws Exception {
-        if (!StringUtils.hasText(map.get("username"))) throw new Exception();
+    public Object logout(@RequestBody UserVO userVO) throws Exception {
+        if (!StringUtils.hasText(userVO.getUsername())) {
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
+        }
 
-        authService.logout(map.get("username"));
+        authService.logout(userVO.getUsername());
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
                 .message("성공")
@@ -63,7 +71,9 @@ public class MainController {
     @NoneAuth
     @PostMapping("/join")
     public Object join(@RequestBody Map<String, String> map) throws Exception {
-        if (Objects.isNull(map)) throw new Exception();
+        if (Objects.isNull(map)) {
+            throw new Exception();
+        }
         UserVO userVO = UserVO.builder()
                 .user_name(map.get("user_name"))
                 .username(map.get("username"))
@@ -73,7 +83,9 @@ public class MainController {
                 .role("role_user")
                 .build();
         int success = userService.join(userVO);
-        if (success <= 0) throw new Exception();
+        if (success <= 0) {
+            throw new RequestParameterException(ErrorCode.FAILED_TO_SING_UP);
+        }
 
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
@@ -96,6 +108,10 @@ public class MainController {
         return ResponseData.builder().code(HttpStatus.OK.value()).message(ErrorCode.SUCCESS.getMessage()).data(userAccessToken).build();
     }
 
+    /**
+     * @param kind      : email, username, phone 중 1개로 넘어오는 중복체크 종류
+     * @param attribute : 중복 체크 확인할 값
+     **/
     @NoneAuth
     @GetMapping("/check/{kind}/{attribute}")
     public ResponseEntity<String> checkEmail(@PathVariable("kind") String kind,
@@ -112,6 +128,9 @@ public class MainController {
         }
     }
 
+    /**
+     * @param data : 이메일 인증을 위해 넘어오는 값
+     **/
     @NoneCheckToken
     @PostMapping("/emailAuth")
     public ResponseEntity<String> emailAuth(@RequestBody Map<String, String> data) throws Exception {
@@ -133,11 +152,9 @@ public class MainController {
             if (!mailResult.equals("인증번호 발송에 성공하였습니다.")) {
                 throw new Exception();
             }
-            System.out.println("authToken : " + authToken);
             return ResponseEntity.ok(authToken);
         } else {
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email authentication failed");
+            throw new RequestParameterException(ErrorCode.CERTIFY_CODE_NOT_FOUND);
         }
     }
 
@@ -145,15 +162,21 @@ public class MainController {
     @PostMapping("/findId")
     public ResponseEntity<String> findId(@RequestBody Map<String, String> data) {
         String username = userService.findId(data.get("email"));
-        if (!StringUtils.isEmpty(username)) return ResponseEntity.ok(username);
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not find username");
+        if (!StringUtils.isEmpty(username)) {
+            return ResponseEntity.ok(username);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not find username");
+        }
     }
 
     @NoneAuth
     @PostMapping("/passwordChange")
     public ResponseEntity<String> passwordChange(@RequestBody Map<String, String> data) throws NoSuchAlgorithmException {
         int result = userService.passwordChange(data.get("email"), SHA512.encrypt(data.get("password")));
-        if (result > 0) return ResponseEntity.ok("비밀번호 변경 성공");
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not changed password");
+        if (result > 0) {
+            return ResponseEntity.ok("비밀번호 변경 성공");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not changed password");
+        }
     }
 }

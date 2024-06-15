@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.nio.charset.StandardCharsets;
-import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;
 
@@ -37,7 +36,6 @@ public class JWTProvider {
     private Long refreshTokenTime;
 
     public String createAccessToken(UserVO userVO) throws Exception {
-        System.out.println("access Token");
         return "Bearer " + Jwts.builder()
                 .claim("data", objectMapper.writeValueAsString(userVO))
                 .setSubject("Authorize")
@@ -73,7 +71,7 @@ public class JWTProvider {
             if (tokenType == TokenType.ACCESS_TOKEN) {
                 throw new RequestParameterException(ErrorCode.ACCESS_TOKEN_EXPIRED);
             } else {
-                throw new Exception();
+                throw new RequestParameterException(ErrorCode.ACCESS_TOKEN_NOT_FOUND);
             }
         } catch (UnsupportedJwtException e) {
             log.error(e.getMessage(), e);
