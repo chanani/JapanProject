@@ -1,5 +1,7 @@
 package com.project.thejapenproject.controller;
 
+import com.project.thejapenproject.command.exception.RequestParameterException;
+import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +20,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 @RequestMapping(value = "/chat-gpt")
@@ -31,6 +34,9 @@ public class ChatGPTController {
     @NoneCheckToken
     @PostMapping("/send")
     public ResponseEntity<String> send(@RequestBody Map<String, String> map) {
+        if(Objects.isNull(map)) {
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
+        }
         RestTemplate restTemplate = new RestTemplate();
 
         URI uri = UriComponentsBuilder
