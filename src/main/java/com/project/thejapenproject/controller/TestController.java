@@ -2,6 +2,8 @@ package com.project.thejapenproject.controller;
 
 import com.project.thejapenproject.command.TestItemVO;
 import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.command.exception.RequestParameterException;
+import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.test.service.TestService;
@@ -12,10 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/test")
@@ -34,8 +33,11 @@ public class TestController {
     @NoneCheckToken
     @PostMapping("/record")
     @Transactional
-    public ResponseEntity<String> testResult(@RequestBody Map<String, Object> map) {
-        ArrayList<Object> list = (ArrayList<Object>) map.get("answer");
+    public ResponseEntity<String> testResult(@RequestBody Map<String, Object> data) {
+        if(Objects.isNull(data)){
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
+        }
+        ArrayList<Object> list = (ArrayList<Object>) data.get("answer");
         ArrayList<TestItemVO> testList = new ArrayList<>();
         for (Object x : list) {
             String[] str = String.valueOf(x).replace("[", "").replace("]", "")
@@ -48,16 +50,18 @@ public class TestController {
             testList.add(vo);
         }
 
-        int a = testService.insertRecord((Integer) map.get("level"),
-                (String) map.get("username"),
-                (Integer) map.get("point"),
-                (boolean) map.get("kind"));
+        int a = testService.insertRecord((Integer) data.get("level"),
+                (String) data.get("username"),
+                (Integer) data.get("point"),
+                (boolean) data.get("kind"));
 
         int b = testService.recordData(testList,
-                (String) map.get("username"));
+                (String) data.get("username"));
 
-        if (a == 1 && b == 10) return ResponseEntity.ok("성공");
-        else return ResponseEntity.ok("실패");
+        if (a == 1 && b == 10) {
+            return ResponseEntity.ok("성공");
+        } else {
+            return ResponseEntity.ok("실패");
+        }
     }
-
 }
