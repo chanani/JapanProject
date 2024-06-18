@@ -22,4 +22,17 @@
         values (#{notice_title}, #{notice_content})
     </insert>
 
+    <insert id="addWeekWord" parameterType="java.util.List">
+        INSERT INTO school (school_week,
+                            school_meaning,
+                            school_content,
+                            school_chinese)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.school_week},
+             #{item.school_meaning},
+             #{item.school_content},
+             #{item.school_chinese})
+        </foreach>
+    </insert>
 </mapper>

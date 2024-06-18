@@ -131,7 +131,7 @@ public class MainController {
     /**
      * @param data : 이메일 인증을 위해 넘어오는 값
      **/
-    @NoneCheckToken
+    @NoneAuth
     @PostMapping("/emailAuth")
     public ResponseEntity<String> emailAuth(@RequestBody Map<String, String> data) throws Exception {
         boolean result = userService.emailAuth(data.get("email"));

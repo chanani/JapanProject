@@ -30,13 +30,18 @@
   margin-right: 5px;
 }
 
-.add-box-input > #word,
-.add-box-input > #mean {
+.add-box-input > #school_word,
+.add-box-input > #school_content,
+.add-box-input > #school_chinese,
+.add-box-input > #school_meaning,
+.add-box-input > #word_content,
+.add-box-input > #word_meaning,
+.add-box-input > #word_level{
   width: 80px;
   height: 40px;
 }
 
-.add-box-input > #level {
+.add-box-input > #school_week {
   width: 50px;
   height: 40px;
 }

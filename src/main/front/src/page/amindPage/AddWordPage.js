@@ -1,7 +1,6 @@
 import {useContext, useEffect, useState} from "react";
 import "../../styles/adminPage/AddWordPage.css";
 import {FaPlus} from "react-icons/fa6";
-import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {axiosInstance} from "../../api";
@@ -9,7 +8,7 @@ import {toast} from "react-toastify";
 
 const AddWordPage = () => {
     const navigate = useNavigate();
-    const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+    const {userRole} = useContext(tokenInfoContext);
 
     useEffect(() => {
         if (userRole !== 'role_admin') {
@@ -31,18 +30,22 @@ const AddWordPage = () => {
 
     // 단어 목록 추가 핸들러
     const handleAddWord = () => {
-        setList(prevList => [...prevList, {word: '', mean: '', level: ''}]);
+        setList(prevList => [...prevList, {word_content: '', word_meaning: '', word_level: '' }]);
         setInputCount(prevCount => prevCount + 1);
     }
 
-    // 공지사항 등록 핸들러
+    // 단어 등록 핸들러
     const handleSubmit = async () => {
         if (inputCount === 1) return toast.error("등록할 단어를 입력해주세요.");
         try {
-            const wordResponse = await axiosInstance.post('admin/addWordList', {list})
-            toast.success(`${list.length}건이 정상적으로 등록되었습니다.`);
-            setList([]);
-            setInputCount(1);
+            await axiosInstance.post('admin/addWordList', list)
+                .then((res) => {
+                    toast.success(`${list.length}건이 정상적으로 등록되었습니다.`);
+                    setList([]);
+                    setInputCount(1);
+                })
+
+
         } catch (error) {
             if (error.response && error.response.status === 403) toast.error("등록에 실패하였습니다. 관리자에게 문의해주세요.");
             else toast.error("등록에 실패하였습니다. 관리자에게 문의해주세요.");
@@ -59,24 +62,24 @@ const AddWordPage = () => {
                     {list.map((item, index) => (
                         <div key={index} className="add-box-input">
                             <input type="text" placeholder="단어"
-                                   className={`word${index}`}
-                                   name="word"
-                                   id="word"
-                                   value={item.word}
+                                   className={`word_content${index}`}
+                                   name="word_content"
+                                   id="word_content"
+                                   value={item.word_content}
                                    onChange={(e) => handleChangeWord(e, index)}
                             />
                             <input type="text" placeholder="뜻"
-                                   className={`mean${index}`}
-                                   name="mean"
-                                   id="mean"
-                                   value={item.mean}
+                                   className={`word_meaning${index}`}
+                                   name="word_meaning"
+                                   id="word_meaning"
+                                   value={item.word_meaning}
                                    onChange={(e) => handleChangeWord(e, index)}
                             />
                             <input type="number" placeholder="단계"
-                                   className={`level${index}`}
-                                   name="level"
-                                   id="level"
-                                   value={item.level}
+                                   className={`word_level${index}`}
+                                   name="word_level"
+                                   id="word_level"
+                                   value={item.word_level}
                                    min={1}
                                    max={3}
                                    onChange={(e) => handleChangeWord(e, index)}
