@@ -4,6 +4,7 @@ import com.project.thejapenproject.command.NoticeVO;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.notice.service.NoticeService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,10 @@ import java.util.ArrayList;
 
 @Controller
 @RequestMapping("/notice")
+@RequiredArgsConstructor
 public class NoticeController {
-    @Autowired
-    @Qualifier("noticeService")
-    private NoticeService noticeService;
+
+    private final NoticeService noticeService;
 
     @NoneAuth
     @GetMapping("/getList")

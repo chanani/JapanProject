@@ -25,7 +25,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class InquiryController {
 
-
     public final InquiryService inquiryService;
 
     /**

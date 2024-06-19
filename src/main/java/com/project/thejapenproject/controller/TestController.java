@@ -7,6 +7,7 @@ import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.test.service.TestService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +19,10 @@ import java.util.*;
 
 @Controller
 @RequestMapping("/test")
+@RequiredArgsConstructor
 public class TestController {
 
-    @Autowired
-    @Qualifier("testService")
-    public TestService testService;
+    public final TestService testService;
 
     @NoneAuth
     @GetMapping("/word/{level}")

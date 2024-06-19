@@ -7,6 +7,7 @@ import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.jwt.SHA512;
 import com.project.thejapenproject.mypage.service.MypageService;
+import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,10 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/mypage")
+@RequiredArgsConstructor
 public class MypageController {
 
-    @Autowired
-    @Qualifier("mypageService")
-    public MypageService mypageService;
+    public final MypageService mypageService;
 
     /**
      * @Param username : 아이디

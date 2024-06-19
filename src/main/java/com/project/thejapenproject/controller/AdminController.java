@@ -7,6 +7,7 @@ import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -24,11 +25,10 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin")
+@RequiredArgsConstructor
 public class AdminController {
 
-    @Autowired
-    @Qualifier("adminService")
-    private AdminService adminService;
+    private final AdminService adminService;
 
     @ExceptionHandler
     @NoneCheckToken

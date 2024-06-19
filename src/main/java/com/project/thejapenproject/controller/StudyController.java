@@ -5,6 +5,7 @@ import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.study.service.StudyService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,11 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/study")
+@RequiredArgsConstructor
 public class StudyController {
 
-    @Autowired
-    @Qualifier("studyService")
-    public StudyService studyService;
+
+    public final StudyService studyService;
 
     @NoneAuth
     @GetMapping("/data/{level}/{num}/{username}")
