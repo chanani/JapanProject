@@ -34,7 +34,8 @@ function Header() {
     const otherWise = [["/chatAi", "Ai학습"],["/search", "통합검색"], ["/notice", "공지사항"], ["/inquiry", '문의사항'],
         ["/schoolPage" , '단계별학습'], ["/translator" , '번역기']]
     // admin 페이지 Link list
-    const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"], ["/mypage", "나의정보"], ["/addInquiryComment", '문의사항']];
+    const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"], ["/mypage", "나의정보"],
+        ["/addInquiryComment", '문의사항'], ["/admin/addWeekWord", '단계별단어 추가']];
 
     // 알랑 목록 조회 API
     const getNoticeList = () => {

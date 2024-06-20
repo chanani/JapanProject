@@ -29,6 +29,8 @@ const SchoolPage = () => {
     const typeChangeHandle = (index) => {
         setAnimateIndex(index);
         setTimeout(() => {
+            const box = document.querySelector(`.school-data-box-${index}`);
+            box.classList.toggle('fade-out');
             setCheck(prevCheck => {
                 const newCheck = [...prevCheck];
                 newCheck[index] = !newCheck[index];
@@ -72,9 +74,7 @@ const SchoolPage = () => {
                 to : "ja"
             }
         })
-            .then((res) => {
-                console.log(res.data)
-            })
+            .catch(e => console.log(e));
         getWeekAPI();
     }, [])
 
@@ -112,7 +112,7 @@ const SchoolPage = () => {
                     <div className="school-mode-one-box">
                         <div className="school-data">
                             {word.map((item, index) => (
-                                <div className="school-data-box" key={index} onClick={() => typeChangeHandle(index)}>
+                                <div className={"school-data-box school-data-box-" + index} key={index} onClick={() => typeChangeHandle(index)}>
                                     <div className="school-data-star">
                                         <Audio inputData={item.school_content}/>
                                     </div>

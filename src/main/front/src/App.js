@@ -34,6 +34,7 @@ import AddInquiryComment from "./page/amindPage/AddInquiryComment";
 import AddInquiryCommentWrite from "./page/amindPage/AddInquiryCommentWrite";
 import SchoolPage from "./page/schoolPage/SchoolPage";
 import TranslatorPage from "./page/translatorPage/TranslatorPage";
+import AddWeekWordPage from "./page/amindPage/AddWeekWordPage";
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
               <Route path="/notice" element={<NoticePage/>} />
               <Route path="/admin/addWord" element={<AddWordPage />} />
               <Route path="/admin/addNotice" element={<AddNoticePage />} />
+              <Route path="/admin/addWeekWord" element={<AddWeekWordPage />} />
               <Route path="/mypage" element={<Mypage />} />
               <Route path="/withdrawal" element={<Withdrawal />} />
               <Route path="/policy" element={<Policy />} />

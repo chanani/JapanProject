@@ -54,7 +54,7 @@
     border-radius: 8px;
     padding: 5px 10px 10px 5px;
     box-shadow: 0 0.125rem 0.25rem #00000014;
-    transition: all .12s cubic-bezier(.47,0,.745,.715);
+    transition: transform 0.3s ease;
     height: 97px;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -66,13 +66,19 @@
 }
 
 .school-word-content {
-    transition: transform 0.3s ease;
     backface-visibility: hidden;
 }
 .school-word-content.fade-out {
     transform: rotateX(360deg);
 }
 
+.school-data-box {
+    transition: transform 0.3s ease;
+}
+
+.school-data-box.fade-out {
+    transform: rotateX(360deg);
+}
 
 
 
