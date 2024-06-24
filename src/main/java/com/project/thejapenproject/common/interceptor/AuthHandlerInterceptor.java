@@ -3,10 +3,14 @@ package com.project.thejapenproject.common.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.thejapenproject.command.JwtPayload;
 import com.project.thejapenproject.command.UserVO;
+import com.project.thejapenproject.command.exception.RequestParameterException;
+import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.TokenType;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.jwt.JWTProvider;
+import com.project.thejapenproject.common.jwt.service.AuthService;
+import com.project.thejapenproject.common.redis.RedisProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -28,7 +32,7 @@ import java.io.InputStreamReader;
 public class AuthHandlerInterceptor implements HandlerInterceptor {
     private final ObjectMapper objectMapper;
     private final JWTProvider jwtProvider;
-
+    private final AuthService authService;
     protected String readBody(HttpServletRequest request) throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(request.getInputStream()));
         StringBuilder builder = new StringBuilder();
@@ -74,9 +78,17 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
                         }
                         System.out.println("payload : " );
                         UserVO userVO = objectMapper.readValue(jwtPayload.getData(), UserVO.class);
+
+                        // 중복 로그인 체크
+                        if(!authService.checkRedisToken(accessToken, userVO.getUsername())) {
+                            throw new RequestParameterException(ErrorCode.REFRESH_TOKEN_NO_SAME);
+                        }
+
                         request.setAttribute("username", userVO.getUsername());
                         request.setAttribute("Role", userVO.getRole());
 
+                    } catch (RequestParameterException e) {
+                      throw new RequestParameterException(ErrorCode.REFRESH_TOKEN_NO_SAME);
                     } catch (Exception e) {
                         log.error("", e);
                     }
@@ -99,6 +111,8 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
         String[] bearerTokens = token.split(" ");
         return (bearerTokens[0].equalsIgnoreCase("Bearer") ? bearerTokens[1] : null);
     }
+
+
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {

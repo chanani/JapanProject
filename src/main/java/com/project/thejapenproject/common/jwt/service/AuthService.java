@@ -1,5 +1,6 @@
 package com.project.thejapenproject.common.jwt.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.thejapenproject.command.UserAccessToken;
 import com.project.thejapenproject.command.UserVO;
@@ -30,7 +31,7 @@ public class AuthService {
     public UserAccessToken token(UserVO userVO) throws Exception {
         String password = SHA512.encrypt(userVO.getPassword());
         UserVO userData = userService.login(userVO.getUsername(), password);
-        if(userData == null){
+        if (userData == null) {
             throw new Exception();
         }
 
@@ -74,6 +75,30 @@ public class AuthService {
         map.put(String.valueOf(userVO.getUsername()), objectMapper.writeValueAsString(userAccessToken));
         redisProvider.setHashOps(SESSION_KEY, map);
         return userAccessToken;
+    }
+
+    /**
+     *
+     * **/
+    public boolean checkRedisToken(String accessToken, String username) {
+        String value = redisProvider.getHashOps(SESSION_KEY, String.valueOf(username));
+        if (value == null) {
+            return false;
+        }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode node = mapper.readTree(value);
+            String storedAccessToken = node.get("accessToken").asText();
+            storedAccessToken = storedAccessToken.replace("Bearer ", "");
+
+            if(accessToken.equals(storedAccessToken)) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
