@@ -10,7 +10,6 @@ import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.jwt.JWTProvider;
 import com.project.thejapenproject.common.jwt.service.AuthService;
-import com.project.thejapenproject.common.redis.RedisProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -33,6 +32,7 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
     private final ObjectMapper objectMapper;
     private final JWTProvider jwtProvider;
     private final AuthService authService;
+
     protected String readBody(HttpServletRequest request) throws IOException {
         BufferedReader input = new BufferedReader(new InputStreamReader(request.getInputStream()));
         StringBuilder builder = new StringBuilder();
@@ -76,11 +76,11 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
                         if (!StringUtils.hasText(jwtPayload.getData())) {
                             throw new Exception();
                         }
-                        System.out.println("payload : " );
+                        System.out.println("payload : ");
                         UserVO userVO = objectMapper.readValue(jwtPayload.getData(), UserVO.class);
 
                         // 중복 로그인 체크
-                        if(!authService.checkRedisToken(accessToken, userVO.getUsername())) {
+                        if (!authService.checkRedisToken(accessToken, userVO.getUsername())) {
                             throw new RequestParameterException(ErrorCode.REFRESH_TOKEN_NO_SAME);
                         }
 
@@ -88,7 +88,7 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
                         request.setAttribute("Role", userVO.getRole());
 
                     } catch (RequestParameterException e) {
-                      throw new RequestParameterException(ErrorCode.REFRESH_TOKEN_NO_SAME);
+                        throw e;
                     } catch (Exception e) {
                         log.error("", e);
                     }
@@ -111,7 +111,6 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
         String[] bearerTokens = token.split(" ");
         return (bearerTokens[0].equalsIgnoreCase("Bearer") ? bearerTokens[1] : null);
     }
-
 
 
     @Override

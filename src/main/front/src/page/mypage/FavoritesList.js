@@ -41,7 +41,7 @@ const FavoritesList = () => {
                 .then((res) => {
                     setWord(res.data);
                 })
-                .catch((e) => console.log(e));
+                .catch((e) => console.log("마이페이지 에러" + e));
         }
     }, []);
 
@@ -50,14 +50,14 @@ const FavoritesList = () => {
             <div className="favorite-page-mid">
 
                 <div className="favorite-info">
-                    {word.length === 0 ?
+                    {word?.length === 0 ?
                         <p>목록이 존재하지 않습니다.</p>
                         :
                         <p>{username}님의 즐겨찾기</p>
                     }
                 </div>
                 <div className="favorite-data">
-                    {word.map((item, index) => (
+                    {word?.map((item, index) => (
                         <div className="favorite-box" key={index}>
                             <div className="favorite-data-star">
                                 <FaStar size={13} onClick={() => handleFavorite(index)}/>

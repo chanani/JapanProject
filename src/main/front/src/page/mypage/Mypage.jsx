@@ -58,6 +58,7 @@ const Mypage = () => {
                 let arr = [res.data.user_name, res.data.username, "", res.data.user_email, res.data.user_phone, ""];
                 setForm(arr);
             })
+            .catch(e => "catch : " + e)
     }
     // 데이터 변경 API
     const modifyData = () => {
@@ -85,7 +86,7 @@ const Mypage = () => {
     }
     // 페이지 권한 및 데이터 호출
     useEffect(() => {
-        if (userRole === "none") {
+        if (userRole === "none" || username === 'none') {
             toast.error("로그인 후 이용해주세요.");
             navigate("/login");
         } else {

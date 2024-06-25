@@ -19,7 +19,7 @@ const RecordPage = () => {
     // 현재 페이지의 공지사항 목록 가져오기
     const indexOfLastNotice = currentPage * dataPerPage;
     const indexOfFirstNotice = indexOfLastNotice - dataPerPage;
-    const currentData = data.slice(indexOfFirstNotice, indexOfLastNotice);
+    const currentData = (data || []).slice(indexOfFirstNotice, indexOfLastNotice);
 
     // 페이지 변경 핸들러
     const nextPage = () => {
@@ -32,18 +32,18 @@ const RecordPage = () => {
     // 상세페이지로 이동하는 핸들러
     const handleContent = async (index) => {
         try {
-            let num = data[index].record_num;
-            let kind = data[index].record_kind;
-            let level = data[index].record_kind;
-            let point = data[index].record_point;
+            let num = data[index]?.record_num;
+            let kind = data[index]?.record_kind;
+            let level = data[index]?.record_kind;
+            let point = data[index]?.record_point;
             const response = await axiosInstance.post('mypage/recordDetails', {username: username, record_num: num})
 
             const answer = response.data;
             navigate("/recordDetails", {state: {kind, level, answer, point, num}});
             window.scrollTo(0, 0);
         } catch (e) {
-            toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
             console.error(e);
+            toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
         }
     };
     // 페이지 권한 및 데이터 가져오기
@@ -62,6 +62,7 @@ const RecordPage = () => {
                 })
                 .catch((error) => {
                     toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
+                    setData([]); // 데이터 조회 실패 시 빈 배열로 설정
                 });
         }
     }, []);
@@ -73,14 +74,14 @@ const RecordPage = () => {
             <div className="recordPage-page-mid">
 
                 <div className="recordPage-info">
-                    {data.length === 0 ?
+                    {data?.length === 0 ?
                         <p>학습 기록이 존재하지 않습니다.</p>
                         :
                         <p>{username}님의 기록</p>
                     }
                 </div>
 
-                {currentData.map((item, index) => (
+                {currentData?.map((item, index) => (
                     <div className="recordPage-score" key={index}
                          onClick={(event) => handleContent(index + ((currentPage - 1) * dataPerPage))}>
                         <div className="score-header">
@@ -103,7 +104,7 @@ const RecordPage = () => {
                             :
                             <FaArrowLeft onClick={prevPage} size={20}/>
                         }
-                        {currentPage * dataPerPage < data.length ?
+                        {currentPage * dataPerPage < data?.length ?
                             <FaArrowRight onClick={nextPage} size={20}/>
                             :
                             <FaArrowRight color="gray" size={20}/>

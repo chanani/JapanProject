@@ -1,8 +1,8 @@
 import "../../styles/inquiry/InquiryWrite.css"
-import EditorWrapper, {Editor} from "../../component/Editor/Editor";
+import EditorWrapper from "../../component/Editor/Editor";
 import React, {useContext, useEffect, useState} from "react";
 
-import {ThemeProvider, CssBaseline, Grid, Typography, createTheme} from '@mui/material';
+import {Grid} from '@mui/material';
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {axiosInstance} from "../../api";
 
@@ -27,12 +27,15 @@ const InquiryWrite = () => {
                 setInquiryWriter(res.data.user_name);
                 setInquiryEmail(res.data.user_email);
             })
+            .catch((e) => console.log(e))
     }
 
     useEffect(() => {
-        console.log(userRole)
-        if(userRole !== 'none') getUserAPI();
+        if(userRole !== 'none'){
+            getUserAPI();
+        }
     }, [userRole]);
+
     return (
         <div className="inquiry-write-container">
             <div className="inquiry-write-box">
