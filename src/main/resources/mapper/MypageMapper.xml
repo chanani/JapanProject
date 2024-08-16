@@ -62,6 +62,7 @@
 
     <select id="getSchoolList" resultType="SchoolVO">
         select * from school where school_week = #{school_week}
+        order by rand()
     </select>
 
     <select id="getWeekList" resultType="int">

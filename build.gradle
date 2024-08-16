@@ -38,6 +38,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.3.1'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
 
     // Jwts
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.5'
