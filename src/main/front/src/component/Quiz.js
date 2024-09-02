@@ -86,7 +86,10 @@ const Quiz = ({level, num, arr}) => {
         if (arr.length !== 0) setWord(arr);
         else {
             axiosInstance(`study/data/${level}/${num}/${username}`)
-                .then((res) => setWord(res.data))
+                .then((res) => {
+                    console.log(res.data)
+                    setWord(res.data)
+                })
                 .catch((e) => toast.error('데이터를 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.'));
         }
     }, [arr, level, num, username]);
@@ -105,7 +108,23 @@ const Quiz = ({level, num, arr}) => {
 
             </div>
             <div className='on-word-box' onClick={handleMeaning}>
-                {meaning ? word[current]?.word_meaning : word[current]?.word_content}
+                {meaning ? word[current]?.word_meaning :
+                    word[current]?.word_chinese === null || word[current]?.word_chinese === '' ?
+                        <div>
+                            <p>{word[current]?.word_content}</p>
+                        </div>
+                        :
+                        <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            flexDirection: "column"
+                        }}>
+                            <p style={{fontSize: "20px"}}>{word[current]?.word_content}</p>
+                            <p>{word[current]?.word_chinese}</p>
+                        </div>
+
+                }
             </div>
             <div className='on-click-box'>
                 <div className='click-left'>

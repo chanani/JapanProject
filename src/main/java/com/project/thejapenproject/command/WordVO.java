@@ -14,5 +14,6 @@ public class WordVO {
     private Integer word_level;
     private String word_meaning;
     private String word_content;
+    private String word_chinese;
     private boolean word_favorite;
 }
