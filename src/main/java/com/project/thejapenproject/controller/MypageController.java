@@ -163,9 +163,9 @@ public class MypageController {
      **/
     @NoneAuth
     @GetMapping("/getSchoolList")
-    public ResponseEntity<ArrayList<SchoolVO>> getSchoolList(@Param("school_week") int school_week) throws
+    public ResponseEntity<ArrayList<WordVO>> getSchoolList(@Param("word_week") int word_week) throws
             Exception {
-        ArrayList<SchoolVO> list = mypageService.getSchoolList(school_week);
+        ArrayList<WordVO> list = mypageService.getSchoolList(word_week);
         if (Objects.isNull(list)) {
             throw new RequestParameterException(ErrorCode.WRONG_PARAM);
         }

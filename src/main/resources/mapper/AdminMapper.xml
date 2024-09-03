@@ -7,13 +7,17 @@
 
     <insert id="addWordList" parameterType="java.util.List">
         INSERT INTO word (word_content,
-                                   word_meaning,
-                                   word_level)
+                          word_meaning,
+                          word_level,
+                          word_chinese,
+                          word_week)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (#{item.word_content},
             #{item.word_meaning},
-            #{item.word_level})
+            #{item.word_level},
+            #{item.word_chinese},
+            #{item.word_week})
         </foreach>
     </insert>
 

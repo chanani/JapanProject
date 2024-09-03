@@ -47,8 +47,8 @@ public class MypageServiceImpl implements MypageService{
     }
 
     @Override
-    public ArrayList<SchoolVO> getSchoolList(int school_week) {
-        return mypageMapper.getSchoolList(school_week);
+    public ArrayList<WordVO> getSchoolList(int word_week) {
+        return mypageMapper.getSchoolList(word_week);
     }
 
     @Override

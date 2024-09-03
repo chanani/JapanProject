@@ -16,10 +16,11 @@ const SchoolPage = () => {
     const getListAPI = () => {
         axiosInstance.get('mypage/getSchoolList', {
             params: {
-                school_week: nowWeek
+                word_week: nowWeek
             }
         })
             .then((res) => {
+                console.log(res.data)
                 setWord(res.data);
                 setCheck(new Array(res.data.length).fill(false));
             })
@@ -114,11 +115,11 @@ const SchoolPage = () => {
                             {word.map((item, index) => (
                                 <div className={"school-data-box school-data-box-" + index} key={index} onClick={() => typeChangeHandle(index)}>
                                     <div className="school-data-star">
-                                        <Audio inputData={item.school_content}/>
+                                        <Audio inputData={item.word_content}/>
                                     </div>
                                     <div className="school-data-text">
                                         <p className={`school-word-content ${animateIndex === index ? 'fade-out' : ''}`}>
-                                            {!check[index] ? item.school_content : item.school_meaning}
+                                            {!check[index] ? item.word_content : item.word_meaning}
                                         </p>
                                     </div>
 
@@ -131,13 +132,13 @@ const SchoolPage = () => {
                         {word.map((item, index) => (
                             <div className="school-content-box" key={index} onClick={(e) => (index)}>
                                 <p className="content-box-p-tag"　style={{paddingTop: "1px"}}>
-                                    {item.school_content} {item.school_chinese ? `/ ${item.school_chinese}` : ""}
+                                    {item.word_content} {item.word_chinese ? `/ ${item.word_chinese}` : ""}
                                 </p>
                                 <p style={{paddingTop: "1px"}}>
-                                    {item.school_meaning}
+                                    {item.word_meaning}
                                 </p>
                                 <p className="school-audio">
-                                    <Audio inputData={item.school_content}/>
+                                    <Audio inputData={item.word_content}/>
                                 </p>
                             </div>
                         ))}

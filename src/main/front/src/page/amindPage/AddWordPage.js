@@ -30,7 +30,7 @@ const AddWordPage = () => {
 
     // 단어 목록 추가 핸들러
     const handleAddWord = () => {
-        setList(prevList => [...prevList, {word_content: '', word_meaning: '', word_level: '' }]);
+        setList(prevList => [...prevList, {word_content: '', word_meaning: '', word_level: '', word_chinese: '', word_week: '' }]);
         setInputCount(prevCount => prevCount + 1);
     }
 
@@ -81,7 +81,20 @@ const AddWordPage = () => {
                                    id="word_level"
                                    value={item.word_level}
                                    min={1}
-                                   max={3}
+                                   onChange={(e) => handleChangeWord(e, index)}
+                            />
+                            <input type="text" placeholder="한자"
+                                   className={`word_chinese${index}`}
+                                   name="word_chinese"
+                                   id="word_chinese"
+                                   value={item.word_chinese}
+                                   onChange={(e) => handleChangeWord(e, index)}
+                            />
+                            <input type="number" placeholder="주차"
+                                   className={`word_week${index}`}
+                                   name="word_week"
+                                   id="word_week"
+                                   value={item.word_week}
                                    onChange={(e) => handleChangeWord(e, index)}
                             />
                         </div>

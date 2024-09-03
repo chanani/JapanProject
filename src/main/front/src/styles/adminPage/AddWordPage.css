@@ -36,7 +36,9 @@
 .add-box-input > #school_meaning,
 .add-box-input > #word_content,
 .add-box-input > #word_meaning,
-.add-box-input > #word_level{
+.add-box-input > #word_level,
+.add-box-input > #word_week,
+.add-box-input > #word_chinese{
   width: 80px;
   height: 40px;
 }

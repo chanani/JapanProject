@@ -60,13 +60,13 @@
         where record_num = #{record_num}
     </update>
 
-    <select id="getSchoolList" resultType="SchoolVO">
-        select * from school where school_week = #{school_week}
+    <select id="getSchoolList" resultType="WordVO">
+        select * from word where word_week = #{word_week}
         order by rand()
     </select>
 
     <select id="getWeekList" resultType="int">
-        select distinct school_week from school order by school_week asc
+        select distinct word_week from word order by word_week asc
     </select>
 
     <resultMap id="recordDetailsResultMap" type="RecordDetailsVO">

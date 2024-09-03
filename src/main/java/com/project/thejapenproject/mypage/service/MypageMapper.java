@@ -15,7 +15,7 @@ public interface MypageMapper {
     public int modifyInfo(UserVO userVO);
     public int withdrawal(String username);
     public int deleteRecord(int record_num);
-    public ArrayList<SchoolVO> getSchoolList(int school_week);
+    public ArrayList<WordVO> getSchoolList(int word_week);
     public ArrayList getWeekList();
 
 }

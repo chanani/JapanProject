@@ -16,4 +16,5 @@ public class WordVO {
     private String word_content;
     private String word_chinese;
     private boolean word_favorite;
+    private String word_week;
 }
