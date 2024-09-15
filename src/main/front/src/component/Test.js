@@ -8,6 +8,7 @@ import {axiosInstance} from "../api";
 const Test = ({level, kind, currentPath}) => {
     // kind가 true일 때 뜻 풀이, false일 때 단어 풀이
     let [word, setWord] = useState([]);
+    // 정답 저장 state
     let [answer, setAnswer] = useState([]);
     const navigate = useNavigate();
 
