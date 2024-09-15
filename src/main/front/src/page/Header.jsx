@@ -4,6 +4,8 @@ import {useContext, useEffect, useRef, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {tokenInfoContext} from '../component/TokenInfoProvider';
 import {MdOutlineKeyboardArrowDown} from "react-icons/md";
+import {FiMenu} from "react-icons/fi";
+
 import {HiOutlineBell} from "react-icons/hi";
 import {GoDotFill} from "react-icons/go";
 import {BiCaretUp} from "react-icons/bi";
@@ -109,10 +111,15 @@ function Header() {
 
     if (window.location.pathname === '/login' || window.location.pathname === "/join") return null;
 
+    console.log(userRole)
     return (
 
         <header>
+            <div className="mobile-left-box">
+                <FiMenu size="20"/>
+            </div>
             <div className="left-menu">
+
                 <div className="site-name-box">
                     <h2>The Japan</h2>
                     <img className="header-logo" src={Logo} alt="Logo"/>
@@ -158,6 +165,9 @@ function Header() {
                     <button className="login-btn">로그인</button>
                     <button className="join-btn">회원가입</button>
                 </div>
+            </div>
+            <div className="mobile-right-box">
+                <button>My</button>
             </div>
         </header>
     );
