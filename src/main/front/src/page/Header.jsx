@@ -5,11 +5,9 @@ import {Link, useNavigate} from 'react-router-dom';
 import {tokenInfoContext} from '../component/TokenInfoProvider';
 import {MdOutlineKeyboardArrowDown} from "react-icons/md";
 import {FiMenu} from "react-icons/fi";
+import {IoMdClose} from "react-icons/io";
 
-import {HiOutlineBell} from "react-icons/hi";
-import {GoDotFill} from "react-icons/go";
-import {BiCaretUp} from "react-icons/bi";
-import {CiMenuKebab} from "react-icons/ci";
+
 import {Cookies} from 'react-cookie';
 import {axiosInstance} from '../api';
 import {toast} from "react-toastify";
@@ -24,6 +22,9 @@ function Header() {
     const [alarm, setAlarm] = useState(alarmRef.current);
     const [alarmOpen, setAlarmOpen] = useState(false);
     const [noCheckList, setNoCheckList] = useState([]); // 확인하지 않은 알람 목록
+    const [openSide, setOpenSide] = useState(false); // 모바일 사이드바
+    const [openCategory, setOpenCategory] = useState(Array(4).fill(false)); // 각 카테고리의 상태
+
 
     // 학습페이지 Link list
     const studyLink = [["/study/easy", "1단계"], ["/study/middle", "2단계"], ["/study/hard", "3단계"]];
@@ -60,6 +61,18 @@ function Header() {
         alarmRef.current = false;
         setAlarmOpen((current) => !current);
     }
+    //　모바일 사이드바 on/off
+    const mobileSidebarToggle = () => {
+        setOpenSide(current => !current);
+    }
+    // 모바일 카테고리 on/off
+    const handleCategoryToggle = (index) => {
+        setOpenCategory((prev) => {
+            const updated = [...prev];
+            updated[index] = !updated[index]; // 해당 카테고리의 상태를 반전시킴
+            return updated;
+        });
+    };
 
     // 로그인 페이지 핸들러
     const handleLogin = () => {
@@ -111,12 +124,11 @@ function Header() {
 
     if (window.location.pathname === '/login' || window.location.pathname === "/join") return null;
 
-    console.log(userRole)
     return (
 
         <header>
             <div className="mobile-left-box">
-                <FiMenu size="20"/>
+                <FiMenu size="20" onClick={mobileSidebarToggle}/>
             </div>
             <div className="left-menu">
 
@@ -168,6 +180,34 @@ function Header() {
             </div>
             <div className="mobile-right-box">
                 <button>My</button>
+            </div>
+
+            {/* 모바일 사이즈 사이드 바 */}
+            <div className={"mobile-side-bar " + (openSide ? "show" : "")} >
+                <div className="mobile-size-bar-category">
+                    {['학습', '테스트', '기타페이지', '고객지원'].map((title, index) => (
+                        <div key={index}>
+                            <div className="mobile-size-title-box" onClick={() => handleCategoryToggle(index)}>
+                                <p>{title}</p>
+                                <MdOutlineKeyboardArrowDown/>
+                            </div>
+                            <div className={"mobile-category-detail " + (openCategory[index] ? " category-show" : "")}>
+                                <p>단어학습 1단계</p>
+                                <p>단어학습 2단계</p>
+                                <p>단어학습 3단계</p>
+                            </div>
+                        </div>
+                    ))}
+                    <hr style={{borderColor : "#fffcfc82", margin : "24px 0"}}/>
+
+                    <div className="mobile-login-box">
+                        <button className="mobile-login-btn">로그인</button>
+                        <button className="mobile-join-btn">회원가입</button>
+                    </div>
+                </div>
+                <div className="mobile-size-close-box">
+                    <IoMdClose size={30} fill="white" onClick={() => setOpenSide(false)}/>
+                </div>
             </div>
         </header>
     );
