@@ -27,7 +27,10 @@ const Test = ({level, kind, currentPath}) => {
     // 데이터 불러오는 핸들러
     useEffect(() => {
         axiosInstance.get(`/test/word/${level}`)
-            .then((res) => setWord(res.data))
+            .then((res) => {
+                console.log("data = ", res.data);
+                setWord(res.data)
+            })
     }, [level]);
 
     return (
@@ -43,7 +46,13 @@ const Test = ({level, kind, currentPath}) => {
                             <p>{index + 1} / {word.length}</p>
                         </div>
                         <div className="test-word-box">
-                            {kind ? <p>{item.word_content}</p> : <p>{item.word_meaning}</p>}
+                            {kind ?
+                                <div className="test-word-content-box">
+                                    <p className="test-word-content-chinese">{item.word_chinese}</p>
+                                    <p className="test-word-content-content">{item.word_content}</p>
+                                </div>
+                                :
+                                <p>{item.word_meaning}</p>}
                         </div>
                         <div className="test-input-box">
                             <input type="text" onChange={(event) => handleAnswer(event, index)}

@@ -86,3 +86,15 @@
   font-size: 15px;
   font-weight: 600;
 }
+
+/* content + 한자  */
+.test-word-content-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.test-word-content-box > .test-word-content-chinese {
+  font-size: 25px;
+}
