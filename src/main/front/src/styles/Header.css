@@ -4,249 +4,134 @@
   list-style: none;
 }
 header {
-  background-color: #A0D995;
+  background-color: #ffffff;
   width: auto;
-  height: 110px;
-}
-.header-box {
-  background-color: transparent;
-  padding: 20px 24px 0 24px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: auto;
-  z-index: 100;
-  opacity: 0;
-  transition: opacity 1.5s ease; 
-}
-
-.header-box.show {
-  opacity: 1; 
-}
-
-.header-info{
-  border-radius: 28px;
-  width: auto;
-  height: 65px;
-  background-color: #F5F0BB;
+  height: 72px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 15px 0 15px;
-  position: relative;
+  padding: 0 32px;
 }
-.title-box{
+
+header .left-menu{
   display: flex;
-  align-items: center;
-  
-}
-.title-box .logo-image {
-  width: 45px;
-  height: 45px;
-}
-
-.title-box .title {
-  font-size: 20px;
-  font-weight: 650;
-  padding-left: 10px;
-  color: black;
-}
-
-.login-box {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-.login-box .login-btn {
-  width: 130px;
-  height: 45px;
-  border-radius: 20px;
-  background-color: #A0D995;
-  border-style: none;
-  color: white;
-  font-size: 22px;
-}
-
-.login-box .menu-btn {
-  width: 30px;
-  height: 45px;
-  font-size: 40px;
-  padding-right: 33px;
-  background-color: transparent;
-  border-style: none;
-}
-
-.menu-open {
-  border-radius: 28px 28px 0 0;
-}
-
-.menu-box{
-  height: 310px;
-  width: auto;
-  background-color: #F5F0BB;
-  border-radius: 0 0 28px 28px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.menu-box .study-title, 
-.menu-box .test-title,
-.menu-box .rank-title,
-.otherWise-title{
-  font-size: 22px;
-}
-
-.menu-box div a > p {
-  padding-top: 15px;
-  font-size: 17px;
-  color: black;
-}
-a {
-  text-decoration: none;
-}
-.menu-box div a > p:hover{
-  text-decoration: underline;
-  color: skyblue;
-}
-
-.alarm-btn {
-  margin-right: 3px;
-
-}
-.alarm-box {
-  display: flex;
-  align-items: center;
+  flex-direction: row;
   justify-content: center;
-}
-.alarm-box:hover{
-  box-sizing: border-box;
-  border-radius: 10px;
-  background-color: #d1cfcf;
-  
-}
-.alarm-bot {
-  position: absolute;
-  top: 3px;
-  right: 162px;
-}
-
-.alarm-box-arrow{
-  position: absolute;
-  z-index: 1;
-}
-.alarm-toggle-all{
-  padding: 10px 3px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  background-color: #272829;
-  position: absolute;
-  width: 240px;
-  z-index: 1;
-  color: white;
-  height: 160px;
-  overflow-y: scroll;
-  scrollbar-width: none; 
 }
 
-.alarm-toggle-title-box {
-  margin-bottom: 10px;
-  border-bottom: 1px solid #777;
-}
-.alarm-toggle-title-box > p {
-  font-size: 20px;
-}
-.alarm-toggle-content-box {
+.site-name-box, .header-category-box {
   display: flex;
-  margin-bottom: 5px;
-  padding: 10px 10px 10px 5px;
-  border-radius: 10px;
-  background-color: #383c3c;
-  width: 210px;
-  
+  justify-content: center;
+  align-items: center;
 }
-.alarm-toggle-content-box > svg{
+
+.header-logo {
+  width: 40px;
+  height: 40px;
+}
+
+.site-name-box > h2 {
+  font-size: 25px;
+  font-weight: 900;
   margin-right: 5px;
 }
+.header-category-box > div {
+  position: relative;
+}
+.header-category-box > div > p {
+  margin-left: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-category-box > div  svg {
+  color: #7a7878;
+  margin-left: 3px;
+}
+
+.header-category-box > div > p:hover + .header-category-detail {
+  opacity: 1;
+  pointer-events: auto; /* 활성화된 상태에서만 클릭 허용 */
+}
+
+.header-category-box > div > .header-category-detail {
+  position: absolute;
+  top: 24px;
+  border: 0px solid #dcdbdb;
+  border-radius: 8px;
+  padding: 8px;
+  min-width: 168px;
+  background-color: rgb(255,255,255);
+  transition: 0.3s ease-in-out;
+  box-shadow: rgba(75, 81, 91, 0.12) 0px 14px 32px 0px, rgba(75, 81, 91, 0.06) 0px 10px 14px 0px, rgba(75, 81, 91, 0.03) 0px 0px 0px 1px, rgba(75, 81, 91, 0.2) 0px 0px 1px 0px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.header-category-box > div > p:hover {
+  color: #7a7878;
+}
+.header-category-box > div > p:hover + .header-category-detail,
+.header-category-box > div > .header-category-detail:hover {
+  opacity: 1;
+  pointer-events: auto;
+
+}
 
 
+.header-category-box > div > .header-category-detail > p {
+  padding: 12px 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
 
+.right-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.right-menu > .login-box > .join-btn {
+  margin-left: 14px;
+  background-color: black;
+  color: white;
+}
+
+.right-menu > .login-box > .login-btn {
+    background-color: white;
+    color: black;
+}
+
+.right-menu > .login-box > button {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border : 1px #dcdbdb solid;
+  font-size: 14px;
+  height: 40px;
+  font-weight: 500;
+}
 
 
 
 /* 500 이하 */
 @media(max-width : 500px){
-  .menu-box {
-    padding: 15px 15px 15px 15px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .alarm-toggle-all{
-    top: 85px;
-    right: 80px;
-  }
-  .alarm-box-arrow{
-    top: 67px;
-    right: 203px;
-  }
-  .menu-box .study-title,
-  .menu-box .test-title,
-  .menu-box .rank-title,
-  .otherWise-title{
-    font-size: 16px;
-  }
-  .menu-box div a > p {
-    font-size: 15px;
-  }
+
 }
 
 /* 500 이상 */
 @media(min-width : 500px){
-  .menu-box {
-    padding: 22px 50px 15px 50px;
-    display: flex;
-  }
-  .alarm-toggle-all{
-    top: 85px;
-    right: 110px;
-  }
-  .alarm-box-arrow{
-    top: 67px;
-    right: 203px;
-  }
-  .menu-box .study-title,
-  .menu-box .test-title,
-  .menu-box .rank-title,
-  .otherWise-title{
-    font-size: 19px;
-  }
-  .menu-box div a > p {
-    font-size: 16px;
-  }
+    header {
+      display: flex;
+    }
 }
  /* 1000 이상 */
 @media(min-width : 1000px){
-  .menu-box {
-    padding: 15px 100px 15px 70px;
-    display: flex;
-    justify-content: left;
-  }
 
-  .menu-box .test-box,
-  .menu-box .rank-box {
-    padding-left: 100px;
-  }
-  .menu-box .study-title,
-  .menu-box .test-title,
-  .menu-box .rank-title,
-  .otherWise-title{
-    font-size: 22px;
-  }
-
-  .menu-box div a > p {
-    font-size: 17px;
-  }
 
 }

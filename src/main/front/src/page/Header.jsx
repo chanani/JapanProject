@@ -3,11 +3,11 @@ import Logo from '../image/logo.png';
 import {useContext, useEffect, useRef, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {tokenInfoContext} from '../component/TokenInfoProvider';
+import {MdOutlineKeyboardArrowDown} from "react-icons/md";
 import {HiOutlineBell} from "react-icons/hi";
 import {GoDotFill} from "react-icons/go";
 import {BiCaretUp} from "react-icons/bi";
 import {CiMenuKebab} from "react-icons/ci";
-import axios from "axios";
 import {Cookies} from 'react-cookie';
 import {axiosInstance} from '../api';
 import {toast} from "react-toastify";
@@ -17,7 +17,6 @@ function Header() {
     const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
     const cookie = new Cookies();
 
-    const [open, setOpen] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
     const alarmRef = useRef(false);
     const [alarm, setAlarm] = useState(alarmRef.current);
@@ -31,8 +30,8 @@ function Header() {
     // 마이페이지 Link list
     const myLink = [["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ["/mypage", "나의정보"]];
     // 그 외 페이지 Link list
-    const otherWise = [["/chatAi", "Ai학습"],["/search", "통합검색"], ["/notice", "공지사항"], ["/inquiry", '문의사항'],
-        ["/schoolPage" , '단계별학습'], ["/translator" , '번역기']]
+    const otherWise = [["/chatAi", "Ai학습"], ["/search", "통합검색"], ["/notice", "공지사항"], ["/inquiry", '문의사항'],
+        ["/schoolPage", '단계별학습'], ["/translator", '번역기']]
     // admin 페이지 Link list
     const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"], ["/mypage", "나의정보"],
         ["/addInquiryComment", '문의사항'], ["/admin/addWeekWord", '단계별단어 추가']];
@@ -59,10 +58,7 @@ function Header() {
         alarmRef.current = false;
         setAlarmOpen((current) => !current);
     }
-    // 메뉴바 상태 핸들러
-    const handleToggle = () => {
-        setOpen((open) => !open);
-    }
+
     // 로그인 페이지 핸들러
     const handleLogin = () => {
         navigate("/login");
@@ -116,97 +112,53 @@ function Header() {
     return (
 
         <header>
-            <div className={`header-box ${isVisible ? 'show' : ''}`}>
-
-                <div className={"header-info" + (open ? " menu-open" : "")}>
-                    <div className='title-box'>
-                        <img src={Logo} alt="로고" className='logo-image'/>
-                        <Link to={"/"}><p className='title'>The Japan</p></Link>
+            <div className="left-menu">
+                <div className="site-name-box">
+                    <h2>The Japan</h2>
+                    <img className="header-logo" src={Logo} alt="Logo"/>
+                </div>
+                <div className="header-category-box">
+                    <div>
+                        <p>학습<MdOutlineKeyboardArrowDown/></p>
+                        <div className="header-category-detail">
+                            <p>단어학습 1단계</p>
+                            <p>단어학습 2단계</p>
+                            <p>단어학습 3단계</p>
+                        </div>
                     </div>
-                    <div className='login-box'>
-                        {userRole === 'role_user' ?
-                            <div className='alarm-box'>
-                                <HiOutlineBell size={27} className='alarm-btn' onClick={handleAlarm}/>
-                                {alarm ? <GoDotFill color='red' className='alarm-bot'/> : ""}
-                            </div>
-                            :
-                            ""
-                        }
-
-                        <button className='menu-btn' onClick={handleToggle}>+</button>
-
-                        {userRole === "none" ?
-                            <button className='login-btn' onClick={handleLogin}>로그인</button>
-                            :
-                            <button className='login-btn' onClick={handleLogout}>로그아웃</button>
-                        }
-
+                    <div>
+                        <p>테스트<MdOutlineKeyboardArrowDown/></p>
+                        <div className="header-category-detail">
+                            <p>단어학습 1단계</p>
+                            <p>단어학습 2단계</p>
+                            <p>단어학습 3단계</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p>기타페이지<MdOutlineKeyboardArrowDown/></p>
+                        <div className="header-category-detail">
+                            <p>단어학습 1단계</p>
+                            <p>단어학습 2단계</p>
+                            <p>단어학습 3단계</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p>고객지원<MdOutlineKeyboardArrowDown/></p>
+                        <div className="header-category-detail">
+                            <p>단어학습 1단계</p>
+                            <p>단어학습 2단계</p>
+                            <p>단어학습 3단계</p>
+                        </div>
                     </div>
 
                 </div>
-                {open ?
-                    userRole === 'role_admin' ?
-                        <div className='menu-box'>
-
-                            <div className='rank-box'>
-                                <h3 className='rank-title'>관리</h3>
-                                {adminLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}>
-                                    <p>{item[1]}</p></Link>)}
-                            </div>
-                        </div>
-
-                        :
-
-                        <div className='menu-box'>
-                            <div className='study-box'>
-                                <h3 className='study-title'>단어 학습</h3>
-                                {studyLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}>
-                                    <p>{item[1]}</p></Link>)}
-                            </div>
-                            <div className='test-box'>
-                                <h3 className='test-title'>단어 테스트</h3>
-                                {testLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}>
-                                    <p>{item[1]}</p></Link>)}
-                            </div>
-                            <div className='rank-box'>
-                                <h3 className='rank-title'>마이페이지</h3>
-                                {myLink.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}>
-                                    <p>{item[1]}</p></Link>)}
-                            </div>
-                            <div className='rank-box'>
-                                <h3 className='otherWise-title'>기타페이지</h3>
-                                {otherWise.map((item, index) => <Link to={item[0]} onClick={handleToggle} key={index}>
-                                    <p>{item[1]}</p></Link>)}
-                            </div>
-                        </div>
-
-                    : ""}
-
-                {alarmOpen ?
-                    <div>
-                        <BiCaretUp size={30} className='alarm-box-arrow' color='#272829'/>
-                        <div className='alarm-toggle-all'>
-                            <div className='alarm-toggle-title-box'>
-                            <p>알림</p>
-                            </div>
-                            {noCheckList.length !== 0 ?
-                                noCheckList.map((item, index) => (
-                                    <div className='alarm-toggle-content-box' key={index}
-                                         onClick={(e) => handleAlarmCheck(item.notice_num)}>
-                                        <CiMenuKebab className='alarm-content-menu'/>
-                                        <h5> 열람하지 않은 공지사항이 있습니다.</h5>
-                                    </div>
-                                ))
-                                :
-                                "등록된 알람이 없습니다."
-                            }
-                        </div>
-                    </div>
-                    :
-                    ""
-                }
             </div>
-
+            <div className="right-menu">
+                <div className="login-box">
+                    <button className="login-btn">로그인</button>
+                    <button className="join-btn">회원가입</button>
+                </div>
+            </div>
         </header>
     );
 }
