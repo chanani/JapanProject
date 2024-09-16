@@ -6,10 +6,11 @@
 
 header {
     background-color: #ffffff;
-    width: auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    width: 100%;
 }
 
 header .left-menu {
@@ -69,6 +70,12 @@ header .left-menu {
     opacity: 0;
     pointer-events: none;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-category-box > div > .mypage-detail {
+    left: -116px;
 }
 
 .header-category-box > div > p:hover {
@@ -83,10 +90,12 @@ header .left-menu {
 }
 
 
-.header-category-box > div > .header-category-detail > p {
+.header-category-box > div > .header-category-detail > a {
     padding: 12px 12px;
     font-size: 14px;
     font-weight: 600;
+    text-decoration-line: none;
+    color: black;
 }
 
 .right-menu {
@@ -128,31 +137,7 @@ header .left-menu {
 
 
 
-/* 500 이하 */
-@media (max-width: 500px) {
-    header {
-        height: 48px;
-        padding: 8px 16px;
-    }
 
-    .header-logo {
-        height: 30px;
-        width: 30px;
-    }
-
-    .mobile-left-box,
-    .mobile-right-box {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .header-category-box,
-    .right-menu {
-        display: none;
-    }
-
-}
 
 /* 모바일에서 사이드 바 */
 
@@ -170,14 +155,12 @@ header .left-menu {
 
 .mobile-side-bar > .mobile-size-bar-category {
     background-color: white;
-    width: 45%;
     padding: 25px 35px;
     overflow: scroll;
 }
 
 .mobile-side-bar > .mobile-size-close-box {
     background-color: #060606ab;
-    width: 55%;
 }
 
 .mobile-size-bar-category .mobile-size-title-box {
@@ -192,28 +175,32 @@ header .left-menu {
 
 
 .mobile-category-detail {
-    display: block; /* display는 애니메이션에 사용하기 힘드므로 block으로 설정 */
     max-height: 0;
     overflow: hidden;
     opacity: 0;
     transition: max-height 0.3s ease-out, opacity 0.3s ease-out, transform 0.3s ease-out;
     transform: translateY(-10px); /* 살짝 위에서 아래로 내려오는 애니메이션 */
+    display: flex;
+    flex-direction: column;
 }
 
 .mobile-category-detail.category-show {
     max-height: 200px; /* 예상 높이로 설정 (필요에 따라 조정 가능) */
     opacity: 1;
     transform: translateY(0); /* 원래 위치로 내려오게 설정 */
+
 }
 
 .show {
     display: flex;
 }
 
-.mobile-category-detail > p {
+.mobile-category-detail > a {
     font-size: 14px;
     font-weight: 500;
     padding: 10px 0;
+    text-decoration-line: none;
+    color: black;
 }
 
 .mobile-login-box {
@@ -249,6 +236,50 @@ header .left-menu {
     padding: 20px;
 }
 
+/* 500 이하 */
+@media (max-width: 500px) {
+    header {
+        height: 48px;
+        padding: 8px 16px;
+    }
+
+    .header-logo {
+        height: 30px;
+        width: 30px;
+    }
+
+    .mobile-left-box,
+    .mobile-right-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .header-category-box,
+    .right-menu {
+        display: none;
+    }
+
+    .mobile-side-bar > .mobile-size-bar-category {
+        width: 65%;
+
+    }
+
+    .mobile-side-bar > .mobile-size-close-box {
+        width: 35%;
+    }
+    .show-box {
+        display : block;
+
+    }
+
+    .header-category-box > div > .mypage-detail {
+        left: -110px;
+    }
+}
+
+
+
 /* 500 이상 */
 @media (min-width: 500px) {
     header {
@@ -272,10 +303,20 @@ header .left-menu {
     .right-menu {
         display: none;
     }
-    /*.mobile-side-bar {
-        display: none;
-    }*/
+    .mobile-side-bar > .mobile-size-bar-category {
+        width: 45%;
 
+    }
+
+    .mobile-side-bar > .mobile-size-close-box {
+        width: 55%;
+    }
+    .show-box {
+        display : block;
+    }
+    .header-category-box > div > .mypage-detail {
+        left: -110px;
+    }
 }
 
 /* 1000 이상 */
@@ -297,6 +338,10 @@ header .left-menu {
     .header-category-box,
     .right-menu {
         display: flex;
+    }
+
+    .show-box {
+        display : none;
     }
 
 }
