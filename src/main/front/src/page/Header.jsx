@@ -130,7 +130,7 @@ function Header() {
         getNoticeList()
     }, [alarm, username]);
 
-    if (window.location.pathname === '/login' || window.location.pathname === "/join") return null;
+    // if (window.location.pathname === '/login' || window.location.pathname === "/join") return null;
 
     return (
 
@@ -261,8 +261,14 @@ function Header() {
 
                     {userRole === 'none' ?
                         <div className="mobile-login-box">
-                            <button className="mobile-login-btn" onClick={handleLogin}>로그인</button>
-                            <button className="mobile-join-btn" onClick={handleJoin}>회원가입</button>
+                            <button className="mobile-login-btn" onClick={() => {
+                                handleLogin();
+                                setOpenSide(false);
+                            }}>로그인</button>
+                            <button className="mobile-join-btn" onClick={() => {
+                                handleJoin();
+                                setOpenSide(false);
+                            }}>회원가입</button>
                         </div> :
                         <div>
                             <div className="mobile-size-title-box" onClick={() => handleCategoryToggle(5)}>
@@ -276,7 +282,10 @@ function Header() {
                                 ))}
                             </div>
                             <div className="mobile-login-box" style={{marginTop: "15px"}}>
-                                <button className="mobile-join-btn" onClick={handleLogout}>로그아웃</button>
+                                <button className="mobile-join-btn" onClick={() => {
+                                    handleLogout();
+                                    setOpenSide(false);
+                                }} >로그아웃</button>
                             </div>
                         </div>
 

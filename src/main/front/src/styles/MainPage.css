@@ -29,3 +29,28 @@
     height: 800px;
   }
 }
+
+/* MainPage.css */
+
+.main-image-container {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* 이미지가 화면의 전체 높이에 맞춰 중앙에 위치하도록 설정 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0); /* 중앙에서 크기 0으로 시작 */
+  transition: transform 1s ease-out, opacity 1s ease-out; /* 애니메이션 효과 추가 */
+  opacity: 0; /* 처음에 투명하게 시작 */
+}
+
+.main-image.loaded {
+  transform: translate(-50%, -50%) scale(1); /* 원래 크기로 확대 */
+  opacity: 1; /* 이미지가 보이게 설정 */
+}

@@ -4,12 +4,14 @@
     list-style: none;
 }
 
+
 header {
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     position: fixed;
+    top: 0;
     width: 100%;
 }
 
@@ -238,6 +240,9 @@ header .left-menu {
 
 /* 500 이하 */
 @media (max-width: 500px) {
+    body {
+        padding-top: 48px;
+    }
     header {
         height: 48px;
         padding: 8px 16px;
@@ -274,7 +279,10 @@ header .left-menu {
     }
 
     .header-category-box > div > .mypage-detail {
-        left: -110px;
+        left: -145px;
+    }
+    .header-category-box > div > p {
+        margin: 0;
     }
 }
 
@@ -282,6 +290,9 @@ header .left-menu {
 
 /* 500 이상 */
 @media (min-width: 500px) {
+    body {
+        padding-top: 48px;
+    }
     header {
         height: 48px;
         padding: 8px 16px;
@@ -314,13 +325,20 @@ header .left-menu {
     .show-box {
         display : block;
     }
+
     .header-category-box > div > .mypage-detail {
-        left: -110px;
+        left: -145px;
+    }
+    .header-category-box > div > p {
+        margin: 0;
     }
 }
 
 /* 1000 이상 */
 @media (min-width: 1000px) {
+    body {
+        padding-top: 72px;
+    }
     header {
         height: 72px;
         padding: 0 32px;
@@ -343,6 +361,8 @@ header .left-menu {
     .show-box {
         display : none;
     }
-
+    .header-category-box > div > p {
+        margin: 0 0 0 30px;
+    }
 }
 

@@ -1,20 +1,23 @@
-import '../../styles/MainPage.css'
-import mainImage1 from '../../image/mainImage1.png'
-import mainImage2 from '../../image/mainImage2.png'
-import mainImage3 from '../../image/mainImage3.png'
-import { useEffect } from 'react'
-function MainPage(){
+import '../../styles/MainPage.css';
+import mainImage1 from '../../image/mainImage1.png';
+import { useEffect, useState } from 'react';
 
-  useEffect(() => {
-  }, [])
+function MainPage() {
+    const [isLoaded, setIsLoaded] = useState(false);
 
-  return (
-    <div>
-      <img src={mainImage1} alt="이미지1" className='image1'/>
-      <img src={mainImage2} alt="이미지2" />
-      <img src={mainImage3} alt="이미지3" />
-    </div>
-  );
+    useEffect(() => {
+        setIsLoaded(true); // 페이지가 로드되면 애니메이션 실행
+    }, []);
+
+    return (
+        <div className="main-image-container">
+            <img
+                src={mainImage1}
+                alt="이미지1"
+                className={`main-image ${isLoaded ? 'loaded' : ''}`} // 이미지 로드 시 클래스 추가
+            />
+        </div>
+    );
 }
 
 export default MainPage;

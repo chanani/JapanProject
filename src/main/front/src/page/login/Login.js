@@ -116,10 +116,10 @@ function Login() {
 
   return (
     <div className="login-all">
-      <div className="login-header">
+      {/*<div className="login-header">
         <p>문의하기</p>
         <p onClick={handleHome}>더재팬홈</p>
-      </div>
+      </div>*/}
 
       <div className="loginPage-box">
         <div className="logo-box">
