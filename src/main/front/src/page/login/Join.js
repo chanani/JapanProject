@@ -1,5 +1,5 @@
 import '../../styles/login/Join.css'
-import Logo from "../../image/logo.png"
+import Logo from "../../image/logo_image.png"
 import {Link, useNavigate} from "react-router-dom";
 import {useState} from 'react';
 import axios from 'axios';
@@ -135,7 +135,7 @@ function Join() {
 
     return (
         <div className="login-all">
-           {/* <div className="login-header">
+            {/* <div className="login-header">
                 <p>문의하기</p>
                 <p onClick={handleHome}>더재팬홈</p>
             </div>*/}
@@ -143,8 +143,6 @@ function Join() {
             <div className="loginPage-box">
                 <div className="logo-box">
                     <img src={Logo} alt=""/>
-                    <p onClick={handleHome}>The Japan</p>
-                    <h5>더재팬</h5>
                 </div>
 
                 <div className="social-join">
@@ -163,17 +161,22 @@ function Join() {
                     </div>
                 </div>
 
+                <hr className="join-hr"/>
+
+
                 <div className="join-info-box">
 
                     <div className="join-info">
                         <div className="join-input-box">
 
+                            <p>이름</p>
                             <input type="text" placeholder="이름(실명)" className='user_name'
                                    onChange={handleInfo}
                                    value={form[0]}
                             />
 
                             <div>
+                                <p>아이디</p>
                                 <input type="text" placeholder="아이디" className='username'
                                        onChange={handleInfo}
                                        value={form[1]}
@@ -185,17 +188,19 @@ function Join() {
                                 </button>
                             </div>
 
+                            <p>비밀번호</p>
                             <input type="password" placeholder="비밀번호" className='password'
                                    onChange={handleInfo}
                                    value={form[2]}
                             />
 
-                            <input type="password" placeholder="비밀번호　확인" className='password_check'
+                            <input type="password" placeholder="비밀번호를 한번 더 입력해주세요." className='password_check'
                                    onChange={handleInfo}
                                    value={form[5]}
                             />
 
                             <div>
+                                <p>이메일</p>
                                 <input type="email" placeholder="이메일" className='user_email'
                                        onChange={handleInfo}
                                        value={form[3]}
@@ -208,7 +213,7 @@ function Join() {
                             </div>
                             <div>
 
-
+                                <p>휴대폰 번호</p>
                                 <input type="number" placeholder="휴대폰번호('-'제외)" className='user_phone'
                                        onChange={handleInfo}
                                        value={form[4]}

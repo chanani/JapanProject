@@ -141,7 +141,6 @@ function Header() {
             <div className="left-menu">
 
                 <div className="site-name-box" onClick={handlehome}>
-                    <h2>The Japan</h2>
                     <img className="header-logo" src={Logo} alt="Logo"/>
                 </div>
                 <div className="header-category-box">
@@ -185,7 +184,7 @@ function Header() {
                     </div>
                     :
                     <div className="header-category-box">
-                        <div className="header-category-box">
+                        <div className="header-category-box no-margin">
                             <div>
                                 <p>My</p>
                                 <div className="header-category-detail mypage-detail">

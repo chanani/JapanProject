@@ -116,6 +116,7 @@ header .left-menu {
 .right-menu > .login-box > .login-btn {
     background-color: white;
     color: black;
+
 }
 
 .right-menu > .login-box > button {
@@ -125,6 +126,17 @@ header .left-menu {
     font-size: 14px;
     height: 40px;
     font-weight: 500;
+    transition: border 0.3s ease, background-color 0.3s ease;
+}
+
+.right-menu > .login-box > .login-btn:hover,
+.mobile-login-box > .mobile-login-btn:hover{
+    border: 1px #979494 solid;
+}
+
+.right-menu > .login-box > .join-btn:hover,
+.mobile-login-box > .mobile-join-btn:hover{
+    background-color: #1b1b1b;
 }
 
 /* 모바일 시 메뉴 버튼 */
@@ -133,6 +145,7 @@ header .left-menu {
     border: none;
     background-color: transparent;
 }
+
 
 
 
@@ -228,6 +241,7 @@ header .left-menu {
     font-size: 14px;
     height: 40px;
     font-weight: 500;
+    transition: border 0.3s ease, background-color 0.3s ease;
 }
 
 
@@ -249,8 +263,9 @@ header .left-menu {
     }
 
     .header-logo {
-        height: 30px;
-        width: 30px;
+        height: 153px;
+        width: 160px;
+        padding-top: 11px;
     }
 
     .mobile-left-box,
@@ -299,8 +314,10 @@ header .left-menu {
     }
 
     .header-logo {
-        height: 30px;
-        width: 30px;
+        height: 153px;
+        width: 160px;
+        padding-top: 11px;
+        padding-left: 12px;
     }
 
     .mobile-left-box,
@@ -341,11 +358,14 @@ header .left-menu {
     }
     header {
         height: 72px;
-        padding: 0 32px;
+        padding: 0 32px 0 135px;
     }
     .header-logo {
-        width: 40px;
-        height: 40px;
+        width: 200px;
+        height: 193px;
+        position: absolute;
+        top: -63px;
+        left: -18px;
     }
 
     .mobile-left-box,
@@ -363,6 +383,9 @@ header .left-menu {
     }
     .header-category-box > div > p {
         margin: 0 0 0 30px;
+    }
+    .no-margin > div > p {
+        margin: 0;
     }
 }
 

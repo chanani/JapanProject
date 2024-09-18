@@ -1,5 +1,5 @@
 import "../../styles/mypage/Withdrawal.css"
-import Logo from "../../image/logo.png";
+import Logo from "../../image/logo11.png";
 import {useNavigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";

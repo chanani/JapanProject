@@ -1,16 +1,50 @@
+.join-info-box, .join-info {
+    width: 100%;
+}
+
+/* 소셜 로그인 */
 .social-join {
-    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
 }
 
 .social-title > p {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 21px;
+    font-weight: 800;
+    margin-bottom: 10px;
 }
 
 .social-join img {
     width: 40px;
     height: 40px;
+    margin: 0 10px;
 }
+
+
+.join-hr {
+    border: 0.1px solid #d9d4d4;
+    margin: 30px 0;
+    width: 100%;
+}
+
+
+/* input box */
+.join-input-box  p {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.join-input-box > input {
+    width: 100%;
+}
+
+
+
+
+
 
 .join-input-box {
     height: auto;
@@ -61,75 +95,13 @@
 
 /* 500 이하 */
 @media (max-width: 600px) {
-    .social-join {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 15px;
-    }
 
-    .social-title {
-        margin-bottom: 10px;
-    }
-
-    .social-logo {
-        margin-left: 10px;
-    }
-
-    .social-logo img {
-        margin-left: 5px;
-    }
-
-    .join-btn-box > button {
-        width: 180px;
-        height: 50px;
-        font-size: 18px;
-    }
-    .join-input-box > input {
-        width: 340px;
-    }
-    .join-input-box > div > input {
-        width: 250px;
-    }
-    .join-input-box > div > button {
-        width: 85px;
-        font-size: 14px;
-    }
 }
 
 /* 500 이상 */
 @media (min-width: 600px) {
-    .social-join {
-        display: flex;
-        align-items: center;
-        margin-top: 15px;
 
-    }
 
-    .social-logo {
-        margin-left: 5px;
-    }
-
-    .social-logo img {
-        margin-left: 10px;
-    }
-
-    .join-btn-box > button {
-        width: 300px;
-        height: 50px;
-        font-size: 19px;
-    }
-
-    .join-input-box > input {
-        width: 500px;
-    }
-    .join-input-box > div > input {
-        width: 400px;
-    }
-    .join-input-box > div > button {
-        width: 95px;
-        font-size: 15px;
-    }
 }
 
 
