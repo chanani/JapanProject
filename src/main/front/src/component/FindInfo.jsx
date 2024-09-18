@@ -48,8 +48,17 @@ const FindInfo = ({info, find_check, setFind_check}) => {
                         </div>
 
                         <div className='find_box'>
+                            {info === 'ID' ?
+                                <div className="find-content-box">
+                                    <p>아이디를 찾고자하는</p>
+                                    <p>이메일을 입력해주세요.</p>
+                                </div> :
+                                <div className="find-content-box">
+                                    <p>비밀번호를 찾고자하는</p>
+                                    <p>이메일을 입력해주세요.</p>
+                                </div>
+                            }
 
-                            <p>가입하신 이메일을 입력해 주세요.</p>
 
                             <div className='find_input_box'>
                                 <input type="email" placeholder='이메일'
@@ -65,15 +74,17 @@ const FindInfo = ({info, find_check, setFind_check}) => {
                                 />
                             </div>
 
-                            <div className='find_btn_box'>
-                                <button onClick={emailAuthAPI}>인증번호 받기</button>
+                            <div className="find-btn-all-box">
+                                <div className='find_btn_box'>
+                                    <button onClick={emailAuthAPI}>인증번호 받기</button>
+                                </div>
+                                <div className={"find_result_box" + (authToken ? " find-auth" : "")}>
+                                    <button onClick={resultHandle}>확인</button>
+                                </div>
                             </div>
-
                         </div>
 
-                        <div className='find_result_box'>
-                            <button onClick={resultHandle}>확인</button>
-                        </div>
+
                     </div>
                     : result === "ID" ?
                         <IdFind
@@ -178,7 +189,7 @@ export const PwReset = ({email, setFind_check, setResult, setEmail, setAuthToken
 
             <div className='find_box'>
 
-                <p>사용하실 비밀번호를 입력해주세요.</p>
+                <p className="find-content-box">사용하실 비밀번호를 입력해주세요.</p>
 
                 <div className='find_input_box'>
                     <input
