@@ -169,60 +169,71 @@ function Join() {
                     <div className="join-info">
                         <div className="join-input-box">
 
-                            <p>이름</p>
-                            <input type="text" placeholder="이름(실명)" className='user_name'
-                                   onChange={handleInfo}
-                                   value={form[0]}
-                            />
+                            <div className="join-name-box">
+                                <p>이름</p>
+                                <input type="text" placeholder="이름(실명)을 입력해 주세요" className='user_name'
+                                       onChange={handleInfo}
+                                       value={form[0]}
+                                />
+                            </div>
 
-                            <div>
+                            <div className="join-id-box">
                                 <p>아이디</p>
-                                <input type="text" placeholder="아이디" className='username'
-                                       onChange={handleInfo}
-                                       value={form[1]}
-                                />
-                                <button onClick={checkHandle}
-                                        className={`check_id`}
-                                        id={idCheck ? 'check_true' : ''}
-                                >중복확인
-                                </button>
+                                <div>
+                                    <input type="text" placeholder="영문, 숫자 6자 이상" className='username'
+                                           onChange={handleInfo}
+                                           value={form[1]}
+                                    />
+                                    <button onClick={checkHandle}
+                                            className={`check_id`}
+                                            id={idCheck ? 'check_true' : ''}
+                                    >중복확인
+                                    </button>
+                                </div>
                             </div>
 
-                            <p>비밀번호</p>
-                            <input type="password" placeholder="비밀번호" className='password'
-                                   onChange={handleInfo}
-                                   value={form[2]}
-                            />
+                            <div className="join-password-box">
+                                <p>비밀번호</p>
+                                <input type="password" placeholder="영문, 숫자, 특수문자 8자 이상" className='password'
+                                       onChange={handleInfo}
+                                       value={form[2]}
+                                       style={{marginBottom: '10px'}}
+                                />
 
-                            <input type="password" placeholder="비밀번호를 한번 더 입력해주세요." className='password_check'
-                                   onChange={handleInfo}
-                                   value={form[5]}
-                            />
+                                <input type="password" placeholder="비밀번호를 한번 더 입력해주세요" className='password_check'
+                                       onChange={handleInfo}
+                                       value={form[5]}
+                                />
+                            </div>
 
-                            <div>
+                            <div className="join-email-box">
                                 <p>이메일</p>
-                                <input type="email" placeholder="이메일" className='user_email'
-                                       onChange={handleInfo}
-                                       value={form[3]}
-                                />
-                                <button onClick={checkHandle}
-                                        className='check_email'
-                                        id={emailCheck ? 'check_true' : ''}
-                                >중복확인
-                                </button>
+                                <div>
+                                    <input type="email" placeholder="이메일을 입력해 주세요" className='user_email'
+                                           onChange={handleInfo}
+                                           value={form[3]}
+                                    />
+                                    <button onClick={checkHandle}
+                                            className='check_email'
+                                            id={emailCheck ? 'check_true' : ''}
+                                    >중복확인
+                                    </button>
+                                </div>
                             </div>
-                            <div>
 
+                            <div className="join-phone-box">
                                 <p>휴대폰 번호</p>
-                                <input type="number" placeholder="휴대폰번호('-'제외)" className='user_phone'
-                                       onChange={handleInfo}
-                                       value={form[4]}
-                                />
-                                <button onClick={checkHandle}
-                                        className='check_phone'
-                                        id={phoneCheck ? 'check_true' : ''}
-                                >중복확인
-                                </button>
+                                <div>
+                                    <input type="number" placeholder="휴대폰번호('-'제외)를 입력해 주세요" className='user_phone'
+                                           onChange={handleInfo}
+                                           value={form[4]}
+                                    />
+                                    <button onClick={checkHandle}
+                                            className='check_phone'
+                                            id={phoneCheck ? 'check_true' : ''}
+                                    >중복확인
+                                    </button>
+                                </div>
                             </div>
 
                         </div>
