@@ -17,5 +17,6 @@ public class NoticeVO {
     private String notice_content;
     private String notice_title;
     private Timestamp notice_regdate;
+    private Integer totalElements;
 
 }

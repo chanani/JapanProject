@@ -5,9 +5,13 @@
 
 <mapper namespace="com.project.thejapenproject.notice.service.NoticeMapper">
 
-    <select id="getList" parameterType="NoticeVO">
-        SELECT * FROM notice
+    <select id="getList"
+            parameterType="com.project.thejapenproject.command.GetListReqVO"
+    resultType="com.project.thejapenproject.command.NoticeVO">
+        SELECT *, COUNT(*) OVER() AS totalElements
+        FROM notice
         ORDER BY notice_regdate DESC
+        limit #{size} offset #{offset}
     </select>
 
     <select id="alarmList" parameterType="NoticeVO">

@@ -143,7 +143,8 @@ function Header() {
                 <div className="site-name-box" onClick={handlehome}>
                     <img className="header-logo" src={Logo} alt="Logo"/>
                 </div>
-                <div className="header-category-box">
+                {userRole !== 'role_admin' ?
+                    (<div className="header-category-box">
                     {['학습', '테스트', '기타페이지', '고객지원'].map((title, index) => {
                         let links;
                         switch (index) {
@@ -173,8 +174,41 @@ function Header() {
                             </div>
                         );
                     })}
-                </div>
-
+                </div>) :
+                    (<div className="header-category-box">
+                        {['학습', '테스트', '기타페이지', '고객지원', '관리자'].map((title, index) => {
+                            let links;
+                            switch (index) {
+                                case 0:
+                                    links = studyLink;
+                                    break;
+                                case 1:
+                                    links = testLink;
+                                    break;
+                                case 2:
+                                    links = otherLink;
+                                    break;
+                                case 3:
+                                    links = customerLink;
+                                    break;
+                                case 4:
+                                    links = adminLink;
+                                    break;
+                                default:
+                                    links = [];
+                            }
+                            return (
+                                <div key={index}>
+                                    <p>{title}<MdOutlineKeyboardArrowDown/></p>
+                                    <div className="header-category-detail">
+                                        {links.map((item, i) => (
+                                            <Link key={i} to={item[0]} >{item[1]}</Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>)}
             </div>
             <div className="right-menu">
                 {userRole === 'none' ?
