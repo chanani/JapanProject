@@ -1,5 +1,5 @@
 import "../../styles/mypage/Withdrawal.css"
-import Logo from "../../image/logo11.png";
+import Logo from "../../image/logo_image.png";
 import {useNavigate} from "react-router-dom";
 import {useContext, useState} from "react";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
@@ -48,8 +48,6 @@ const Withdrawal = () => {
 
                 <div className='withdrawal-title-box'>
                     <img src={Logo} alt=""/>
-                    <p onClick={handleHome}>The Japan</p>
-                    <h5>더재팬</h5>
                 </div>
 
                 <div className='withdrawal-info'>

@@ -14,9 +14,14 @@
 }
 
 .withdrawal-title-box {
-    display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+}
+
+.withdrawal-title-box > img {
+    width: 250px;
+    height: 250px;
 }
 
 .withdrawal-info {
@@ -80,14 +85,22 @@
 .withdrawal-btn-box > .withdrawal-close-btn {
     color: #667085;
     background-color: #f2f4f7;
+    transition: border 0.3s ease, background-color 0.3s ease;
 }
 
+.withdrawal-btn-box > .withdrawal-close-btn:hover {
+    background-color: #b4b4b4;
+
+}
 
 
 .withdrawal-check-on {
     background-color: #9DDE8B;
     color: white;
-
+    transition: border 0.3s ease, background-color 0.3s ease;
+}
+.withdrawal-check-on:hover {
+    background-color: #85dc6d;
 }
 
 .withdrawal-check-off {
@@ -102,22 +115,17 @@
 @media (max-width: 600px) {
     .withdrawal-box-all {
         width: 300px;
+        margin-top: 90px;
     }
 
-    .withdrawal-title-box > img {
-        width: 50px;
-        height: 50px;
+    .withdrawal-title-box {
+        top: 0;
     }
 
-    .withdrawal-title-box > p {
-        font-size: 30px;
-        font-weight: 600;
-        padding-left: 5px;
-    }
 
     .withdrawal-info > p {
         font-size: 18px;
-        font-weight: 500;
+        font-weight: 700;
     }
 
     .withdrawal-content-box {
@@ -142,26 +150,18 @@
     }
 }
 
-/* 1000 이상 */
+/* 600 이상 */
 @media (min-width: 600px) {
     .withdrawal-box-all {
         width: 500px;
+        margin-top: 150px;
     }
-
-    .withdrawal-title-box > img {
-        width: 60px;
-        height: 60px;
+    .withdrawal-title-box {
+        top: 50px;
     }
-
-    .withdrawal-title-box > p {
-        font-size: 35px;
-        font-weight: 600;
-        padding-left: 5px;
-    }
-
     .withdrawal-info > p {
-        font-size: 19px;
-        font-weight: 500;
+        font-size: 20px;
+        font-weight: 700;
     }
 
     .withdrawal-content-box {
@@ -191,22 +191,16 @@
 @media (min-width: 1000px) {
     .withdrawal-box-all {
         width: 850px;
+        margin-top: 150px;
+    }
+    .withdrawal-title-box {
+        top: 70px;
     }
 
-    .withdrawal-title-box > img {
-        width: 70px;
-        height: 70px;
-    }
-
-    .withdrawal-title-box > p {
-        font-size: 50px;
-        font-weight: 600;
-        padding-left: 5px;
-    }
 
     .withdrawal-info > p {
-        font-size: 21px;
-        font-weight: 500;
+        font-size: 22px;
+        font-weight: 700;
     }
 
     .withdrawal-content-box {

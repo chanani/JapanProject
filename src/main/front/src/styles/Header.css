@@ -13,6 +13,7 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1000;
 }
 
 header .left-menu {
@@ -71,7 +72,7 @@ header .left-menu {
     box-shadow: rgba(75, 81, 91, 0.12) 0px 14px 32px 0px, rgba(75, 81, 91, 0.06) 0px 10px 14px 0px, rgba(75, 81, 91, 0.03) 0px 0px 0px 1px, rgba(75, 81, 91, 0.2) 0px 0px 1px 0px;
     opacity: 0;
     pointer-events: none;
-    z-index: 10;
+    z-index: 1000 ;
     display: flex;
     flex-direction: column;
 }
@@ -171,7 +172,7 @@ header .left-menu {
 .mobile-side-bar > .mobile-size-bar-category {
     background-color: white;
     padding: 25px 35px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .mobile-side-bar > .mobile-size-close-box {

@@ -117,6 +117,7 @@ const TranslatorPage = (props) => {
                             classNamePrefix="custom-select"
                             value={fromValue}
                             onChange={(selectedOption) => setFromValue([selectedOption])}
+                            style={{zIndex : "0 !important"}}
                         />
                     </div>
                     <div className='translator-icon-box'>
