@@ -7,6 +7,8 @@ import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {Cookies} from 'react-cookie';
 import FindInfo from "../../component/FindInfo";
 import {toast} from "react-toastify";
+import {FaRegEyeSlash} from "react-icons/fa";
+import {MdOutlineRemoveRedEye} from "react-icons/md";
 
 function Login() {
     const navigator = useNavigate();
@@ -14,6 +16,7 @@ function Login() {
     const cookies = new Cookies();
     const [find_check, setFind_check] = useState("");
     const [info, setInfo] = useState("");
+    const [showPassword, setShowPassword] = useState(false)
     // 로그인 되어있을 때 홈으로 리턴
     useEffect(() => {
         if (userRole !== "none") {
@@ -51,6 +54,11 @@ function Login() {
     const handleJoin = () => {
         navigate("/join");
     }
+    // 비밀번호 보이기/숨기기 핸들러
+    const handleShowPassword = () => {
+        setShowPassword((prev) => !prev);
+    }
+
     // 로그인 핸들러
     const handleLogin = async (event) => {
         let formData = new FormData();
@@ -138,11 +146,26 @@ function Login() {
                                        value={username}
                                 />
                                 <p>비밀번호</p>
-                                <input type="password" placeholder="••••••••"
+                                <input type={showPassword ? "text" : "password"}
+                                       className="login-password_input"
+                                       placeholder="••••••••"
                                        onChange={handlePassword}
                                        value={password}
                                        onKeyDown={loginKeyDown}
                                 />
+                                {!showPassword ?
+                                    <FaRegEyeSlash
+                                        size={20}
+                                        className="login-password-not-show-icon"
+                                        onClick={handleShowPassword}
+                                    />
+                                    :
+                                    <MdOutlineRemoveRedEye
+                                        size={20}
+                                        className="login-password-show-icon"
+                                        onClick={handleShowPassword}
+                                    />
+                                }
                             </div>
                         </div>
 

@@ -75,6 +75,9 @@
     font-size: 16px;
     margin-bottom: 10px;
 }
+.login-info .login-input-box > .login-password_input{
+    padding: 12px 40px 12px 16px;
+}
 
 .login-info .login-input-box > input:hover {
     outline: 0.3px solid gray;
@@ -182,6 +185,17 @@
     font-weight: bold;
 }
 
+/* 비밀번호 보이기/숨기기 */
+.login-input-box {
+    position: relative;
+}
+
+.login-password-not-show-icon,
+.login-password-show-icon {
+    position: absolute;
+    top: 130px;
+    right: 13px;
+}
 
 /* 500 이하 */
 @media (max-width: 500px) {

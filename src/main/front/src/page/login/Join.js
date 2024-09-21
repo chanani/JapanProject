@@ -6,12 +6,16 @@ import axios from 'axios';
 import {toast} from "react-toastify";
 import {axiosInstance} from "../../api";
 import {Overlap} from "../../hook/Overlap";
+import {FaRegEyeSlash} from "react-icons/fa";
+import {MdOutlineRemoveRedEye} from "react-icons/md";
+
 
 function Join() {
     const [form, setForm] = useState(["", "", "", "", "", ""]);
     const [idCheck, setIdCheck] = useState(false);
     const [emailCheck, setEmailCheck] = useState(false);
     const [phoneCheck, setPhoneCheck] = useState(false);
+    const [showPassword, setShowPassword] = useState([false, false])
     let navigate = useNavigate();
 
     // 홈 핸들러
@@ -98,6 +102,14 @@ function Join() {
         }
         setForm(arr);
     }
+
+    const handleShowPassword = (index) => {
+        setShowPassword((prev) => {
+            const newShowPassword = [...prev];
+            newShowPassword[index] = !newShowPassword[index];
+            return newShowPassword;
+        });
+    };
 
     // 회원가입 핸들러
     const handleJoin = (event) => {
@@ -194,16 +206,46 @@ function Join() {
 
                             <div className="join-password-box">
                                 <p>비밀번호</p>
-                                <input type="password" placeholder="영문, 숫자, 특수문자 8자 이상" className='password'
+                                <input type={showPassword[0] ? "text" : "password"}
+                                       placeholder="영문, 숫자, 특수문자 8자 이상"
+                                       className='password'
                                        onChange={handleInfo}
                                        value={form[2]}
                                        style={{marginBottom: '10px'}}
                                 />
 
-                                <input type="password" placeholder="비밀번호를 한번 더 입력해주세요" className='password_check'
+                                <input type={showPassword[1] ? "text" : "password"}
+                                       placeholder="비밀번호를 한번 더 입력해주세요"
+                                       className='password_check'
                                        onChange={handleInfo}
                                        value={form[5]}
                                 />
+                                {!showPassword[0] ?
+                                <FaRegEyeSlash
+                                    size={20}
+                                    className="password-not-show-icon"
+                                    onClick={() => handleShowPassword(0)}
+                                />
+                                :
+                                <MdOutlineRemoveRedEye
+                                    size={20}
+                                    className="password-show-icon"
+                                    onClick={() => handleShowPassword(0)}
+                                />
+                                }
+                                {!showPassword[1] ?
+                                <FaRegEyeSlash
+                                    size={20}
+                                    className="password-check-not-show-icon"
+                                    onClick={() => handleShowPassword(1)}
+                                />
+                                :
+                                <MdOutlineRemoveRedEye
+                                    size={20}
+                                    className="password-check-show-icon"
+                                    onClick={() => handleShowPassword(1)}
+                                />
+                                }
                             </div>
 
                             <div className="join-email-box">
