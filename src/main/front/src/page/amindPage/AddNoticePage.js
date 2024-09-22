@@ -26,6 +26,8 @@ const AddNoticePage = () => {
         try {
             // 공지사항 등록
             const noticeResponse = await axiosInstance.post('admin/addNotice', {title: title, content: content})
+                .then(res => console.log(res))
+                .catch("공지사항 등록에 실패하였습니다.")
             // 카프카 Topic 등록
             await axiosInstance.post('kafka/send', {message: content})
             toast.success("정상적으로 등록되었습니다.");

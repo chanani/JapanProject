@@ -31,7 +31,6 @@ public class AdminController {
     private final AdminService adminService;
 
     @ExceptionHandler
-    @NoneCheckToken
     @PostMapping("/addWordList")
     public ResponseEntity<String> addWordList(@RequestBody ArrayList<WordVO> wordList){
         if(Objects.isNull(wordList)){
@@ -40,7 +39,6 @@ public class AdminController {
         adminService.addWordList(wordList);
         return ResponseEntity.ok("성공");
     }
-    @NoneCheckToken
     @PostMapping("/addNotice")
     public ResponseEntity<String> addNotice(@RequestBody Map<String, String> map){
         if(Objects.isNull(map)){
@@ -53,7 +51,6 @@ public class AdminController {
         return ResponseEntity.ok("성공");
     }
 
-    @NoneCheckToken
     @PostMapping("/addWeekWord")
     public ResponseEntity<String> addWeekWord(@RequestBody ArrayList<SchoolVO> wordList){
         adminService.addWeekWord(wordList);

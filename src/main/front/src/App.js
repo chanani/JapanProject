@@ -35,6 +35,7 @@ import AddInquiryCommentWrite from "./page/amindPage/AddInquiryCommentWrite";
 import SchoolPage from "./page/schoolPage/SchoolPage";
 import TranslatorPage from "./page/translatorPage/TranslatorPage";
 import AddWeekWordPage from "./page/amindPage/AddWeekWordPage";
+import NoticeDetail from "./page/notice/NoticeDetail";
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
               <Route path="/AddInquiryCommentWrite" element={<AddInquiryCommentWrite />} />
               <Route path="/schoolPage" element={<SchoolPage />} />
               <Route path="/translator" element={<TranslatorPage />}/>
+              <Route path="/notice-detail" element={<NoticeDetail />}/>
             </Routes>
             <Footer />
           </BrowserRouter>

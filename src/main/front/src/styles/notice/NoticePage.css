@@ -52,13 +52,22 @@
     margin-left: 3px;
 }
 
+/* 제목 줄임 표시 */
+.content-box-p-tag{
+    white-space: nowrap;        /* 한 줄로 표시 */
+    overflow: hidden;           /* 넘치는 텍스트를 숨김 */
+    text-overflow: ellipsis;    /* 넘치는 부분에 ... 표시 */
+}
+
 /* 600 까지 */
 @media (max-width: 600px) {
     .user-notice-box {
         margin-top: 40px;
         width: 95%;
     }
-
+    .content-box-p-tag {
+        max-width : 200px
+    }
 }
 
 /* 600 이상 */
@@ -67,14 +76,19 @@
         margin-top: 40px;
         width: 90%;
     }
-
+    .content-box-p-tag {
+        max-width : 410px
+    }
 }
 
 /* 1000 이상 */
 @media (min-width: 1000px) {
     .user-notice-box {
         margin-top: 40px;
-        width: 80%;
+        width: 70%;
+    }
+    .content-box-p-tag {
+        max-width : 590px
     }
 }
 

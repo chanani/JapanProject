@@ -56,7 +56,6 @@ public class JWTProvider {
     }
 
     public void verifyToken(TokenType tokenType, String jwtToken) throws Exception {
-        System.out.println("verifyToken method : " + jwtToken);
         try {
             Jwts.parser().verifyWith(Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8))).build().parseSignedClaims(jwtToken);
         } catch (SecurityException | MalformedJwtException e) {

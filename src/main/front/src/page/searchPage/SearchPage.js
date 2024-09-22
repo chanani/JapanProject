@@ -5,7 +5,7 @@ import {FaSearch} from "react-icons/fa";
 import moment from "moment";
 import 'moment/locale/ko';
 import {toast} from "react-toastify";
-import NoticeDetail from "../../component/NoticeDetail";
+import NoticeDetailNotUse from "../../component/NoticeDetailNotUse";
 
 const Search = () => {
     // 검색 종류
@@ -321,7 +321,7 @@ const NoticeComponent = ({
                     </div>
 
                     {detailToggle &&
-                        <NoticeDetail
+                        <NoticeDetailNotUse
                             setDetailToggle={setDetailToggle}
                             detailIndex={detailIndex}
                             notice={noticeList[detailIndex]._source}
@@ -359,7 +359,7 @@ const NoticeComponent = ({
                     </div>
 
                     { detailToggle &&
-                        <NoticeDetail
+                        <NoticeDetailNotUse
                             setDetailToggle={setDetailToggle}
                             notice={noticeList[detailIndex]._source}
                             handleDetailOut={handleDetailOut}
