@@ -30,9 +30,9 @@ const Inquiry = () => {
     // 작성자 이름 처리 함수
     const formatWriterName = (name) => {
         if (name.length > 3) {
-            return `${name[0]}**..`;
+            return `${name[0]}${name[1]}*..`;
         } else {
-            return `${name[0]}${'**'.repeat(name.length - 2)}`;
+            return `${name[0]}${name[1]}${'*'.repeat(name.length - 2)}`;
         }
     };
     // 글쓰기 페이지로 이동
@@ -58,7 +58,7 @@ const Inquiry = () => {
         searchAPI();
     }
     const keyDownHandle = (event) => {
-        if(event.key !== 'Enter') return;
+        if (event.key !== 'Enter') return;
         searchAPI();
     }
     // 검색 요청 API
@@ -99,18 +99,18 @@ const Inquiry = () => {
             <div className="inquiry-box">
 
                 <div className="inquiry-title-box">
-                    <h2>문의하기</h2>
+                    <p>문의하기</p>
                 </div>
 
                 <div className="inquiry-content-box">
 
-                    <div className="inquiry-content-title">
-                        <p style={{width: "7%"}}>번호</p>
-                        <p style={{width: "12%"}}>답변</p>
-                        <p style={{width: "48%"}}>제목</p>
-                        <p style={{width: "13%"}}>글쓴이</p>
-                        <p style={{width: "20%"}}>등록일</p>
-                    </div>
+                    {/*<div className="inquiry-content-title">*/}
+                    {/*    <p style={{width: "7%"}}>번호</p>*/}
+                    {/*    <p style={{width: "12%"}}>답변</p>*/}
+                    {/*    <p style={{width: "48%"}}>제목</p>*/}
+                    {/*    <p style={{width: "13%"}}>글쓴이</p>*/}
+                    {/*    <p style={{width: "20%"}}>등록일</p>*/}
+                    {/*</div>*/}
 
                     <div className="inquiry-content-detail">
                         {data.length === 0 ?
@@ -122,30 +122,29 @@ const Inquiry = () => {
                                 {currentNotices.map((item, index) => (
                                     item.inquiry_state === 'y' &&
                                     <div className="inquiry-data-box" key={index}>
-                                        <p style={{width: "7%", textAlign: "center"}}
-                                           className="inquiry_num">{item.inquiry_num}</p>
+                                        <div className="inquiry-content-high-box">
+                                            {item.inquiry_comment ?
+                                                <p style={{width: "65px", textAlign: "center"}}
+                                                   className='inquiry-comment inquiry-comment-y'>답변완료</p>
+                                                :
+                                                <p style={{width: "65px", textAlign: "center"}}
+                                                   className='inquiry-comment inquiry-comment-n'>미완료</p>
 
-                                        {item.inquiry_comment ?
-                                            <p style={{width: "12%", textAlign: "center"}}
-                                               className='inquiry-comment inquiry-comment-y'>답변완료</p>
-                                            :
-                                            <p style={{width: "12%", textAlign: "center"}}
-                                               className='inquiry-comment inquiry-comment-n'>미완료</p>
+                                            }
+                                            <p
+                                                className="inquiry_title"
+                                                onClick={CheckPasswordHandle}
+                                                id={item.inquiry_num}
+                                            >
+                                                {item.inquiry_secret === 'y' ? <FaLock/> : <FaLockOpen/>}
+                                                {item.inquiry_title}
 
-                                        }
-                                        <p
-                                            className="inquiry_title"
-                                            onClick={CheckPasswordHandle}
-                                            id={item.inquiry_num}
-                                        >
-                                            {item.inquiry_secret === 'y' ? <FaLock/> : <FaLockOpen/>}
-                                            {item.inquiry_title}
-
-                                        </p>
-                                        <p style={{textAlign: "center"}}
-                                           className="inquiry_writer">{formatWriterName(item.inquiry_writer)}</p>
-                                        <p style={{width: "20%", textAlign: "center"}}
-                                           className="inquiry_regdate">{moment(item.inquiry_regdate).format('YY/MM/DD')}</p>
+                                            </p>
+                                        </div>
+                                        <div className="inquiry-content-row-box">
+                                            <p className="inquiry_regdate">{moment(item.inquiry_regdate).format('YYYY. MM. DD')}</p>
+                                            <p className="inquiry_writer">{formatWriterName(item.inquiry_writer)}</p>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -174,17 +173,9 @@ const Inquiry = () => {
                         nowNumber={nowNumber}
                     />}
                 </div>
+
                 <div className="inquiry-pageNation">
-                    {currentPage === 1 ?
-                        <FaArrowLeft color="gray" size={20}/>
-                        :
-                        <FaArrowLeft onClick={prevPage} size={20}/>
-                    }
-                    {currentPage * InquiryPerPage < data.length ?
-                        <FaArrowRight onClick={nextPage} size={20}/>
-                        :
-                        <FaArrowRight color="gray" size={20}/>
-                    }
+
                 </div>
             </div>
         </div>
