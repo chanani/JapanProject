@@ -1,8 +1,8 @@
 package com.project.thejapenproject.notice.service;
 
 import com.project.thejapenproject.command.NoticeVO;
-import com.project.thejapenproject.command.GetListReqVO;
-import com.project.thejapenproject.vo.GetNoticeDetailResVO;
+import com.project.thejapenproject.notice.vo.GetListReqVO;
+import com.project.thejapenproject.notice.vo.GetNoticeDetailResVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

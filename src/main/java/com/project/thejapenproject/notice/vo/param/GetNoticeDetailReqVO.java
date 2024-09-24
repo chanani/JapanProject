@@ -1,4 +1,4 @@
-package com.project.thejapenproject.vo.param;
+package com.project.thejapenproject.notice.vo.param;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

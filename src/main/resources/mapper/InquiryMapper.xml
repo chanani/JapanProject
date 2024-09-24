@@ -23,16 +23,26 @@
                 #{inquiry_email})
     </insert>
 
-    <select id="getList" resultType="InquiryVO">
+    <!-- 문의사항 전체 목록 조회 -->
+    <select id="getList"
+            parameterType="com.project.thejapenproject.inquiry.vo.GetInquiryListReqVO"
+            resultType="InquiryVO">
         select inquiry_num,
                inquiry_title,
                inquiry_writer,
                inquiry_secret,
                inquiry_regdate,
                inquiry_state,
-               inquiry_comment
+               inquiry_comment,
+               COUNT(*) over() AS totalElements
         from inquiry
+        WHERE inquiry_state = 'Y'
+        <if test='keyword != null and keyword != ""'>
+            AND( inquiry_title like '%${keyword}%'
+               OR inquiry_writer like '%${keyword}%')
+        </if>
         order by inquiry_num DESC
+        limit #{size} offset #{offset}
     </select>
 
     <select id="checkPassword" resultType="Boolean">

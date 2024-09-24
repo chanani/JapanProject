@@ -2,8 +2,8 @@ package com.project.thejapenproject.notice.service;
 
 import com.project.thejapenproject.command.NoticeVO;
 import com.project.thejapenproject.common.utils.PageResponse;
-import com.project.thejapenproject.command.GetListReqVO;
-import com.project.thejapenproject.vo.GetNoticeDetailResVO;
+import com.project.thejapenproject.notice.vo.GetListReqVO;
+import com.project.thejapenproject.notice.vo.GetNoticeDetailResVO;
 
 import java.util.ArrayList;
 

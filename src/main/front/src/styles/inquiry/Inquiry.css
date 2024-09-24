@@ -126,23 +126,32 @@
     height: 30px;
     margin-right: 5px;
     padding-left: 10px;
-    border: 2px solid #9DDE8B;
+    border: 2px solid #aeaeae;
     font-size: 17px;
 }
-
-.inquiry-button-box > button{
-    border-radius: 10px;
-    background-color: #A0D995;
-    border: none;
-    color: white;
-    width: 90px;
-    height: 35px;
-    font-size: 16px;
+.inquiry-search-box > input:focus{
+    outline-color: #605f5f;
 }
 
+.inquiry-search-box > svg {
+    color: #6f6f6f;
+}
+.inquiry-search-box > svg:hover{
+    color: #605f5f;
+}
+.inquiry-button-box > button{
+    width: 90px;
+    height: 35px;
+    border-radius: 8px;
+    background-color: black;
+    color: white;
+    font-size: 17px;
+    border: none;
+}
 
-
-
+.inquiry-button-box > button:hover {
+    background-color: #1b1b1b;
+}
 
 /* 페이지 네이션 */
 .inquiry-pageNation {

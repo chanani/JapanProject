@@ -1,12 +1,16 @@
 package com.project.thejapenproject.controller;
 
 import com.project.thejapenproject.command.InquiryVO;
+import com.project.thejapenproject.command.NoticeVO;
+import com.project.thejapenproject.command.ResponseData;
 import com.project.thejapenproject.command.UserVO;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
+import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.inquiry.service.InquiryService;
+import com.project.thejapenproject.inquiry.vo.GetInquiryListReqVO;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.apache.ibatis.annotations.Param;
@@ -16,11 +20,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import reactor.util.ObjectUtils;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Objects;
 
 
-@Controller
+@RestController
 @RequestMapping("/inquiry")
 @RequiredArgsConstructor
 public class InquiryController {
@@ -48,9 +53,17 @@ public class InquiryController {
      **/
     @NoneAuth
     @GetMapping("/getList")
-    public ResponseEntity<ArrayList<InquiryVO>> getList() {
-        ArrayList<InquiryVO> list = inquiryService.getList();
-        return ResponseEntity.ok(list);
+    public ResponseData getList(@Valid @ModelAttribute GetInquiryListReqVO getInquiryListReqVO) {
+        System.out.println("getInquiryListReqVO = " + getInquiryListReqVO);
+        if (getInquiryListReqVO.getPage() < 1 || getInquiryListReqVO.getSize() < 1) {
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
+        }
+        PageResponse<InquiryVO> inquiryList = inquiryService.getList(getInquiryListReqVO);
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(inquiryList)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
     }
 
     /**
