@@ -8,34 +8,57 @@ import {axiosInstance} from "../../api";
 import moment from "moment";
 import {toast} from "react-toastify";
 import {IoIosSearch} from "react-icons/io";
+import usePagination from "../../hook/usePagination";
+import CheckPassword from "../../component/CheckPassword";
+import PageNation from "../../component/PageNation";
 
 const AddInquiryComment = () => {
 
     const navigator = useNavigate();
     // 문의사항 목록
     const [data, setData] = useState([]);
+    const [totalData, setTotalData] = useState(0);
 
     // 페이지 네이션 관련 state
-    const [currentPage, setCurrentPage] = useState(1);
-    const InquiryPerPage = 5;
-    const indexOfLastNotice = currentPage * InquiryPerPage;
-    const indexOfFirstNotice = indexOfLastNotice - InquiryPerPage;
-    const currentNotices = data.slice(indexOfFirstNotice, indexOfLastNotice);
+    const inquiryPerPage = 5; // 보여줄 목록 수
+    const pagesPerRange = 5; // 표시할 페이지 수
+
+    // 페이지 네이션 hook 관리
+    const {
+        currentPage,
+        totalPages,
+        startPage,
+        endPage,
+        handlePageChange
+    } = usePagination({
+        totalItems: totalData,
+        itemsPerPage: inquiryPerPage,
+        pagesPerRange
+    });
+
 
     // 검색 단어 State
     const [word, setWord] = useState("");
 
     // comment 입력 페이지로 이동
-    const writeHandle = (event) => {
-        navigator(`/AddInquiryCommentWrite?inquiry_num=${event.target.id}`);
+    const writeHandle = (inquiryNum) => {
+        navigator(`/AddInquiryCommentWrite?inquiry_num=${inquiryNum}`);
         window.scrollTo(0, 0);
     }
     // 목록 조회 API
     const getListAPI = () => {
-        axiosInstance.get(`inquiry/getList`)
+        axiosInstance.get(`inquiry/getList`,{
+            params: {
+                page: currentPage,
+                size: inquiryPerPage,
+                keyword: word
+            }
+        })
             .then((res) => {
-                setData(res.data);
+                setData(res.data.data.content);
+                setTotalData(res.data.data.total_elements);
             })
+            .catch(e => toast.error('목록 조회를 실패하였습니다.'));
     }
 
     // 검색 핸들러
@@ -64,77 +87,59 @@ const AddInquiryComment = () => {
         setWord("");
         getListAPI();
     }
-    // 페이지 변경 핸들러
-    const nextPage = () => {
-        setCurrentPage(currentPage + 1);
-    };
-    // 페이지 변경 핸들러
-    const prevPage = () => {
-        setCurrentPage(currentPage - 1);
-    };
+
 
 
     // 목록 불러오기
     useEffect(() => {
         getListAPI();
-    }, []);
+    }, [currentPage]);
 
     return (
         <div className="inquiry-container">
             <div className="inquiry-box">
 
                 <div className="inquiry-title-box">
-                    <h2>문의하기</h2>
+                    <p>문의하기</p>
                 </div>
 
                 <div className="inquiry-content-box">
-
-                    <div className="inquiry-content-title">
-                        <p style={{width: "7%"}}>번호</p>
-                        <p style={{width: "12%"}}>답변</p>
-                        <p style={{width: "48%"}}>제목</p>
-                        <p style={{width: "13%"}}>글쓴이</p>
-                        <p style={{width: "20%"}}>등록일</p>
-                    </div>
-
                     <div className="inquiry-content-detail">
-                        {data.length === 0 ?
+                        {data?.length === 0 ?
                             <div className="inquiry-notData-box">
                                 <p>목록이 없습니다.</p>
                             </div>
                             :
                             <div className="inquiry-inData-box">
-                                {currentNotices.map((item, index) => (
-                                    item.inquiry_state === 'y' &&
-                                    <div className="inquiry-data-box" key={index}>
-                                        <p style={{width: "7%", textAlign: "center"}}
-                                           className="inquiry_num">{item.inquiry_num}</p>
+                                {data?.map((item, index) => (
+                                    <div className="inquiry-data-box" key={index} onClick={() => writeHandle(item.inquiry_num)}>
+                                        <div className="inquiry-content-high-box">
+                                            {item.inquiry_comment ?
+                                                <p style={{width: "65px", textAlign: "center"}}
+                                                   className='inquiry-comment inquiry-comment-y'>답변완료</p>
+                                                :
+                                                <p style={{width: "65px", textAlign: "center"}}
+                                                   className='inquiry-comment inquiry-comment-n'>미완료</p>
 
-                                        {item.inquiry_comment ?
-                                            <p style={{width: "12%", textAlign: "center"}}
-                                               className='inquiry-comment inquiry-comment-y'>답변완료</p>
-                                            :
-                                            <p style={{width: "12%", textAlign: "center"}}
-                                               className='inquiry-comment inquiry-comment-n'>미완료</p>
+                                            }
+                                            <p
+                                                className="inquiry_title"
+                                                id={item.inquiry_num}
+                                            >
+                                                {item.inquiry_secret === 'y' ? <FaLock/> : <FaLockOpen/>}
+                                                {item.inquiry_title}
 
-                                        }
-                                        <p
-                                            className="inquiry_title"
-                                            onClick={writeHandle}
-                                            id={item.inquiry_num}
-                                        >
-                                            {item.inquiry_secret === 'y' ? <FaLock/> : <FaLockOpen/>}
-                                            {item.inquiry_title}
-
-                                        </p>
-                                        <p style={{textAlign: "center"}}
-                                           className="inquiry_writer">{item.inquiry_writer}</p>
-                                        <p style={{width: "20%", textAlign: "center"}}
-                                           className="inquiry_regdate">{moment(item.inquiry_regdate).format('YY/MM/DD')}</p>
+                                            </p>
+                                        </div>
+                                        <div className="inquiry-content-row-box">
+                                            <p className="inquiry_regdate">{moment(item.inquiry_regdate).format('YYYY. MM. DD')}</p>
+                                            <p className="inquiry_writer">{item.inquiry_writer}</p>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
                         }
+                        <hr style={{border: "0.5px solid #777"}}/>
                     </div>
 
                     <div className="inquiry-search-button-box">
@@ -149,23 +154,19 @@ const AddInquiryComment = () => {
 
                         </div>
 
-
                     </div>
 
 
                 </div>
-                <div className="inquiry-pageNation">
-                    {currentPage === 1 ?
-                        <FaArrowLeft color="gray" size={20}/>
-                        :
-                        <FaArrowLeft onClick={prevPage} size={20}/>
-                    }
-                    {currentPage * InquiryPerPage < data.length ?
-                        <FaArrowRight onClick={nextPage} size={20}/>
-                        :
-                        <FaArrowRight color="gray" size={20}/>
-                    }
-                </div>
+
+                <PageNation
+                    currentPage={currentPage}
+                    startPage={startPage}
+                    endPage={endPage}
+                    totalPages={totalPages}
+                    handlePageChange={handlePageChange}
+                    pagesPerRange={pagesPerRange}
+                />
             </div>
         </div>
     )

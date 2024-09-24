@@ -9,6 +9,7 @@ import {TbSquareRoundedLetterQ} from "react-icons/tb";
 import {FaRegTrashAlt} from "react-icons/fa";
 import { PiChatCircleTextBold } from "react-icons/pi";
 import {toast} from "react-toastify";
+import {BiMessageRounded} from "react-icons/bi";
 
 const InquiryDetail = () => {
     const [data, setData] = useState([]);
@@ -75,15 +76,17 @@ const InquiryDetail = () => {
     }, [data.inquiry_comment]);
 
     return (
-        <div className="inquiry-detail-container">
-            <div className="inquiry-detail-box">
-                <div className="inquiry-detail-title">
+        <div className="inquiry-container">
+            <div className="inquiry-box">
+
+                <div className="inquiry-title-box">
                     <p>문의내역</p>
                 </div>
+
                 <div className="inquiry-detail-content-container">
+
                     <div className="inquiry-detail-info">
                         <div className="inquiry-detail-info-title">
-                            <TbSquareRoundedLetterQ size={35}/>
                             {!data.inquiry_comment ?
                                 <p className="comment-result comment-result-n">답변대기</p> :
                                 <p className="comment-result comment-result-y">답변완료</p>
@@ -92,36 +95,36 @@ const InquiryDetail = () => {
                         </div>
                         <div className="inquiry-detail-info-title2">
                             <p>{data.inquiry_writer} / {moment(data.inquiry_regdate).format('YYYY.MM.DD HH:mm')}</p>
-                            <FaRegTrashAlt size={18} onClick={deleteHandle}/>
+                            <FaRegTrashAlt size={16} onClick={deleteHandle}/>
                         </div>
                     </div>
+
                     <div>
                         <div className="inquiry-detail-content-box">
                             <div dangerouslySetInnerHTML={{__html: data.inquiry_content}}/>
                         </div>
                     </div>
+
                 </div>
+
                 {!data.inquiry_comment ?
                     <div className="inquiry-detail-comment-box">
-                        <PiChatCircleTextBold size={27}/><p>순차적으로 답변 중 입니다. 잠시만 기다려주세요 ! </p>
+                        <BiMessageRounded size={23}/>
+                        <p>순차적으로 답변 중 입니다. 잠시만 기다려주세요 ! </p>
                     </div>
                     :
                     <div className="inquiry-detail-comment-box">
-                        <div className="inquiry-detail-comment-image">
-                            <TbSquareRoundedLetterAFilled size={35}/>
-                        </div>
-                        <div className="inquiry-detail-comment-text">
-                            <textarea
-                                onChange={handleChange}
-                                style={{height: textareaHeight}}
-                                value={data.inquiry_comment}
-                            />
-                        </div>
+                        <BiMessageRounded size={23}/>
+                        <div dangerouslySetInnerHTML={{__html: data.inquiry_comment}}/>
+
                     </div>
+
                 }
+
                 <div className="inquiry-detail-button-box">
-                    <button onClick={listHandle}>목록으로 가기</button>
+                    <button onClick={listHandle}>목록으로</button>
                 </div>
+
             </div>
         </div>
     );

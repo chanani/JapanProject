@@ -3,33 +3,25 @@ import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
-import {TbSquareRoundedLetterAFilled, TbSquareRoundedLetterQ} from "react-icons/tb";
+import { BiMessageRounded } from "react-icons/bi";
 import moment from "moment/moment";
-import {PiChatCircleTextBold} from "react-icons/pi";
+import {Grid} from "@mui/material";
+import EditorWrapper from "../../component/Editor/Editor";
 
 const AddInquiryCommentWrite = () => {
     const [data, setData] = useState([]);
     const [inquiryComment, setInquiryComment] = useState("");
-    const [textareaHeight, setTextareaHeight] = useState('auto');
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const inquiryNum = queryParams.get('inquiry_num');
     const navigator = useNavigate();
-    const handleChange = (event) => {
-        setInquiryComment(event.target.value);
-        setTextareaHeight(`${event.target.scrollHeight}px`);
-    };
 
-
-    // 목록으로 가는 핸들러
-    const listHandle = () => {
-        navigator('/addInquiryComment');
-    }
     // 답글 submit 핸들러
-    const submitHandle = () => {
-        if(!inquiryComment) return toast.error('답글을 남겨주세요.');
+    const submitHandler = () => {
+        if (!inquiryComment) return toast.error('답글을 남겨주세요.');
         addCommentAPI();
     }
+
     // 답글 추가 핸들러
     const addCommentAPI = () => {
         axiosInstance.post('inquiry/addComment', {
@@ -37,7 +29,7 @@ const AddInquiryCommentWrite = () => {
             inquiry_comment: inquiryComment,
         })
             .then((res) => {
-                if(res.status !== 200) return toast.error("답글 작성중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
+                if (res.status !== 200) return toast.error("답글 작성중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
                 toast.success('정상적으로 답글이 등록되었습니다.');
                 getDetails();
             })
@@ -60,27 +52,15 @@ const AddInquiryCommentWrite = () => {
         getDetails();
     }, [inquiryNum]);
 
-    // textarea 크기 조절
-    useEffect(() => {
-        if (data.inquiry_comment) {
-            const textarea = document.querySelector('.inquiry-detail-comment-text > textarea');
-            if (textarea) {
-                textarea.style.height = 'auto';
-                textarea.style.height = `${textarea.scrollHeight}px`;
-            }
-        }
-    }, [data.inquiry_comment]);
-
     return (
-        <div className="inquiry-detail-container">
-            <div className="inquiry-detail-box">
-                <div className="inquiry-detail-title">
+        <div className="inquiry-container">
+            <div className="inquiry-box">
+                <div className="inquiry-title-box">
                     <p>문의내역</p>
                 </div>
                 <div className="inquiry-detail-content-container">
                     <div className="inquiry-detail-info">
                         <div className="inquiry-detail-info-title">
-                            <TbSquareRoundedLetterQ size={35}/>
                             {!data.inquiry_comment ?
                                 <p className="comment-result comment-result-n">답변대기</p> :
                                 <p className="comment-result comment-result-y">답변완료</p>
@@ -98,23 +78,37 @@ const AddInquiryCommentWrite = () => {
                     </div>
                 </div>
 
-                <div className="inquiry-detail-comment-box">
-                    <div className="inquiry-detail-comment-image">
-                        <TbSquareRoundedLetterAFilled size={35}/>
-                    </div>
-                    <div className="inquiry-detail-comment-text">
-                            <textarea
-                                onChange={handleChange}
-                                style={{height: textareaHeight}}
-                                value={inquiryComment ? inquiryComment : ""}
-                            />
-                    </div>
-                </div>
 
-                <div className="inquiry-detail-button-box">
-                    <button onClick={listHandle}>목록으로 가기</button>
-                    <button onClick={submitHandle} className="comment-button">답글 작성하기</button>
-                </div>
+                {data.inquiry_comment ?
+                    <div className="inquiry-detail-comment-box detail-box-margin-bottom">
+                        <BiMessageRounded size={23}/>
+                        <div dangerouslySetInnerHTML={{__html: data.inquiry_comment}}/>
+                    </div>
+                    :
+                    <div className="inquiry-detail-comment-box detail-box-margin-bottom not-comment">
+
+                        <div className="inquiry-write-content-box">
+                            <Grid container sx={{minHeight: "100%", marginTop: "10px"}}
+                                  justifyContent="center"
+                                  flexDirection="column">
+                                <Grid item xs={12} sx={{width: "100%"}}>
+                                    <EditorWrapper
+                                        setEditorContent={setInquiryComment}
+                                        submitHandler={submitHandler}
+                                        historyPath="/addInquiryComment"
+                                    />
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </div>
+                }
+
+
+                {/*<div className="inquiry-detail-button-box">
+                    <button onClick={listHandle}>목록으로</button>
+                    <button onClick={submitHandler} className="comment-button">답글 작성</button>
+                </div>*/}
+
             </div>
         </div>
     );

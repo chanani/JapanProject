@@ -5,6 +5,9 @@ import React, {useContext, useEffect, useState} from "react";
 import {Grid} from '@mui/material';
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {axiosInstance} from "../../api";
+import {toast} from "react-toastify";
+import {Overlap} from "../../hook/Overlap";
+import {useNavigate} from "react-router-dom";
 
 
 const InquiryWrite = () => {
@@ -15,6 +18,8 @@ const InquiryWrite = () => {
     const [inquiryPasswordCheck, setInquiryPasswordCheck] = useState("");
     const [infoCheck, setInfoCheck] = useState(false);
     const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+    const [editorContent, setEditorContent] = useState("");
+    const navigator = useNavigate();
 
     // 로그인한 유저가 접속하였을 경우 정보 가져오는 API
     const getUserAPI = () => {
@@ -35,6 +40,41 @@ const InquiryWrite = () => {
             getUserAPI();
         }
     }, [userRole]);
+
+    // 목록으로 가기
+    const listHandle = () => {
+        navigator("/inquiry");
+        window.scroll(0, 0);
+    }
+    // 글 등록하기 API
+    const inquirySaveAPI = () => {
+        axiosInstance.post("inquiry/insertData", {
+            inquiry_title: inquiryTitle,
+            inquiry_content: editorContent,
+            inquiry_writer: inquiryWriter,
+            inquiry_email: inquiryEmail,
+            inquiry_password: inquiryPassword,
+        })
+            .then((res) => {
+                toast.success("정상적으로 글이 등록되었습니다.");
+                navigator("/inquiry");
+            })
+            .catch(e => toast.error("글 등록 중 에러가 발생하였습니다."))
+    }
+
+    // 글쓰기 핸들러
+    const submitHandler = () => {
+        if (!inquiryTitle) return toast.error("제목을 입력해주세요.");
+        if (!inquiryWriter) return toast.error("작성자를 입력해주세요.");
+        if (!inquiryEmail) return toast.error("이메일을 입력해주세요.");
+        if (!inquiryPassword) return toast.error("비밀번호를 입력해주세요.");
+        if (!inquiryPasswordCheck) return toast.error("비밀번호 확인란을 입력해주세요.");
+        if (!infoCheck) return toast.error("개인정보 수집 및 이용에 동의해주세요.");
+        if (!Overlap("email", inquiryEmail)) return;
+        if (inquiryPassword.length !== 4) return toast.error("비밀번호는 4자리에 맞춰 입력해주세요.");
+        if (inquiryPassword !== inquiryPasswordCheck) return toast.error("비밀번호가 일치하지 않습니다.");
+        inquirySaveAPI();
+    }
 
     return (
         <div className="inquiry-write-container">
@@ -108,13 +148,9 @@ const InquiryWrite = () => {
                           flexDirection="column">
                         <Grid item xs={12} sx={{width: "100%"}}>
                             <EditorWrapper
-                                inquiryTitle={inquiryTitle}
-                                inquiryWriter={inquiryWriter}
-                                inquiryEmail={inquiryEmail}
-                                inquiryPassword={inquiryPassword}
-                                inquiryPasswordCheck={inquiryPasswordCheck}
-                                infoCheck={infoCheck}
-
+                                setEditorContent={setEditorContent}
+                                submitHandler={submitHandler}
+                                historyPath="/inquiry"
                             />
                         </Grid>
                     </Grid>
