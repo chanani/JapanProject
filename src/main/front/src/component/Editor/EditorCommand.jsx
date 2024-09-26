@@ -46,7 +46,6 @@ const EditorCommand = ({setEditorContent, submitHandler, historyPath}) =>{
                     contentEditable={<MuiContentEditable/>}
                     placeholder={<Box sx={placeHolderSx}>내용 입력...</Box>}
                     ErrorBoundary={LexicalErrorBoundary}
-
                 />
                 <OnChangePlugin onChange={onChange}/>
                 <HistoryPlugin />

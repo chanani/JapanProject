@@ -38,8 +38,8 @@ const Mypage = () => {
         if (form[0].trim() === "" || form[1].trim() === "" || form[3].trim() === "" || form[4].trim() === "") {
             return toast.error('모든 항목를 입력하세요.');
         }
-        if(!Overlap("email", form[3])) return;
-        if(!Overlap("phone", form[4])) return;
+        if (!Overlap("email", form[3])) return;
+        if (!Overlap("phone", form[4])) return;
         // 전화번호 유효성
         let check = window.confirm('정말 변경하시겠습니까?');
         if (check) {
@@ -103,18 +103,15 @@ const Mypage = () => {
                     <p>나의 정보 관리</p>
                 </div>
 
+
                 <div className='mypage-content-box'>
                     <div className='mypage-content'>
-                        <div className='name-box'>
-                            <p><label>이름</label></p>
-                            <input type="text"
-                                   placeholder=''
-                                   disabled={!modify}
-                                   value={form[0]}
-                                   className='user_name'
-                                   onChange={changeInfo}
-                            />
+
+                        <div className="mypage-image-box">
+                            <img src="#" alt="이미지"/>
+                            <span>{form[0]}</span>
                         </div>
+
                         <div className='id-box'>
                             <p><label>아이디</label></p>
                             <input type="text"
@@ -126,6 +123,17 @@ const Mypage = () => {
                             />
                         </div>
 
+                        <div className='password-box'>
+                            <p><label>비밀번호</label></p>
+                            <input type="text"
+                                   placeholder='**********'
+                                   className='password'
+                                   disabled={true}
+                            />
+                            <button className="password-change-btn"
+                                    onClick={pwModifyHandle}>변경
+                            </button>
+                        </div>
 
                         <div className='email-box'>
                             <p><label>이메일</label></p>
@@ -150,13 +158,18 @@ const Mypage = () => {
                     </div>
 
                     {!modify ?
-                        <div className="mypage-btn-box">
+                        <div className="mypage-btn-box-on">
                             <button onClick={modifyToggleHandle}>수정하기</button>
-                            <button onClick={pwModifyHandle}>비밀번호 재설정</button>
                             <FindInfo info="pw" find_check={pwModifyCheck} setFind_check={setPwModifyCheck}/>
+                            {!modify &&
+                                <div className="withdrawal-box">
+                                    <p>The Japan을 더 이상 사용하지 않으신가요?</p>
+                                    <input type='button' value='회원탈퇴' onClick={withdrawalHandle}/>
+                                </div>
+                            }
                         </div>
                         :
-                        <div className="mypage-btn-box">
+                        <div className="mypage-btn-box-off">
                             <button onClick={modifySubmit}>변경사항 저장</button>
                             <button onClick={modifyToggleHandle} className="modifyToggleClose">취소</button>
                         </div>
@@ -164,12 +177,7 @@ const Mypage = () => {
 
                 </div>
 
-                {!modify &&
-                <div className="withdrawal-box">
-                    <p>The Japan을 더 이상 사용하지 않으신가요?</p>
-                    <input type='button' value='회원탈퇴' onClick={withdrawalHandle}/>
-                </div>
-                }
+
             </div>
         </div>
     )
