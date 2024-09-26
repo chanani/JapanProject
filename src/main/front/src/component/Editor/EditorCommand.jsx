@@ -41,7 +41,7 @@ const EditorCommand = ({setEditorContent, submitHandler, historyPath}) =>{
         <LexicalComposer initialConfig={lexicalEditorConfig}>
             <LexicalEditorTopBar/>
             <Divider/>
-            <Box sx={{position: "relative", background: "white", paddingTop : "3px"}}>
+            <Box sx={{position: "relative", background: "white", paddingTop : "12px"}}>
                 <RichTextPlugin // #312D4B
                     contentEditable={<MuiContentEditable/>}
                     placeholder={<Box sx={placeHolderSx}>내용 입력...</Box>}

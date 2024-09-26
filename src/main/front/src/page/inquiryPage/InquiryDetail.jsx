@@ -110,7 +110,7 @@ const InquiryDetail = () => {
                 {!data.inquiry_comment ?
                     <div className="inquiry-detail-comment-box">
                         <BiMessageRounded size={23}/>
-                        <p>순차적으로 답변 중 입니다. 잠시만 기다려주세요 ! </p>
+                        <p>순차적으로 답변 중 입니다.</p>
                     </div>
                     :
                     <div className="inquiry-detail-comment-box">
