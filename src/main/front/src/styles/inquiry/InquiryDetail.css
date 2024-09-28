@@ -1,0 +1,147 @@
+.inquiry-detail-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    background-color: #f6f7fb;
+}
+
+.inquiry-detail-box {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.0);
+    background-color: white;
+    padding: 25px 30px 30px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.inquiry-detail-title > p {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    font-family: Sandoll GyeokdongGothic, sans-serif;
+}
+
+.inquiry-detail-content-container {
+    width: 100%;
+}
+
+.inquiry-detail-info {
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.inquiry-detail-info-title {
+    display: flex;
+    align-items: center;
+}
+
+.inquiry-detail-info-title2 {
+    display: flex;
+    align-items: center;
+}
+
+.inquiry-detail-info-title2 > p {
+    padding-top: 5px;
+    color: #6b6b6b;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.inquiry-detail-info-title2 > svg {
+    margin-left: 5px;
+    color: #6b6b6b;
+}
+
+.inquiry-detail-info-title2 > svg:hover {
+    color: #f75757bf;
+}
+.inquiry-title {
+    font-size: 21px;
+    font-weight: 500;
+    padding-top: 3px;
+    word-break: break-word; /* 긴 단어가 있을 경우 줄바꿈 처리 */
+    white-space: normal; /* 텍스트가 줄바꿈 되도록 설정 */
+}
+
+.comment-result {
+    margin: 0 5px 0 0;
+    padding: 4px 5px 2px 5px;
+    font-size: 13px;
+    border-radius: 3px;
+    box-shadow: 0 4px 30px 0 #aec1d033;
+}
+
+.comment-result-y {
+    background-color: #a0d995;
+    color: white;
+}
+.comment-result-n {
+    background-color: #f75757bf;
+    color: white;
+}
+
+.inquiry-detail-content-box {
+    padding: 35px 10px;
+    border-bottom: 1px solid #e7e7e7;
+    margin-bottom: 20px;
+}
+
+.inquiry-detail-comment-box {
+    display: flex;
+    flex-direction: row;
+}
+
+.inquiry-detail-comment-box > svg {
+    margin-right: 5px;
+}
+.inquiry-detail-comment-text {
+    padding: 5px 0 0 5px;
+}
+
+.inquiry-detail-comment-text > textarea {
+    /*font-size: 18px;
+    resize: none;
+    overflow: hidden;
+    border: none;
+    outline: none;*/
+}
+.inquiry-detail-button-box {
+    margin: 40px 0;
+}
+.inquiry-detail-button-box > button {
+    width: 85px;
+    height: 41px;
+    border: 1px solid #d3d3d3;
+    background-color: white;
+    color: #212121;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.inquiry-detail-button-box > button:hover {
+    background-color: #f5f5f5;
+}
+
+/* 반응형 */
+/* 600 까지 */
+@media (max-width: 600px) {
+
+
+
+}
+
+/* 600 이상 */
+@media (min-width: 600px) {
+
+
+}
+
+/* 1000 이상 */
+@media (min-width: 1000px) {
+
+
+
+}

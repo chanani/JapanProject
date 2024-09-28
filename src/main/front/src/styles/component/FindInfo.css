@@ -1,0 +1,184 @@
+.find_background{
+  width: 100vw;
+  height: 100vh;
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #3535359e;
+  z-index: 1000;
+}
+
+.find_box_all {
+  z-index: 3;
+  position:fixed;
+  top: 38%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  height: auto;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+  display: flex;
+  flex-direction: column;
+}
+
+.find_title_box{
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  position: relative;
+}
+
+.find-content-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.find_title_box > p {
+  border-bottom: 1px solid #777;
+  padding-bottom: 14px;
+}
+
+.find_title_box > svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.find_box {
+  margin: 20px 0 5px 0;
+}
+
+.find_input_box {
+  margin: 10px 0 0 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.find_input_box > input {
+  height: 45px;
+  margin-bottom: 5px;
+  padding: 12px 16px;
+  font-size: 15px;
+  border: 1px solid #d9d4d4;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.find-btn-all-box {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.find_btn_box > button {
+  height: 40px;
+  width: 100px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+  background-color: #353535;
+  color: white;
+  font-weight: 500;
+}
+
+.find_btn_box > button:hover{
+  background-color: black;
+}
+
+.find_result_box > button {
+  height: 40px;
+  width: 60px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+  background-color: red;
+  color: white;
+  font-weight: 500;
+}
+
+.find-auth > button{
+  background-color: #4cbc5c;
+}
+
+/* 아이디 확인 페이지*/
+.id_find_content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 233px;
+}
+
+.id_find_title_box {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+  position: relative;
+}
+
+.id_find_title_box > svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.id_find_title_box > p {
+  border-bottom: 1px solid #777;
+  padding-bottom: 14px;
+
+}
+
+/* 비밀번호 재설정 페이지*/
+.pw_find_btn_box {
+  text-align: center;
+
+}
+
+.pw_find_btn_box > button {
+  margin-top: 35px;
+  height: 40px;
+  width: 100px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: none;
+  background-color: #A0D995;
+  color: white;
+  font-weight: 500;
+  transition: 0.3s ease-in-out;
+
+}
+
+.pw_find_btn_box > button:hover {
+  background-color: #4cbc5c;
+}
+.id_find_content > p {
+  font-size: 20px;
+}
+
+
+/* 600 이상 */
+@media(max-width : 500px){
+  .find_box_all{
+    width: 360px;
+  }
+}
+/* 1000 이상 */
+@media(min-width : 500px){
+  .find_box_all{
+    width: 400px;
+  }
+}
+
+/* 1000 이상 */
+@media(min-width : 1000px){
+  .find_box_all{
+    width: 500px;
+  }
+}

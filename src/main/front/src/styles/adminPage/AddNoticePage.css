@@ -1,0 +1,104 @@
+.notice-box-all {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 10px;
+  background-color: #f6f7fb;
+  
+}
+
+.notice-box {
+  border: 1px solid #777;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+  background-color: white;
+  padding: 35px 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.notice-box label {
+  margin-right: 10px;
+}
+.noticePage-title-box {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.notice-title-box {
+  margin: 20px 0;
+}
+
+.notice-title-box > input {
+  border : none;
+  border-bottom: 1px solid #777;
+  font-size: 15px;
+  padding-left: 5px;
+  outline: none;
+}
+.notice-content-box {
+  display: flex;
+}
+
+.notice-content-box > textarea {
+  resize: none;
+  outline: none;
+}
+
+.notice-btn-box {
+  margin-top: 30px;
+}
+
+.notice-btn-box > button {
+  width: 90px;
+  height: 35px;
+  border-radius: 10px;
+  border: none;
+  background-color: #6CC4A1;
+  color: white;
+  font-size: 14px;
+}
+
+
+/* 600 이하 */
+@media(max-width : 600px){
+  .notice-box{
+    width: 268px;
+  }
+  .notice-title-box > input {
+    width: 200px;
+  }
+  .notice-content-box > textarea {
+    width: 200px;
+    height: 100px;
+  }
+}
+
+/* 600 이상 */
+@media(min-width : 600px){
+  .notice-box{
+    width: 468px;
+  }
+  .notice-title-box > input {
+    width: 220px;
+  }
+  .notice-content-box > textarea {
+    width: 220px;
+    height: 150px;
+  }
+}
+ /* 1000 이상 */
+@media(min-width : 1000px){
+  .notice-box{
+    width: 700px;
+  }
+  .notice-title-box > input {
+    width: 250px;
+  }
+  .notice-content-box > textarea {
+    width: 250px;
+    height: 180px;
+  }
+}

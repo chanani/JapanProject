@@ -1,0 +1,160 @@
+CREATE TABLE `user` (
+	`username`	VARCHAR(30)	NOT NULL,
+	`password`	VARCHAR(80)	NOT NULL,
+	`user_name`	VARCHAR(20)	NOT NULL,
+	`user_email`	VARCHAR(30)	NOT NULL,
+	`user_phone`	VARCHAR(30)	NOT NULL,
+	`role`	VARCHAR(20)	NOT NULL,
+	`user_regdate`	TIMESTAMP	NOT NULL	DEFAULT now(),
+    `user_logdate` TIMESTAMP,
+    `user_status` INT DEFAULT 0
+);
+
+CREATE TABLE `word` (
+	`word_num`	INT	NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`word_level`	INT	NOT NULL,
+	`word_meaning`	VARCHAR(20)	NOT NULL,
+	`word_content`	VARCHAR(20)	NOT NULL
+);
+
+CREATE TABLE `favorites` (
+	`favorite_num`	INT	NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`username`	VARCHAR(30)	NOT NULL,
+	`word_num`	INT	NOT NULL,
+	`favorite_regdate`	TIMESTAMP	NOT NULL	DEFAULT now()
+);
+
+CREATE TABLE `record` (
+	`record_num`	INT	NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`username`	VARCHAR(30)	NOT NULL,
+	`record_level`	INT	NOT NULL,
+	`record_date`	TIMESTAMP	NOT NULL	DEFAULT now(),
+	`record_point`	INT	NOT NULL,
+    `record_kind` VARCHAR(30) NOT NULL
+);
+
+CREATE TABLE `record_detail` (
+	`rd_num`	INT	NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`record_num`	INT	NOT NULL,
+    `record_value` VARCHAR(30) NOT NULL,
+	`username`	VARCHAR(30)	NOT NULL,
+	`word_num`	INT	NOT NULL,
+	`rd_check`	VARCHAR(30)	NOT NULL
+);
+
+CREATE TABLE `notice` (
+	`notice_num`	INT	NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	`notice_content`	VARCHAR(500)	NOT NULL,
+	`notice_title`	VARCHAR(30)	NOT NULL,
+	`notice_regdate`	TIMESTAMP	NOT NULL	DEFAULT now()
+);
+
+CREATE TABLE `TheJapen`.`notice_check` (
+  `check_num` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `username` VARCHAR(45) NOT NULL,
+  `notice_num` INT NOT NULL,
+  `check_regdate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP
+  );
+
+CREATE TABLE `TheJapen`.`inquiry` (
+  `inquiry_num` INT NOT NULL AUTO_INCREMENT,
+  `inquiry_title` VARCHAR(100) NOT NULL,
+  `inquiry_content` VARCHAR(1000) NOT NULL,
+  `inquiry_writer` VARCHAR(45) NOT NULL,
+  `inquiry_password` VARCHAR(45) NULL,
+  `inquiry_secret` VARCHAR(1) NOT NULL,
+  `inquiry_comment` VARCHAR(500) NULL,
+  `inquiry_regdate` TIMESTAMP NOT NULL DEFAULT NOW(),
+  `inquiry_comment_regdate` TIMESTAMP NULL,
+  `inquiry_email` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`inquiry_num`)
+);
+
+CREATE TABLE `TheJapen`.`school` (
+  `school_num` INT NOT NULL AUTO_INCREMENT,
+  `school_week` INT NOT NULL,
+  `school_meaning` VARCHAR(45) NOT NULL,
+  `school_content` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`shool_num`));
+
+
+ALTER TABLE `user` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
+	`username`
+);
+
+ALTER TABLE `word` ADD CONSTRAINT `PK_WORD` PRIMARY KEY (
+	`word_num`
+);
+
+ALTER TABLE `favorites` ADD CONSTRAINT `PK_FAVORITES` PRIMARY KEY (
+	`favorite_num`,
+	`username`,
+	`word_num`
+);
+
+ALTER TABLE `record` ADD CONSTRAINT `PK_RECORD` PRIMARY KEY (
+	`record_num`,
+	`username`
+);
+
+ALTER TABLE `record_detail` ADD CONSTRAINT `PK_RECORD_DETAIL` PRIMARY KEY (
+	`rd_num`,
+	`record_num`,
+	`username`,
+	`word_num`
+);
+
+ALTER TABLE `notice` ADD CONSTRAINT `PK_NOTICE` PRIMARY KEY (
+	`notice_num`,
+	`username`
+);
+
+ALTER TABLE `favorites` ADD CONSTRAINT `FK_user_TO_favorites_1` FOREIGN KEY (
+	`username`
+)
+REFERENCES `user` (
+	`username`
+);
+
+ALTER TABLE `favorites` ADD CONSTRAINT `FK_word_TO_favorites_1` FOREIGN KEY (
+	`word_num`
+)
+REFERENCES `word` (
+	`word_num`
+);
+
+ALTER TABLE `record` ADD CONSTRAINT `FK_user_TO_record_1` FOREIGN KEY (
+	`username`
+)
+REFERENCES `user` (
+	`username`
+);
+
+ALTER TABLE `record_detail` ADD CONSTRAINT `FK_record_TO_record_detail_1` FOREIGN KEY (
+	`record_num`
+)
+REFERENCES `record` (
+	`record_num`
+);
+
+ALTER TABLE `record_detail` ADD CONSTRAINT `FK_record_TO_record_detail_2` FOREIGN KEY (
+	`username`
+)
+REFERENCES `record` (
+	`username`
+);
+
+ALTER TABLE `record_detail` ADD CONSTRAINT `FK_word_TO_record_detail_1` FOREIGN KEY (
+	`word_num`
+)
+REFERENCES `word` (
+	`word_num`
+);
+
+ALTER TABLE `notice` ADD CONSTRAINT `FK_user_TO_notice_1` FOREIGN KEY (
+	`username`
+)
+REFERENCES `user` (
+	`username`
+);
+

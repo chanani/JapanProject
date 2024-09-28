@@ -1,0 +1,70 @@
+.notice-detail-box-all {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000078;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.notice-detail-box {
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.0);
+}
+
+.notice-detail-title {
+    padding: 10px 10px;
+    background-color: #A0D995;
+    color: white;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+}
+
+.notice-detail-content {
+    padding: 20px 10px;
+}
+
+.notice-detail-content > textarea {
+    resize: none;
+    outline: none;
+    border: none;
+    overflow:hidden;
+}
+
+.notice-detail-out {
+    position: absolute;
+    top: 8px;
+    right: 5px;
+}
+
+.notice-detail-out > svg:hover {
+  color: #6CC4A1;
+}
+
+/* 600 까지 */
+@media (max-width: 600px) {
+    .notice-detail-box {
+        width: 330px;
+        height: 330px;
+    }
+    .notice-detail-content > textarea {
+        width: 300px;
+    }
+}
+
+/* 600 이상 */
+@media (min-width: 600px) {
+    .notice-detail-box {
+        width: 500px;
+        height: 330px;
+    }
+    .notice-detail-content > textarea {
+        width: 460px;
+    }
+}
+
