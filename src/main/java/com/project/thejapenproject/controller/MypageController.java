@@ -16,13 +16,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
 
-@Controller
+@RestController
 @RequestMapping("/mypage")
 @RequiredArgsConstructor
 public class MypageController {
@@ -187,6 +190,29 @@ public class MypageController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @NoneAuth
+    @PostMapping("/image-change")
+    public ResponseData userImageChange(@RequestParam("file") MultipartFile file,
+                                        @RequestParam("username") String username) throws IOException {
+        String fileName = file.getOriginalFilename();
+        String filePath = "/opt/thejapan/user/icon/" + fileName;
+
+        try {
+            File dest = new File(filePath);
+            file.transferTo(dest);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        mypageService.userImageChange(fileName, username);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message(ErrorCode.SUCCESS.getMessage())
+                .data("/images/" + fileName)
+                .build();
     }
 
 }

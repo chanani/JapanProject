@@ -14,4 +14,7 @@ public interface MypageService {
     public int deleteRecord(int record_num);
     public ArrayList<WordVO> getSchoolList(int school_week);
     public ArrayList getWeekList();
+
+    // 프로필 이미지 수정
+    public void userImageChange(String fileName, String username);
 }

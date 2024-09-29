@@ -12,14 +12,16 @@ const Mypage = () => {
     const navigate = useNavigate();
     const {userRole, username} = useContext(tokenInfoContext);
     const [modify, setModify] = useState(false);
-    const [form, setForm] = useState(["", "", "", "", "", ""]);
+    const [form, setForm] = useState(["", "", "", "", "", "", ""]);
     const [pwModifyCheck, setPwModifyCheck] = useState("");
     const [modifyIcon, setModifyIcon] = useState("");
+
     // 수정하기 활성화
     const modifyToggleHandle = (event) => {
         setModify(current => !current);
         if (event.target.className === 'modifyToggleClose') getData();
     }
+
     // 정보 수정하기
     const changeInfo = (event) => {
         let eventName = event.target.className;
@@ -47,6 +49,7 @@ const Mypage = () => {
             setModify(current => !current);
         }
     }
+
     // 데이터 호출 API
     const getData = () => {
         axiosInstance.get('mypage/data', {
@@ -55,11 +58,15 @@ const Mypage = () => {
             }
         })
             .then((res) => {
-                let arr = [res.data.user_name, res.data.username, "", res.data.user_email, res.data.user_phone, ""];
+                let arr = [res.data.user_name, res.data.username, "", res.data.user_email, res.data.user_phone, "", res.data.image_path];
                 setForm(arr);
+                console.log("res.data", res.data);
+                console.log("icon path ", res.data.image_path);
+
             })
             .catch(e => "catch : " + e)
     }
+
     // 데이터 변경 API
     const modifyData = () => {
         axiosInstance.post('mypage/update', {
@@ -76,17 +83,41 @@ const Mypage = () => {
             })
             .catch(e => toast.error('정보 수정 중 오류가 발생하였습니다. 관리자에게 문의해주세요.'));
     }
+
     // 비밀번호 찾기 핸들러
     const pwModifyHandle = () => {
         setPwModifyCheck("PW");
     }
+
     // 탈퇴 페이지로 이동
     const withdrawalHandle = () => {
         navigate('/withdrawal');
     }
+
+    // 이미지 변경 API
+    const imageChangeAPI = (formData) => {
+        axiosInstance.post('mypage/image-change', formData, {
+            headers: {'content-type': 'multipart/form-data'}
+        })
+            .then((res) => {
+                console.log(res.data.data);
+                setModify(res.data.data);
+                toast.success("이미지를 변경하였습니다.")
+            })
+            .catch(toast.error("이미지 변경 중 오류가 발생하였습니다."))
+    }
+
+
     // 대표 이미지 변경 핸들러
-    const userIconChangeHandle = () => {
-        console.log(11);
+    const userIconChangeHandle = (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("username", username);
+
+        // API 호출
+        imageChangeAPI(formData);
     }
 
     // 페이지 권한 및 데이터 호출
@@ -113,12 +144,19 @@ const Mypage = () => {
                     <div className='mypage-content'>
 
                         <div className="mypage-image-box">
-                            {/*<img src="/opt/thejapan/user/icon/default_icon.png" alt="이미지"/>*/}
-                            <img className="user-icon" src="123.jpeg" alt="이미지"/>
+                            <img className="user-icon"
+                                 src={modifyIcon ? modifyIcon : "/icon-image/default_icon.png"}
+                                 alt="이미지"/>
+                            <img src="http://lg.thejapan.today/opt/thejapan/user/icon/default_icon.png" alt="이미지"/>
+                            <img className="user-icon" src={`"https://lg.thejapan.today/opt/thejapan/user/icon/default_icon.png`} alt="이미지"/>
                             <label className="user-icon-modify-btn"
-                            htmlFor="icon-file"><CiCamera size={30}/></label>
+                                   htmlFor="icon-file"><CiCamera size={30}/></label>
                             <span>{form[0]}</span>
-                            <input id="icon-file" type="file" style={{display : 'none'}} />
+                            <input id="icon-file"
+                                   type="file"
+                                   style={{display: 'none'}}
+                                   onChange={userIconChangeHandle}
+                            />
                         </div>
 
                         <div className='id-box'>

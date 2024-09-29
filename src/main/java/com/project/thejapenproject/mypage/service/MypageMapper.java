@@ -18,4 +18,10 @@ public interface MypageMapper {
     public ArrayList<WordVO> getSchoolList(int word_week);
     public ArrayList getWeekList();
 
+    // 프로필 이미지 수정을 위해 삭제
+    public int userImageRemove(@Param("username") String username);
+
+    // 프로필 이미지 수정
+    public int userImageChange(@Param("fileName") String fileName, @Param("username") String username);
+
 }

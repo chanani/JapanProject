@@ -45,7 +45,10 @@ public enum ErrorCode {
     REFRESH_TOKEN_WRONG(HttpStatus.FORBIDDEN, "Refresh Token이 토큰이 잘못되었습니다. (해킹)"),
 
     // 프로세스 오류
-    NOT_FOUND_USER_INFO_BY_THIS_PHONE_NUMBER(HttpStatus.FORBIDDEN, "해당 핸드폰번호로 가입된 유저의 정보를 찾을 수 없습니다.");
+    NOT_FOUND_USER_INFO_BY_THIS_PHONE_NUMBER(HttpStatus.FORBIDDEN, "해당 핸드폰번호로 가입된 유저의 정보를 찾을 수 없습니다."),
+
+    // 프로필 이미지 수정
+    FAIL_TO_IMAGE(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 수정에 실패하였습니다.");
 
     private final HttpStatus errorCode;
     private final String message;

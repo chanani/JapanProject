@@ -4,13 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.project.thejapenproject.mypage.service.MypageMapper">
+
+    <!-- 마이페이지에 유저 정보 가져오기 -->
     <select id="myInfo" resultType="UserVO">
-        SELECT username,
-               user_name,
-               user_email,
-               user_phone
-        FROM user
-        WHERE username = #{username}
+        SELECT U.username,
+               U.user_name,
+               U.user_email,
+               U.user_phone,
+               I.image_path
+        FROM user U
+                 LEFT JOIN image I
+                           ON U.username = I.username
+                               AND I.state = 0
+        WHERE U.username = #{username}
     </select>
 
     <update id="modifyInfo" parameterType="UserVO">
@@ -68,6 +74,29 @@
     <select id="getWeekList" resultType="int">
         select distinct word_week from word order by word_week asc
     </select>
+
+    <update id="userImageRemove">
+        UPDATE image
+        SET state = 1
+        WHERE image_type = 'user-profile'
+          AND username = #{username}
+          AND state = 0
+    </update>
+
+    <!-- 프로필 이미지 수정 -->
+    <insert id="userImageChange" >
+        INSERT INTO image (image_path,
+                           image_type,
+                           username,
+                           created_at,
+                           created_by)
+        VALUES (#{fileName},
+                'user-profile',
+                #{username},
+                now(),
+                'admin')
+    </insert>
+
 
     <resultMap id="recordDetailsResultMap" type="RecordDetailsVO">
         <id property="rd_num" column="rd_num"/>

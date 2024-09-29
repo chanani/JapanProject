@@ -19,6 +19,12 @@ public class WebConfig implements WebMvcConfigurer{
     public static final String ALLOWED_METHOD_NAMES = "GET,HEAD,POST,PUT,DELETE,TRACE,OPTIONS,PATCH";
 
     @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/icon-image/**")
+                .addResourceLocations("file:/opt/thejapan/user/icon/"); // 실제 파일 저장 경로
+    }
+
+    @Override
     public void addCorsMappings(final CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000", "https://lg.thejapan.today", "https://lg.thejapan.today:443",
@@ -29,6 +35,8 @@ public class WebConfig implements WebMvcConfigurer{
                 .maxAge(3000)
                 .allowedMethods(ALLOWED_METHOD_NAMES.split(","));
     }
+
+
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

@@ -1,6 +1,8 @@
 package com.project.thejapenproject.mypage.service;
 
 import com.project.thejapenproject.command.*;
+import com.project.thejapenproject.command.exception.OperationErrorException;
+import com.project.thejapenproject.command.exception.code.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,6 +56,17 @@ public class MypageServiceImpl implements MypageService{
     @Override
     public ArrayList getWeekList() {
         return mypageMapper.getWeekList();
+    }
+
+    // 프로필 이미지 수정
+    @Override
+    public void userImageChange(String fileName, String username) {
+        // 기존 이미지 삭제
+        mypageMapper.userImageRemove(username);
+        // 새로운 이미지 등록
+        if(mypageMapper.userImageChange(fileName, username) < 1){
+            throw new OperationErrorException(ErrorCode.FAIL_TO_IMAGE);
+        }
     }
 
 

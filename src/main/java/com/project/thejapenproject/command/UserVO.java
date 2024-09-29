@@ -21,5 +21,7 @@ public class UserVO {
     private Timestamp user_regdate;
     private Timestamp user_logdate;
 
+    private String image_path;
+
 
 }
