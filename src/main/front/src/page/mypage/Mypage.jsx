@@ -116,10 +116,9 @@ const Mypage = () => {
                             {/*<img src="/opt/thejapan/user/icon/default_icon.png" alt="이미지"/>*/}
                             <img className="user-icon" src="123.jpeg" alt="이미지"/>
                             <label className="user-icon-modify-btn"
-
-                            form="icon-file"><CiCamera size={30}/></label>
+                            htmlFor="icon-file"><CiCamera size={30}/></label>
                             <span>{form[0]}</span>
-                            <input id="icon-file" type="file" />
+                            <input id="icon-file" type="file" style={{display : 'none'}} />
                         </div>
 
                         <div className='id-box'>
