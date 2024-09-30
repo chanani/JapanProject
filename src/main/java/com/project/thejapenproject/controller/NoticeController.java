@@ -68,4 +68,7 @@ public class NoticeController {
                 .data(noticeDetail)
                 .build();
     }
+
+
+
 }

@@ -14,7 +14,7 @@ const Mypage = () => {
     const [modify, setModify] = useState(false);
     const [form, setForm] = useState(["", "", "", "", "", "", ""]);
     const [pwModifyCheck, setPwModifyCheck] = useState("");
-    const [modifyIcon, setModifyIcon] = useState("");
+    const [userIcon, setUserIcon] = useState("");
 
     // 수정하기 활성화
     const modifyToggleHandle = (event) => {
@@ -60,9 +60,7 @@ const Mypage = () => {
             .then((res) => {
                 let arr = [res.data.user_name, res.data.username, "", res.data.user_email, res.data.user_phone, "", res.data.image_path];
                 setForm(arr);
-                console.log("res.data", res.data);
-                console.log("icon path ", res.data.image_path);
-
+                setUserIcon(res.data.image_path);
             })
             .catch(e => "catch : " + e)
     }
@@ -100,11 +98,10 @@ const Mypage = () => {
             headers: {'content-type': 'multipart/form-data'}
         })
             .then((res) => {
-                console.log(res.data.data);
-                setModify(res.data.data);
+                setUserIcon(res.data.data);
                 toast.success("이미지를 변경하였습니다.")
             })
-            .catch(toast.error("이미지 변경 중 오류가 발생하였습니다."))
+            .catch((e) => toast.error("이미지 변경 중 오류가 발생하였습니다."))
     }
 
 
@@ -144,11 +141,27 @@ const Mypage = () => {
                     <div className='mypage-content'>
 
                         <div className="mypage-image-box">
-                            <img className="user-icon"
-                                 src={modifyIcon ? modifyIcon : "/icon-image/default_icon.png"}
-                                 alt="이미지"/>
-                            <img src="http://lg.thejapan.today/opt/thejapan/user/icon/default_icon.png" alt="이미지"/>
-                            <img className="user-icon" src={`"https://lg.thejapan.today/opt/thejapan/user/icon/default_icon.png`} alt="이미지"/>
+                            {/* 서버  이미지 */}
+                            <img
+                                className="user-icon"
+                                src={userIcon ? `/icon-image/${userIcon}` : "/default_icon.svg"}
+                                alt="이미지"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "/default_icon.svg";
+                                }}
+                            />
+
+                            {/* 로컬 이미지 */}
+                            {/*<img
+                                className="user-icon"
+                                src={userIcon ? `https://lg.thejapan.today/icon-image/${userIcon}` : "/default_icon.svg"}
+                                alt="이미지"
+                                onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "/default_icon.svg";
+                                }}
+                            />*/}
                             <label className="user-icon-modify-btn"
                                    htmlFor="icon-file"><CiCamera size={30}/></label>
                             <span>{form[0]}</span>

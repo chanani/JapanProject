@@ -1,15 +1,14 @@
 package com.project.thejapenproject.controller;
 
-import com.project.thejapenproject.command.RequestUserLogin;
-import com.project.thejapenproject.command.ResponseData;
-import com.project.thejapenproject.command.UserAccessToken;
-import com.project.thejapenproject.command.UserVO;
+import com.project.thejapenproject.command.*;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.jwt.SHA512;
 import com.project.thejapenproject.common.jwt.service.AuthService;
+import com.project.thejapenproject.notice.vo.GetNoticeDetailResVO;
+import com.project.thejapenproject.notice.vo.param.GetNoticeDetailReqVO;
 import com.project.thejapenproject.user.service.UserService;
 import com.project.thejapenproject.utils.MailSend;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.util.StringUtils;
 
+import javax.validation.Valid;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
@@ -53,6 +53,8 @@ public class MainController {
             throw new RequestParameterException(ErrorCode.DO_NOT_USER_MATCHING);
         }
     }
+
+
 
     @NoneCheckToken
     @PostMapping("/logout")
@@ -178,5 +180,15 @@ public class MainController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not changed password");
         }
+    }
+
+    @PostMapping("/user-icon")
+    public ResponseData getNoticeDetail(@Valid @RequestBody GetUserIconReqVO getUserIconReqVO){
+        String image_path = userService.getUserIcon(getUserIconReqVO);
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message(ErrorCode.SUCCESS.getMessage())
+                .data(image_path)
+                .build();
     }
 }

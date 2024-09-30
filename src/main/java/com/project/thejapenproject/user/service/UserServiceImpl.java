@@ -1,5 +1,6 @@
 package com.project.thejapenproject.user.service;
 
+import com.project.thejapenproject.command.GetUserIconReqVO;
 import com.project.thejapenproject.command.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,11 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean checkPhone(String user_phone) {
         return usermapper.checkPhone(user_phone);
+    }
+
+    @Override
+    public String getUserIcon(GetUserIconReqVO getUserIconReqVO) {
+        return usermapper.getUserIcon(getUserIconReqVO);
     }
 
 }

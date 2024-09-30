@@ -5,22 +5,16 @@ import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
-import com.project.thejapenproject.common.jwt.SHA512;
 import com.project.thejapenproject.mypage.service.MypageService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Objects;
@@ -211,7 +205,7 @@ public class MypageController {
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
                 .message(ErrorCode.SUCCESS.getMessage())
-                .data("/images/" + fileName)
+                .data(fileName)
                 .build();
     }
 

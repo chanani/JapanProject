@@ -17,13 +17,13 @@ function Header() {
     const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
     const cookie = new Cookies();
 
-    const [isVisible, setIsVisible] = useState(false);
     const alarmRef = useRef(false);
     const [alarm, setAlarm] = useState(alarmRef.current);
     const [alarmOpen, setAlarmOpen] = useState(false);
     const [noCheckList, setNoCheckList] = useState([]); // 확인하지 않은 알람 목록
     const [openSide, setOpenSide] = useState(false); // 모바일 사이드바
     const [openCategory, setOpenCategory] = useState(Array(5).fill(false)); // 각 카테고리의 상태
+    const [userIcon, setUserIcon] = useState("");
 
 
     // 학습페이지 Link list
@@ -93,6 +93,15 @@ function Header() {
             .catch((e) => toast.error("로그아웃 중 오류가 발생하였습니다."))
 
     }
+    // 이미지 불러오는 핸들러
+    const userIconHandler = () => {
+        axiosInstance.post('/user-icon', {username: username})
+            .then((res) => {
+                console.log(res);
+                setUserIcon(res.data.data);
+            })
+            .catch((e) => toast.error("이미지 불러오는 중 오류가 발생하였습니다."));
+    }
     // 회원가입 페이지 핸들러
     const handleJoin = () => {
         navigate("/join");
@@ -101,9 +110,35 @@ function Header() {
     const handlehome = () => {
         navigate("/");
     }
-    useEffect(() => {
-        setIsVisible(true);
-    }, []);
+
+    // userIcon 태그
+    const userIconDiv = () => {
+        if(process.env.REACT_APP_URL_JAVA === 'http://localhost:8889/') {
+            return <img
+                className="header-user-icon"
+                src={userIcon ? `https://lg.thejapan.today/icon-image/${userIcon}` : "/default_icon.svg"}
+                alt="이미지"
+                onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/default_icon.svg";
+                }}
+            />
+        } else {
+            return <img
+                className="header-user-icon"
+                src={userIcon ? `/icon-image/${userIcon}` : "/default_icon.svg"}
+                alt="이미지"
+                onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/default_icon.svg";
+                }}
+            />
+        }
+
+
+    }
+
+
     // 알람 SSE Connection
     useEffect(() => {
         /*let eventSource;
@@ -130,6 +165,11 @@ function Header() {
         getNoticeList()
     }, [alarm, username]);
 
+    // 유저 이미지 불러오기
+    useEffect(() => {
+        if (userRole != 'none') userIconHandler();
+    }, [])
+
     // if (window.location.pathname === '/login' || window.location.pathname === "/join") return null;
 
     return (
@@ -145,36 +185,36 @@ function Header() {
                 </div>
                 {userRole !== 'role_admin' ?
                     (<div className="header-category-box">
-                    {['학습', '테스트', '기타페이지', '고객지원'].map((title, index) => {
-                        let links;
-                        switch (index) {
-                            case 0:
-                                links = studyLink;
-                                break;
-                            case 1:
-                                links = testLink;
-                                break;
-                            case 2:
-                                links = otherLink;
-                                break;
-                            case 3:
-                                links = customerLink;
-                                break;
-                            default:
-                                links = [];
-                        }
-                        return (
-                            <div key={index}>
-                                <p>{title}<MdOutlineKeyboardArrowDown/></p>
-                                <div className="header-category-detail">
-                                    {links.map((item, i) => (
-                                        <Link key={i} to={item[0]} >{item[1]}</Link>
-                                    ))}
+                        {['학습', '테스트', '기타페이지', '고객지원'].map((title, index) => {
+                            let links;
+                            switch (index) {
+                                case 0:
+                                    links = studyLink;
+                                    break;
+                                case 1:
+                                    links = testLink;
+                                    break;
+                                case 2:
+                                    links = otherLink;
+                                    break;
+                                case 3:
+                                    links = customerLink;
+                                    break;
+                                default:
+                                    links = [];
+                            }
+                            return (
+                                <div key={index}>
+                                    <p>{title}<MdOutlineKeyboardArrowDown/></p>
+                                    <div className="header-category-detail">
+                                        {links.map((item, i) => (
+                                            <Link key={i} to={item[0]}>{item[1]}</Link>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        );
-                    })}
-                </div>) :
+                            );
+                        })}
+                    </div>) :
                     (<div className="header-category-box">
                         {['학습', '테스트', '기타페이지', '고객지원', '관리자'].map((title, index) => {
                             let links;
@@ -202,7 +242,7 @@ function Header() {
                                     <p>{title}<MdOutlineKeyboardArrowDown/></p>
                                     <div className="header-category-detail">
                                         {links.map((item, i) => (
-                                            <Link key={i} to={item[0]} >{item[1]}</Link>
+                                            <Link key={i} to={item[0]}>{item[1]}</Link>
                                         ))}
                                     </div>
                                 </div>
@@ -219,8 +259,8 @@ function Header() {
                     :
                     <div className="header-category-box">
                         <div className="header-category-box no-margin">
-                            <div>
-                                <p>My</p>
+                            <div className="header-user-icon-box">
+                                {userIconDiv()}
                                 <div className="header-category-detail mypage-detail">
                                     {myLink.map((item, i) => (
                                         <Link key={i} to={item[0]}>{item[1]}</Link>
@@ -240,8 +280,8 @@ function Header() {
                 :
                 <div className="header-category-box show-box">
                     <div className="header-category-box show-box">
-                        <div>
-                            <p>My</p>
+                        <div className="header-user-icon-box">
+                            {userIconDiv()}
                             <div className="header-category-detail mypage-detail mobile-detail">
                                 {myLink.map((item, i) => (
                                     <Link key={i} to={item[0]}>{item[1]}</Link>
@@ -297,11 +337,13 @@ function Header() {
                             <button className="mobile-login-btn" onClick={() => {
                                 handleLogin();
                                 setOpenSide(false);
-                            }}>로그인</button>
+                            }}>로그인
+                            </button>
                             <button className="mobile-join-btn" onClick={() => {
                                 handleJoin();
                                 setOpenSide(false);
-                            }}>회원가입</button>
+                            }}>회원가입
+                            </button>
                         </div> :
                         <div>
                             <div className="mobile-size-title-box" onClick={() => handleCategoryToggle(5)}>
@@ -318,7 +360,8 @@ function Header() {
                                 <button className="mobile-join-btn" onClick={() => {
                                     handleLogout();
                                     setOpenSide(false);
-                                }} >로그아웃</button>
+                                }}>로그아웃
+                                </button>
                             </div>
                         </div>
 

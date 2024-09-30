@@ -1,5 +1,6 @@
 package com.project.thejapenproject.user.service;
 
+import com.project.thejapenproject.command.GetUserIconReqVO;
 import com.project.thejapenproject.command.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -21,6 +22,9 @@ public interface UserMapper {
     public boolean checkId(String username);
     public boolean checkEmail(String user_email);
     public boolean checkPhone(String user_phone);
+
+    // user image 조회
+    public String getUserIcon(GetUserIconReqVO getUserIconReqVO);
 
 
 

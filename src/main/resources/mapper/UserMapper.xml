@@ -63,4 +63,13 @@
         update user set password = (#{password})
         where user_email = #{email}
     </update>
+
+    <select id="getUserIcon"
+            parameterType="com.project.thejapenproject.command.GetUserIconReqVO">
+        SELECT I.image_path
+        FROM user U
+                 LEFT JOIN
+             image I ON U.username = I.username AND I.state = 0
+        WHERE U.username = #{username}
+    </select>
 </mapper>

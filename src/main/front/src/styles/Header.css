@@ -55,7 +55,7 @@ header .left-menu {
     margin-left: 3px;
 }
 
-.header-category-box > div > p:hover + .header-category-detail {
+.header-category-box > div > img:hover + .header-category-detail {
     opacity: 1;
     pointer-events: auto; /* 활성화된 상태에서만 클릭 허용 */
 }
@@ -253,6 +253,14 @@ header .left-menu {
     padding: 20px;
 }
 
+
+/* header user icon */
+.header-user-icon-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* 500 이하 */
 @media (max-width: 500px) {
     body {
@@ -281,6 +289,8 @@ header .left-menu {
         display: none;
     }
 
+
+
     .mobile-side-bar > .mobile-size-bar-category {
         width: 65%;
 
@@ -295,10 +305,16 @@ header .left-menu {
     }
 
     .header-category-box > div > .mypage-detail {
-        left: -145px;
+        left: -133px;
+        top: 30px;
     }
     .header-category-box > div > p {
         margin: 0;
+    }
+    .header-user-icon{
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
     }
 }
 
@@ -345,12 +361,19 @@ header .left-menu {
     }
 
     .header-category-box > div > .mypage-detail {
-        left: -145px;
+        left: -114px;
+        top: 47px;
     }
     .header-category-box > div > p {
         margin: 0;
     }
+    .header-user-icon{
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
 }
+
 
 /* 1000 이상 */
 @media (min-width: 1000px) {
@@ -388,5 +411,11 @@ header .left-menu {
     .no-margin > div > p {
         margin: 0;
     }
+    .header-user-icon{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+    }
 }
+
 
