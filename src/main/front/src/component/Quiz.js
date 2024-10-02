@@ -19,7 +19,7 @@ const Quiz = ({level, num, arr}) => {
     const [current, setCurrent] = useState(0);
     const [meaning, setMeaning] = useState(false);
     const [play, setPlay] = useState(false);
-    const {userRole, username, accessToken, refreshTokne} = useContext(tokenInfoContext);
+    const {userRole, username} = useContext(tokenInfoContext);
 
     // 단위 뒤집는 핸들러
     const handleMeaning = () => {
@@ -35,7 +35,7 @@ const Quiz = ({level, num, arr}) => {
         else {
             setWord(prevWord => {
                 const newWord = [...prevWord];
-                newWord[current].word_favorite = !newWord[current].word_favorite;
+                newWord[current].wordFavorite = !newWord[current].wordFavorite;
                 return newWord;
             });
             changeFavorite();
@@ -43,7 +43,7 @@ const Quiz = ({level, num, arr}) => {
     }
     // 즐겨 찾기 백엔드로 전달
     const changeFavorite = () => {
-        axiosInstance.get(`study/addFavorite/${word[current].word_num}/${!word[current].word_favorite}/${username}`)
+        axiosInstance.get(`study/addFavorite/${word[current].wordNum}/${!word[current].wordFavorite}/${username}`)
             .catch((e) => toast.error('데이터를 저장하는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.'))
     }
     // +1 핸들러
@@ -87,8 +87,7 @@ const Quiz = ({level, num, arr}) => {
         else {
             axiosInstance(`study/data/${level}/${num}/${username}`)
                 .then((res) => {
-                    console.log(res.data)
-                    setWord(res.data)
+                    setWord(res.data);
                 })
                 .catch((e) => toast.error('데이터를 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.'));
         }
@@ -98,20 +97,20 @@ const Quiz = ({level, num, arr}) => {
         <div className='study-on-box'>
             <div className='on-header-box'>
 
-                {word.length > 0 && current >= 0 && word[current].word_favorite === false ?
+                {word.length > 0 && current >= 0 && word[current].wordFavorite === false ?
                     <FaRegStar size={21} onClick={handleStar}/>
                     :
                     <FaStar size={21} onClick={handleStar}/>}
 
-                {meaning ? "" : <Audio inputData={word[current]?.word_content}/>}
+                {meaning ? "" : <Audio inputData={word[current]?.wordContent}/>}
 
 
             </div>
             <div className='on-word-box' onClick={handleMeaning}>
-                {meaning ? word[current]?.word_meaning :
-                    word[current]?.word_chinese === null || word[current]?.word_chinese === '' ?
+                {meaning ? word[current]?.wordMeaning :
+                    word[current]?.wordChinese === null || word[current]?.wordChinese === '' ?
                         <div>
-                            <p>{word[current]?.word_content}</p>
+                            <p>{word[current]?.wordContent}</p>
                         </div>
                         :
                         <div style={{
@@ -120,8 +119,8 @@ const Quiz = ({level, num, arr}) => {
                             alignItems: "center",
                             flexDirection: "column"
                         }}>
-                            <p style={{fontSize: "20px"}}>{word[current]?.word_content}</p>
-                            <p>{word[current]?.word_chinese}</p>
+                            <p style={{fontSize: "20px"}}>{word[current]?.wordContent}</p>
+                            <p>{word[current]?.wordChinese}</p>
                         </div>
 
                 }
