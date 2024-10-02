@@ -32,8 +32,6 @@ const NoticePage = () => {
         pagesPerRange
     });
 
-    // 공지사항 내용의 길이가 페이지 너비 초과할 경우 ...으로 표시
-    const truncate = (str, n) => (str?.length > n ? str.substr(0, n - 1) + "..." : str);
 
     // 등록한지 3일 전일 경우 new 표시될 수 있도록
     const isWithinOneDay = (date) => moment(date).isAfter(moment().subtract(3, 'days'));
@@ -49,7 +47,7 @@ const NoticePage = () => {
                     }
                 });
                 setNotices(res.data.data.content);
-                setTotalNotices(res.data.data.total_elements); // 전체 공지사항 개수 설정
+                setTotalNotices(res.data.data.totalElements); // 전체 공지사항 개수 설정
             } catch (error) {
                 toast.error('목록을 불러오는 중 오류가 발생하였습니다.');
             }
@@ -60,11 +58,11 @@ const NoticePage = () => {
     // 공지사항 상세 조회
     const handleDetail = (item) => {
         if (username) {
-            axiosInstance.get(`/notice/noticeCheck/${item.notice_num}/${username}`)
+            axiosInstance.get(`/notice/noticeCheck/${item.noticeNum}/${username}`)
                 .catch(() => toast.error('조회가 정상적으로 이루어지지 않았습니다.'));
         }
         navigate(`/notice-detail`, {
-            state: {noticeDetailNo: item.notice_num}
+            state: {noticeDetailNo: item.noticeNum}
         })
     };
 
@@ -76,16 +74,16 @@ const NoticePage = () => {
                 </div>
 
                 <div className="user-notice-detail-box">
-                    {notices.map((item, index) => (
-                        <div className="user-notice-content-box" key={item.notice_num}
+                    {notices?.map((item, index) => (
+                        <div className="user-notice-content-box" key={item.noticeNum}
                              onClick={() => handleDetail(item)}>
                             <div className="notice-content-high">
                                 <p style={{marginRight: "5px", fontWeight: "700"}}>[공지사항]</p>
-                                <p className="content-box-p-tag">{item.notice_title}</p>
-                                {isWithinOneDay(item.notice_regdate) && <TbCircleLetterN color="red"/>}
+                                <p className="content-box-p-tag">{item.noticeTitle}</p>
+                                {isWithinOneDay(item.noticeRegdate) && <TbCircleLetterN color="red"/>}
                             </div>
                             <div className="notice-content-row">
-                                <p>{moment(item.notice_regdate).format('YYYY. MM. DD')}</p>
+                                <p>{moment(item.noticeRegdate).format('YYYY. MM. DD')}</p>
                             </div>
                         </div>
                     ))}

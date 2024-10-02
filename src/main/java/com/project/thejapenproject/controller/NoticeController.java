@@ -25,7 +25,11 @@ public class NoticeController {
 
     private final NoticeService noticeService;
 
-    // 공지사항 전체 목록 조회
+    /**
+     * 공지사항 목록 조회 API
+     * @param getListReqVO
+     * @return
+     */
     @NoneAuth
     @GetMapping("/getList")
     public ResponseData getList(@Valid @ModelAttribute GetListReqVO getListReqVO) {
@@ -40,16 +44,22 @@ public class NoticeController {
                 .build();
     }
 
-    // 목록 조회
+    /**
+     * 알람에 공지사항 목록 조회 API
+     * @param username
+     * @return
+     */
     @GetMapping("/alarmList/{username}")
     public ResponseEntity<ArrayList<NoticeVO>> alarmList(@PathVariable("username") String username) {
         return ResponseEntity.ok(noticeService.alarmList(username));
     }
 
-    // 공지사항 알람 리스트 조회
+    /**
+     * 공지사항 알람 리스트 조회 API
+     */
     @NoneAuth
-    @GetMapping("/noticeCheck/{notice_num}/{username}")
-    public ResponseEntity<String> noticeCheck(@PathVariable("notice_num") Integer notice_num,
+    @GetMapping("/noticeCheck/{noticeNum}/{username}")
+    public ResponseEntity<String> noticeCheck(@PathVariable("noticeNum") Integer notice_num,
                                               @PathVariable("username") String username) {
         if (!username.equals("undefined")) {
             noticeService.noticeCheck(notice_num, username);
@@ -57,7 +67,11 @@ public class NoticeController {
         return ResponseEntity.ok("성공");
     }
 
-    // 공지사항 상세 목록 조회
+    /**
+     * 공지사항 상세 목록 조회 API
+     * @param getNoticeDetailReqVO
+     * @return
+     */
     @NoneAuth
     @GetMapping("/get-detail")
     public ResponseData getNoticeDetail(@Valid @ModelAttribute GetNoticeDetailReqVO getNoticeDetailReqVO){

@@ -45,8 +45,8 @@ public class AdminController {
             throw new RequestParameterException(ErrorCode.WRONG_PARAM);
         }
         adminService.addNotice(NoticeVO.builder()
-                .notice_content(map.get("content"))
-                .notice_title(map.get("title"))
+                .noticeContent(map.get("content"))
+                .noticeTitle(map.get("title"))
                 .build());
         return ResponseEntity.ok("성공");
     }

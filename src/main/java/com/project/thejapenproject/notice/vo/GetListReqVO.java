@@ -13,10 +13,10 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class GetListReqVO {
 
-    @NotNull
+    @NotNull(message = "페이지 수는 필수입니다.")
     private Integer page = 1;
 
-    @NotNull
+    @NotNull(message = "목록 수는 필수입니다.")
     private Integer size = 10;
 
     private Integer offset;

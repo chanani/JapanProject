@@ -17,14 +17,13 @@ const NoticeDetail = () => {
         axiosInstance.get(`/notice/get-detail?noticeNum=${noticeDetailNo}`)
             .then((res) => {
                 setNoticeDetail(res.data.data)
-                console.log(res.data.data)
             })
             .catch(err => toast.error("공지사항 조회 중 오류가 발생하였습니다."));
     }
 
-    const getOtherData = (notice_num) => {
+    const getOtherData = (noticeNum) => {
         navigate(`/notice-detail`, {
-            state: {noticeDetailNo: notice_num}
+            state: {noticeDetailNo: noticeNum}
         })
     }
 
@@ -48,26 +47,26 @@ const NoticeDetail = () => {
                 </div>
 
                 <div className="notice-detail-title-box">
-                    <p>{noticeDetail[1]?.notice_title}</p>
+                    <p>{noticeDetail[1]?.noticeTitle}</p>
                 </div>
 
                 <div className="notice-detail-content-box">
-                    <p>{noticeDetail[1]?.notice_content}</p>
+                    <p>{noticeDetail[1]?.noticeContent}</p>
                 </div>
 
                 <div className="notice-other-data-box">
-                    {noticeDetail[2]?.notice_title ?
-                        <div className="notice-back-data-box" onClick={() => getOtherData(noticeDetail[2].notice_num)}>
+                    {noticeDetail[2]?.noticeTitle ?
+                        <div className="notice-back-data-box" onClick={() => getOtherData(noticeDetail[2].noticeNum)}>
                             <p className="notice-other-info">이전글</p>
                             <p className="notice-other-title">{noticeDetail[2].notice_title}</p>
                         </div>
                     :
                     ""
                     }
-                    {noticeDetail[0]?.notice_title ?
-                        <div className="notice-next-data-box" onClick={() => getOtherData(noticeDetail[0].notice_num)}>
+                    {noticeDetail[0]?.noticeTitle ?
+                        <div className="notice-next-data-box" onClick={() => getOtherData(noticeDetail[0].noticeNum)}>
                             <p className="notice-other-info">다음글</p>
-                            <p className="notice-other-title">{noticeDetail[0].notice_title}</p>
+                            <p className="notice-other-title">{noticeDetail[0].noticeTitle}</p>
                         </div>
                         :
                         ""

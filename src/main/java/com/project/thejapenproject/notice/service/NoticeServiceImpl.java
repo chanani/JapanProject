@@ -48,9 +48,9 @@ public class NoticeServiceImpl implements NoticeService {
 
     // 확인한 공지사항 체크하기
     @Override
-    public int noticeCheck(Integer notice_num, String username) {
-        if (noticeMapper.checkList(notice_num, username) == false) {
-            return noticeMapper.noticeCheck(notice_num, username);
+    public int noticeCheck(Integer noticeNum, String username) {
+        if (noticeMapper.checkList(noticeNum, username) == false) {
+            return noticeMapper.noticeCheck(noticeNum, username);
         }
         return 0;
     }

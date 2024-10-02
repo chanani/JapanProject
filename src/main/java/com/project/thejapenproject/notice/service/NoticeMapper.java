@@ -18,7 +18,7 @@ public interface NoticeMapper {
     public ArrayList<NoticeVO> alarmList(String username);
 
     // 공지사항 확인했을 때 체크
-    public int noticeCheck(@Param("notice_num") Integer notice_num, @Param("username") String username);
+    public int noticeCheck(@Param("noticeNum") Integer noticeNum, @Param("username") String username);
 
     // 공지사항 체크했는지 확인
     public boolean checkList(@Param("notice_num") Integer notice_num, @Param("username") String username);

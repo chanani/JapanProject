@@ -13,10 +13,10 @@ import java.sql.Timestamp;
 @Builder
 public class NoticeVO {
 
-    private Integer notice_num;
-    private String notice_content;
-    private String notice_title;
-    private Timestamp notice_regdate;
+    private Integer noticeNum;
+    private String noticeContent;
+    private String noticeTitle;
+    private Timestamp noticeRegdate;
     private Integer totalElements;
 
 }

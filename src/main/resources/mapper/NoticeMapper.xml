@@ -34,12 +34,13 @@
           AND notice_num = #{notice_num}
     </select>
 
+    <!-- 공지사항 체크 update -->
     <insert id="noticeCheck">
         INSERT INTO notice_check (username,
                                   notice_num,
                                   check_regdate)
         VALUES (#{username},
-                #{notice_num},
+                #{noticeNum},
                 now())
     </insert>
 
