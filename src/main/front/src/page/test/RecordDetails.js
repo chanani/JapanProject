@@ -31,10 +31,8 @@ const RecordDetails = () => {
         deleteAPI();
     }
     const deleteAPI = () => {
-        axiosInstance.get('mypage/deleteRecord', {
-            params: {
-                record_num : num
-            }
+        axiosInstance.post('mypage/deleteRecord', {
+            recordNum : num
         })
             .then((res) => {
                 if(res.status !== 200) return toast.error('기록 삭제 중 오류가 발생하였습니다. 관리자에게 문의해주세요.');
@@ -52,23 +50,23 @@ const RecordDetails = () => {
                         {point === 10 ? "" : <p>단어를 클릭하여 답을 확인하세요.</p>}
                     </div>
                     <div className="result-box">
-                        {answer.map((item, index) => (
+                        {answer?.map((item, index) => (
                             <div
-                                className={"result-box-content index" + (index) + (item.rd_check ? " success" : " fail")}
+                                className={"result-box-content index" + (index) + (item.rdCheck ? " success" : " fail")}
                                 key={index}>
                                 <div className="result-header-box">
-                                    {<Audio inputData={item.word_vo.word_content}/>}
+                                    {<Audio inputData={item.word_vo.wordContent}/>}
                                     <p>{index + 1} / {answer.length}</p>
                                 </div>
                                 <div className="result-word-box" onClick={(event) => handleCheck(index)}>
                                     {kind ?
-                                        check[index] ? item.word_vo.word_meaning : item.word_vo.word_content
+                                        check[index] ? item.word_vo.wordMeaning : item.word_vo.wordContent
                                         :
-                                        check[index] ? item.word_vo.word_content : item.word_vo.word_meaning
+                                        check[index] ? item.word_vo.wordContent : item.word_vo.wordMeaning
                                     }
                                 </div>
                                 <div className="result-input-box">
-                                    <input type="text" value={(answer[index] && item.record_value) || ''}
+                                    <input type="text" value={(answer[index] && item.recordValue) || ''}
                                            className={index} readOnly/>
                                 </div>
                             </div>

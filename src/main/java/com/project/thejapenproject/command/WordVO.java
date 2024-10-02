@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class WordVO {
-    private Integer word_num;
-    private Integer word_level;
-    private String word_meaning;
-    private String word_content;
-    private String word_chinese;
-    private boolean word_favorite;
-    private String word_week;
+    private Integer wordNum;
+    private Integer wordLevel;
+    private String wordMeaning;
+    private String wordContent;
+    private String wordChinese;
+    private boolean wordFavorite;
+    private String wordWeek;
 }

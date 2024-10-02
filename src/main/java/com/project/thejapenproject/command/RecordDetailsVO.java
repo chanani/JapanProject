@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class RecordDetailsVO {
-    private  Integer rd_num;
-    private Integer record_num;
-    private Integer word_num;
-    private boolean rd_check;
-    private String record_value;
+    private  Integer rdNum;
+    private Integer recordNum;
+    private Integer wordNum;
+    private boolean rdCheck;
+    private String recordValue;
+
     private WordVO wordVO;
 }

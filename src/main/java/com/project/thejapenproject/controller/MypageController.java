@@ -6,21 +6,23 @@ import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.mypage.service.MypageService;
+import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
 import com.project.thejapenproject.mypage.vo.UserMypageResVO;
 import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
+import com.project.thejapenproject.mypage.vo.UserWithdrawalReqVO;
+import com.project.thejapenproject.mypage.vo.param.GetSchoolListParamVO;
+import com.project.thejapenproject.mypage.vo.param.ImageChangeParamVO;
+import com.project.thejapenproject.mypage.vo.param.RecordNumParamVO;
 import com.project.thejapenproject.mypage.vo.param.UsernameParamVO;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -31,10 +33,9 @@ public class MypageController {
     public final MypageService mypageService;
 
     /**
-     * @Param username : 아이디
-     * mypage 개인정보 불러오기
-     * 쿼리스트링으로 id 전달
-     **/
+     * 마이페이지 유저 정보 조회 API
+     * @param usernameParamVO
+     */
     @NoneCheckToken
     @GetMapping("/data")
     public ResponseEntity<UserMypageResVO> myInfo(@Valid @ModelAttribute UsernameParamVO usernameParamVO) {
@@ -48,8 +49,9 @@ public class MypageController {
     }
 
     /**
-     * @Param data : 변경 요청하는 데이터
-     **/
+     * 유저 정보 변경 API
+     * @param userInfoModifyReqVO
+     */
     @NoneCheckToken
     @PostMapping("/update")
     public ResponseEntity<String> modifyInfo(@Valid @RequestBody UserInfoModifyReqVO userInfoModifyReqVO) {
@@ -62,24 +64,14 @@ public class MypageController {
 
     /**
      * 회원 탈퇴 API
-     * ＠todo 여기부터 수정해야됨
      */
     @NoneCheckToken
     @PostMapping("/withdrawal")
-    public ResponseEntity<String> withdrawal(@RequestBody Map<String, String> data) {
-        if (Objects.isNull(data)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM1);
-        }
-        try {
-            int result = mypageService.withdrawal(data.get("username"));
-            if (result > 0) {
-                return ResponseEntity.ok("정상적으로 탈퇴 되었습니다.");
-            } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("탈퇴 중 오류가 발생하였습니다.");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<String> withdrawal(@Valid @RequestBody UserWithdrawalReqVO userWithdrawalReqVO) {
+
+        mypageService.withdrawal(userWithdrawalReqVO.getUsername());
+
+        return ResponseEntity.ok("정상적으로 탈퇴 되었습니다.");
     }
 
     /**
@@ -89,14 +81,10 @@ public class MypageController {
      **/
     @NoneCheckToken
     @PostMapping("/favorite")
-    public ResponseEntity<ArrayList<WordVO>> favoriteList(@RequestBody Map<String, String> map) throws Exception {
-        if (Objects.isNull(map)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM1);
-        }
-        ArrayList<WordVO> list = mypageService.favoriteList(map.get("username"));
-        if (Objects.isNull(list)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
+    public ResponseEntity<ArrayList<WordVO>> favoriteList(@Valid @RequestBody UsernameParamVO usernameParamVO) {
+
+        ArrayList<WordVO> list = mypageService.favoriteList(usernameParamVO.getUsername());
+
         return ResponseEntity.ok(list);
     }
 
@@ -107,11 +95,9 @@ public class MypageController {
      **/
     @NoneCheckToken
     @GetMapping("/record")
-    public ResponseEntity<ArrayList<RecordVO>> recordList(@RequestParam String username) throws Exception {
-        ArrayList<RecordVO> list = mypageService.recordList(username);
-        if (Objects.isNull(list)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
+    public ResponseEntity<ArrayList<RecordVO>> recordList(@Valid @ModelAttribute UsernameParamVO usernameParamVO) {
+        ArrayList<RecordVO> list = mypageService.recordList(usernameParamVO.getUsername());
+
         return ResponseEntity.ok(list);
     }
 
@@ -122,11 +108,9 @@ public class MypageController {
      **/
     @NoneCheckToken
     @PostMapping("/recordDetails")
-    public ResponseEntity<ArrayList<RecordDetailsVO>> recordDetailList(@RequestBody Map<String, String> map) {
-        ArrayList<RecordDetailsVO> list = mypageService.recordDetails(map.get("username"), Integer.valueOf(map.get("record_num")));
-        if (Objects.isNull(list)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
+    public ResponseEntity<ArrayList<RecordDetailsVO>> recordDetailList(@Valid @RequestBody GetRecordDetailsReqVO getRecordDetailsReqVO) {
+        ArrayList<RecordDetailsVO> list = mypageService.recordDetails(getRecordDetailsReqVO);
+
         return ResponseEntity.ok(list);
     }
 
@@ -136,12 +120,9 @@ public class MypageController {
      * @Param record_num : record 테이블의 PK를 통해 삭제
      **/
     @NoneCheckToken
-    @GetMapping("/deleteRecord")
-    public ResponseEntity<String> deleteRecord(@Param("record_num") int record_num) throws Exception {
-        int result = mypageService.deleteRecord(record_num);
-        if (result != 1) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
+    @PostMapping("/deleteRecord")
+    public ResponseEntity<String> deleteRecord(@Valid @RequestBody RecordNumParamVO recordNumParamVO) throws Exception {
+        mypageService.deleteRecord(recordNumParamVO.getRecordNum());
         return ResponseEntity.ok("성공");
     }
 
@@ -150,12 +131,9 @@ public class MypageController {
      **/
     @NoneAuth
     @GetMapping("/getSchoolList")
-    public ResponseEntity<ArrayList<WordVO>> getSchoolList(@Param("word_week") int word_week) throws
-            Exception {
-        ArrayList<WordVO> list = mypageService.getSchoolList(word_week);
-        if (Objects.isNull(list)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
+    public ResponseEntity<ArrayList<WordVO>> getSchoolList(@Valid @ModelAttribute GetSchoolListParamVO getSchoolListParamVO) {
+        ArrayList<WordVO> list = mypageService.getSchoolList(getSchoolListParamVO.getWordWeek());
+
         return ResponseEntity.ok(list);
     }
 
@@ -164,33 +142,34 @@ public class MypageController {
      **/
     @NoneAuth
     @GetMapping("/getWeekList")
-    public ResponseEntity<Object> getWeekList() throws Exception {
-        try {
-            ArrayList<Integer> list = mypageService.getWeekList();
-            if (Objects.isNull(list)) {
-                throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-            }
-            return ResponseEntity.ok(list);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+    public ResponseEntity<Object> getWeekList() {
+
+        ArrayList<Integer> list = mypageService.getWeekList();
+        if (Objects.isNull(list)) {
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
         }
+        return ResponseEntity.ok(list);
+
     }
 
+    /**
+     * 이미지 변경 API
+     * @param imageChangeParamVO
+     */
     @NoneAuth
     @PostMapping("/image-change")
-    public ResponseData userImageChange(@RequestParam("file") MultipartFile file,
-                                        @RequestParam("username") String username) throws IOException {
-        String fileName = file.getOriginalFilename();
+    public ResponseData userImageChange(@Valid @ModelAttribute ImageChangeParamVO imageChangeParamVO) {
+        String fileName = imageChangeParamVO.getFile().getOriginalFilename();
         String filePath = "/opt/thejapan/user/icon/" + fileName;
 
         try {
             File dest = new File(filePath);
-            file.transferTo(dest);
+            imageChangeParamVO.getFile().transferTo(dest);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        mypageService.userImageChange(fileName, username);
+        mypageService.userImageChange(fileName, imageChangeParamVO.getUsername());
 
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())

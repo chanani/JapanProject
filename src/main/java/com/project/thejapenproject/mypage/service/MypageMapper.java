@@ -1,6 +1,7 @@
 package com.project.thejapenproject.mypage.service;
 
 import com.project.thejapenproject.command.*;
+import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
 import com.project.thejapenproject.mypage.vo.UserMypageResVO;
 import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,12 +13,12 @@ import java.util.ArrayList;
 public interface MypageMapper {
     public ArrayList<WordVO> favoriteList(String username);
     public ArrayList<RecordVO> recordList(String username);
-    public ArrayList<RecordDetailsVO> recordDetails(@Param("username") String username, @Param("record_num") Integer record_num);
+    public ArrayList<RecordDetailsVO> recordDetails(GetRecordDetailsReqVO getRecordDetailsReqVO);
     public UserMypageResVO myInfo(String username);
     public int modifyInfo(UserInfoModifyReqVO userInfoModifyReqVO);
     public int withdrawal(String username);
-    public int deleteRecord(int record_num);
-    public ArrayList<WordVO> getSchoolList(int word_week);
+    public int deleteRecord(int recordNum);
+    public ArrayList<WordVO> getSchoolList(int wordWeek);
     public ArrayList getWeekList();
 
     // 프로필 이미지 수정을 위해 삭제

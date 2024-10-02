@@ -17,6 +17,7 @@ public enum ErrorCode {
     ALREADY_REGISTRY_PHONE1(HttpStatus.BAD_REQUEST, "이미 가입된 회원입니다."),
     NOT_FOUND_USERS_PHONE(HttpStatus.BAD_REQUEST, "가입한 회원의 정보가 없습니다."),
     FAILED_TO_SING_UP(HttpStatus.BAD_REQUEST, "회원가입에 실패했습니다."),
+    FAILED_TO_WITHDRAWAL(HttpStatus.BAD_REQUEST, "탈퇴에 실패했습니다."),
     WRONG_PARAM1(HttpStatus.BAD_REQUEST, "파라미터가 잘못요청되었습니다."),
 
     CERTIFY_CODE_INVALIDATE(HttpStatus.UNAUTHORIZED, "인증번호는 6자리입니다."),
@@ -48,7 +49,10 @@ public enum ErrorCode {
     NOT_FOUND_USER_INFO_BY_THIS_PHONE_NUMBER(HttpStatus.FORBIDDEN, "해당 핸드폰번호로 가입된 유저의 정보를 찾을 수 없습니다."),
 
     // 프로필 이미지 수정
-    FAIL_TO_IMAGE(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 수정에 실패하였습니다.");
+    FAIL_TO_IMAGE(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 수정에 실패하였습니다."),
+    FAIL_TO_REMOVE_RECORD(HttpStatus.INTERNAL_SERVER_ERROR, "학습 기록 삭제에 실패하였습니다.");
+
+    // record
 
     private final HttpStatus errorCode;
     private final String message;

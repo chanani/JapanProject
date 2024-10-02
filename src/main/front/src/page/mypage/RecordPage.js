@@ -32,11 +32,11 @@ const RecordPage = () => {
     // 상세페이지로 이동하는 핸들러
     const handleContent = async (index) => {
         try {
-            let num = data[index]?.record_num;
-            let kind = data[index]?.record_kind;
-            let level = data[index]?.record_kind;
-            let point = data[index]?.record_point;
-            const response = await axiosInstance.post('mypage/recordDetails', {username: username, record_num: num})
+            let num = data[index]?.recordNum;
+            let kind = data[index]?.recorKind;
+            let level = data[index]?.recorLevel;
+            let point = data[index]?.recordPoint;
+            const response = await axiosInstance.post('mypage/recordDetails', {username: username, recordNum: num})
 
             const answer = response.data;
             navigate("/recordDetails", {state: {kind, level, answer, point, num}});
@@ -85,13 +85,13 @@ const RecordPage = () => {
                     <div className="recordPage-score" key={index}
                          onClick={(event) => handleContent(index + ((currentPage - 1) * dataPerPage))}>
                         <div className="score-header">
-                            <div className="level">{item.record_level}단계</div>
+                            <div className="level">{item.recordLevel}단계</div>
                             <div style={{fontSize: "13px"}}>⏐</div>
                             <div>{username}</div>
                         </div>
                         <div className="score-content">
-                            <div className="point">{item.record_point}점</div>
-                            <div className="save-date">{moment(item.record_date).format('YYYY/MM/DD')} </div>
+                            <div className="point">{item.recordPoint}점</div>
+                            <div className="save-date">{moment(item.recordDate).format('YYYY/MM/DD')} </div>
                         </div>
 
                     </div>

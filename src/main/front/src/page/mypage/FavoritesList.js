@@ -15,8 +15,8 @@ const FavoritesList = () => {
     // 즐겨찾기 버튼 클릭 핸들러
     const handleFavorite = (index) => {
         const newData = [...word];
-        newData[index].word_favorite = !newData[index].word_favorite;
-        if (!newData[index].word_favorite) {
+        newData[index].wordFavorite = !newData[index].wordFavorite;
+        if (!newData[index].wordFavorite) {
             newData.splice(index, 1);
             setWord(newData);
         }
@@ -24,7 +24,7 @@ const FavoritesList = () => {
     };
     // 즐겨찾기 삭제 기능
     const deleteFavorite = (index) => {
-        axiosInstance.get(`study/addFavorite/${word[index].word_num}/${word[index].word_favorite}/${username}`)
+        axiosInstance.get(`study/addFavorite/${word[index].wordNum}/${word[index].wordFavorite}/${username}`)
             .catch(err => toast.error("데이터 삭제 중 오류가 발생하였습니다. 관리자에게 문의해주세요."))
     };
     // 즐겨찾기 페이지에서 단어 공부 페이지로 이동
@@ -41,7 +41,7 @@ const FavoritesList = () => {
                 .then((res) => {
                     setWord(res.data);
                 })
-                .catch((e) => console.log("마이페이지 에러" + e));
+                .catch((e) => toast.error('조회 중 오류가 발생하였습니다.'));
         }
     }, []);
 
@@ -63,7 +63,7 @@ const FavoritesList = () => {
                                 <FaStar size={13} onClick={() => handleFavorite(index)}/>
                             </div>
                             <div className="favorite-data-text">
-                                <div className="level">{item.word_content}</div>
+                                <div className="level">{item.wordContent}</div>
                             </div>
                         </div>
                     ))}

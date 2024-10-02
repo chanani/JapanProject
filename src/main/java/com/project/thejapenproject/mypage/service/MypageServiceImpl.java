@@ -2,7 +2,9 @@ package com.project.thejapenproject.mypage.service;
 
 import com.project.thejapenproject.command.*;
 import com.project.thejapenproject.command.exception.OperationErrorException;
+import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
+import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
 import com.project.thejapenproject.mypage.vo.UserMypageResVO;
 import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ public class MypageServiceImpl implements MypageService{
     @Autowired
     public MypageMapper mypageMapper;
 
+    // 즐겨찾기 목록 API
     @Override
     public ArrayList<WordVO> favoriteList(String username) {
         return mypageMapper.favoriteList(username);
@@ -26,8 +29,8 @@ public class MypageServiceImpl implements MypageService{
     }
 
     @Override
-    public ArrayList<RecordDetailsVO> recordDetails(String username, Integer record_num) {
-        return mypageMapper.recordDetails(username, record_num);
+    public ArrayList<RecordDetailsVO> recordDetails(GetRecordDetailsReqVO getRecordDetailsReqVO) {
+        return mypageMapper.recordDetails(getRecordDetailsReqVO);
     }
 
     @Override
@@ -40,19 +43,25 @@ public class MypageServiceImpl implements MypageService{
         return mypageMapper.modifyInfo(userInfoModifyReqVO);
     }
 
+    // 회원 탈퇴
     @Override
-    public int withdrawal(String username) {
-        return mypageMapper.withdrawal(username);
+    public void withdrawal(String username) {
+        if(mypageMapper.withdrawal(username) < 1){
+            throw new OperationErrorException(ErrorCode.FAILED_TO_WITHDRAWAL);
+        }
+    }
+
+    // 학습 기록 삭제
+    @Override
+    public void deleteRecord(int recordNum) {
+        if(mypageMapper.deleteRecord(recordNum) < 1){
+            throw new RequestParameterException(ErrorCode.FAIL_TO_REMOVE_RECORD);
+        }
     }
 
     @Override
-    public int deleteRecord(int record_num) {
-        return mypageMapper.deleteRecord(record_num);
-    }
-
-    @Override
-    public ArrayList<WordVO> getSchoolList(int word_week) {
-        return mypageMapper.getSchoolList(word_week);
+    public ArrayList<WordVO> getSchoolList(int wordWeek) {
+        return mypageMapper.getSchoolList(wordWeek);
     }
 
     @Override

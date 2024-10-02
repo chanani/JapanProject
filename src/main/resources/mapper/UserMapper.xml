@@ -32,38 +32,48 @@
     <select id="checkEmail" parameterType="String">
         select IF(COUNT(*) > 0, true, false) from user
         where user_email = #{user_email}
+        AND state = 0
     </select>
     <!-- 휴대폰 중복 확인 -->
     <select id="checkPhone" parameterType="String">
         select IF(COUNT(*) > 0, true, false) from user
         where user_phone = #{user_phone}
+          AND state = 0
     </select>
 
     <select id="login"
             resultType="com.project.thejapenproject.command.UserVO">
-        select * from user
-        where username = #{username} and password = #{password} and user_status = 0
+        SELECT *
+        FROM user
+        WHERE username = #{username}
+          AND password = #{password}
+          AND state = 0
     </select>
 
     <update id="logDate">
-        UPDATE user SET user_logdate = now()
+        UPDATE user
+        SET user_logdate = now()
         WHERE username = #{username}
+          AND state = 0
     </update>
 
     <select id="emailAuth" resultType="boolean">
         select IF(count(*) > 0, true, false)
         from user
         where user_email = #{email}
+          AND state = 0
     </select>
 
     <select id="findId" resultType="String">
         select username from user
         where user_email = #{email}
+          AND state = 0
     </select>
 
     <update id="passwordChange">
         update user set password = (#{password})
         where user_email = #{email}
+          AND state = 0
     </update>
 
     <select id="getUserIcon"

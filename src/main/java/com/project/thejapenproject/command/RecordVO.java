@@ -14,10 +14,11 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Builder
 public class RecordVO {
-    private Integer record_num;
-    private Integer record_level;
-    private Date record_date;
-    private Integer record_point;
-    private boolean record_kind;
+
+    private Integer recordNum;
+    private Integer recordLevel;
+    private Date recordDate;
+    private Integer recordPoint;
+    private boolean recordKind;
 
 }
