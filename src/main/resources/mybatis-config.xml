@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <!-- db컬럼 camel표기 : user_name -> userName으로 자동 변환 : 기본값 false -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 매개변수로 null 값을 전달할 때 JDBC 타입을 설정합니다. 기본값은 OTHER입니다. -->
+        <setting name="jdbcTypeForNull" value="NULL"/>
+    </settings>
+
+    <typeAliases>
+    </typeAliases>
+
+</configuration>
