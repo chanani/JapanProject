@@ -16,12 +16,12 @@ const CheckPassword = ({setCheckPassword, nowNumber}) => {
     // 비밀번호 확인 요청 API
     const checkHandle = () => {
         axiosInstance.post('inquiry/checkPassword', {
-            inquiry_password: password,
-            inquiry_num: nowNumber
+            inquiryPassword: password,
+            inquiryNum: nowNumber
         })
             .then((res) => {
                 if (!res.data) return toast.error("비밀번호가 일지하지 않습니다.");
-                navigator(`/inquiryDetail?inquiry_num=${nowNumber}`);
+                navigator(`/inquiryDetail?inquiryNum=${nowNumber}`);
             })
             .catch(e => toast.error('비밀번호 확인 중 오류가 발생하였습니다. 관리자에게 문의해주세요.'))
     }

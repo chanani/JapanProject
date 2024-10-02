@@ -44,11 +44,11 @@ const InquiryWrite = () => {
     // 글 등록하기 API
     const inquirySaveAPI = () => {
         axiosInstance.post("inquiry/insertData", {
-            inquiry_title: inquiryTitle,
-            inquiry_content: editorContent,
-            inquiry_writer: inquiryWriter,
-            inquiry_email: inquiryEmail,
-            inquiry_password: inquiryPassword,
+            inquiryTitle: inquiryTitle,
+            inquiryContent: editorContent,
+            inquiryWriter: inquiryWriter,
+            inquiryEmail: inquiryEmail,
+            inquiryPassword: inquiryPassword,
         })
             .then((res) => {
                 toast.success("정상적으로 글이 등록되었습니다.");

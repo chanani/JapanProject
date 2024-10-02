@@ -1,9 +1,7 @@
 package com.project.thejapenproject.controller;
 
 import com.project.thejapenproject.command.InquiryVO;
-import com.project.thejapenproject.command.NoticeVO;
 import com.project.thejapenproject.command.ResponseData;
-import com.project.thejapenproject.command.UserVO;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
@@ -11,14 +9,17 @@ import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.inquiry.service.InquiryService;
 import com.project.thejapenproject.inquiry.vo.GetInquiryListReqVO;
+import com.project.thejapenproject.inquiry.vo.InquiryGetDetailResVO;
+import com.project.thejapenproject.inquiry.vo.InquiryGetListResVO;
+import com.project.thejapenproject.inquiry.vo.InquiryRegisterReqVO;
+import com.project.thejapenproject.inquiry.vo.param.AddCommentParamVO;
+import com.project.thejapenproject.inquiry.vo.param.CheckPasswordParamVO;
+import com.project.thejapenproject.inquiry.vo.param.GetInquiryNumberParamVO;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import reactor.util.ObjectUtils;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -38,14 +39,9 @@ public class InquiryController {
      **/
     @NoneAuth
     @PostMapping("/insertData")
-    public ResponseEntity<String> insertDate(@RequestBody InquiryVO vo) {
-        if (Objects.isNull(vo)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
-        int result = inquiryService.insertData(vo);
-        if (result == 1) return ResponseEntity.ok("성공");
-        else return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body("실패");
-
+    public ResponseEntity<String> insertDate(@Valid @RequestBody InquiryRegisterReqVO inquiryRegisterReqVO) {
+        inquiryService.insertData(inquiryRegisterReqVO);
+        return ResponseEntity.ok("성공");
     }
 
     /**
@@ -54,11 +50,10 @@ public class InquiryController {
     @NoneAuth
     @GetMapping("/getList")
     public ResponseData getList(@Valid @ModelAttribute GetInquiryListReqVO getInquiryListReqVO) {
-        System.out.println("getInquiryListReqVO = " + getInquiryListReqVO);
         if (getInquiryListReqVO.getPage() < 1 || getInquiryListReqVO.getSize() < 1) {
             throw new RequestParameterException(ErrorCode.WRONG_PARAM);
         }
-        PageResponse<InquiryVO> inquiryList = inquiryService.getList(getInquiryListReqVO);
+        PageResponse<InquiryGetListResVO> inquiryList = inquiryService.getList(getInquiryListReqVO);
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
                 .data(inquiryList)
@@ -73,19 +68,14 @@ public class InquiryController {
      **/
     @NoneAuth
     @PostMapping("/checkPassword")
-    public ResponseEntity<Boolean> checkPassword(@RequestBody InquiryVO vo) {
-        if (Objects.isNull(vo)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
+    public ResponseEntity<Boolean> checkPassword(@Valid @RequestBody CheckPasswordParamVO checkPasswordParamVO) {
+
+        if (inquiryService.checkPassword(checkPasswordParamVO)) {
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.ok(false);
         }
-        try {
-            if (inquiryService.checkPassword(vo)) {
-                return ResponseEntity.ok(true);
-            } else {
-                return ResponseEntity.ok(false);
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+
     }
 
     /**
@@ -95,13 +85,10 @@ public class InquiryController {
      **/
     @NoneAuth
     @GetMapping("/getDetails")
-    public ResponseEntity<Object> getDetails(@Param("inquiry_num") int inquiry_num) {
-        if (Objects.isNull(inquiry_num)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
-        InquiryVO inquiryVO = inquiryService.getDetails(inquiry_num);
-        if (inquiryVO == null) return ResponseEntity.ok(HttpStatus.NOT_FOUND);
-        return ResponseEntity.ok(inquiryVO);
+    public ResponseEntity<Object> getDetails(@Valid @ModelAttribute GetInquiryNumberParamVO getInquiryNumberParamVO) {
+
+        InquiryGetDetailResVO inquiryDetailData = inquiryService.getDetails(getInquiryNumberParamVO.getInquiryNum());
+        return ResponseEntity.ok(inquiryDetailData);
     }
 
     /**
@@ -111,14 +98,8 @@ public class InquiryController {
      **/
     @NoneAuth
     @GetMapping("/deleteData")
-    public ResponseEntity<String> deleteData(@Param("inquiry_num") int inquiry_num) throws Exception {
-        if (Objects.isNull(inquiry_num)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
-        int result = inquiryService.deleteData(inquiry_num);
-        if (result != 1) {
-            throw new Exception();
-        }
+    public ResponseEntity<String> deleteData(@Valid @ModelAttribute GetInquiryNumberParamVO getInquiryNumberParamVO) throws Exception {
+        inquiryService.deleteData(getInquiryNumberParamVO.getInquiryNum());
         return ResponseEntity.ok("성공");
     }
 
@@ -139,20 +120,14 @@ public class InquiryController {
     }
 
     /**
-     * 문의내역 comment 작성 API
-     *
-     * @Param InquiryVO : 검색 키워드를 통해 조회
-     **/
+     * 문의 답글 등록 API
+     */
     @NoneCheckToken
     @PostMapping("/addComment")
-    public ResponseEntity<String> addComment(@RequestBody InquiryVO vo) throws Exception {
-        if (Objects.isNull(vo)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
-        int result = inquiryService.addComment(vo);
-        if (result != 1) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
+    public ResponseEntity<String> addComment(@Valid @RequestBody AddCommentParamVO addCommentParamVO) {
+
+        inquiryService.addComment(addCommentParamVO);
+
         return ResponseEntity.ok("성공");
     }
 }

@@ -13,14 +13,11 @@ import {BiMessageRounded} from "react-icons/bi";
 
 const InquiryDetail = () => {
     const [data, setData] = useState([]);
-    const [textareaHeight, setTextareaHeight] = useState('auto');
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const inquiryNum = queryParams.get('inquiry_num');
+    const inquiryNum = queryParams.get('inquiryNum');
     const navigator = useNavigate();
-    const handleChange = (event) => {
-        setTextareaHeight(`${event.target.scrollHeight}px`);
-    };
+
 
     // 문의 삭제 핸들러
     const deleteHandle = () => {
@@ -33,7 +30,7 @@ const InquiryDetail = () => {
     const deleteAPI = () => {
         axiosInstance.get("inquiry/deleteData",{
             params : {
-                inquiry_num : inquiryNum
+                inquiryNum : inquiryNum
             }
         })
             .then((res) => {
@@ -50,11 +47,12 @@ const InquiryDetail = () => {
         navigator('/inquiry');
     }
 
+    // 상세 내용 조회하기
     useEffect(() => {
         const getDetails = () => {
             axiosInstance.get('inquiry/getDetails', {
                 params: {
-                    inquiry_num: inquiryNum
+                    inquiryNum: inquiryNum
                 }
             })
                 .then((res) => {
@@ -66,14 +64,14 @@ const InquiryDetail = () => {
     }, [inquiryNum]);
 
     useEffect(() => {
-        if (data.inquiry_comment) {
+        if (data.inquiryComment) {
             const textarea = document.querySelector('.inquiry-detail-comment-text > textarea');
             if (textarea) {
                 textarea.style.height = 'auto';
                 textarea.style.height = `${textarea.scrollHeight}px`;
             }
         }
-    }, [data.inquiry_comment]);
+    }, [data.inquiryComment]);
 
     return (
         <div className="inquiry-container">
@@ -87,27 +85,27 @@ const InquiryDetail = () => {
 
                     <div className="inquiry-detail-info">
                         <div className="inquiry-detail-info-title">
-                            {!data.inquiry_comment ?
+                            {!data.inquiryComment ?
                                 <p className="comment-result comment-result-n">답변대기</p> :
                                 <p className="comment-result comment-result-y">답변완료</p>
                             }
-                            <p className="inquiry-title">{data.inquiry_title}</p>
+                            <p className="inquiry-title">{data.inquiryTitle}</p>
                         </div>
                         <div className="inquiry-detail-info-title2">
-                            <p>{data.inquiry_writer} / {moment(data.inquiry_regdate).format('YYYY.MM.DD HH:mm')}</p>
+                            <p>{data.inquiryWriter} / {moment(data.inquiryRegdate).format('YYYY.MM.DD HH:mm')}</p>
                             <FaRegTrashAlt size={16} onClick={deleteHandle}/>
                         </div>
                     </div>
 
                     <div>
                         <div className="inquiry-detail-content-box">
-                            <div dangerouslySetInnerHTML={{__html: data.inquiry_content}}/>
+                            <div dangerouslySetInnerHTML={{__html: data.inquiryContent}}/>
                         </div>
                     </div>
 
                 </div>
 
-                {!data.inquiry_comment ?
+                {!data.inquiryComment ?
                     <div className="inquiry-detail-comment-box">
                         <BiMessageRounded size={23}/>
                         <p>순차적으로 답변 중 입니다.</p>
@@ -115,7 +113,7 @@ const InquiryDetail = () => {
                     :
                     <div className="inquiry-detail-comment-box">
                         <BiMessageRounded size={23}/>
-                        <div dangerouslySetInnerHTML={{__html: data.inquiry_comment}}/>
+                        <div dangerouslySetInnerHTML={{__html: data.inquiryComment}}/>
 
                     </div>
 

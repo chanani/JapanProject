@@ -1,6 +1,6 @@
 import "../../styles/inquiry/InquiryWrite.css";
 import {useEffect, useState} from "react";
-import {FaArrowLeft, FaArrowRight, FaLock} from "react-icons/fa";
+import {FaLock} from "react-icons/fa";
 import {FaLockOpen} from "react-icons/fa";
 import {GrPowerReset} from "react-icons/gr";
 import {useNavigate} from "react-router-dom";
@@ -9,7 +9,6 @@ import moment from "moment";
 import {toast} from "react-toastify";
 import {IoIosSearch} from "react-icons/io";
 import usePagination from "../../hook/usePagination";
-import CheckPassword from "../../component/CheckPassword";
 import PageNation from "../../component/PageNation";
 
 const AddInquiryComment = () => {
@@ -42,7 +41,7 @@ const AddInquiryComment = () => {
 
     // comment 입력 페이지로 이동
     const writeHandle = (inquiryNum) => {
-        navigator(`/AddInquiryCommentWrite?inquiry_num=${inquiryNum}`);
+        navigator(`/AddInquiryCommentWrite?inquiryNum=${inquiryNum}`);
         window.scrollTo(0, 0);
     }
     // 목록 조회 API
@@ -56,7 +55,7 @@ const AddInquiryComment = () => {
         })
             .then((res) => {
                 setData(res.data.data.content);
-                setTotalData(res.data.data.total_elements);
+                setTotalData(res.data.data.totalElements);
             })
             .catch(e => toast.error('목록 조회를 실패하였습니다.'));
     }
@@ -112,9 +111,9 @@ const AddInquiryComment = () => {
                             :
                             <div className="inquiry-inData-box">
                                 {data?.map((item, index) => (
-                                    <div className="inquiry-data-box" key={index} onClick={() => writeHandle(item.inquiry_num)}>
+                                    <div className="inquiry-data-box" key={index} onClick={() => writeHandle(item.inquiryNum)}>
                                         <div className="inquiry-content-high-box">
-                                            {item.inquiry_comment ?
+                                            {item.inquiryComment ?
                                                 <p style={{width: "65px", textAlign: "center"}}
                                                    className='inquiry-comment inquiry-comment-y'>답변완료</p>
                                                 :
@@ -124,16 +123,16 @@ const AddInquiryComment = () => {
                                             }
                                             <p
                                                 className="inquiry_title"
-                                                id={item.inquiry_num}
+                                                id={item.inquiryNum}
                                             >
-                                                {item.inquiry_secret === 'y' ? <FaLock/> : <FaLockOpen/>}
-                                                {item.inquiry_title}
+                                                {item.inquirySecret === 'y' ? <FaLock/> : <FaLockOpen/>}
+                                                {item.inquiryTitle}
 
                                             </p>
                                         </div>
                                         <div className="inquiry-content-row-box">
-                                            <p className="inquiry_regdate">{moment(item.inquiry_regdate).format('YYYY. MM. DD')}</p>
-                                            <p className="inquiry_writer">{item.inquiry_writer}</p>
+                                            <p className="inquiry_regdate">{moment(item.inquiryRegdate).format('YYYY. MM. DD')}</p>
+                                            <p className="inquiry_writer">{item.inquiryWriter}</p>
                                         </div>
                                     </div>
                                 ))}

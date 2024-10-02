@@ -50,9 +50,16 @@ public enum ErrorCode {
 
     // 프로필 이미지 수정
     FAIL_TO_IMAGE(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 수정에 실패하였습니다."),
-    FAIL_TO_REMOVE_RECORD(HttpStatus.INTERNAL_SERVER_ERROR, "학습 기록 삭제에 실패하였습니다.");
 
     // record
+    FAIL_TO_REMOVE_RECORD(HttpStatus.INTERNAL_SERVER_ERROR, "학습 기록 삭제에 실패하였습니다."),
+
+    // inquiry
+    FAIL_TO_REGISTER_INQUIRY(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 등록에 실패하였습니다."),
+    FAIL_TO_REMOVE_INQUIRY(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 삭제에 실패하였습니다."),
+    FAIL_TO_ADD_COMMENT(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 답글 등록에 실패하였습니다.");
+
+
 
     private final HttpStatus errorCode;
     private final String message;

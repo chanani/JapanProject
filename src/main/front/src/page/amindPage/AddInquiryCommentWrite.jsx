@@ -13,7 +13,7 @@ const AddInquiryCommentWrite = () => {
     const [inquiryComment, setInquiryComment] = useState("");
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const inquiryNum = queryParams.get('inquiry_num');
+    const inquiryNum = queryParams.get('inquiryNum');
     const navigator = useNavigate();
 
     // 답글 submit 핸들러
@@ -25,8 +25,8 @@ const AddInquiryCommentWrite = () => {
     // 답글 추가 핸들러
     const addCommentAPI = () => {
         axiosInstance.post('inquiry/addComment', {
-            inquiry_num: inquiryNum,
-            inquiry_comment: inquiryComment,
+            inquiryNum: inquiryNum,
+            inquiryComment: inquiryComment,
         })
             .then((res) => {
                 if (res.status !== 200) return toast.error("답글 작성중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
@@ -39,12 +39,12 @@ const AddInquiryCommentWrite = () => {
     const getDetails = () => {
         axiosInstance.get('inquiry/getDetails', {
             params: {
-                inquiry_num: inquiryNum
+                inquiryNum: inquiryNum
             }
         })
             .then((res) => {
                 setData(res.data);
-                setInquiryComment(res.data.inquiry_comment);
+                setInquiryComment(res.data.inquiryComment);
             })
     }
 
@@ -67,28 +67,28 @@ const AddInquiryCommentWrite = () => {
                 <div className="inquiry-detail-content-container">
                     <div className="inquiry-detail-info">
                         <div className="inquiry-detail-info-title">
-                            {!data.inquiry_comment ?
+                            {!data.inquiryComment ?
                                 <p className="comment-result comment-result-n">답변대기</p> :
                                 <p className="comment-result comment-result-y">답변완료</p>
                             }
-                            <p className="inquiry-title">{data.inquiry_title}</p>
+                            <p className="inquiry-title">{data.inquiryTitle}</p>
                         </div>
                         <div className="inquiry-detail-info-title2">
-                            <p>{data.inquiry_writer} / {moment(data.inquiry_regdate).format('YYYY.MM.DD HH:mm')}</p>
+                            <p>{data.inquiryWriter} / {moment(data.inquiryRegdate).format('YYYY.MM.DD HH:mm')}</p>
                         </div>
                     </div>
                     <div>
                         <div className="inquiry-detail-content-box">
-                            <div dangerouslySetInnerHTML={{__html: data.inquiry_content}}/>
+                            <div dangerouslySetInnerHTML={{__html: data.inquiryContent}}/>
                         </div>
                     </div>
                 </div>
 
 
-                {data.inquiry_comment ?
+                {data.inquiryComment ?
                     <div className="inquiry-detail-comment-box detail-box-margin-bottom">
                         <BiMessageRounded size={23}/>
-                        <div dangerouslySetInnerHTML={{__html: data.inquiry_comment}}/>
+                        <div dangerouslySetInnerHTML={{__html: data.inquiryComment}}/>
                     </div>
                     :
                     <div className="inquiry-detail-comment-box detail-box-margin-bottom not-comment">
@@ -109,7 +109,7 @@ const AddInquiryCommentWrite = () => {
                     </div>
                 }
 
-                {data.inquiry_comment &&
+                {data.inquiryComment &&
                     <div className="inquiry-detail-button-box">
                         <button onClick={listHandle}>목록으로</button>
                     </div>

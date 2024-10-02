@@ -5,39 +5,39 @@
 
 <mapper namespace="com.project.thejapenproject.inquiry.service.InquiryMapper">
 
+    <!-- 문의 등록하기 -->
     <insert id="insertData"
-            parameterType="com.project.thejapenproject.command.InquiryVO">
+            parameterType="com.project.thejapenproject.inquiry.vo.InquiryRegisterReqVO">
         insert into inquiry (inquiry_title,
                              inquiry_content,
                              inquiry_writer,
                              inquiry_password,
                              inquiry_secret,
                              inquiry_regdate,
-                             inquiry_email
-                             )
-        values (#{inquiry_title},
-                #{inquiry_content},
-                #{inquiry_writer},
-                #{inquiry_password},
+                             inquiry_email)
+        values (#{inquiryTitle},
+                #{inquiryContent},
+                #{inquiryWriter},
+                #{inquiryPassword},
                 'y',
                 now(),
-                #{inquiry_email})
+                #{inquiryEmail})
     </insert>
 
     <!-- 문의사항 전체 목록 조회 -->
     <select id="getList"
             parameterType="com.project.thejapenproject.inquiry.vo.GetInquiryListReqVO"
-            resultType="com.project.thejapenproject.command.InquiryVO">
+            resultType="com.project.thejapenproject.inquiry.vo.InquiryGetListResVO">
         select inquiry_num,
                inquiry_title,
                inquiry_writer,
                inquiry_secret,
                inquiry_regdate,
-               inquiry_state,
+               state,
                inquiry_comment,
-               COUNT(*) over() AS totalElements
+               COUNT(*) over() AS total_elements
         from inquiry
-        WHERE inquiry_state = 'Y'
+        WHERE state = 0
         <if test='keyword != null and keyword != ""'>
             AND( inquiry_title like '%${keyword}%'
                OR inquiry_writer like '%${keyword}%')
@@ -46,23 +46,37 @@
         limit #{size} offset #{offset}
     </select>
 
+    <!-- 문의사항 비밀번호 확 -->
     <select id="checkPassword" resultType="Boolean">
         select IF(COUNT(*) = 1, true, false)
         from inquiry
-        where inquiry_num = #{inquiry_num} and
-              inquiry_password = #{inquiry_password}
+        where inquiry_num = #{inquiryNum} and
+              inquiry_password = #{inquiryPassword}
     </select>
 
+    <!-- 문의사항 상세 내용 조회-->
     <select id="getDetails"
-            resultType="com.project.thejapenproject.command.InquiryVO">
-        select * from inquiry where inquiry_num = #{inquiry_num}
+            resultType="com.project.thejapenproject.inquiry.vo.InquiryGetDetailResVO">
+        select inquiry_num,
+               inquiry_title,
+               inquiry_writer,
+               inquiry_content,
+               inquiry_regdate,
+               inquiry_comment
+        from inquiry
+        where inquiry_num = #{inquiryNum}
+        AND state = 0
     </select>
 
-    <update id="deleteData" parameterType="int">
-        update inquiry set inquiry_state = 'n'
-        where inquiry_num = #{inquiry_num}
+    <!-- 문의사항 삭제 -->
+    <update id="deleteData" parameterType="java.lang.Integer">
+        UPDATE inquiry
+        SET state = 1
+        WHERE inquiry_num = #{inquiryNum}
+          AND state = 0
     </update>
 
+    <!-- 문의사항 검색 -->
     <select id="searchInquiry"
             resultType="com.project.thejapenproject.command.InquiryVO">
         select inquiry_num,
@@ -77,9 +91,13 @@
         order by inquiry_num DESC
     </select>
 
+    <!-- 문의사항 답글 등록 -->
     <update id="addComment"
-            parameterType="com.project.thejapenproject.command.InquiryVO">
-        update inquiry set inquiry_comment = #{inquiry_comment}, inquiry_regdate = now()
-        where inquiry_num = #{inquiry_num}
+            parameterType="com.project.thejapenproject.inquiry.vo.param.AddCommentParamVO">
+        UPDATE inquiry
+        SET inquiry_comment = #{inquiryComment},
+            inquiry_regdate = now()
+        WHERE inquiry_num = #{inquiryNum}
+          AND state = 0
     </update>
 </mapper>

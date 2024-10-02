@@ -67,7 +67,7 @@ const Inquiry = () => {
         })
             .then((res) => {
                 setData(res.data.data.content);
-                setTotalData(res.data.data.total_elements);
+                setTotalData(res.data.data.totalElements);
             })
             .catch(e => toast.error('목록 조회를 실패하였습니다.'));
     }
@@ -120,7 +120,7 @@ const Inquiry = () => {
                                 {data?.map((item, index) => (
                                     <div className="inquiry-data-box" key={index}>
                                         <div className="inquiry-content-high-box">
-                                            {item.inquiry_comment ?
+                                            {item.inquiryComment ?
                                                 <p style={{width: "65px", textAlign: "center"}}
                                                    className='inquiry-comment inquiry-comment-y'>답변완료</p>
                                                 :
@@ -130,17 +130,17 @@ const Inquiry = () => {
                                             }
                                             <p
                                                 className="inquiry_title"
-                                                id={item.inquiry_num}
+                                                id={item.inquiryNum}
                                                 onClick={CheckPasswordHandle}
                                             >
-                                                {item.inquiry_secret === 'y' ? <FaLock/> : <FaLockOpen/>}
-                                                {item.inquiry_title}
+                                                {item.inquirySecret === 'y' ? <FaLock/> : <FaLockOpen/>}
+                                                {item.inquiryTitle}
 
                                             </p>
                                         </div>
                                         <div className="inquiry-content-row-box">
-                                            <p className="inquiry_regdate">{moment(item.inquiry_regdate).format('YYYY. MM. DD')}</p>
-                                            <p className="inquiry_writer">{formatWriterName(item.inquiry_writer)}</p>
+                                            <p className="inquiry_regdate">{moment(item.inquiryRegdate).format('YYYY. MM. DD')}</p>
+                                            <p className="inquiry_writer">{formatWriterName(item.inquiryWriter)}</p>
                                         </div>
                                     </div>
                                 ))}
