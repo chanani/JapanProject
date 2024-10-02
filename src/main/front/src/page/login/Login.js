@@ -61,14 +61,15 @@ function Login() {
 
     // 로그인 핸들러
     const handleLogin = async (event) => {
-        let formData = new FormData();
-        formData.append('username', username);
-        formData.append('password', password);
+
 
         axios({
             url: process.env.REACT_APP_URL_JAVA + 'login',
             method: 'POST',
-            data: formData
+            data: {
+                username : username,
+                password : password
+            }
         })
             .then((res) => {
                 if (res.status === 200) {

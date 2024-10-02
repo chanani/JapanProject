@@ -7,28 +7,33 @@
 
     <select id="getList"
             parameterType="com.project.thejapenproject.notice.vo.GetListReqVO"
-    resultType="com.project.thejapenproject.command.NoticeVO">
+            resultType="com.project.thejapenproject.command.NoticeVO">
         SELECT *, COUNT(*) OVER() AS totalElements
         FROM notice
         ORDER BY notice_regdate DESC
-        limit #{size} offset #{offset}
+            limit #{size}
+        offset #{offset}
     </select>
 
-    <select id="alarmList" parameterType="NoticeVO">
-        SELECT * FROM notice N
+    <select id="alarmList"
+            parameterType="com.project.thejapenproject.command.NoticeVO">
+        SELECT *
+        FROM notice N
         WHERE notice_num NOT IN (SELECT notice_num
                                  FROM notice_check
                                  WHERE username = #{username})
-        AND N.notice_regdate > (SELECT user_regdate
-                                FROM user
-                                WHERE username = #{username})
+          AND N.notice_regdate > (SELECT user_regdate
+                                  FROM user
+                                  WHERE username = #{username})
     </select>
 
     <select id="checkList">
-        SELECT IF(COUNT(*) = 1, true, false) AS CH FROM notice_check
+        SELECT IF(COUNT(*) = 1, true, false) AS CH
+        FROM notice_check
         WHERE username = #{username}
-        AND notice_num = #{notice_num}
+          AND notice_num = #{notice_num}
     </select>
+
     <insert id="noticeCheck">
         INSERT INTO notice_check (username,
                                   notice_num,
@@ -41,34 +46,31 @@
     <select id="getDetailNotice"
             parameterType="Integer"
             resultType="com.project.thejapenproject.notice.vo.GetNoticeDetailResVO">
-        SELECT
-        COALESCE((SELECT notice_num FROM notice WHERE #{noticeNum} > notice_num ORDER BY notice_num DESC LIMIT 1), #{noticeNum} - 1) AS noticeNum,
-        (SELECT notice_title FROM notice WHERE #{noticeNum} > notice_num ORDER BY notice_num DESC LIMIT 1) AS noticeTitle,
-        (SELECT notice_content FROM notice WHERE #{noticeNum} > notice_num ORDER BY notice_num DESC LIMIT 1) AS noticeContent,
-        (SELECT notice_regdate FROM notice WHERE #{noticeNum} > notice_num ORDER BY notice_num DESC LIMIT 1) AS noticeRegDate,
-        '1' AS position
+        SELECT COALESCE((SELECT notice_num FROM notice WHERE #{noticeNum} > notice_num ORDER BY notice_num DESC LIMIT
+                        1), #{noticeNum} - 1) AS                                                         noticeNum,
+               (SELECT notice_title FROM notice WHERE #{noticeNum} > notice_num ORDER BY notice_num DESC LIMIT 1) AS noticeTitle,
+        (SELECT notice_content FROM notice WHERE #{noticeNum} > notice_num ORDER BY notice_num DESC LIMIT 1) AS noticeContent, (SELECT notice_regdate FROM notice WHERE
+               #{noticeNum} > notice_num ORDER BY notice_num DESC LIMIT 1) AS noticeRegDate, '1' AS position
 
         UNION ALL
 
-        SELECT
-        notice_num AS noticeNum,
-        notice_title AS noticeTitle,
-        notice_content AS noticeContent,
-        notice_regdate AS noticeRegDate,
-        '2' AS position
+        SELECT notice_num     AS noticeNum,
+               notice_title   AS noticeTitle,
+               notice_content AS noticeContent,
+               notice_regdate AS noticeRegDate,
+               '2' AS position
         FROM
-        notice
+            notice
         WHERE
-        notice_num = #{noticeNum}
+            notice_num = #{noticeNum}
 
         UNION ALL
 
-        SELECT
-        COALESCE((SELECT notice_num FROM notice WHERE notice_num > #{noticeNum} ORDER BY notice_num ASC LIMIT 1), #{noticeNum} + 1) AS noticeNum,
-        (SELECT notice_title FROM notice WHERE notice_num > #{noticeNum} ORDER BY notice_num ASC LIMIT 1) AS noticeTitle,
-        (SELECT notice_content FROM notice WHERE notice_num > #{noticeNum} ORDER BY notice_num DESC LIMIT 1) AS noticeContent,
-        (SELECT notice_regdate FROM notice WHERE notice_num > #{noticeNum} ORDER BY notice_num DESC LIMIT 1) AS noticeRegDate,
-        '3' AS position
+        SELECT COALESCE((SELECT notice_num FROM notice WHERE notice_num > #{noticeNum} ORDER BY notice_num ASC LIMIT
+                        1), #{noticeNum} + 1) AS                                                        noticeNum,
+               (SELECT notice_title FROM notice WHERE notice_num > #{noticeNum} ORDER BY notice_num ASC LIMIT 1) AS noticeTitle,
+        (SELECT notice_content FROM notice WHERE notice_num > #{noticeNum} ORDER BY notice_num DESC LIMIT 1) AS noticeContent, (SELECT notice_regdate FROM notice WHERE notice_num >
+               #{noticeNum} ORDER BY notice_num DESC LIMIT 1) AS noticeRegDate, '3' AS position
 
         ORDER BY position
     </select>

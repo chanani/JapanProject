@@ -4,7 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.project.thejapenproject.user.service.UserMapper">
-    <insert id="join" parameterType="UserVO">
+    <insert id="join"
+            parameterType="com.project.thejapenproject.command.UserVO">
         insert into user(user_name,
                          username,
                          password,
@@ -38,7 +39,8 @@
         where user_phone = #{user_phone}
     </select>
 
-    <select id="login" resultType="UserVO">
+    <select id="login"
+            resultType="com.project.thejapenproject.command.UserVO">
         select * from user
         where username = #{username} and password = #{password} and user_status = 0
     </select>

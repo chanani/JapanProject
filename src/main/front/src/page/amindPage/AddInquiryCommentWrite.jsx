@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
-import { BiMessageRounded } from "react-icons/bi";
+import {BiMessageRounded} from "react-icons/bi";
 import moment from "moment/moment";
 import {Grid} from "@mui/material";
 import EditorWrapper from "../../component/Editor/Editor";
@@ -47,6 +47,12 @@ const AddInquiryCommentWrite = () => {
                 setInquiryComment(res.data.inquiry_comment);
             })
     }
+
+    // 목록으로
+    const listHandle = () => {
+        navigator("/addInquiryComment");
+    }
+
     // 문의내역 조회
     useEffect(() => {
         getDetails();
@@ -103,12 +109,11 @@ const AddInquiryCommentWrite = () => {
                     </div>
                 }
 
-
-                {/*<div className="inquiry-detail-button-box">
-                    <button onClick={listHandle}>목록으로</button>
-                    <button onClick={submitHandler} className="comment-button">답글 작성</button>
-                </div>*/}
-
+                {data.inquiry_comment &&
+                    <div className="inquiry-detail-button-box">
+                        <button onClick={listHandle}>목록으로</button>
+                    </div>
+                }
             </div>
         </div>
     );

@@ -37,7 +37,7 @@ const Mypage = () => {
     }
     // 변경사항 저장하기
     const modifySubmit = () => {
-        if (form[0].trim() === "" || form[1].trim() === "" || form[3].trim() === "" || form[4].trim() === "") {
+        if (form[0]?.trim() === "" || form[1]?.trim() === "" || form[3]?.trim() === "" || form[4]?.trim() === "") {
             return toast.error('모든 항목를 입력하세요.');
         }
         if (!Overlap("email", form[3])) return;
@@ -58,9 +58,9 @@ const Mypage = () => {
             }
         })
             .then((res) => {
-                let arr = [res.data.user_name, res.data.username, "", res.data.user_email, res.data.user_phone, "", res.data.image_path];
+                let arr = [res.data.userName, res.data.username, "", res.data.userEmail, res.data.userPhone, "", res.data.imagePath];
                 setForm(arr);
-                setUserIcon(res.data.image_path);
+                setUserIcon(res.data.imagePath);
             })
             .catch(e => "catch : " + e)
     }
@@ -68,10 +68,9 @@ const Mypage = () => {
     // 데이터 변경 API
     const modifyData = () => {
         axiosInstance.post('mypage/update', {
-            user_name: form[0],
-            username: form[1],
-            user_email: form[3],
-            user_phone: form[4]
+            username: username,
+            userEmail: form[3],
+            userPhone: form[4]
         })
             .then((res) => {
                 if (res.status === 200) {

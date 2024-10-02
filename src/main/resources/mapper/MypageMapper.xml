@@ -6,7 +6,8 @@
 <mapper namespace="com.project.thejapenproject.mypage.service.MypageMapper">
 
     <!-- 마이페이지에 유저 정보 가져오기 -->
-    <select id="myInfo" resultType="UserVO">
+    <select id="myInfo"
+            resultType="com.project.thejapenproject.mypage.vo.UserMypageResVO">
         SELECT U.username,
                U.user_name,
                U.user_email,
@@ -19,23 +20,30 @@
         WHERE U.username = #{username}
     </select>
 
-    <update id="modifyInfo" parameterType="UserVO">
+    <update id="modifyInfo"
+            parameterType="com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO">
         update user
-        set user_name = #{user_name}, user_email = #{user_email}, user_phone = #{user_phone}
+        set user_email = #{userEmail},
+            user_phone = #{userPhone}
         where username = #{username}
     </update>
 
-    <select id="favoriteList" resultType="WordVO">
-        SELECT *, 'true' as word_favorite FROM word
-        where word_num  in (
-            SELECT word_num FROM favorites
-            where username = #{username}
-            ORDER BY favorite_regdate)
+    <select id="favoriteList"
+            resultType="com.project.thejapenproject.command.WordVO">
+        SELECT *, 'true' as word_favorite
+        FROM word
+        where word_num in (SELECT word_num
+                           FROM favorites
+                           where username = #{username}
+                           ORDER BY favorite_regdate)
     </select>
 
-    <select id="recordList" resultType="RecordVO">
-        SELECT * FROM record
-        WHERE username = #{username} and record_state = 'y'
+    <select id="recordList"
+            resultType="com.project.thejapenproject.command.RecordVO">
+        SELECT *
+        FROM record
+        WHERE username = #{username}
+          and record_state = 'y'
         ORDER BY record_date DESC
     </select>
 
@@ -50,29 +58,37 @@
                W.word_meaning,
                W.word_content
         FROM record_detail R
-             JOIN word W
-             ON R.word_num = W.word_num
+                 JOIN word W
+                      ON R.word_num = W.word_num
         WHERE username = #{username}
-        AND record_num = #{record_num}
+          AND record_num = #{record_num}
         ORDER BY rd_num
     </select>
 
     <update id="withdrawal" parameterType="String">
-        update user set user_status = 1 where username = #{username};
+        update user
+        set user_status = 1
+        where username = #{username};
     </update>
 
     <update id="deleteRecord" parameterType="int">
-        update record set record_state = 'n'
+        update record
+        set record_state = 'n'
         where record_num = #{record_num}
     </update>
 
-    <select id="getSchoolList" resultType="WordVO">
-        select * from word where word_week = #{word_week}
+    <select id="getSchoolList"
+            resultType="com.project.thejapenproject.command.WordVO">
+        select *
+        from word
+        where word_week = #{word_week}
         order by rand()
     </select>
 
     <select id="getWeekList" resultType="int">
-        select distinct word_week from word order by word_week asc
+        select distinct word_week
+        from word
+        order by word_week asc
     </select>
 
     <update id="userImageRemove">
@@ -84,7 +100,7 @@
     </update>
 
     <!-- 프로필 이미지 수정 -->
-    <insert id="userImageChange" >
+    <insert id="userImageChange">
         INSERT INTO image (image_path,
                            image_type,
                            username,
@@ -98,14 +114,14 @@
     </insert>
 
 
-    <resultMap id="recordDetailsResultMap" type="RecordDetailsVO">
+    <resultMap id="recordDetailsResultMap" type="com.project.thejapenproject.command.RecordDetailsVO">
         <id property="rd_num" column="rd_num"/>
         <result property="record_num" column="record_num"/>
         <result property="word_num" column="word_num"/>
         <result property="rd_check" column="rd_check"/>
         <result property="record_value" column="Record_value"/>
 
-        <association property="wordVO" javaType="WordVO">
+        <association property="wordVO" javaType="com.project.thejapenproject.command.WordVO">
             <id property="word_num" column="word_num"/>
             <result property="word_level" column="word_level"/>
             <result property="word_meaning" column="word_meaning"/>

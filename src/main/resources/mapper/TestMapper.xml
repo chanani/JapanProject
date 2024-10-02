@@ -5,7 +5,8 @@
 
 <mapper namespace="com.project.thejapenproject.test.service.TestMapper">
 
-    <select id="getTestList" resultType="WordVO">
+    <select id="getTestList"
+            resultType="com.project.thejapenproject.command.WordVO">
         SELECT * FROM word
         WHERE word_level = #{level}
         ORDER BY RAND()

@@ -21,7 +21,7 @@
         </foreach>
     </insert>
 
-    <insert id="addNotice" parameterType="NoticeVO">
+    <insert id="addNotice" parameterType="com.project.thejapenproject.command.NoticeVO">
         INSERT INTO notice (notice_title, notice_content)
         values (#{notice_title}, #{notice_content})
     </insert>

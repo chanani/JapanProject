@@ -7,6 +7,10 @@ import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.jwt.SHA512;
 import com.project.thejapenproject.common.jwt.service.AuthService;
+import com.project.thejapenproject.mainpage.vo.LoginReqVO;
+import com.project.thejapenproject.mainpage.vo.LogoutReqVO;
+import com.project.thejapenproject.mainpage.vo.MailAuthReqVO;
+import com.project.thejapenproject.mainpage.vo.PasswordChangeReqVO;
 import com.project.thejapenproject.notice.vo.GetNoticeDetailResVO;
 import com.project.thejapenproject.notice.vo.param.GetNoticeDetailReqVO;
 import com.project.thejapenproject.user.service.UserService;
@@ -22,31 +26,21 @@ import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping(value = "/", produces = "application/json")
 @RequiredArgsConstructor
 public class MainController {
 
     private final UserService userService;
     private final AuthService authService;
 
-    /**
-     * @param userVO : 로그인 요청 정보
-     **/
     @NoneAuth
     @PostMapping("/login")
-    public Object login(UserVO userVO) throws Exception {
-
-        if (Objects.isNull(userVO)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
-        if (!StringUtils.hasText(userVO.getUsername()) || !StringUtils.hasText(userVO.getPassword()))
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-
+    public Object login(@Valid @RequestBody LoginReqVO loginReqVO) throws Exception {
         try {
-            UserAccessToken userAccessToken = authService.token(userVO);
+            UserAccessToken userAccessToken = authService.token(loginReqVO);
             return ResponseData.builder()
                     .code(HttpStatus.OK.value())
-                    .message("성공")
+                    .message(ErrorCode.SUCCESS.getMessage())
                     .data(userAccessToken)
                     .build();
         } catch (Exception e) {
@@ -55,15 +49,11 @@ public class MainController {
     }
 
 
-
     @NoneCheckToken
     @PostMapping("/logout")
-    public Object logout(@RequestBody UserVO userVO) throws Exception {
-        if (!StringUtils.hasText(userVO.getUsername())) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
+    public Object logout(@Valid @RequestBody LogoutReqVO logoutReqVO) throws Exception {
 
-        authService.logout(userVO.getUsername());
+        authService.logout(logoutReqVO.getUsername());
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
                 .message("성공")
@@ -131,18 +121,24 @@ public class MainController {
     }
 
     /**
-     * @param data : 이메일 인증을 위해 넘어오는 값
+     * @param mailAuthReqVO : 이메일 인증을 위해 넘어오는 값
      **/
     @NoneAuth
     @PostMapping("/emailAuth")
-    public ResponseEntity<String> emailAuth(@RequestBody Map<String, String> data) throws Exception {
-        boolean result = userService.emailAuth(data.get("email"));
+    public ResponseEntity<String> emailAuth(@Valid @RequestBody MailAuthReqVO mailAuthReqVO) throws Exception {
+        boolean result = userService.emailAuth(mailAuthReqVO.getEmail());
         if (result) {
             Random random = new Random();
 
             List<String> list = new ArrayList<>();
-            for (int i = 0; i < 3; i++) list.add(String.valueOf(random.nextInt(10)));
-            for (int i = 0; i < 3; i++) list.add(String.valueOf((char) (random.nextInt(26) + 65)));
+
+            for (int i = 0; i < 3; i++) {
+                list.add(String.valueOf(random.nextInt(10)));
+            }
+
+            for (int i = 0; i < 3; i++) {
+                list.add(String.valueOf((char) (random.nextInt(26) + 65)));
+            }
 
             Collections.shuffle(list);
             String authToken = "";
@@ -150,7 +146,7 @@ public class MainController {
 
             MailSend send = new MailSend();
             send.setAuthNum(authToken);
-            String mailResult = send.welcomeMailSend(data.get("email"), send.getAuthNum());
+            String mailResult = send.welcomeMailSend(mailAuthReqVO.getEmail(), send.getAuthNum());
             if (!mailResult.equals("인증번호 발송에 성공하였습니다.")) {
                 throw new Exception();
             }
@@ -162,8 +158,8 @@ public class MainController {
 
     @NoneAuth
     @PostMapping("/findId")
-    public ResponseEntity<String> findId(@RequestBody Map<String, String> data) {
-        String username = userService.findId(data.get("email"));
+    public ResponseEntity<String> findId(@Valid @RequestBody MailAuthReqVO mailAuthReqVO) {
+        String username = userService.findId(mailAuthReqVO.getEmail());
         if (!StringUtils.isEmpty(username)) {
             return ResponseEntity.ok(username);
         } else {
@@ -173,9 +169,8 @@ public class MainController {
 
     @NoneAuth
     @PostMapping("/passwordChange")
-    public ResponseEntity<String> passwordChange(@RequestBody Map<String, String> data) throws NoSuchAlgorithmException {
-        int result = userService.passwordChange(data.get("email"), SHA512.encrypt(data.get("password")));
-        if (result > 0) {
+    public ResponseEntity<String> passwordChange(@Valid @RequestBody PasswordChangeReqVO passwordChangeReqVO) throws NoSuchAlgorithmException {
+        if (userService.passwordChange(passwordChangeReqVO.getEmail(), SHA512.encrypt(passwordChangeReqVO.getPassword())) > 0) {
             return ResponseEntity.ok("비밀번호 변경 성공");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("not changed password");
@@ -183,7 +178,8 @@ public class MainController {
     }
 
     @PostMapping("/user-icon")
-    public ResponseData getNoticeDetail(@Valid @RequestBody GetUserIconReqVO getUserIconReqVO){
+    @NoneCheckToken
+    public ResponseData getUserIcon(@Valid @RequestBody GetUserIconReqVO getUserIconReqVO) {
         String image_path = userService.getUserIcon(getUserIconReqVO);
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())

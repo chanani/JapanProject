@@ -76,13 +76,13 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
                         if (!StringUtils.hasText(jwtPayload.getData())) {
                             throw new Exception();
                         }
-                        System.out.println("payload : ");
+
                         UserVO userVO = objectMapper.readValue(jwtPayload.getData(), UserVO.class);
 
                         // 중복 로그인 체크
-                        if (!authService.checkRedisToken(accessToken, userVO.getUsername())) {
+                        /*if (!authService.checkRedisToken(accessToken, userVO.getUsername())) {
                             throw new RequestParameterException(ErrorCode.REFRESH_TOKEN_NO_SAME);
-                        }
+                        }*/
 
                         request.setAttribute("username", userVO.getUsername());
                         request.setAttribute("Role", userVO.getRole());

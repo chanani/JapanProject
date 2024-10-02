@@ -5,7 +5,8 @@
 
 <mapper namespace="com.project.thejapenproject.inquiry.service.InquiryMapper">
 
-    <insert id="insertData" parameterType="InquiryVO">
+    <insert id="insertData"
+            parameterType="com.project.thejapenproject.command.InquiryVO">
         insert into inquiry (inquiry_title,
                              inquiry_content,
                              inquiry_writer,
@@ -26,7 +27,7 @@
     <!-- 문의사항 전체 목록 조회 -->
     <select id="getList"
             parameterType="com.project.thejapenproject.inquiry.vo.GetInquiryListReqVO"
-            resultType="InquiryVO">
+            resultType="com.project.thejapenproject.command.InquiryVO">
         select inquiry_num,
                inquiry_title,
                inquiry_writer,
@@ -52,7 +53,8 @@
               inquiry_password = #{inquiry_password}
     </select>
 
-    <select id="getDetails" resultType="InquiryVO">
+    <select id="getDetails"
+            resultType="com.project.thejapenproject.command.InquiryVO">
         select * from inquiry where inquiry_num = #{inquiry_num}
     </select>
 
@@ -61,7 +63,8 @@
         where inquiry_num = #{inquiry_num}
     </update>
 
-    <select id="searchInquiry" resultType="InquiryVO">
+    <select id="searchInquiry"
+            resultType="com.project.thejapenproject.command.InquiryVO">
         select inquiry_num,
                inquiry_title,
                inquiry_writer,
@@ -74,7 +77,8 @@
         order by inquiry_num DESC
     </select>
 
-    <update id="addComment" parameterType="InquiryVO">
+    <update id="addComment"
+            parameterType="com.project.thejapenproject.command.InquiryVO">
         update inquiry set inquiry_comment = #{inquiry_comment}, inquiry_regdate = now()
         where inquiry_num = #{inquiry_num}
     </update>

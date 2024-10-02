@@ -97,7 +97,6 @@ function Header() {
     const userIconHandler = () => {
         axiosInstance.post('/user-icon', {username: username})
             .then((res) => {
-                console.log(res);
                 setUserIcon(res.data.data);
             })
             .catch((e) => toast.error("이미지 불러오는 중 오류가 발생하였습니다."));
@@ -113,7 +112,7 @@ function Header() {
 
     // userIcon 태그
     const userIconDiv = () => {
-        if(process.env.REACT_APP_URL_JAVA === 'http://localhost:8889/') {
+        if (process.env.REACT_APP_URL_JAVA === 'http://localhost:8889/') {
             return <img
                 className="header-user-icon"
                 src={userIcon ? `https://lg.thejapan.today/icon-image/${userIcon}` : "/default_icon.svg"}
@@ -134,9 +133,9 @@ function Header() {
                 }}
             />
         }
-
-
     }
+
+
 
 
     // 알람 SSE Connection

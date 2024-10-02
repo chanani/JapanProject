@@ -9,6 +9,7 @@ import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.jwt.JWTProvider;
 import com.project.thejapenproject.common.jwt.SHA512;
 import com.project.thejapenproject.common.redis.RedisProvider;
+import com.project.thejapenproject.mainpage.vo.LoginReqVO;
 import com.project.thejapenproject.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,9 +29,9 @@ public class AuthService {
 
     private final String SESSION_KEY = "S_SESSION";
 
-    public UserAccessToken token(UserVO userVO) throws Exception {
-        String password = SHA512.encrypt(userVO.getPassword());
-        UserVO userData = userService.login(userVO.getUsername(), password);
+    public UserAccessToken token(LoginReqVO loginReqVO) throws Exception {
+        String password = SHA512.encrypt(loginReqVO.getPassword());
+        UserVO userData = userService.login(loginReqVO.getUsername(), password);
         if (userData == null) {
             throw new Exception();
         }
@@ -42,7 +43,7 @@ public class AuthService {
 
         // Redis에 저장하여 중복 로그인을 막는다.
         Map<String, String> map = new HashMap<String, String>();
-        map.put(userVO.getUsername(), objectMapper.writeValueAsString(userAccessToken));
+        map.put(loginReqVO.getUsername(), objectMapper.writeValueAsString(userAccessToken));
         redisProvider.setHashOps(SESSION_KEY, map);
         return userAccessToken;
     }
@@ -77,12 +78,9 @@ public class AuthService {
         return userAccessToken;
     }
 
-    /**
-     *
-     * **/
     public boolean checkRedisToken(String accessToken, String username) {
         String value = redisProvider.getHashOps(SESSION_KEY, String.valueOf(username));
-        if (value == null) {
+        if (value == null || value.equals("")) {
             return false;
         }
         try {
@@ -90,7 +88,6 @@ public class AuthService {
             JsonNode node = mapper.readTree(value);
             String storedAccessToken = node.get("accessToken").asText();
             storedAccessToken = storedAccessToken.replace("Bearer ", "");
-
             if(accessToken.equals(storedAccessToken)) {
                 return true;
             }

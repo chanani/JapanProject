@@ -3,6 +3,8 @@ package com.project.thejapenproject.mypage.service;
 import com.project.thejapenproject.command.*;
 import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
+import com.project.thejapenproject.mypage.vo.UserMypageResVO;
+import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,13 +31,13 @@ public class MypageServiceImpl implements MypageService{
     }
 
     @Override
-    public UserVO myInfo(String username) {
+    public UserMypageResVO myInfo(String username) {
         return mypageMapper.myInfo(username);
     }
 
     @Override
-    public int modifyInfo(UserVO userVO) {
-        return mypageMapper.modifyInfo(userVO);
+    public int modifyInfo(UserInfoModifyReqVO userInfoModifyReqVO) {
+        return mypageMapper.modifyInfo(userInfoModifyReqVO);
     }
 
     @Override

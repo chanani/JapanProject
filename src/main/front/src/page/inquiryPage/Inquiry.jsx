@@ -130,8 +130,8 @@ const Inquiry = () => {
                                             }
                                             <p
                                                 className="inquiry_title"
-                                                onClick={CheckPasswordHandle}
                                                 id={item.inquiry_num}
+                                                onClick={CheckPasswordHandle}
                                             >
                                                 {item.inquiry_secret === 'y' ? <FaLock/> : <FaLockOpen/>}
                                                 {item.inquiry_title}

@@ -5,7 +5,8 @@
 
 <mapper namespace="com.project.thejapenproject.study.service.StudyMapper">
 
-    <select id="getWord" resultType="WordVO">
+    <select id="getWord"
+            resultType="com.project.thejapenproject.command.WordVO">
         SELECT w.*,
                CASE
                    WHEN f.username IS NOT NULL THEN 'true'

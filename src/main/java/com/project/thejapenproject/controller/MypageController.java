@@ -6,6 +6,9 @@ import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.mypage.service.MypageService;
+import com.project.thejapenproject.mypage.vo.UserMypageResVO;
+import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
+import com.project.thejapenproject.mypage.vo.param.UsernameParamVO;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
@@ -13,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,7 +24,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/mypage")
+@RequestMapping(value = "/mypage", produces = "application/json")
 @RequiredArgsConstructor
 public class MypageController {
 
@@ -33,16 +37,14 @@ public class MypageController {
      **/
     @NoneCheckToken
     @GetMapping("/data")
-    public ResponseEntity<UserVO> myInfo(@RequestParam String username) {
-        if (Objects.isNull(username)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM1);
-        }
-        UserVO userVO = mypageService.myInfo(username);
-        if (Objects.isNull(userVO)) {
+    public ResponseEntity<UserMypageResVO> myInfo(@Valid @ModelAttribute UsernameParamVO usernameParamVO) {
+
+        UserMypageResVO userMypageResVO = mypageService.myInfo(usernameParamVO.getUsername());
+        if (Objects.isNull(userMypageResVO)) {
             throw new RequestParameterException(ErrorCode.WRONG_PARAM);
         }
 
-        return ResponseEntity.ok(userVO);
+        return ResponseEntity.ok(userMypageResVO);
     }
 
     /**
@@ -50,29 +52,17 @@ public class MypageController {
      **/
     @NoneCheckToken
     @PostMapping("/update")
-    public ResponseEntity<String> modifyInfo(@RequestBody Map<String, String> data) {
-        if (Objects.isNull(data)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM1);
+    public ResponseEntity<String> modifyInfo(@Valid @RequestBody UserInfoModifyReqVO userInfoModifyReqVO) {
+
+        if (mypageService.modifyInfo(userInfoModifyReqVO) < 0) {
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
         }
-        try {
-            UserVO userVO = UserVO.builder()
-                    .username(data.get("username"))
-                    .user_name(data.get("user_name"))
-                    .user_email(data.get("user_email"))
-                    .user_phone(data.get("user_phone"))
-                    .build();
-            int result = mypageService.modifyInfo(userVO);
-            if (result < 0) {
-                throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-            }
-            return ResponseEntity.ok("성공");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return ResponseEntity.ok("성공");
     }
 
     /**
-     * 회원 탈퇴 컨트롤러
+     * 회원 탈퇴 API
+     * ＠todo 여기부터 수정해야됨
      */
     @NoneCheckToken
     @PostMapping("/withdrawal")

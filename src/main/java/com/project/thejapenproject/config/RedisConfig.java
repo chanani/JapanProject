@@ -39,7 +39,7 @@ public class RedisConfig {
         return redisTemplate;
     }
 
-    @Bean
+    /*@Bean
     public ObjectMapper objectMapper() {
         return new ObjectMapper()
                 .configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
@@ -52,5 +52,5 @@ public class RedisConfig {
                                 PropertyNamingStrategies.LOWER_CAMEL_CASE
                         )
                 ).registerModule(new JavaTimeModule());
-    }
+    }*/
 }
