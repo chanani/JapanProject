@@ -30,6 +30,7 @@ const RecordDetails = () => {
         if (!window.confirm('기록을 삭제하시겠습니까 ?')) return;
         deleteAPI();
     }
+    // 삭제 API
     const deleteAPI = () => {
         axiosInstance.post('mypage/deleteRecord', {
             recordNum : num
@@ -40,6 +41,7 @@ const RecordDetails = () => {
                 navigate("/mypage/record");
             })
     }
+
     return (
         <div className="result-page-all">
             <div className="result-page-mid">
@@ -55,14 +57,14 @@ const RecordDetails = () => {
                                 className={"result-box-content index" + (index) + (item.rdCheck ? " success" : " fail")}
                                 key={index}>
                                 <div className="result-header-box">
-                                    {<Audio inputData={item.word_vo.wordContent}/>}
+                                    {<Audio inputData={item.wordVO.wordContent}/>}
                                     <p>{index + 1} / {answer.length}</p>
                                 </div>
                                 <div className="result-word-box" onClick={(event) => handleCheck(index)}>
                                     {kind ?
-                                        check[index] ? item.word_vo.wordMeaning : item.word_vo.wordContent
+                                        check[index] ? item.wordVO.wordMeaning : item.wordVO.wordContent
                                         :
-                                        check[index] ? item.word_vo.wordContent : item.word_vo.wordMeaning
+                                        check[index] ? item.wordVO.wordContent : item.wordVO.wordMeaning
                                     }
                                 </div>
                                 <div className="result-input-box">

@@ -5,15 +5,13 @@ import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
+import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.mypage.service.MypageService;
 import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
 import com.project.thejapenproject.mypage.vo.UserMypageResVO;
 import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
 import com.project.thejapenproject.mypage.vo.UserWithdrawalReqVO;
-import com.project.thejapenproject.mypage.vo.param.GetSchoolListParamVO;
-import com.project.thejapenproject.mypage.vo.param.ImageChangeParamVO;
-import com.project.thejapenproject.mypage.vo.param.RecordNumParamVO;
-import com.project.thejapenproject.mypage.vo.param.UsernameParamVO;
+import com.project.thejapenproject.mypage.vo.param.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -95,10 +93,14 @@ public class MypageController {
      **/
     @NoneCheckToken
     @GetMapping("/record")
-    public ResponseEntity<ArrayList<RecordVO>> recordList(@Valid @ModelAttribute UsernameParamVO usernameParamVO) {
-        ArrayList<RecordVO> list = mypageService.recordList(usernameParamVO.getUsername());
+    public ResponseData recordList(@Valid @ModelAttribute GetRecordListParamVO getRecordListParamVO) {
+        PageResponse<RecordVO> list = mypageService.recordList(getRecordListParamVO);
 
-        return ResponseEntity.ok(list);
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(list)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
     }
 
     /**

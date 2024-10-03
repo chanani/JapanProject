@@ -6,43 +6,54 @@ import moment from "moment";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
+import usePagination from "../../hook/usePagination";
+import PageNation from "../../component/PageNation";
 
 
 const RecordPage = () => {
 
-    const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+    const {userRole, username} = useContext(tokenInfoContext);
     const navigate = useNavigate();
     const [data, setData] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const dataPerPage = 5;
+    const [totalRecord, setTotalRecord] = useState(0);
 
-    // 현재 페이지의 공지사항 목록 가져오기
-    const indexOfLastNotice = currentPage * dataPerPage;
-    const indexOfFirstNotice = indexOfLastNotice - dataPerPage;
-    const currentData = (data || []).slice(indexOfFirstNotice, indexOfLastNotice);
 
-    // 페이지 변경 핸들러
-    const nextPage = () => {
-        setCurrentPage(currentPage + 1);
-    };
-    // 페이지 변경 핸들러
-    const prevPage = () => {
-        setCurrentPage(currentPage - 1);
-    };
+
+    const noticesPerPage = 5; // 보여줄 목록 수
+    const pagesPerRange = 5; // 표시할 페이지 수
+
+    // 페이지 네이션 hook 관리
+    const {
+        currentPage,
+        totalPages,
+        startPage,
+        endPage,
+        handlePageChange
+    } = usePagination({
+        totalItems: totalRecord,
+        itemsPerPage: noticesPerPage,
+        pagesPerRange
+    });
+
+
+
     // 상세페이지로 이동하는 핸들러
     const handleContent = async (index) => {
         try {
             let num = data[index]?.recordNum;
-            let kind = data[index]?.recorKind;
-            let level = data[index]?.recorLevel;
+            let kind = data[index]?.recordKind;
+            let level = data[index]?.recordLevel;
             let point = data[index]?.recordPoint;
-            const response = await axiosInstance.post('mypage/recordDetails', {username: username, recordNum: num})
+            const response = await axiosInstance.post('mypage/recordDetails', {
+                    username: username,
+                    recordNum: num
+                }
+            )
 
             const answer = response.data;
             navigate("/recordDetails", {state: {kind, level, answer, point, num}});
             window.scrollTo(0, 0);
         } catch (e) {
-            console.error(e);
             toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
         }
     };
@@ -54,18 +65,21 @@ const RecordPage = () => {
         } else {
             axiosInstance.get('mypage/record', {
                 params: {
-                    username: username
+                    username: username,
+                    page: currentPage,
+                    size: noticesPerPage
                 }
             })
                 .then((res) => {
-                    setData(res.data);
+                    setData(res.data.data.content);
+                    setTotalRecord(res.data.data.totalElements); // 전체 공지사항 개수 설정
                 })
                 .catch((error) => {
                     toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
                     setData([]); // 데이터 조회 실패 시 빈 배열로 설정
                 });
         }
-    }, []);
+    }, [currentPage]);
 
 
     return (
@@ -81,9 +95,9 @@ const RecordPage = () => {
                     }
                 </div>
 
-                {currentData?.map((item, index) => (
+                {data?.map((item, index) => (
                     <div className="recordPage-score" key={index}
-                         onClick={(event) => handleContent(index + ((currentPage - 1) * dataPerPage))}>
+                         onClick={(event) => handleContent(index)}>
                         <div className="score-header">
                             <div className="level">{item.recordLevel}단계</div>
                             <div style={{fontSize: "13px"}}>⏐</div>
@@ -97,20 +111,14 @@ const RecordPage = () => {
                     </div>
                 ))}
 
-                <div className="data-detail-box-all">
-                    <div className="data-pageNation">
-                        {currentPage === 1 ?
-                            <FaArrowLeft color="gray" size={20}/>
-                            :
-                            <FaArrowLeft onClick={prevPage} size={20}/>
-                        }
-                        {currentPage * dataPerPage < data?.length ?
-                            <FaArrowRight onClick={nextPage} size={20}/>
-                            :
-                            <FaArrowRight color="gray" size={20}/>
-                        }
-                    </div>
-                </div>
+                <PageNation
+                    currentPage={currentPage}
+                    startPage={startPage}
+                    endPage={endPage}
+                    totalPages={totalPages}
+                    handlePageChange={handlePageChange}
+                    pagesPerRange={pagesPerRange}
+                />
             </div>
 
 

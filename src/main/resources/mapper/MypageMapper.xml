@@ -48,17 +48,19 @@
 
     <!-- 유저의 학습 목록 조회 -->
     <select id="recordList"
-            parameterType="java.lang.String"
+            parameterType="com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO"
             resultType="com.project.thejapenproject.command.RecordVO">
         SELECT record_num,
                record_level,
                record_date,
                record_point,
-               record_kind
+               record_kind,
+               COUNT(*) OVER() AS total_elements
         FROM record
         WHERE username = #{username}
           and state = 0
         ORDER BY record_num DESC
+        limit #{size} offset #{offset}
     </select>
 
     <!-- 유저의 학습 상세 내용 조회 -->

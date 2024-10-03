@@ -99,7 +99,6 @@ const ResultPage = () => {
     }, [kind, word, answer]);
 
 
-    console.log(kind)
     return (
         <div className="result-page-all">
             <div className="result-page-mid">

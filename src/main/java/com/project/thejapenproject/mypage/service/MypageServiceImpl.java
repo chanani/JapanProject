@@ -4,9 +4,12 @@ import com.project.thejapenproject.command.*;
 import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
+import com.project.thejapenproject.common.utils.PageResponse;
+import com.project.thejapenproject.inquiry.vo.InquiryGetListResVO;
 import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
 import com.project.thejapenproject.mypage.vo.UserMypageResVO;
 import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
+import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +20,33 @@ public class MypageServiceImpl implements MypageService{
     @Autowired
     public MypageMapper mypageMapper;
 
-    // 즐겨찾기 목록 API
+    // 즐겨찾기 목록
     @Override
     public ArrayList<WordVO> favoriteList(String username) {
         return mypageMapper.favoriteList(username);
     }
 
+    // 학습 기록 목록
     @Override
-    public ArrayList<RecordVO> recordList(String username) {
-        return mypageMapper.recordList(username);
+    public PageResponse<RecordVO> recordList(GetRecordListParamVO getRecordListParamVO) {
+        Integer page = getRecordListParamVO.getPage();
+        Integer size = getRecordListParamVO.getSize();
+        getRecordListParamVO.setOffset((page - 1) * size);
+
+        ArrayList<RecordVO> recordList = mypageMapper.recordList(getRecordListParamVO);
+        // 총 데이터 수 계산
+        int totalElements = recordList.size() != 0 ? recordList.get(0).getTotalElements() : 0;
+        // 총 페이지 수 계산
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        PageResponse<RecordVO> responseData = PageResponse.<RecordVO>builder()
+                .content(recordList)
+                .page(page)
+                .size(size)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .build();
+        return responseData;
     }
 
     @Override

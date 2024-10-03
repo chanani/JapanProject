@@ -21,4 +21,6 @@ public class RecordVO {
     private Integer recordPoint;
     private boolean recordKind;
 
+    private Integer totalElements;
+
 }

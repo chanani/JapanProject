@@ -135,8 +135,6 @@ function Header() {
     }
 
 
-
-
     // 알람 SSE Connection
     useEffect(() => {
         /*let eventSource;
@@ -181,72 +179,42 @@ function Header() {
                 <div className="site-name-box" onClick={handlehome}>
                     <img className="header-logo" src={Logo} alt="Logo"/>
                 </div>
-                {userRole !== 'role_admin' ?
-                    (<div className="header-category-box">
-                        {['학습', '테스트', '기타페이지', '고객지원'].map((title, index) => {
-                            let links;
-                            switch (index) {
-                                case 0:
-                                    links = studyLink;
-                                    break;
-                                case 1:
-                                    links = testLink;
-                                    break;
-                                case 2:
-                                    links = otherLink;
-                                    break;
-                                case 3:
-                                    links = customerLink;
-                                    break;
-                                default:
-                                    links = [];
-                            }
-                            return (
-                                <div key={index}>
-                                    <p>{title}<MdOutlineKeyboardArrowDown/></p>
-                                    <div className="header-category-detail">
-                                        {links.map((item, i) => (
-                                            <Link key={i} to={item[0]}>{item[1]}</Link>
-                                        ))}
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>) :
-                    (<div className="header-category-box">
-                        {['학습', '테스트', '기타페이지', '고객지원', '관리자'].map((title, index) => {
-                            let links;
-                            switch (index) {
-                                case 0:
-                                    links = studyLink;
-                                    break;
-                                case 1:
-                                    links = testLink;
-                                    break;
-                                case 2:
-                                    links = otherLink;
-                                    break;
-                                case 3:
-                                    links = customerLink;
-                                    break;
-                                case 4:
+                <div className="header-category-box">
+                    {['학습', '테스트', '기타페이지', '고객지원', ...(userRole === 'role_admin' ? ['관리자 페이지'] : [])].map((title, index) => {
+                        let links;
+                        switch (index) {
+                            case 0:
+                                links = studyLink;
+                                break;
+                            case 1:
+                                links = testLink;
+                                break;
+                            case 2:
+                                links = otherLink;
+                                break;
+                            case 3:
+                                links = customerLink;
+                                break;
+                            case 4:
+                                if (userRole === 'role_admin') {
                                     links = adminLink;
-                                    break;
-                                default:
-                                    links = [];
-                            }
-                            return (
-                                <div key={index}>
-                                    <p>{title}<MdOutlineKeyboardArrowDown/></p>
-                                    <div className="header-category-detail">
-                                        {links.map((item, i) => (
-                                            <Link key={i} to={item[0]}>{item[1]}</Link>
-                                        ))}
-                                    </div>
+                                }
+                                break;
+                            default:
+                                links = [];
+                        }
+                        return (
+                            <div key={index}>
+                                <p>{title}<MdOutlineKeyboardArrowDown/></p>
+                                <div className="header-category-detail">
+                                    {links.map((item, i) => (
+                                        <Link key={i} to={item[0]}>{item[1]}</Link>
+                                    ))}
                                 </div>
-                            );
-                        })}
-                    </div>)}
+                            </div>
+                        );
+                    })}
+                </div>
             </div>
             <div className="right-menu">
                 {userRole === 'none' ?
@@ -295,7 +263,7 @@ function Header() {
             {/* 모바일 사이즈 사이드 바 */}
             <div className={"mobile-side-bar " + (openSide ? "show" : "")}>
                 <div className="mobile-size-bar-category">
-                    {['학습', '테스트', '기타페이지', '고객지원'].map((title, index) => {
+                    {['학습', '테스트', '기타페이지', '고객지원', ...(userRole === 'role_admin' ? ['관리자 페이지'] : [])].map((title, index) => {
                         let links;
                         switch (index) {
                             case 0:
@@ -309,6 +277,11 @@ function Header() {
                                 break;
                             case 3:
                                 links = customerLink;
+                                break;
+                            case 4:
+                                if (userRole === 'role_admin') {
+                                    links = adminLink;
+                                }
                                 break;
                             default:
                                 links = [];

@@ -4,6 +4,7 @@ import com.project.thejapenproject.command.*;
 import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
 import com.project.thejapenproject.mypage.vo.UserMypageResVO;
 import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
+import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 @Mapper
 public interface MypageMapper {
     public ArrayList<WordVO> favoriteList(String username);
-    public ArrayList<RecordVO> recordList(String username);
+    public ArrayList<RecordVO> recordList(GetRecordListParamVO getRecordListParamVO);
     public ArrayList<RecordDetailsVO> recordDetails(GetRecordDetailsReqVO getRecordDetailsReqVO);
     public UserMypageResVO myInfo(String username);
     public int modifyInfo(UserInfoModifyReqVO userInfoModifyReqVO);
