@@ -57,7 +57,10 @@ public enum ErrorCode {
     // inquiry
     FAIL_TO_REGISTER_INQUIRY(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 등록에 실패하였습니다."),
     FAIL_TO_REMOVE_INQUIRY(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 삭제에 실패하였습니다."),
-    FAIL_TO_ADD_COMMENT(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 답글 등록에 실패하였습니다.");
+    FAIL_TO_ADD_COMMENT(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 답글 등록에 실패하였습니다."),
+
+    // test
+    WRONG_PARAM_LEVEL(HttpStatus.BAD_REQUEST, "단계는 필수입니다.");
 
 
 

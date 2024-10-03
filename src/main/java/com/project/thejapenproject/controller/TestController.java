@@ -7,6 +7,8 @@ import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.test.service.TestService;
+import com.project.thejapenproject.test.vo.GetTestListResVO;
+import com.project.thejapenproject.test.vo.TestRecordRegisterReqVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.*;
 
 @Controller
@@ -24,20 +27,28 @@ public class TestController {
 
     public final TestService testService;
 
+    /**
+     * 테스트 내용 가져오는 API
+     * level에 단계 필수 전달.
+     */
     @NoneAuth
     @GetMapping("/word/{level}")
-    public ResponseEntity<ArrayList<WordVO>> getTestList(@PathVariable Integer level) {
+    public ResponseEntity<ArrayList<GetTestListResVO>> getTestList(@PathVariable Integer level) {
+        if (level == null) {
+            throw new RequestParameterException(ErrorCode.WRONG_PARAM_LEVEL);
+        }
         return ResponseEntity.ok(testService.getTestList(level));
     }
 
+    /**
+     * 점수 기록 API
+     */
     @NoneCheckToken
     @PostMapping("/record")
     @Transactional
-    public ResponseEntity<String> testResult(@RequestBody Map<String, Object> data) {
-        if(Objects.isNull(data)){
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
-        ArrayList<Object> list = (ArrayList<Object>) data.get("answer");
+    public ResponseEntity<String> testResult(@Valid @RequestBody TestRecordRegisterReqVO testRecordRegisterReqVO) {
+
+        ArrayList<Object> list = testRecordRegisterReqVO.getAnswer();
         ArrayList<TestItemVO> testList = new ArrayList<>();
         for (Object x : list) {
             String[] str = String.valueOf(x).replace("[", "").replace("]", "")
@@ -50,15 +61,11 @@ public class TestController {
             testList.add(vo);
         }
 
-        int a = testService.insertRecord((Integer) data.get("level"),
-                (String) data.get("username"),
-                (Integer) data.get("point"),
-                (boolean) data.get("kind"));
+        int insertRecordResult = testService.insertRecord(testRecordRegisterReqVO);
 
-        int b = testService.recordData(testList,
-                (String) data.get("username"));
+        int insertDetailResult = testService.recordData(testList, testRecordRegisterReqVO.getUsername());
 
-        if (a == 1 && b == 10) {
+        if (insertRecordResult == 1 && insertDetailResult == 10) {
             return ResponseEntity.ok("성공");
         } else {
             return ResponseEntity.ok("실패");

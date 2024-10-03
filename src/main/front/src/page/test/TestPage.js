@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "../../styles/test/TestPage.css";
 import Test from "../../component/Test";
-import { useLocation } from "react-router-dom";
 
 function TestPage() {
   const [currentPath, setCurrentPath] = useState(window.location.pathname.substring(6));

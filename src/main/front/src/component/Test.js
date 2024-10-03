@@ -16,7 +16,7 @@ const Test = ({level, kind, currentPath}) => {
     const handleAnswer = (event, index) => {
         // word_num, answer값
         const updatedAnswer = [...answer];
-        updatedAnswer[index] = [event.target.value, word[index].word_num];
+        updatedAnswer[index] = [event.target.value, word[index].wordNum];
         setAnswer(updatedAnswer);
     };
     // 결과 확인 핸들러
@@ -29,7 +29,6 @@ const Test = ({level, kind, currentPath}) => {
     useEffect(() => {
         axiosInstance.get(`/test/word/${level}`)
             .then((res) => {
-                console.log("data = ", res.data);
                 setWord(res.data)
             })
     }, [level]);
@@ -43,17 +42,17 @@ const Test = ({level, kind, currentPath}) => {
                 {word.map((item, index) => (
                     <div className="test-box-content" key={index}>
                         <div className="test-header-box">
-                            {kind ? <Audio inputData={item.word_content}/> : <p></p>}
+                            {kind ? <Audio inputData={item.wordContent}/> : <p></p>}
                             <p>{index + 1} / {word.length}</p>
                         </div>
                         <div className="test-word-box">
                             {kind ?
                                 <div className="test-word-content-box">
-                                    <p className="test-word-content-chinese">{item.word_chinese}</p>
-                                    <p className="test-word-content-content">{item.word_content}</p>
+                                    <p className="test-word-content-chinese">{item.wordChinese}</p>
+                                    <p className="test-word-content-content">{item.wordContent}</p>
                                 </div>
                                 :
-                                <p>{item.word_meaning}</p>}
+                                <p>{item.wordMeaning}</p>}
                         </div>
                         <div className="test-input-box">
                             <input type="text" onChange={(event) => handleAnswer(event, index)}

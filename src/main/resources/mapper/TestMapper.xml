@@ -5,14 +5,20 @@
 
 <mapper namespace="com.project.thejapenproject.test.service.TestMapper">
 
+    <!-- 테스트볼 내용 조회 -->
     <select id="getTestList"
-            resultType="com.project.thejapenproject.command.WordVO">
-        SELECT * FROM word
+            resultType="com.project.thejapenproject.test.vo.GetTestListResVO">
+        SELECT word_num,
+               word_meaning,
+               word_content,
+               word_chinese
+        FROM word
         WHERE word_level = #{level}
         ORDER BY RAND()
-        LIMIT 10
+         LIMIT 10
     </select>
 
+    <!-- 테스트 결과 insert -->
     <insert id="insertRecord">
         INSERT INTO record (username,
                             record_level,
@@ -26,6 +32,7 @@
                 #{kind})
     </insert>
 
+    <!-- 테스트 상세 결과 저장-->
     <insert id="recordData" parameterType="java.util.List">
         <selectKey keyProperty="record_num" resultType="int" order="BEFORE">
             SELECT max(record_num) FROM record
