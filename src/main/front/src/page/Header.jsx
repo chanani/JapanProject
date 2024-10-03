@@ -37,8 +37,7 @@ function Header() {
     // 고객지원 list
     const customerLink = [["/notice", "공지사항"], ["/inquiry", '문의사항']];
     // admin 페이지 Link list
-    const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"], ["/mypage", "나의정보"],
-        ["/addInquiryComment", '문의사항'], ["/admin/addWeekWord", '단계별단어 추가']];
+    const adminLink = [["/admin/addWord", "단어추가"], ["/admin/addNotice", "공지사항 전달"], ["/addInquiryComment", '문의사항 답글']];
 
     // 알랑 목록 조회 API
     const getNoticeList = () => {

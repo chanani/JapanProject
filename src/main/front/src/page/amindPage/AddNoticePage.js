@@ -1,14 +1,23 @@
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import "../../styles/adminPage/AddNoticePage.css";
-import axios from "axios";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
+import {useNavigate} from "react-router-dom";
+
 
 const AddNoticePage = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userRole !== 'role_admin') {
+            toast.error('해당 페이지는 관리자 외에는 접근이 불가합니다.');
+            navigate("/");
+        }
+    }, [userRole]);
 
 
     // 제목 수정 핸들러
@@ -25,13 +34,16 @@ const AddNoticePage = () => {
     const handleSubmit = async () => {
         try {
             // 공지사항 등록
-            const noticeResponse = await axiosInstance.post('admin/addNotice', {title: title, content: content})
-                .then(res => console.log(res))
+            const noticeResponse = await axiosInstance.post('admin/addNotice', {
+                noticeTitle: title,
+                noticeContent: content
+            })
+                .then(res => toast.success('공지사항이 등록되었습니다.'))
                 .catch("공지사항 등록에 실패하였습니다.")
             // 카프카 Topic 등록
-            await axiosInstance.post('kafka/send', {message: content})
-            toast.success("정상적으로 등록되었습니다.");
-            window.location = "/";
+            // await axiosInstance.post('kafka/send', {message: content})
+            // toast.success("정상적으로 등록되었습니다.");
+            navigate("/");
         } catch (error) {
             if (error.response && error.response.status === 403) toast.error("등록에 실패하였습니다. 관리자에게 문의해주세요.");
             else toast.error("등록에 실패하였습니다. 관리자에게 문의해주세요.");

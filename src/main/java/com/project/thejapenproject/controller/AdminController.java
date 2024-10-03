@@ -1,6 +1,8 @@
 package com.project.thejapenproject.controller;
 
 import com.project.thejapenproject.admin.service.AdminService;
+import com.project.thejapenproject.admin.vo.AddNoticeReqVO;
+import com.project.thejapenproject.admin.vo.AddWordReqVO;
 import com.project.thejapenproject.command.NoticeVO;
 import com.project.thejapenproject.command.SchoolVO;
 import com.project.thejapenproject.command.WordVO;
@@ -12,42 +14,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import reactor.util.StringUtils;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
-@Controller
+@RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
 public class AdminController {
 
     private final AdminService adminService;
 
-    @ExceptionHandler
+    /**
+     * 단어 등록 API
+     * @param addWordReqVO : 단어, 뜻, 단계, 한자, 주차까지 등록
+     */
     @PostMapping("/addWordList")
-    public ResponseEntity<String> addWordList(@RequestBody ArrayList<WordVO> wordList){
-        if(Objects.isNull(wordList)){
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
-        adminService.addWordList(wordList);
+    public ResponseEntity<String> addWordList(@Valid @RequestBody AddWordReqVO addWordReqVO){
+        adminService.addWordList(addWordReqVO);
         return ResponseEntity.ok("성공");
     }
     @PostMapping("/addNotice")
-    public ResponseEntity<String> addNotice(@RequestBody Map<String, String> map){
-        if(Objects.isNull(map)){
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
-        adminService.addNotice(NoticeVO.builder()
-                .noticeContent(map.get("content"))
-                .noticeTitle(map.get("title"))
-                .build());
+    public ResponseEntity<String> addNotice(@Valid @RequestBody AddNoticeReqVO addNoticeReqVO){
+
+        adminService.addNotice(addNoticeReqVO);
         return ResponseEntity.ok("성공");
     }
 

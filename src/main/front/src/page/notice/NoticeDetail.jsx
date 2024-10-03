@@ -58,7 +58,7 @@ const NoticeDetail = () => {
                     {noticeDetail[2]?.noticeTitle ?
                         <div className="notice-back-data-box" onClick={() => getOtherData(noticeDetail[2].noticeNum)}>
                             <p className="notice-other-info">이전글</p>
-                            <p className="notice-other-title">{noticeDetail[2].notice_title}</p>
+                            <p className="notice-other-title">{noticeDetail[2].noticeTitle}</p>
                         </div>
                     :
                     ""

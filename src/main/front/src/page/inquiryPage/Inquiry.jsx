@@ -146,7 +146,7 @@ const Inquiry = () => {
                                 ))}
                             </div>
                         }
-                        <hr style={{border: "0.5px solid #777"}}/>
+                        <hr style={{border: "-0.5px solid #777"}}/>
                     </div>
 
                     <div className="inquiry-search-button-box">

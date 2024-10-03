@@ -73,12 +73,6 @@ public class InquiryServiceImpl implements InquiryService {
         }
     }
 
-    // 문의사항 키워드 검색
-    @Override
-    public ArrayList<InquiryVO> searchInquiry(String word) {
-        return inquiryMapper.searchInquiry(word);
-    }
-
     // 문의사항 답글 등록
     @Override
     public void addComment(AddCommentParamVO addCommentParamVO) {

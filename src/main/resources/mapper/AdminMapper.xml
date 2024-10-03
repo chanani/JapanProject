@@ -5,7 +5,9 @@
 
 <mapper namespace="com.project.thejapenproject.admin.service.AdminMapper">
 
-    <insert id="addWordList" parameterType="java.util.List">
+    <!-- 단어 등록하기 -->
+    <insert id="addWordList"
+            parameterType="com.project.thejapenproject.admin.vo.AddWordReqVO">
         INSERT INTO word (word_content,
                           word_meaning,
                           word_level,
@@ -13,17 +15,19 @@
                           word_week)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.word_content},
-            #{item.word_meaning},
-            #{item.word_level},
-            #{item.word_chinese},
-            #{item.word_week})
+            (#{item.wordContent},
+            #{item.wordMeaning},
+            #{item.wordLevel},
+            #{item.wordChinese},
+            #{item.wordWeek})
         </foreach>
     </insert>
 
     <insert id="addNotice" parameterType="com.project.thejapenproject.command.NoticeVO">
-        INSERT INTO notice (notice_title, notice_content)
-        values (#{notice_title}, #{notice_content})
+        INSERT INTO notice (notice_title,
+                            notice_content)
+        values (#{noticeTitle},
+                #{noticeContent})
     </insert>
 
     <insert id="addWeekWord" parameterType="java.util.List">

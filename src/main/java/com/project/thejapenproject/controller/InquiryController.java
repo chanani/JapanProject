@@ -104,22 +104,6 @@ public class InquiryController {
     }
 
     /**
-     * 문의내역 검색 API
-     *
-     * @Param word : 검색 키워드를 통해 조회
-     **/
-    @NoneAuth
-    @GetMapping("/searchInquiry")
-    public ResponseEntity<Object> searchInquiry(@Param("word") String word) {
-        if (Objects.isNull(word)) {
-            throw new RequestParameterException(ErrorCode.WRONG_PARAM);
-        }
-        ArrayList<InquiryVO> inquiryList = inquiryService.searchInquiry(word);
-        if (inquiryList.size() == 0) return ResponseEntity.ok(HttpStatus.NOT_FOUND);
-        return ResponseEntity.ok(inquiryList);
-    }
-
-    /**
      * 문의 답글 등록 API
      */
     @NoneCheckToken

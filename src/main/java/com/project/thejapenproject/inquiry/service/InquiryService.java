@@ -17,6 +17,5 @@ public interface InquiryService {
     public Boolean checkPassword(CheckPasswordParamVO checkPasswordParamVO);
     public InquiryGetDetailResVO getDetails(int inquiry_num);
     public void deleteData(int inquiry_num);
-    public ArrayList<InquiryVO> searchInquiry(String word);
     public void addComment(AddCommentParamVO addCommentParamVO);
 }

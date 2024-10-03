@@ -29,9 +29,6 @@ public interface InquiryMapper {
     // 문의 사항 삭제
     public int deleteData(int inquiryNum);
 
-    // 문의사항 키워드 검색
-    public ArrayList<InquiryVO> searchInquiry(String word);
-
     // 문의사항 답글 등록
     public int addComment(AddCommentParamVO addCommentParamVO);
 

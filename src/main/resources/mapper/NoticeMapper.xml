@@ -10,7 +10,8 @@
             resultType="com.project.thejapenproject.command.NoticeVO">
         SELECT *, COUNT(*) OVER() AS totalElements
         FROM notice
-        ORDER BY notice_regdate DESC
+        WHERE state = 0
+        ORDER BY notice_num DESC
             limit #{size}
         offset #{offset}
     </select>

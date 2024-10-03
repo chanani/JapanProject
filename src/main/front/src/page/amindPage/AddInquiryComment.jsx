@@ -63,24 +63,16 @@ const AddInquiryComment = () => {
     // 검색 핸들러
     const searchHandle = () => {
         if (!word) toast.error('검색하실 문구를 입력해주세요.');
-        searchAPI();
+        handlePageChange(1);
+        getListAPI();
     }
+    // 검색 엔터 핸들러
     const keyDownHandle = (event) => {
-        if(event.key !== 'Enter') return;
-        searchAPI();
+        if (event.key !== 'Enter') return;
+        handlePageChange(1);
+        getListAPI();
     }
-    // 검색 요청 API
-    const searchAPI = () => {
-        axiosInstance.get('inquiry/searchInquiry', {
-            params: {
-                word: word
-            }
-        })
-            .then((res) => {
-                if (res.data === 'NOT_FOUND') return toast.error('일치하는 게시글이 존재하지 않습니다.');
-                setData(res.data);
-            })
-    }
+
     // 검색 초기화 핸들러
     const resetHandle = () => {
         setWord("");
@@ -138,7 +130,7 @@ const AddInquiryComment = () => {
                                 ))}
                             </div>
                         }
-                        <hr style={{border: "0.5px solid #777"}}/>
+                        <hr style={{border: "-0.5px solid #777"}}/>
                     </div>
 
                     <div className="inquiry-search-button-box">
