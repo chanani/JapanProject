@@ -1,14 +1,14 @@
 .study-page-all {
   display: flex;
   justify-content: center;
-  padding: 40px 0;
-  background-color: #f6f7fb;
-
+  align-items: center;
+  padding: 0 5px;
+  background-color: white;
+  width: 100%;
 }
 
 .study-page-mid{
-  background-color: white;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+
 }
 
 .study-off-box{
@@ -52,7 +52,8 @@ input[type="number"]::-webkit-inner-spin-button {
 /* 500 이하 */
 @media(max-width : 600px){
   .study-page-mid{
-    width: 350px;
+    width: 95%;
+    margin-top: 20px;
   }
   .study-off-info {
     font-size: 15px;
@@ -62,7 +63,8 @@ input[type="number"]::-webkit-inner-spin-button {
 /* 500 이상 */
 @media(min-width : 600px){
   .study-page-mid{
-    width: 500px;
+    width: 90%;
+    margin-top: 30px;
   }
   .study-off-info {
     font-size: 18px;
@@ -71,7 +73,8 @@ input[type="number"]::-webkit-inner-spin-button {
  /* 1000 이상 */
 @media(min-width : 1000px){
   .study-page-mid{
-    width: 48vw;
+    width: 70%;
+    margin-top: 40px;
   }
   .study-off-info {
     font-size: 20px;

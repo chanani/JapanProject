@@ -1,73 +1,207 @@
-.study-on-box {
-  transition: transform 0.3s ease; 
+.study-on-header-box {
+    transition: transform 0.6s ease;
 }
 
-.study-on-box.fade-out {
-  transform: rotateX(360deg); 
+.study-on-header-box.fade-out {
+    transform: rotateX(360deg);
 }
 
+
+.study-on-header-box {
+    background-color: white;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.4), 0 0px 0px rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    position: relative;
+}
 
 .on-header-box {
-  padding: 13px 15px 0 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    padding: 13px 15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.on-word-box{
-  height: 150px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.on-word-box {
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .on-click-box {
-  display: flex;
-  justify-content: space-between;
-  border-top: 2px solid #777;
-  padding: 13px 15px 10px 15px;
-  align-items: center;
+    display: flex;
+    justify-content: center;
+    padding: 13px 15px 10px 15px;
+    align-items: center;
+    margin: 15px 0;
 }
+
+.on-click-box p {
+    font-size: 25px;
+}
+
 .click-mid {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .click-mid > p {
-  margin: 0 10px;
+    margin: 5px 20px 0 20px;
+
 }
 
-.click-right > a {color: black;}
-
-.click-right > a path {
-  width: 300px;
+.study-on-play-box {
+    display: flex;
+    justify-content: space-between;
 }
 
+
+/* Progress bar container */
+.progress-bar {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px 5px 0 0;
+}
+
+/* Fill element */
+.progress-bar-fill {
+    height: 100%;
+    background-color: #2ac4f8;
+    border-radius: 5px 5px 0 0;
+    transition: width 0.3s ease-in-out;
+}
+
+
+/* 이용 방법 버튼 박스 */
+.study-rule-box {
+    font-size: 16px;
+
+}
+.study-rule-box span {
+    color: #006ae5;
+    font-weight: 600;
+}
+
+.study-rule-box label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.study-rule-box input[type="checkbox"] {
+    appearance: none;
+    position: relative;
+    border: max(2px, 0.1em) solid gray;
+    border-radius: 1.25em;
+    width: 2.25em;
+    height: 1.25em;
+}
+
+.study-rule-box input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    transform: scale(0.8);
+    background-color: gray;
+    transition: left 250ms linear;
+}
+
+.study-rule-box input[type="checkbox"]:checked {
+    background-color: #b2b9ea;
+    border-color: #dbdfff;
+}
+
+.study-rule-box input[type="checkbox"]:checked::before {
+    background-color: #4255ff;
+    left: 1em;
+}
+
+.study-rule-box input[type="checkbox"]:disabled {
+    border-color: lightgray;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.study-rule-box input[type="checkbox"]:disabled:before {
+    background-color: lightgray;
+}
+
+.study-rule-box input[type="checkbox"]:disabled + span {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.study-rule-box input[type="checkbox"]:focus-visible {
+    outline-offset: max(2px, 0.1em);
+    outline: max(2px, 0.1em) solid #4255ff;
+}
+
+.study-rule-box fieldset {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+
+/* 이용방법 내용 박스 */
+.help-box {
+    padding: 7px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #5fa5f6;
+    border-radius: 0 0 10px 10px;
+    color: white;
+    font-weight: 600;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
 
 
 /* 500 이하 */
-@media(max-width : 500px){
-  .on-word-box{
-    height: 180px;
-    font-size: 40px;
-    font-weight: 400;
-  }
+@media (max-width: 500px) {
+    .on-word-box {
+        height: 230px;
+        font-size: 40px;
+        font-weight: 400;
+    }
+    .help-box {
+        font-size: 13px;
+    }
 }
 
 /* 500 이상 */
-@media(min-width : 500px){
-  .on-word-box{
-    height: 250px;
-    font-size: 45px;
-    font-weight: 400;
-  }
+@media (min-width: 500px) {
+    .on-word-box {
+        height: 280px;
+        font-size: 45px;
+        font-weight: 400;
+    }
+    .help-box{
+        font-size: 15px;
+    }
 }
- /* 1000 이상 */
-@media(min-width : 1000px){
-  .on-word-box{
-    height: 300px;
-    font-size: 50px;
-    font-weight: 400;
-  }
+
+/* 1000 이상 */
+@media (min-width: 1000px) {
+    .on-word-box {
+        height: 330px;
+        font-size: 50px;
+        font-weight: 400;
+    }
+    .help-box {
+        font-size: 16px;
+    }
 }
+
+
+

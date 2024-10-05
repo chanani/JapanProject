@@ -30,12 +30,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 5px 10px;
     border: 1px solid #777;
     margin-bottom: 2px;
     border-radius: 5px 5px 0 0;
     font-weight: 500;
-    background-color: rgb(231 240 254);
+    background-color: rgb(111 164 246);
 }
 
 .add-box-input-box {
@@ -113,13 +113,18 @@
 }
 
 .add-box-btn > .home-btn {
-    background: white;
-    color: grey;
+    background: #fff;
+    color: #212121;
     border: 1px solid rgb(211, 211, 211);
     width: 85px;
     height: 41px;
     font-size: 14px;
     border-radius: 3px;
+    transition: all .15s cubic-bezier(.47, 0, .745, .715);
+}
+
+.add-box-btn > .home-btn:hover {
+    background-color: #f5f5f5;
 }
 
 .add-box-btn > .add-word-submit-btn {
@@ -130,6 +135,10 @@
     height: 41px;
     font-size: 14px;
     border-radius: 3px;
+}
+
+.add-box-btn > .add-word-submit-btn:hover {
+    background-color: #1b1b1b;
 }
 
 
