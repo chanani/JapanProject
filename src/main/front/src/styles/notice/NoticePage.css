@@ -61,7 +61,6 @@
 /* 600 까지 */
 @media (max-width: 600px) {
     .user-notice-box {
-        margin-top: 40px;
         width: 95%;
     }
     .content-box-p-tag {
@@ -72,7 +71,6 @@
 /* 600 이상 */
 @media (min-width: 600px) {
     .user-notice-box {
-        margin-top: 40px;
         width: 90%;
     }
     .content-box-p-tag {
@@ -83,7 +81,6 @@
 /* 1000 이상 */
 @media (min-width: 1000px) {
     .user-notice-box {
-        margin-top: 40px;
         width: 70%;
     }
     .content-box-p-tag {

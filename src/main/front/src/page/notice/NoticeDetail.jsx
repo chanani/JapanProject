@@ -2,14 +2,14 @@ import "../../styles/notice/NoticeDetail.css";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
 import {useLocation, useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import { IoChevronBackOutline } from "react-icons/io5";
 
-const NoticeDetail = () => {
+const
+    NoticeDetail = () => {
     const location = useLocation(); // useLocation으로 state 받기
     const {noticeDetailNo} = location.state; // 전달된 state에서 값 추출
     const [noticeDetail, setNoticeDetail] = useState([]) // 공지사항 데이터
-    const [otherNoticeData, setOtherNoticeData] = useState([]) // 이전, 다음 공지사항
     const navigate = useNavigate();
 
     // 공지사항 상세 내용 가져오기
@@ -51,7 +51,7 @@ const NoticeDetail = () => {
                 </div>
 
                 <div className="notice-detail-content-box">
-                    <p>{noticeDetail[1]?.noticeContent}</p>
+                    <div dangerouslySetInnerHTML={{__html: noticeDetail[1]?.noticeContent}}/>
                 </div>
 
                 <div className="notice-other-data-box">

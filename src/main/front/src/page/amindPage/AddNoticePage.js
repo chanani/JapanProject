@@ -1,15 +1,17 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "../../styles/adminPage/AddNoticePage.css";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
 import {useNavigate} from "react-router-dom";
+import {Grid} from "@mui/material";
+import EditorWrapper from "../../component/Editor/Editor";
 
 
 const AddNoticePage = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
-    const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+    const {userRole} = useContext(tokenInfoContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,11 +27,7 @@ const AddNoticePage = () => {
         let input_value = event.target.value;
         setTitle(input_value);
     }
-    // 내용 수정 핸들러
-    const handleContent = (event) => {
-        let input_value = event.target.value;
-        setContent(input_value);
-    }
+
     // 공지사항 등록 핸들러
     const handleSubmit = async () => {
         try {
@@ -57,22 +55,27 @@ const AddNoticePage = () => {
                     <p>공지사항 작성</p>
                 </div>
                 <div className="notice-title-box">
-                    <label htmlFor="notice-title">제목 :</label>
+                    <p>제목</p>
                     <input type="text"
                            id="notice-title"
                            value={title}
                            onChange={handleTitle}
+                           placeholder="제목을 입력해주세요."
                     />
                 </div>
                 <div className="notice-content-box">
-                    <label htmlFor="notice-content">내용 : </label>
-                    <textarea id="notice-content"
-                              value={content}
-                              onChange={handleContent}
-                    ></textarea>
-                </div>
-                <div className="notice-btn-box">
-                    <button onClick={handleSubmit}>전송하기</button>
+
+                    <Grid container sx={{minHeight: "100%", marginTop: "10px"}}
+                          justifyContent="center"
+                          flexDirection="column">
+                        <Grid item xs={12} sx={{width: "100%"}}>
+                            <EditorWrapper
+                                setEditorContent={setContent}
+                                submitHandler={handleSubmit}
+                                historyPath="/notice"
+                            />
+                        </Grid>
+                    </Grid>
                 </div>
             </div>
         </div>

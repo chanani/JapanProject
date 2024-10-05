@@ -54,7 +54,6 @@ const ResultPage = () => {
         let sliceWord = word.replaceAll(" ", "").split(",");
         let foundCorrectAnswer = false;
         sliceWord.map((item, index) => {
-            console.log("item : " + item)
             if (item === answer) {
                 foundCorrectAnswer = true;
             }
