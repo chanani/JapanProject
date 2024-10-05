@@ -7,9 +7,6 @@
     width: 100%;
 }
 
-.inquiry-box{
-    margin-top: 40px;
-}
 
 .inquiry-title-box {
     font-size: 25px;
@@ -167,6 +164,7 @@
 @media(max-width : 600px){
     .inquiry-box{
         width: 95%;
+        margin-top: 20px;
     }
 
 }
@@ -174,6 +172,7 @@
 @media(min-width : 600px){
     .inquiry-box{
         width: 90%;
+        margin-top: 30px;
     }
 
 
@@ -183,6 +182,7 @@
 @media(min-width : 1000px){
     .inquiry-box{
         width: 70%;
+        margin-top: 40px;
     }
 
 }

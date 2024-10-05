@@ -14,11 +14,6 @@
     padding-top: 3px;
 }
 
-.notice-detail-title-box {
-    font-size: 33px;
-    font-weight: 700;
-    margin-bottom: 30px;
-}
 
 .notice-detail-content-box {
     padding: 20px 0;
@@ -86,6 +81,12 @@
     .notice-other-title {
         max-width : 200px
     }
+
+    .notice-detail-title-box {
+        font-size: 25px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
 }
 
 /* 600 이상 */
@@ -94,6 +95,12 @@
     .notice-other-title {
         max-width : 410px
     }
+
+    .notice-detail-title-box {
+        font-size: 33px;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
 }
 
 /* 1000 이상 */
@@ -101,5 +108,11 @@
 
     .notice-other-title {
         max-width : 590px
+    }
+
+    .notice-detail-title-box {
+        font-size: 33px;
+        font-weight: 700;
+        margin-bottom: 15px;
     }
 }

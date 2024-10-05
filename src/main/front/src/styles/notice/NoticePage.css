@@ -7,10 +7,6 @@
     width: 100%;
 }
 
-.user-notice-box {
-    margin-top: 40px;
-}
-
 .user-notice-title-box {
     font-size: 25px;
     font-weight: 700;
@@ -62,6 +58,7 @@
 @media (max-width: 600px) {
     .user-notice-box {
         width: 95%;
+        margin-top: 20px;
     }
     .content-box-p-tag {
         max-width : 200px
@@ -72,6 +69,7 @@
 @media (min-width: 600px) {
     .user-notice-box {
         width: 90%;
+        margin-top: 30px;
     }
     .content-box-p-tag {
         max-width : 410px
@@ -82,6 +80,7 @@
 @media (min-width: 1000px) {
     .user-notice-box {
         width: 70%;
+        margin-top: 40px;
     }
     .content-box-p-tag {
         max-width : 590px

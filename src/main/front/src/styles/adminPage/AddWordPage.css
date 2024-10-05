@@ -1,66 +1,187 @@
-.add-box-all{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.add-box{
-  padding: 30px;
+.add-box-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px;
+    background-color: white;
+    width: 100%;
 }
 
-.add-box .add-box-title{
-  text-align: center;
-  font-size: 22px;
+.add-box .add-box-title {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    width: 100px;
+    border-bottom: 3px solid #2668f1;
 }
+
 .add-box-info {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
+/* 단어 입력 박스 */
 .add-box-input {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
-.add-box-input > input {
-  border : 1px solid #777;
-  border-radius: 5px;
-  font-size: 15px;
-  padding-left: 5px;
-  margin-right: 5px;
+.add-box-head-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #777;
+    margin-bottom: 2px;
+    border-radius: 5px 5px 0 0;
+    font-weight: 500;
+    background-color: rgb(231 240 254);
 }
 
-.add-box-input > #school_word,
-.add-box-input > #school_content,
-.add-box-input > #school_chinese,
-.add-box-input > #school_meaning,
-.add-box-input > #word_content,
-.add-box-input > #word_meaning,
-.add-box-input > #word_level,
-.add-box-input > #word_week,
-.add-box-input > #word_chinese{
-  width: 80px;
-  height: 40px;
+.add-box-input-box {
+    width: 100%;
+    padding: 30px 10px 10px 10px;
+    border: 1px solid #777;
+    margin-bottom: 10px;
+    border-radius: 0 0 5px 5px;
+
 }
 
-.add-box-input > #school_week {
-  width: 50px;
-  height: 40px;
+.add-box-input-box > div > p {
+    font-size: 13px;
 }
 
+.add-box-input-box > div > input {
+    border: none;
+    border-bottom: 1.5px solid #777;
+    outline: none;
+    width: 90%;
+    padding: 2px;
+    margin-bottom: 3px;
+    transition: all .15s cubic-bezier(.47, 0, .745, .715);
+    font-size: 15px;
+
+}
+
+.add-box-input-box > div > input:focus {
+    border-bottom: 2px solid #2668f1d1;
+}
+
+/* input 상세 크기 */
+.add-box-input-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.add-box-input-box > .word-content-input-box {
+    width: 30%;
+}
+
+.add-box-input-box > .word-chinese-input-box {
+    width: 20%;
+}
+
+.add-box-input-box > .word-meaning-input-box {
+    width: 30%;
+}
+
+
+
+
+/* 목록 추가 버튼 */
+.plus-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed #cdcdcd;
+    border-radius: 3px;
+    height: 35px;
+    width: 100%;
+    transition: all .15s cubic-bezier(.47, 0, .745, .715);
+}
+
+.plus-btn:hover {
+    background-color: #2668f1d1;
+}
+
+/* 버튼 box */
 .add-box-btn {
-  text-align: center;
-  margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
 }
 
-.add-box-btn > button {
-  width: 100px;
-  height: 40px;
-  border-radius: 10px;
-  border : none;
-  background-color: #6CC4A1;
-  font-size: 14px;
-  color: white;
+.add-box-btn > .home-btn {
+    background: white;
+    color: grey;
+    border: 1px solid rgb(211, 211, 211);
+    width: 85px;
+    height: 41px;
+    font-size: 14px;
+    border-radius: 3px;
 }
 
-.plus-btn {text-align: center;}
+.add-box-btn > .add-word-submit-btn {
+    background: black;
+    color: white;
+    border: 1px solid rgb(211, 211, 211);
+    width: 85px;
+    height: 41px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+
+/* 600 까지 */
+@media (max-width: 600px) {
+    .add-box {
+        width: 95%;
+        margin-top: 20px;
+    }
+
+    .add-box-input-box > .word-level-input-box {
+        width: 8%;
+    }
+
+    .add-box-input-box > .word-week-input-box {
+        width: 8%;
+    }
+
+}
+
+/* 600 이상 */
+@media (min-width: 600px) {
+    .add-box {
+        width: 90%;
+        margin-top: 30px;
+    }
+
+    .add-box-input-box > .word-level-input-box {
+        width: 5%;
+    }
+
+    .add-box-input-box > .word-week-input-box {
+        width: 5%;
+    }
+
+}
+
+/* 1000 이상 */
+@media (min-width: 1000px) {
+    .add-box {
+        width: 70%;
+        margin-top: 40px;
+    }
+
+    .add-box-input-box > .word-level-input-box {
+        width: 4%;
+    }
+
+    .add-box-input-box > .word-week-input-box {
+        width: 4%;
+    }
+
+
+
+}

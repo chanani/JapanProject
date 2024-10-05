@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
+import {FaRegTrashAlt} from "react-icons/fa";
 
 const AddWordPage = () => {
     const navigate = useNavigate();
@@ -29,7 +30,13 @@ const AddWordPage = () => {
 
     // 단어 목록 추가 핸들러
     const handleAddWord = () => {
-        setList(prevList => [...prevList, {wordContent: '', wordMeaning: '', wordLevel: '', wordChinese: '', wordWeek: '' }]);
+        setList(prevList => [...prevList, {
+            wordContent: '',
+            wordMeaning: '',
+            wordLevel: '',
+            wordChinese: '',
+            wordWeek: ''
+        }]);
         setInputCount(prevCount => prevCount + 1);
     }
 
@@ -44,7 +51,7 @@ const AddWordPage = () => {
     // 단어 등록 핸들러
     const handleSubmit = async () => {
         if (inputCount === 1) return toast.error("등록할 단어를 입력해주세요.");
-        const payload = { list };
+        const payload = {list};
         try {
             const result = await axiosInstance.post('admin/addWordList', payload)
                 .then((res) => {
@@ -61,59 +68,97 @@ const AddWordPage = () => {
 
     }
 
+    // 홈으로 가는 핸들러
+    const handleHome = () => {
+        navigate("/");
+    }
+
     return (
         <div className="add-box-all">
             <div className="add-box">
                 <div className="add-box-title">
-                    새로운 단어를 추가해보세요.
+                    <p>단어 등록</p>
                 </div>
+
                 <div className="add-box-info">
                     {list?.map((item, index) => (
                         <div key={index} className="add-box-input">
-                            <input type="text" placeholder="단어"
-                                   className={`word_content${index}`}
-                                   name="wordContent"
-                                   id="word_content"
-                                   value={item.wordContent}
-                                   onChange={(e) => handleChangeWord(e, index)}
-                            />
-                            <input type="text" placeholder="뜻"
-                                   className={`word_meaning${index}`}
-                                   name="wordMeaning"
-                                   id="word_meaning"
-                                   value={item.wordMeaning}
-                                   onChange={(e) => handleChangeWord(e, index)}
-                            />
-                            <input type="number" placeholder="단계"
-                                   className={`word_level${index}`}
-                                   name="wordLevel"
-                                   id="word_level"
-                                   value={item.wordLevel}
-                                   min={1}
-                                   onChange={(e) => handleChangeWord(e, index)}
-                            />
-                            <input type="text" placeholder="한자"
-                                   className={`word_chinese${index}`}
-                                   name="wordChinese"
-                                   id="word_chinese"
-                                   value={item.wordChinese}
-                                   onChange={(e) => handleChangeWord(e, index)}
-                            />
-                            <input type="number" placeholder="주차"
-                                   className={`word_week${index}`}
-                                   name="wordWeek"
-                                   id="word_week"
-                                   value={item.wordWeek}
-                                   onChange={(e) => handleChangeWord(e, index)}
-                            />
-                            <button onClick={() => handleRemoveWord(index)}>-</button>
+                            <div className="add-box-head-box">
+                                <p>{index + 1}</p>
+                                <FaRegTrashAlt onClick={() => handleRemoveWord(index)} />
+
+                            </div>
+                            <div className="add-box-input-box">
+
+                                <div className="word-content-input-box">
+                                    <input type="text"
+                                           className={`word_content${index}`}
+                                           name="wordContent"
+                                           id="word_content"
+                                           value={item.wordContent}
+                                           onChange={(e) => handleChangeWord(e, index)}
+                                    />
+                                    <p>단어</p>
+                                </div>
+
+                                <div className="word-chinese-input-box">
+                                    <input type="text"
+                                           className={`word_chinese${index}`}
+                                           name="wordChinese"
+                                           id="word_chinese"
+                                           value={item.wordChinese}
+                                           onChange={(e) => handleChangeWord(e, index)}
+                                    />
+                                    <p>한자</p>
+                                </div>
+
+                                <div className="word-meaning-input-box">
+                                    <input type="text"
+                                           className={`word_meaning${index}`}
+                                           name="wordMeaning"
+                                           id="word_meaning"
+                                           value={item.wordMeaning}
+                                           onChange={(e) => handleChangeWord(e, index)}
+                                    />
+                                    <p>뜻</p>
+                                </div>
+                                <div className="word-level-input-box">
+                                    <input type="number"
+                                           className={`word_level${index}`}
+                                           name="wordLevel"
+                                           id="word_level"
+                                           value={item.wordLevel}
+                                           min={1}
+                                           onChange={(e) => handleChangeWord(e, index)}
+                                    />
+                                    <p>단계</p>
+                                </div>
+
+                                <div className="word-week-input-box">
+                                    <input type="number"
+                                           className={`word_week${index}`}
+                                           name="wordWeek"
+                                           id="word_week"
+                                           value={item.wordWeek}
+                                           onChange={(e) => handleChangeWord(e, index)}
+                                    />
+                                    <p>주차</p>
+                                </div>
+                            </div>
                         </div>
                     ))}
-                    <div className="plus-btn">
-                        <FaPlus size={20} onClick={handleAddWord}/>
+                    <div className="plus-btn" onClick={handleAddWord}>
+                        <FaPlus size={20}/>
                     </div>
                     <div className="add-box-btn">
-                        <button onClick={handleSubmit}>추가하기</button>
+                        <button
+                            onClick={handleHome}
+                            className="home-btn"
+                        >홈으로</button>
+                        <button
+                            onClick={handleSubmit}
+                            className="add-word-submit-btn"
+                        >등록하기</button>
                     </div>
                 </div>
             </div>

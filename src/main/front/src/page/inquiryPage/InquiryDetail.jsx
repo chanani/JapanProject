@@ -4,10 +4,7 @@ import {axiosInstance} from "../../api";
 import moment from "moment";
 import {useLocation, useNavigate} from "react-router-dom";
 import "../../styles/inquiry/InquiryDetail.css";
-import {TbSquareRoundedLetterAFilled} from "react-icons/tb";
-import {TbSquareRoundedLetterQ} from "react-icons/tb";
 import {FaRegTrashAlt} from "react-icons/fa";
-import { PiChatCircleTextBold } from "react-icons/pi";
 import {toast} from "react-toastify";
 import {BiMessageRounded} from "react-icons/bi";
 
