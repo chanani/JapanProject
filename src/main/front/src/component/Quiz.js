@@ -1,26 +1,28 @@
 import {useContext, useEffect, useState} from 'react';
 import '../styles/component/Quiz.css';
-import {FaPlay} from "react-icons/fa";
 
 import {MdOutlineSensorDoor} from "react-icons/md";
 import {FaRegStar} from "react-icons/fa";
 import {FaStar} from "react-icons/fa";
 import {Link} from 'react-router-dom';
-import {FaStopCircle} from "react-icons/fa";
 import Audio from './Audio';
 import {tokenInfoContext} from './TokenInfoProvider';
 import {axiosInstance} from '../api';
 import {toast} from "react-toastify";
 import {FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight} from "react-icons/fa";
-
+import { IoPlayCircle, IoStopCircle } from "react-icons/io5";
+import { IoSchoolSharp } from "react-icons/io5";
 
 const Quiz = ({level, num, arr}) => {
     let [word, setWord] = useState([]);
     const [current, setCurrent] = useState(0);
     const [meaning, setMeaning] = useState(false);
     const [play, setPlay] = useState(false);
-    const [help, setHelp] = useState(false);
+    const [help, setHelp] = useState(false); // 이용 방법 활성화 여부
     const {userRole, username} = useContext(tokenInfoContext);
+    const [hiragana, setHiragana] = useState(true); // 히라나가 활성화 여부
+    const [chinese, setChinese] = useState(true); // 한자 활성화 여부
+
 
     // 단위 뒤집는 핸들러
     const handleMeaning = () => {
@@ -54,6 +56,7 @@ const Quiz = ({level, num, arr}) => {
                 toast.error('더 이상 단어가 없습니다.');
                 return current; // 그대로 유지
             }
+            setMeaning(false);
             return current + 1;
         });
     }
@@ -64,6 +67,7 @@ const Quiz = ({level, num, arr}) => {
                 toast.error('첫 번째 단어입니다.');
                 return current;
             }
+            setMeaning(false);
             return current - 1;
         });
     }
@@ -136,6 +140,19 @@ const Quiz = ({level, num, arr}) => {
     };
 
 
+    // 히라가나와 가타가나 보이기, 숨기기 상태 관리
+    const handleBlackContent = (type) => {
+
+        if (type === 'hiragana') {
+            if (!chinese) return toast.error('히라가나와 한자를 모두 숨길 수 없습니다.');
+            setHiragana((current) => !current);
+        }
+        if (type === 'chinese') {
+            if (!hiragana) return toast.error('히라가나와 한자를 모두 숨길 수 없습니다.');
+            setChinese((current) => !current);
+        }
+    }
+
     return (
         <div className='study-on-box'>
 
@@ -147,32 +164,46 @@ const Quiz = ({level, num, arr}) => {
                     ></div>
                 </div>
                 <div className='on-header-box'>
+                    <div className="on-header-left-box">
+                        {word.length > 0 && current >= 0 && word[current].wordFavorite === false ?
+                            <FaRegStar size={21} onClick={handleStar}/>
+                            :
+                            <FaStar size={21} onClick={handleStar}/>
+                        }
 
-                    {word.length > 0 && current >= 0 && word[current].wordFavorite === false ?
-                        <FaRegStar size={21} onClick={handleStar}/>
-                        :
-                        <FaStar size={21} onClick={handleStar}/>}
-
-                    <Audio inputData={word[current]?.wordContent}/>
-
+                        <Audio inputData={word[current]?.wordContent}/>
+                    </div>
+                    <div className="on-header-right-box">
+                        <div className="hiragana-btn-box"
+                             onClick={() => handleBlackContent("hiragana")}>
+                            <p className={(hiragana ? "word-on" : "word-off")}>あ</p>
+                        </div>
+                        <div className="chinese-btn-box"
+                             onClick={() => handleBlackContent("chinese")}>
+                            <p className={(chinese ? "word-on" : "word-off")}>文</p>
+                        </div>
+                    </div>
 
                 </div>
 
                 <div className='on-word-box' onClick={handleMeaning}>
                     {meaning ? word[current]?.wordMeaning :
                         word[current]?.wordChinese === null || word[current]?.wordChinese === '' ?
-                            <div>
+                            <div className="only-content">
                                 <p>{word[current]?.wordContent}</p>
                             </div>
                             :
-                            <div style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                flexDirection: "column"
-                            }}>
-                                <p style={{fontSize: "20px"}}>{word[current]?.wordContent}</p>
-                                <p>{word[current]?.wordChinese}</p>
+                            <div className="content-and-chinese">
+                                {hiragana ?
+                                    <p className="content-and-chinese-content">{word[current]?.wordContent}</p>
+                                    :
+                                    <div className="content-block-box"></div>
+                                }
+                                {chinese ?
+                                    <p>{word[current]?.wordChinese}</p>
+                                    :
+                                    <div className="chinese-block-box"></div>
+                                }
                             </div>
 
                     }
@@ -214,9 +245,9 @@ const Quiz = ({level, num, arr}) => {
                 <div className="study-on-play-box">
                     <div className='click-left'>
                         {play ?
-                            <FaStopCircle size={26} onClick={handlePlay} color='#4e4e4e'/>
+                            <IoStopCircle size={32} onClick={handlePlay} color='#4e4e4e'/>
                             :
-                            <FaPlay size={23} onClick={handlePlay} color='#4e4e4e'/>
+                            <IoPlayCircle size={32} onClick={handlePlay} color='#4e4e4e'/>
                         }
                     </div>
 
@@ -239,6 +270,21 @@ const Quiz = ({level, num, arr}) => {
                     </div>
                 </div>
 
+            </div>
+
+            <div className="study-page-test-type-box">
+                <div className="study-page-choice-box">
+                    <img src="/svg/choice1.svg" alt=""/>
+                    <p>학습</p>
+                </div>
+                <div className="study-page-test-box">
+                    <img src="/svg/test1.svg" alt=""/>
+                    <p>테스트</p>
+                </div>
+                <div className="study-page-card-box">
+                    <img src="/svg/card1.svg" alt=""/>
+                    <p>카드게임</p>
+                </div>
             </div>
         </div>
     );

@@ -21,11 +21,62 @@
     align-items: center;
 }
 
+.on-header-left-box,
+.on-header-right-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.on-header-left-box > svg {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+/* 히라가나, 한자 박스 */
+.on-header-right-box > div {
+    margin-left: 10px;
+    border: 1px solid #d1cfcf;
+    padding: 0 5px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.word-on {
+    color: #2181ef;
+}
+
+.word-off {
+    color: #d1cfcf;
+}
+
+/* 단어 박스 */
 .on-word-box {
     height: 150px;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.content-and-chinese {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.content-and-chinese > .content-and-chinese-content {
+    font-size: 20px;
+}
+
+.content-block-box {
+    width: 70px;
+    height: 30px;
+    background: #d1cfcf;
+}
+.chinese-block-box {
+    width: 100px;
+    background: #d1cfcf;
 }
 
 .on-click-box {
@@ -49,6 +100,11 @@
 .click-mid > p {
     margin: 5px 20px 0 20px;
 
+}
+
+.click-mid > svg,
+.click-left > svg {
+    cursor: pointer;
 }
 
 .study-on-play-box {
@@ -79,6 +135,7 @@
     font-size: 16px;
 
 }
+
 .study-rule-box span {
     color: #006ae5;
     font-weight: 600;
@@ -166,6 +223,42 @@
     transition: all .12s cubic-bezier(.47, 0, .745, .715);
 }
 
+/* 테스트, 학습 으로 가는 박스 */
+.study-page-test-type-box {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0;
+}
+.study-page-test-type-box > div {
+    background-color: #f6f7fb;
+    border-radius: .5rem;
+    width: 32%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    box-shadow: 0px 0px 3px rgba(15, 0, 2, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+
+}
+.study-page-test-type-box > div:hover {
+    background-color: #d0d0ff;
+}
+
+.study-page-test-type-box img {
+    padding-top: 10px;
+    height: 40px;
+    margin-bottom: 7px;
+}
+.study-page-test-type-box p {
+    font-size: 16px;
+    font-weight: 600;
+}
 
 /* 500 이하 */
 @media (max-width: 500px) {
@@ -174,6 +267,11 @@
         font-size: 40px;
         font-weight: 400;
     }
+
+    .chinese-block-box {
+        height: 60px;
+    }
+
     .help-box {
         font-size: 13px;
     }
@@ -186,7 +284,12 @@
         font-size: 45px;
         font-weight: 400;
     }
-    .help-box{
+
+    .chinese-block-box {
+        height: 67px;
+    }
+
+    .help-box {
         font-size: 15px;
     }
 }
@@ -198,6 +301,11 @@
         font-size: 50px;
         font-weight: 400;
     }
+
+    .chinese-block-box {
+        height: 75px;
+    }
+
     .help-box {
         font-size: 16px;
     }
