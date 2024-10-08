@@ -33,22 +33,7 @@
     cursor: pointer;
 }
 
-/* 히라가나, 한자 박스 */
-.on-header-right-box > div {
-    margin-left: 10px;
-    border: 1px solid #d1cfcf;
-    padding: 0 5px;
-    border-radius: 50%;
-    cursor: pointer;
-}
 
-.word-on {
-    color: #2181ef;
-}
-
-.word-off {
-    color: #d1cfcf;
-}
 
 /* 단어 박스 */
 .on-word-box {
@@ -82,9 +67,9 @@
 .on-click-box {
     display: flex;
     justify-content: center;
-    padding: 13px 15px 10px 15px;
+    padding: 0 15px 10px 15px;
     align-items: center;
-    margin: 15px 0;
+    margin: 3px 0 20px 0;
 }
 
 .on-click-box p {
@@ -110,6 +95,7 @@
 .study-on-play-box {
     display: flex;
     justify-content: space-between;
+    margin-top: 15px;
 }
 
 
@@ -230,7 +216,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin: 15px 0;
+    margin: 15px 0 30px 0;
 }
 .study-page-test-type-box > div {
     background-color: #f6f7fb;
@@ -260,6 +246,247 @@
     font-weight: 600;
 }
 
+/* 레벨 박스 */
+.study-level-change-box {
+    width: 100%;
+    background-color: #f6f7fb;
+    border-radius: 10px;
+    padding : 10px 20px;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 0px 3px rgba(15, 0, 2, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+.study-level-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 70%;
+}
+
+.study-level-box > div {
+    background-color: white;
+    border-radius: 5px;
+    width: 30%;
+    height: 45px;
+    padding: 10px;
+    margin-right: 10px;
+    font-weight: 500;
+    text-align: center;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    box-shadow: 0px 0px 3px rgba(15, 0, 2, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+.study-level-box > div:hover {
+    background-color: #d0d0ff;
+}
+
+
+/* 히라가나, 한자 박스 */
+.study-change-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.study-change-box > div {
+    margin-left: 10px;
+    border: 1px solid #d1cfcf;
+    padding: 0 5px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.word-on {
+    color: #2181ef;
+}
+
+.word-off {
+    color: #d1cfcf;
+}
+
+
+
+
+
+/* 단어 전체 리스트 */
+.study-page-word-list-box {
+    width: 100%;
+    position: relative;
+}
+
+.study-page-word-list-title-box {
+    margin: 35px 0 15px 0;
+    cursor: pointer;
+}
+.study-page-word-list-title-box > p {
+    margin-right: 5px;
+}
+
+.study-page-word-list-title-box > svg {
+    padding-top: 5px;
+
+}
+
+.study-page-word-list-title-box > p {
+    font-size: 22px;
+    font-weight: 600;
+    display: inline-block;
+
+}
+
+.study-page-word-list-content-box {
+    padding: 20px 20px 3px 20px;
+    border :none;
+    background-color: #f6f7fb;
+    border-radius: 10px;
+    transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 3px rgba(15, 0, 2, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
+
+}
+
+.study-page-word-list-content-box.show {
+    max-height: 10000px;
+    opacity: 1;
+}
+
+.study-page-word-list-content-box.hide {
+    max-height: 0;
+    opacity: 0;
+}
+
+.study-page-word-list-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 17px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px rgba(15, 0, 2, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+.study-page-word-list-word {
+    width: 100%;
+    background-color: white;
+}
+
+.study-page-word-list-word > p {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.word-blind {
+    color: transparent;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    background: repeating-linear-gradient(
+            45deg,
+
+            rgba(255, 255, 255, 0.25) 10px,
+            rgba(255, 255, 255, 0.25) 20px
+    );
+}
+
+.study-page-word-list-btn {
+    height: 22px;
+    display: flex;
+
+}
+.study-page-word-list-btn >svg {
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* 목록 리스트 버튼 박스 */
+.change-position-box {
+    position: fixed;
+    bottom: 20px; /* 기본적으로 화면 하단에 고정 */
+    left: 50%;
+    transform: translateX(-50%) translateY(100%); /* 처음에는 화면 밖에 위치 */
+    opacity: 0; /* 투명하게 시작 */
+    visibility: hidden; /* 요소가 보이지 않도록 설정 */
+    padding: 15px 20px;
+    background-color: white;
+    border: none;
+    border-radius: 15px;
+    z-index: 1;
+    box-shadow: 0px 0px 11px rgba(23, 12, 7, 0.13), 0 0px 0px rgba(0, 0, 0, 0);
+    width: 270px;
+    height: 80px;
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; /* 애니메이션 적용 */
+}
+
+.change-position-box.change-position-show {
+    visibility: visible; /* 요소가 보이도록 설정 */
+    transform: translateX(-50%) translateY(0); /* 화면 안으로 위치 */
+    opacity: 1; /* 완전히 보이도록 변경 */
+}
+
+.absolute-button {
+    position: absolute;
+    bottom: -95px; /* 마지막 아이템 하단에 배치 */
+    right: 20px;
+}
+.study-white-box {
+    height: 106px;
+}
+.change-btn-box-position {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 2px solid #d7dbe6;
+    border-radius: 10px;
+}
+
+.change-position-var {
+    background: #d7dbe6;
+    height: 1.5rem;
+    width: .0625rem;
+}
+
+.change-position-text {
+    font-size: 16px;
+    font-weight: 700;
+    width: 80%;
+    height: 100%;
+    text-align: center;
+    color: #586380;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
+.change-position-text:hover{
+    background-color: #d0d0ff;
+}
+
+.change-position-btn{
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
+
+.change-position-btn:hover {
+    background-color: #d0d0ff;
+}
+
+
+
+
 /* 500 이하 */
 @media (max-width: 500px) {
     .on-word-box {
@@ -274,6 +501,15 @@
 
     .help-box {
         font-size: 13px;
+    }
+
+    .study-page-word-list-word {
+        display: flex;
+        flex-direction: column;
+
+    }
+    .study-level-box {
+        width: 70%;
     }
 }
 
@@ -292,6 +528,16 @@
     .help-box {
         font-size: 15px;
     }
+    .study-page-word-list-word {
+        display: flex;
+        flex-direction: row;
+    }
+    .study-page-word-list-word-content {
+        width: 40%;
+    }
+    .study-level-box {
+        width: 60%;
+    }
 }
 
 /* 1000 이상 */
@@ -308,6 +554,9 @@
 
     .help-box {
         font-size: 16px;
+    }
+    .study-level-box {
+        width: 50%;
     }
 }
 
