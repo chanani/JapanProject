@@ -10,14 +10,13 @@ import Footer from "./page/Footer";
 import MainPage from "./page/mainPage/MainPage";
 import Login from "./page/login/Login";
 import Join from "./page/login/Join";
-import Easy from "./page/study/StudyPage";
 import TestPage from "./page/test/TestPage";
 import ResultPage from "./page/test/ResultPage";
 import RecordPage from "./page/mypage/RecordPage";
 import FavoritesList from "./page/mypage/FavoritesList";
 import Search from "./page/searchPage/SearchPage";
 import TokenInfoProvider from "./component/TokenInfoProvider";
-import Quiz from "./component/Quiz";
+import Study from "./page/study/Study";
 import RecordDetails from "./page/test/RecordDetails";
 import ChatAi from "./page/chatAiPage/ChatAi";
 import AddWordPage from "./page/amindPage/AddWordPage";
@@ -35,6 +34,7 @@ import AddInquiryCommentWrite from "./page/amindPage/AddInquiryCommentWrite";
 import SchoolPage from "./page/schoolPage/SchoolPage";
 import TranslatorPage from "./page/translatorPage/TranslatorPage";
 import NoticeDetail from "./page/notice/NoticeDetail";
+import Choice from "./page/study/Choice";
 
 function App() {
   return (
@@ -60,13 +60,11 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/join" element={<Join />} />
               <Route path="/" element={<MainPage />} />
-              <Route path="/study/:level" element={<Easy/>} />
               <Route path="/test/:level" element={<TestPage />}/>
               <Route path="/result" element={<ResultPage />}/>
               <Route path="/mypage/record" element={<RecordPage />} />
               <Route path="/mypage/favorites" element={<FavoritesList />} />
               <Route path="/search" element={<Search />}/>
-              <Route path="/quiz" element={<Quiz />} />
               <Route path="/recordDetails" element={<RecordDetails />}/>
               <Route path="/chatAi" element={<ChatAi/>} />
               <Route path="/notice" element={<NoticePage/>} />
@@ -83,6 +81,8 @@ function App() {
               <Route path="/schoolPage" element={<SchoolPage />} />
               <Route path="/translator" element={<TranslatorPage />}/>
               <Route path="/notice-detail" element={<NoticeDetail />}/>
+              <Route path="/study" element={<Study />}/>
+              <Route path="choice" element={<Choice />} />
             </Routes>
             <Footer />
           </BrowserRouter>

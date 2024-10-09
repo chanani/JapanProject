@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import "../styles/component/Test.css";
 import Audio from "./Audio";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 import {axiosInstance} from "../api";
 
 const Test = ({level, kind, currentPath}) => {

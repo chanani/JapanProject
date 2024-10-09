@@ -1,0 +1,150 @@
+.choice-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px;
+    background-color: white;
+    width: 100%;
+}
+
+/* count + 게이지 바 box */
+.choice-header-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2%;
+    margin-bottom: 30px;
+}
+
+.choice-header-count,
+.choice-header-total-count {
+    padding: 4px 16px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.choice-header-count {
+    background-color: #378ff5;
+}
+
+.choice-header-total-count {
+    background-color: #D9DDE8;
+}
+
+
+/* Progress bar container */
+.choice-progress-bar {
+    width: 100%;
+    height: 16px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+}
+
+/* Fill element */
+.choice-progress-bar-fill {
+    height: 100%;
+    background-color: #2ac4f8;
+    border-radius: 10px;
+    transition: width 0.3s ease-in-out;
+}
+
+/* content box */
+.choice-content-box {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    padding: 20px 32px 16px;
+}
+
+.choice-content-header-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.choice-content-header-left > p {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.choice-content-header-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.choice-content-header-right > svg {
+    margin-left: 10px;
+}
+
+/* 뜻 box */
+.choice-content-content-box > .choice-content-word-content {
+    font-size: 23px;
+    margin-bottom: 75px;
+}
+
+.choice-content-content-box > .choice-content-info {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(86, 96, 124);
+}
+
+/* 단어 목록 box */
+.choice-content-choice-example-box {
+    width: 100%;
+    border: 1px solid rgb(86, 96, 124);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+
+
+/* 500 이하 */
+@media (max-width: 500px) {
+    .choice-all {
+        width: 95%;
+        margin-top: 20px;
+    }
+
+    .choice-header-count,
+    .choice-header-total-count {
+        width: 14%;
+    }
+
+}
+
+/* 500 이상 */
+@media (min-width: 500px) {
+    .choice-all {
+        width: 90%;
+        margin-top: 30px;
+    }
+
+    .choice-header-count,
+    .choice-header-total-count {
+        width: 10%;
+    }
+}
+
+/* 1000 이상 */
+@media (min-width: 1000px) {
+    .choice-all {
+        width: 70%;
+        margin-top: 40px;
+    }
+
+    .choice-header-count,
+    .choice-header-total-count {
+        width: 7%;
+    }
+
+}
