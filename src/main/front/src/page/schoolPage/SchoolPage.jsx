@@ -20,7 +20,6 @@ const SchoolPage = () => {
             }
         })
             .then((res) => {
-                console.log(res.data)
                 setWord(res.data);
                 setCheck(new Array(res.data.length).fill(false));
             })

@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material";
 
-const font = "'Lexend', sans-serif";
+const font = "";
 
 const mediaQueryTheme = createTheme();
 

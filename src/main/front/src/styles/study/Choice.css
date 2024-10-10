@@ -5,6 +5,7 @@
     padding: 0 5px;
     background-color: white;
     width: 100%;
+
 }
 
 /* count + 게이지 바 box */
@@ -58,6 +59,8 @@
     box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
     border-radius: 10px;
     padding: 20px 32px 16px;
+    margin-bottom: 50px;
+    position: relative;
 }
 
 .choice-content-header-box {
@@ -82,9 +85,14 @@
 
 .choice-content-header-right > svg {
     margin-left: 10px;
+    cursor: pointer;
 }
 
 /* 뜻 box */
+.choice-content-content-box {
+    margin-bottom: 30px;
+}
+
 .choice-content-content-box > .choice-content-word-content {
     font-size: 23px;
     margin-bottom: 75px;
@@ -92,21 +100,315 @@
 
 .choice-content-content-box > .choice-content-info {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 650;
     color: rgb(86, 96, 124);
 }
 
+.choice-content-content-box > .choice-content-info-ok {
+    font-size: 14px;
+    font-weight: 650;
+    color: rgb(0 157 1);
+}
+
+.choice-content-content-box > .choice-content-info-fail {
+    font-size: 14px;
+    font-weight: 650;
+    color: rgb(244 73 73);
+}
+
 /* 단어 목록 box */
+
 .choice-content-choice-example-box {
-    width: 100%;
-    border: 1px solid rgb(86, 96, 124);
+    border: 2px solid rgb(237 239 245);
+    border-radius: 8px;
+    padding: 16px;
     display: flex;
     flex-direction: row;
     align-items: center;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    cursor: pointer;
+}
+
+.choice-content-choice-example-box:hover {
+    background-color: #d0d0ff;
+}
+
+.choice-example-index {
+    padding: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    border-radius: 50%;
+    background-color: #e3e5eb;
+    margin-right: 10px;
+
+}
+
+.choice-example-word {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* i do not know*/
+.choice-content-i-do-not-know-box {
+    width: 100%;
+    margin-top: 15px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.choice-content-i-do-not-know-box > div {
+    width: 135px;
+    height: 40px;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: #4255ff;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    cursor: pointer;
+}
+
+.choice-content-i-do-not-know-box > div:hover {
+    background-color: #e5eaff7d;
 }
 
 
+.choice-content-choice-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* 간격 설정 */
+}
 
+.choice-content-choice-example-box {
+    flex: 1 1 100%; /* 기본적으로 100% 차지 (한 줄에 1개) */
+}
+
+@media (min-width: 1000px) {
+    .choice-content-choice-example-box {
+        flex: 1 1 calc(50% - 20px); /* 1000px 이상일 때 한 줄에 2개 */
+    }
+}
+
+
+/* 레벨, 숫자 선택 모달 */
+.choice-level-box-all {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.1);
+    border-radius: 10px;
+    z-index: 1002;
+    padding: 24px 32px;
+}
+
+/* 뒷 배경 흐리게 */
+.choice-level-number-box-all {
+    width: 100%;
+    height: 100%;
+}
+.choice-level-number-box-all::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(8, 11, 35, 0.5); /* 배경 어둡게 */
+    z-index: 1001;
+    backdrop-filter: blur(5px); /* 배경 흐리게 */
+}
+
+.choice-level-box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgb(237 239 245);
+    padding-bottom: 32px;
+}
+
+.choice-level-box-header img {
+    width: 65px;
+    height: 65px;
+    margin-left: 10px;
+}
+
+.choice-level-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #56607c;
+    margin-bottom: 5px;
+}
+
+.choice-level-title-content {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+/* 난이도 선택 box */
+.choice-level-box-level-box {
+    width: 100%;
+    padding: 30px 0;
+}
+
+.choice-level-box-number-box {
+    margin-bottom: 40px;
+}
+
+.choice-level-box-level-box > p,
+.choice-level-box-number-box > p {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.choice-level-box-level-box-content {
+    width: 100%;
+    display: flex;
+    align-content: center;
+}
+
+.choice-level-box-level-box-content > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    background-color: white;
+    border-radius: 10px;
+    height: 40px;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+
+}
+
+.level-number-on {
+    border: 2px solid #5d9cff;
+}
+
+.level-number-off {
+    border: 2px solid #d9dde8;
+}
+
+.choice-level-box-level-box-content > div:hover {
+    border: 2px solid #5d9cff;
+}
+
+.choice-level-box-level-box svg,
+.choice-level-box-number-box svg {
+    width: 20px;
+    height: 20px;
+}
+
+.choice-level-box-svg-box {
+    height: 100%;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 8px 8px 0;
+    background-color: #345cff38;
+}
+
+/* 개수 선택 box*/
+
+.choice-level-box-number-box-content {
+    width: 100%;
+    display: flex;
+    align-content: center;
+}
+
+.choice-level-box-number-box-content > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 15px;
+    background-color: white;
+    border-radius: 10px;
+    height: 40px;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+
+}
+
+.choice-level-box-number-box-content > div:hover {
+    border: 2px solid #5d9cff;
+}
+
+.choice-level-box-svg-box,
+.choice-number-box-svg-box {
+    height: 100%;
+    width: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 8px 8px 0;
+    background-color: #345cff38;
+}
+
+.choice-level-btn-box {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.choice-level-btn-box > button {
+    width: 47%;
+}
+
+.choice-level-btn-box > button {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
+.choice-level-btn-home {
+    border: 2px solid #d9dde8;
+    background-color: white;
+    color: #56607c;
+}
+.choice-level-btn-home:hover {
+    background-color: #e4e5e587;
+}
+
+.choice-level-btn-submit {
+    border: 2px solid #4255ff;
+    background-color: #4255ff;
+    color: white;
+}
+
+.choice-level-btn-submit:hover {
+    border: 2px solid #4c16f9;
+    background-color: #c5ffc061;
+}
+
+
+/* 정답, 오답 */
+.answer-ok-box{
+    border : 2px #4cbc5c dashed;
+    background-color : #c3ffcd70;
+
+}
+
+.answer-fail-box{
+    border : 2px #ff0000bf dashed;
+    background-color : #ffc4c470;
+}
+
+/* 다음으로 버튼 */
+.choice-content-next-btn-box {
+    position: absolute;
+    bottom: 12px;
+    right: 33px;
+    cursor: pointer;
+}
 
 /* 500 이하 */
 @media (max-width: 500px) {
@@ -115,12 +417,40 @@
         margin-top: 20px;
     }
 
+    .choice-content-box {
+        padding: 20px 20px 16px;
+    }
+
     .choice-header-count,
     .choice-header-total-count {
         width: 14%;
     }
 
+    .choice-content-choice-example-box {
+        width: 100%;
+    }
+
+    .choice-example-index {
+        display: none;
+    }
+
+    .choice-level-box-all {
+        width: 100%;
+        height: 100%;
+    }
+
+    .choice-level-box-level-box-content,
+    .choice-level-box-number-box-content {
+        flex-direction: column;
+    }
+
+    .choice-level-box-level-box-content > div,
+    .choice-level-box-number-box-content > div {
+        width: 100%;
+        margin-bottom: 15px;
+    }
 }
+
 
 /* 500 이상 */
 @media (min-width: 500px) {
@@ -129,10 +459,38 @@
         margin-top: 30px;
     }
 
+    .choice-content-box {
+        padding: 20px 32px 16px;
+    }
+
     .choice-header-count,
     .choice-header-total-count {
         width: 10%;
     }
+
+    .choice-content-choice-example-box {
+        width: 100%;
+    }
+
+    .choice-level-box-all {
+        width: 90%;
+    }
+
+    .choice-level-box-level-box-content,
+    .choice-level-box-number-box-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .choice-level-box-level-box-content > div {
+        width: 31%;
+    }
+
+    .choice-level-box-number-box-content > div {
+        width: 23%;
+    }
+
+
 }
 
 /* 1000 이상 */
@@ -142,9 +500,17 @@
         margin-top: 40px;
     }
 
+    .choice-content-box {
+        padding: 20px 32px 16px;
+    }
+
     .choice-header-count,
     .choice-header-total-count {
         width: 7%;
     }
 
+    .choice-level-box-all {
+        width: 50%;
+    }
 }
+

@@ -36,4 +36,29 @@
         AND word_num = #{word_num}
     </delete>
 
+    <!-- 선택 학습 단어 가져오기 -->
+    <select id="getChoiceList"
+            parameterType="com.project.thejapenproject.study.vo.param.StudyChoiceParamVO"
+            resultType="com.project.thejapenproject.study.vo.StudyChoiceResVO">
+        SELECT word_num,
+               word_meaning,
+               word_content,
+               word_chinese
+        FROM word
+        WHERE word_level = #{level}
+        ORDER by RAND()
+        LIMIT #{number}
+    </select>
+
+    <!-- 선택 학습 예제 단어 가져오기 -->
+    <select id="getChoiceExampleData"
+            parameterType="java.util.Map"
+            resultType="com.project.thejapenproject.study.vo.StudyChoiceExampleVO">
+        SELECT word_content AS wordContent, word_chinese AS wordChinese
+        FROM word
+        WHERE word_num != #{wordNum}
+        ORDER BY RAND()
+            LIMIT 3
+    </select>
+
 </mapper>
