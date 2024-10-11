@@ -1,3 +1,4 @@
+import "../../styles/notice/NoticePage.css";
 import {useEffect, useState, useContext} from "react";
 import moment from "moment";
 import 'moment/locale/ko';
@@ -7,7 +8,6 @@ import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
 import PageNation from "../../component/PageNation";
 import usePagination from "../../hook/usePagination";
-import "../../styles/notice/NoticePage.css";
 import {useNavigate} from "react-router-dom";
 
 const NoticePage = () => {
