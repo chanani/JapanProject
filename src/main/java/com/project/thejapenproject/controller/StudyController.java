@@ -7,7 +7,10 @@ import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.study.service.StudyService;
+import com.project.thejapenproject.study.vo.ResultFavoriteCheckResVO;
 import com.project.thejapenproject.study.vo.StudyChoiceResVO;
+import com.project.thejapenproject.study.vo.param.ResultAddFavoriteParamVO;
+import com.project.thejapenproject.study.vo.param.ResultFavoriteCheckParamVO;
 import com.project.thejapenproject.study.vo.param.StudyChoiceParamVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,9 +50,15 @@ public class StudyController {
         return ResponseEntity.ok("성공");
     }
 
+    /**
+     * 선택 학습 단어 조회 API
+     *
+     * @param studyChoiceParamVO
+     * @return
+     */
     @NoneAuth
     @GetMapping("/choice")
-    public ResponseData changeFavorite(@Valid @ModelAttribute StudyChoiceParamVO studyChoiceParamVO) {
+    public ResponseData choiceGetList(@Valid @ModelAttribute StudyChoiceParamVO studyChoiceParamVO) {
 
         ArrayList<StudyChoiceResVO> choiceList = studyService.getChoiceList(studyChoiceParamVO);
 
@@ -59,4 +68,42 @@ public class StudyController {
                 .message(ErrorCode.SUCCESS.getMessage())
                 .build();
     }
+
+    /**
+     * 선택 학습 결과 페이지 즐겨찾기 목록 조회 API
+     *
+     * @param favoriteVO : 결과 페이지에 있는 단어 목록
+     * @return
+     */
+    @PostMapping("/choice-result/favoriteCheck")
+    public ResponseData resultFavoriteCheck(@Valid @RequestBody ResultFavoriteCheckParamVO favoriteVO) {
+        ArrayList<Integer> choiceList = studyService.getFavoriteCheckList(favoriteVO);
+
+        boolean[] responseData = new boolean[favoriteVO.getWordNum().size()];
+        ArrayList<Integer> wordList = favoriteVO.getWordNum();
+
+        for (int i = 0; i < favoriteVO.getWordNum().size(); i++) {
+            Integer word = wordList.get(i);
+            boolean check = choiceList.contains(word);
+            responseData[i] = check;
+        }
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(responseData)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+    @GetMapping("/choice-result-addFavorite")
+    public ResponseData resultAddFavorite(@Valid @ModelAttribute ResultAddFavoriteParamVO favoriteVO) {
+        studyService.resultAddFavorite(favoriteVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+
 }

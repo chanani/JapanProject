@@ -410,7 +410,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    
+    margin-bottom: 20px;
+}
+
+.choice-result-btn-box > button {
+    width: 103px;
+    height: 43px;
+    font-size: 15px;
+    font-weight: 500;
+    background-color : #4856f0;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
+
+.choice-result-btn-box > button:hover{
+    background-color : #423ed8;
 }
 
 

@@ -1,0 +1,70 @@
+import "../../styles/study/SoloStudy.css"
+import { FaPlus } from "react-icons/fa6";
+
+const SoloStudy = () => {
+    const data = [{
+        title: "타이틀입니다.",
+        content: "내용입니다.",
+        count: 10,
+        writer : "chanhan12"
+    },
+        {
+            title: "타이틀 2입니다.",
+            content: "내용 2입니다.",
+            count: 200,
+            writer : "chanhan12"
+        },{
+            title: "타이틀 2입니다.",
+            content: "내용 2입니다.",
+            count: 20,
+            writer : "chanhan12"
+        },{
+            title: "타이틀 2입니다.",
+            content: "내용 2입니다.",
+            count: 20,
+            writer : "chanhan12"
+        }];
+    return (
+        <div className="solo-study-container">
+            <div className="solo-study-all">
+
+                <div className="solo-study-header">
+                    <p>개인 맞춤 학습</p>
+                </div>
+
+                <div className="solo-study-content-all">
+                    {data.map((item, index) => (
+                        <div className="solo-study-content-box" key={index}>
+                            <div className="solo-study-title">
+                                <p>{item.title}</p>
+                            </div>
+                            <div className="solo-study-count">
+                                <p>{item.count} 단어</p>
+                            </div>
+                            <div className="solo-study-write">
+                                <img
+                                    className="header-user-icon"
+                                    src={`https://lg.thejapan.today/icon-image/스크린샷 2024-08-29 오후 4.48.30.png`}
+                                    alt="이미지"
+                                    onError={(e) => {
+                                        e.target.onerror = null;
+                                        e.target.src = "/default_icon.svg";
+                                    }}
+                                />
+                                <p>{item.writer}</p>
+                            </div>
+
+                        </div>
+                    ))}
+                    <div className="solo-study-content-add-box">
+                        <FaPlus size={28} color="rgb(130 129 129)"/>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    )
+}
+
+export default SoloStudy;

@@ -1,0 +1,125 @@
+.solo-study-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px;
+    background-color: white;
+    width: 100%;
+}
+
+/* 타이틀 박스 */
+.solo-study-header {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 30px;
+    width: 148px;
+}
+
+.solo-study-content-all {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* 컨텐트 박스 */
+.solo-study-content-box {
+    cursor: pointer;
+    border: 2px solid #edeff4;
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.1), 0 0px 0px rgba(0, 0, 0, 0);
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
+
+.solo-study-content-box:hover {
+    border: 2px solid #bbc4fbab;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.15), 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+.solo-study-content-add-box {
+    cursor: pointer;
+    border: 2px solid #edeff4;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.1), 0 0px 0px rgba(0, 0, 0, 0);
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 152px;
+}
+
+.solo-study-content-add-box:hover {
+    border: 2px solid #bbc4fbab;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.15), 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+
+
+.solo-study-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.solo-study-count {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 10px;
+    width: 57px;
+    height: 23px;
+    background-color: rgb(60 106 251 / 31%);
+    margin-bottom: 35px;
+}
+
+.solo-study-write {
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+.solo-study-write > img {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+}
+
+/* 500 이하 */
+@media (max-width: 500px) {
+    .solo-study-all {
+        width: 95%;
+        margin-top: 20px;
+    }
+
+    .solo-study-content-all {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+}
+
+/* 500 이상 */
+@media (min-width: 500px) {
+    .solo-study-all {
+        width: 90%;
+        margin-top: 30px;
+    }
+
+    .solo-study-content-all {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+/* 1000 이상 */
+@media (min-width: 1000px) {
+    .solo-study-all {
+        width: 70%;
+        margin-top: 40px;
+    }
+
+    .solo-study-content-all {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

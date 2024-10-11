@@ -35,6 +35,7 @@ import SchoolPage from "./page/schoolPage/SchoolPage";
 import TranslatorPage from "./page/translatorPage/TranslatorPage";
 import NoticeDetail from "./page/notice/NoticeDetail";
 import Choice from "./page/study/Choice";
+import SoloStudy from "./page/study/SoloStudy";
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
               <Route path="/notice-detail" element={<NoticeDetail />}/>
               <Route path="/study" element={<Study />}/>
               <Route path="choice" element={<Choice />} />
+              <Route path="/solo-study" element={<SoloStudy />} />
             </Routes>
             <Footer />
           </BrowserRouter>

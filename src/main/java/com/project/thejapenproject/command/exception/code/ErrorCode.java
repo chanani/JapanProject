@@ -60,7 +60,10 @@ public enum ErrorCode {
     FAIL_TO_ADD_COMMENT(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 답글 등록에 실패하였습니다."),
 
     // test
-    WRONG_PARAM_LEVEL(HttpStatus.BAD_REQUEST, "단계는 필수입니다.");
+    WRONG_PARAM_LEVEL(HttpStatus.BAD_REQUEST, "단계는 필수입니다."),
+
+    // test
+    FAIL_TO_FAVORITE(HttpStatus.BAD_REQUEST, "즐겨찾기 추가에 실패하였습니다.");
 
 
 

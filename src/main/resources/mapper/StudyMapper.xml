@@ -23,17 +23,18 @@
 
     <insert id="addFavorite">
         INSERT INTO favorites (username,
-                              word_num,
-                              favorite_regdate)
+                               word_num,
+                               favorite_regdate)
         values (#{username},
                 #{word_num},
                 now())
     </insert>
 
     <delete id="deleteFavorite">
-        DELETE FROM favorites
+        DELETE
+        FROM favorites
         where username = #{username}
-        AND word_num = #{word_num}
+          AND word_num = #{word_num}
     </delete>
 
     <!-- 선택 학습 단어 가져오기 -->
@@ -47,7 +48,7 @@
         FROM word
         WHERE word_level = #{level}
         ORDER by RAND()
-        LIMIT #{number}
+            LIMIT #{number}
     </select>
 
     <!-- 선택 학습 예제 단어 가져오기 -->
@@ -61,4 +62,46 @@
             LIMIT 3
     </select>
 
+    <!-- 즐겨찾기 여부 조회 -->
+    <select id="getFavoriteCheckList"
+            parameterType="com.project.thejapenproject.study.vo.param.ResultFavoriteCheckParamVO"
+            resultType="Integer">
+        SELECT word_num
+        FROM favorites
+        WHERE username = #{username}
+          AND word_num in (
+              <foreach collection="wordNum" item="word" separator=",">
+                  #{word}
+              </foreach>
+            )
+    </select>
+
+    <!-- 현재 즐겨 찾기 여부 확인 -->
+    <select id="currentFavoriteCheck"
+            parameterType="com.project.thejapenproject.study.vo.param.ResultAddFavoriteParamVO"
+            resultType="java.lang.Integer">
+        SELECT count(*)
+        FROM favorites
+        WHERE username = #{username}
+          AND word_num = #{wordNum}
+    </select>
+
+    <!-- 선택 학습 결과 페이지 즐겨찾기 추가 -->
+    <insert id="resultAddFavorite"
+            parameterType="com.project.thejapenproject.study.vo.param.ResultAddFavoriteParamVO">
+        INSERT INTO favorites (username,
+                               word_num,
+                               favorite_regdate)
+        VALUES (#{username},
+                #{wordNum},
+                now())
+    </insert>
+
+    <!-- 선택 학습 결과 페이지 즐겨찾기 삭제 -->
+    <delete id="resultDeleteFavorite"
+            parameterType="com.project.thejapenproject.study.vo.param.ResultAddFavoriteParamVO">
+        DELETE FROM favorites
+        WHERE username = #{username}
+        AND word_num = #{wordNum}
+    </delete>
 </mapper>

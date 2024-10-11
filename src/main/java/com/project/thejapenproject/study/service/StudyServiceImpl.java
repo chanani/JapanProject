@@ -1,8 +1,13 @@
 package com.project.thejapenproject.study.service;
 
 import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.command.exception.OperationErrorException;
+import com.project.thejapenproject.command.exception.code.ErrorCode;
+import com.project.thejapenproject.study.vo.ResultFavoriteCheckResVO;
 import com.project.thejapenproject.study.vo.StudyChoiceResVO;
 import com.project.thejapenproject.study.vo.StudyChoiceExampleVO;
+import com.project.thejapenproject.study.vo.param.ResultAddFavoriteParamVO;
+import com.project.thejapenproject.study.vo.param.ResultFavoriteCheckParamVO;
 import com.project.thejapenproject.study.vo.param.StudyChoiceParamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,6 +84,27 @@ public class StudyServiceImpl implements StudyService {
         }
 
         return choiceList;
+    }
+
+    // 즐겨찾기 여부 조회
+    @Override
+    public ArrayList<Integer> getFavoriteCheckList(ResultFavoriteCheckParamVO favoriteVO) {
+        return studyMapper.getFavoriteCheckList(favoriteVO);
+    }
+
+    // 선택 학습 결과 페이지 즐겨찾기 추가 및 삭제
+    @Override
+    public void resultAddFavorite(ResultAddFavoriteParamVO favoriteVO) {
+        Integer currentCheck = studyMapper.currentFavoriteCheck(favoriteVO);
+        if (currentCheck == 0) {
+            if (studyMapper.resultAddFavorite(favoriteVO) < 1) {
+                throw new OperationErrorException(ErrorCode.FAIL_TO_FAVORITE);
+            }
+        } else if(currentCheck > 0) {
+            if(studyMapper.resultDeleteFavorite(favoriteVO) < 1){
+                throw new OperationErrorException(ErrorCode.FAIL_TO_FAVORITE);
+            }
+        }
     }
 
 
