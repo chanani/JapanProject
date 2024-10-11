@@ -257,11 +257,6 @@
 /* 난이도 선택 box */
 .choice-level-box-level-box {
     width: 100%;
-    padding: 30px 0;
-}
-
-.choice-level-box-number-box {
-    margin-bottom: 40px;
 }
 
 .choice-level-box-level-box > p,
@@ -386,7 +381,7 @@
 
 .choice-level-btn-submit:hover {
     border: 2px solid #4c16f9;
-    background-color: #c5ffc061;
+    background-color: #4c16f9;
 }
 
 
@@ -410,6 +405,16 @@
     cursor: pointer;
 }
 
+/* 버튼 box */
+.choice-result-btn-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+
+
 /* 500 이하 */
 @media (max-width: 500px) {
     .choice-all {
@@ -417,8 +422,15 @@
         margin-top: 20px;
     }
 
+    .choice-level-box-header {
+        padding-bottom: 10px;
+    }
     .choice-content-box {
         padding: 20px 20px 16px;
+    }
+
+    .choice-level-box-number-box {
+        margin-bottom: 20px;
     }
 
     .choice-header-count,
@@ -437,6 +449,10 @@
     .choice-level-box-all {
         width: 100%;
         height: 100%;
+    }
+
+    .choice-level-box-level-box {
+        padding: 30px 0 10px 0;
     }
 
     .choice-level-box-level-box-content,
@@ -462,10 +478,21 @@
     .choice-content-box {
         padding: 20px 32px 16px;
     }
+    .choice-level-box-header {
+        padding-bottom: 32px;
+    }
 
     .choice-header-count,
     .choice-header-total-count {
         width: 10%;
+    }
+
+    .choice-level-box-level-box {
+        padding: 30px 0;
+    }
+
+    .choice-level-box-number-box {
+        margin-bottom: 40px;
     }
 
     .choice-content-choice-example-box {
