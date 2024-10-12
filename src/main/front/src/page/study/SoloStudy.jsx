@@ -1,9 +1,17 @@
 import "../../styles/study/SoloStudy.css"
 import {FaPlus} from "react-icons/fa6";
 import {IoSettingsOutline} from "react-icons/io5";
+import {useNavigate} from "react-router-dom";
 
 const SoloStudy = () => {
-    const data = [{
+    const navigator = useNavigate();
+
+    const handleAddPage = () => {
+        navigator("/solo-study/add-word")
+    }
+
+    const data = [
+        {
         title: "타이틀입니다.",
         content: "내용입니다.",
         count: 10,
@@ -25,6 +33,7 @@ const SoloStudy = () => {
             count: 20,
             writer: "chanhan12"
         }];
+
     return (
         <div className="solo-study-container">
             <div className="solo-study-all">
@@ -63,9 +72,9 @@ const SoloStudy = () => {
                             </div>
                         </div>
                     ))}
-                    <div className="solo-study-content-add-box">
+                    <div className="solo-study-content-add-box"
+                         onClick={handleAddPage}>
                         <FaPlus size={28} color="rgb(130 129 129)"/>
-
                     </div>
                 </div>
 

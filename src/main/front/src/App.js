@@ -36,6 +36,7 @@ import TranslatorPage from "./page/translatorPage/TranslatorPage";
 import NoticeDetail from "./page/notice/NoticeDetail";
 import Choice from "./page/study/Choice";
 import SoloStudy from "./page/study/SoloStudy";
+import SoloAdd from "./page/study/SoloAdd";
 
 function App() {
   return (
@@ -85,6 +86,7 @@ function App() {
               <Route path="/study" element={<Study />}/>
               <Route path="choice" element={<Choice />} />
               <Route path="/solo-study" element={<SoloStudy />} />
+              <Route path="/solo-study/add-word" element={<SoloAdd />} />
             </Routes>
             <Footer />
           </BrowserRouter>

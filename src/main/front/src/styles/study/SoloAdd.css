@@ -1,0 +1,153 @@
+
+.solo-add-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px;
+    background-color: white;
+    width: 100%;
+}
+
+/* 타이틀 박스 */
+.solo-add-header-sub-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #014c8c;
+}
+.solo-add-header {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+/* 제목 입력 박스 */
+.solo-add-title-all {
+    width: 100%;
+    box-shadow: 0 0 15px rgba(30, 0, 45, 0.1), 0 0 0 rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    border: 2px solid #edeff4;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    margin-bottom: 30px;
+}
+.solo-add-title-all > p {
+    font-size: 14px;
+    color: #6a738c;
+    padding-left: 16px;
+    padding-top: 4px;
+}
+.solo-add-title-all input {
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    outline: none;
+}
+
+.solo-add-title-input-value {
+    height: 32px;
+    font-size: 16px;
+    padding: 0 16px;
+    margin-bottom: 3px;
+}
+
+.solo-add-title-input-not-value {
+    height: 60px;
+    font-size: 17px;
+    padding: 4px 16px;
+}
+
+.solo-add-title-all:focus-within {
+    border: 2px solid #5d9cff;
+}
+
+
+/* 직접 추가 박스 */
+.solo-add-content-all-title,
+.solo-add-word-all-title {
+    display: flex;
+    align-items: center;
+    font-size: 19px;
+    font-weight: 500;
+    color: #014c8c;
+    margin-bottom: 20px;
+}
+
+.solo-add-word-all {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+}
+
+.solo-add-word-box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    box-shadow: 0 0 15px rgba(30, 0, 45, 0.06), 0 0 0 rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    border: 2px solid #edeff4;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
+
+.solo-add-word-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 24px;
+    border-bottom: 1px solid #edeff5;
+    font-size: 15px;
+    font-weight: 600;
+    color: #777777;
+}
+
+.solo-add-word-content {
+    display: flex;
+    padding: 12px 12px 24px;
+}
+
+.solo-add-word-content > div {
+    padding: 12px 20px 0 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 500 이하 */
+@media (max-width: 500px) {
+    .solo-add-all {
+        width: 95%;
+        margin-top: 20px;
+    }
+
+
+
+}
+
+/* 500 이상 */
+@media (min-width: 500px) {
+    .solo-add-all {
+        width: 90%;
+        margin-top: 30px;
+    }
+
+
+
+}
+
+/* 1000 이상 */
+@media (min-width: 1000px) {
+    .solo-add-all {
+        width: 70%;
+        margin-top: 40px;
+    }
+
+
+}
