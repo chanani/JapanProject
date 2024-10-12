@@ -1,35 +1,39 @@
 import "../../styles/study/SoloStudy.css"
-import { FaPlus } from "react-icons/fa6";
+import {FaPlus} from "react-icons/fa6";
+import {IoSettingsOutline} from "react-icons/io5";
 
 const SoloStudy = () => {
     const data = [{
         title: "타이틀입니다.",
         content: "내용입니다.",
         count: 10,
-        writer : "chanhan12"
+        writer: "chanhan12"
     },
         {
             title: "타이틀 2입니다.",
             content: "내용 2입니다.",
             count: 200,
-            writer : "chanhan12"
-        },{
+            writer: "chanhan12"
+        }, {
             title: "타이틀 2입니다.",
             content: "내용 2입니다.",
             count: 20,
-            writer : "chanhan12"
-        },{
+            writer: "chanhan12"
+        }, {
             title: "타이틀 2입니다.",
             content: "내용 2입니다.",
             count: 20,
-            writer : "chanhan12"
+            writer: "chanhan12"
         }];
     return (
         <div className="solo-study-container">
             <div className="solo-study-all">
 
+                <div className="solo-study-header-sub-title">
+                    <p>학습</p>
+                </div>
                 <div className="solo-study-header">
-                    <p>개인 맞춤 학습</p>
+                    <p>내가 만드는 학습</p>
                 </div>
 
                 <div className="solo-study-content-all">
@@ -52,8 +56,11 @@ const SoloStudy = () => {
                                     }}
                                 />
                                 <p>{item.writer}</p>
-                            </div>
 
+                            </div>
+                            <div className="solo-study-setting-box">
+                                <IoSettingsOutline size={20}/>
+                            </div>
                         </div>
                     ))}
                     <div className="solo-study-content-add-box">

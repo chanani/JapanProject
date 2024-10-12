@@ -8,11 +8,15 @@
 }
 
 /* 타이틀 박스 */
+.solo-study-header-sub-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #4242f9;
+}
 .solo-study-header {
     font-size: 25px;
     font-weight: 700;
     margin-bottom: 30px;
-    width: 148px;
 }
 
 .solo-study-content-all {
@@ -29,6 +33,7 @@
     padding: 16px;
     box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.1), 0 0px 0px rgba(0, 0, 0, 0);
     transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    position: relative;
 }
 
 .solo-study-content-box:hover {
@@ -80,12 +85,18 @@
     display: flex;
     align-items: center;
 }
-.solo-study-write > img {
+.solo-study-write  img {
     width: 24px;
     height: 24px;
     margin-right: 5px;
 }
 
+.solo-study-setting-box {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    z-index: 1;
+}
 /* 500 이하 */
 @media (max-width: 500px) {
     .solo-study-all {
