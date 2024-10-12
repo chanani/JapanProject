@@ -7,12 +7,13 @@ const SoloStudy = () => {
     const navigator = useNavigate();
 
     const handleAddPage = () => {
-        navigator("/solo-study/add-word")
+        navigator("/solo-study/add-word");
+        window.scrollTo(0, 0);
     }
 
     const data = [
         {
-        title: "타이틀입니다.",
+        title: "안녕하세요 저는 한국인입",
         content: "내용입니다.",
         count: 10,
         writer: "chanhan12"
@@ -46,7 +47,7 @@ const SoloStudy = () => {
                 </div>
 
                 <div className="solo-study-content-all">
-                    {data.map((item, index) => (
+                    {data?.map((item, index) => (
                         <div className="solo-study-content-box" key={index}>
                             <div className="solo-study-title">
                                 <p>{item.title}</p>
