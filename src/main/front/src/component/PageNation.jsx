@@ -1,6 +1,14 @@
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 
-const PageNation = ({ currentPage, startPage, endPage, totalPages, handlePageChange, pagesPerRange }) => {
+const PageNation = ({
+                        currentPage,
+                        startPage,
+                        endPage,
+                        totalPages,
+                        handlePageChange,
+                        pagesPerRange,
+                        divMargin
+                    }) => {
     const renderPageNumbers = () => {
         const pageNumbers = [];
 
@@ -11,7 +19,7 @@ const PageNation = ({ currentPage, startPage, endPage, totalPages, handlePageCha
                     onClick={() => handlePageChange(startPage - pagesPerRange)}
                     style={buttonStyle}
                 >
-                    <FaArrowLeft />
+                    <FaArrowLeft/>
                 </button>
             );
         }
@@ -40,7 +48,7 @@ const PageNation = ({ currentPage, startPage, endPage, totalPages, handlePageCha
                     onClick={() => handlePageChange(endPage + 1)}
                     style={buttonStyle}
                 >
-                    <FaArrowRight />
+                    <FaArrowRight/>
                 </button>
             );
         }
@@ -63,7 +71,7 @@ const PageNation = ({ currentPage, startPage, endPage, totalPages, handlePageCha
         <div className="notice-pageNation" style={{
             display: 'flex',
             justifyContent: 'center',
-            margin: '30px 0',
+            margin: `${divMargin}`,
             alignItems: 'center',
         }}>
             {renderPageNumbers()}

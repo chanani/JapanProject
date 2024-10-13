@@ -1,12 +1,10 @@
 package com.project.thejapenproject.study.service;
 
+import com.project.thejapenproject.command.UsernameReqVO;
 import com.project.thejapenproject.command.WordVO;
-import com.project.thejapenproject.study.vo.ResultFavoriteCheckResVO;
-import com.project.thejapenproject.study.vo.StudyChoiceResVO;
-import com.project.thejapenproject.study.vo.StudyChoiceExampleVO;
-import com.project.thejapenproject.study.vo.param.ResultAddFavoriteParamVO;
-import com.project.thejapenproject.study.vo.param.ResultFavoriteCheckParamVO;
-import com.project.thejapenproject.study.vo.param.StudyChoiceParamVO;
+import com.project.thejapenproject.common.utils.PageResponse;
+import com.project.thejapenproject.study.vo.*;
+import com.project.thejapenproject.study.vo.param.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -35,4 +33,37 @@ public interface StudyMapper {
 
     // 선택 학습 결과 페이지 즐겨찾기 삭제
     public int resultDeleteFavorite(ResultAddFavoriteParamVO favoriteVO);
+
+    // 개인 학습 페이지 단어 검색 및 조회
+    public ArrayList<SoloStudyGetSearchDataResVO> getSoleStudySearchData(SoloStudyGetSearchDataParamVO searchVO);
+
+    // 세트 단어 등록
+    public int wordSetInsert(SoloStudyRegisterReqVO requestVO);
+
+    // 세트 단어 상세 내용 등록
+    public int wordSetDetailInsert(SoloStudyRegisterReqVO requestVO);
+
+    // 단어 세트 상세 내역 삭제(수정 시)
+    public int wordSetDetailDelete(SoloStudyModifyReqVO requestVO);
+
+    // 단어 세트 상세 내역 등록(수정 시)
+    public int wordSetDetailModify(SoloStudyModifyReqVO requestVO);
+
+    // 단어 세트 삭제
+    public int wordSetRemove(SoloStudyRemoveReqVO requestVO);
+
+    // 단어 세트 목록 조회
+    public ArrayList<SoloStudyGetUserListResVO> getSetList(UsernameReqVO usernameReqVO);
+
+    // 단어 세트 목록 상세 조회
+    public ArrayList<GetWordSetDetailListResVO> getSetDetailList(GetWordSetDetailListReqVO requestVO);
+
+    // 단어 세트 수정을 위한 목록 조회
+    public GetModifyDataResVO getModifyDataList(GetWordSetDetailListReqVO requestVO);
+
+    // 단어 세트 수정을 위한 상세 단어 목록 조회
+    public ArrayList<WordInfo> getModifyDataDetailList(GetWordSetDetailListReqVO requestVO);
+
+    // 단어 세트 전체 목록 조회
+    public ArrayList<SoloStudyGetUserListResVO> getSetListAll(GetSetStudyDataListParamVO requestVO);
 }

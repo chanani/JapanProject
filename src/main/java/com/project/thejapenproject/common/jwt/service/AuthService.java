@@ -55,6 +55,7 @@ public class AuthService {
     public UserAccessToken refresh(UserVO userVO, String refreshToken) throws Exception {
         // Redis에 Refresh 토큰이 있는지 확인한다.
         String value = redisProvider.getHashOps(SESSION_KEY, String.valueOf(userVO.getUsername()));
+        System.out.println("value = " + value);
         if (value.isEmpty()) {
             throw new AccountTokenException(ErrorCode.REFRESH_TOKEN_EXPIRED);
         }

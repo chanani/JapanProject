@@ -1,16 +1,17 @@
 package com.project.thejapenproject.study.service;
 
+import com.project.thejapenproject.command.NoticeVO;
+import com.project.thejapenproject.command.UsernameReqVO;
 import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
-import com.project.thejapenproject.study.vo.ResultFavoriteCheckResVO;
-import com.project.thejapenproject.study.vo.StudyChoiceResVO;
-import com.project.thejapenproject.study.vo.StudyChoiceExampleVO;
-import com.project.thejapenproject.study.vo.param.ResultAddFavoriteParamVO;
-import com.project.thejapenproject.study.vo.param.ResultFavoriteCheckParamVO;
-import com.project.thejapenproject.study.vo.param.StudyChoiceParamVO;
+import com.project.thejapenproject.common.utils.PageResponse;
+import com.project.thejapenproject.study.vo.*;
+import com.project.thejapenproject.study.vo.param.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,11 +20,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Service("studyService")
+@RequiredArgsConstructor
 public class StudyServiceImpl implements StudyService {
 
-    @Autowired
-    public StudyMapper studyMapper;
-
+    public final StudyMapper studyMapper;
 
     @Override
     public ArrayList<WordVO> getWord(Integer level, Integer num, String username) {
@@ -100,11 +100,117 @@ public class StudyServiceImpl implements StudyService {
             if (studyMapper.resultAddFavorite(favoriteVO) < 1) {
                 throw new OperationErrorException(ErrorCode.FAIL_TO_FAVORITE);
             }
-        } else if(currentCheck > 0) {
-            if(studyMapper.resultDeleteFavorite(favoriteVO) < 1){
+        } else if (currentCheck > 0) {
+            if (studyMapper.resultDeleteFavorite(favoriteVO) < 1) {
                 throw new OperationErrorException(ErrorCode.FAIL_TO_FAVORITE);
             }
         }
+    }
+
+
+    // 개인 학습 페이지 단어 검색 및 조회
+    @Override
+    public PageResponse<SoloStudyGetSearchDataResVO> getSoleStudySearchData(SoloStudyGetSearchDataParamVO searchVO) {
+        Integer page = searchVO.getPage();
+        Integer size = searchVO.getSize();
+        searchVO.setOffset((page - 1) * size);
+
+        // 목록 조회
+        ArrayList<SoloStudyGetSearchDataResVO> wordList = studyMapper.getSoleStudySearchData(searchVO);
+
+        // 총 데이터 수 계산
+        int totalElements = wordList.size() != 0 ? wordList.get(0).getTotalElements() : 0;
+        // 총 페이지 수 계산
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        PageResponse<SoloStudyGetSearchDataResVO> responseData = PageResponse.<SoloStudyGetSearchDataResVO>builder()
+                .content(wordList)
+                .page(page)
+                .size(size)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .build();
+        return responseData;
+    }
+
+
+    // 단어 세트 등록
+    @Override
+    @Transactional
+    public void registerSoloStudy(SoloStudyRegisterReqVO requestVO) {
+        // word_set 테이블 insert
+        int insertResult = studyMapper.wordSetInsert(requestVO);
+        // word_set_detail 테이블 insert
+        int detailInsertResult = studyMapper.wordSetDetailInsert(requestVO);
+
+        if (insertResult < 1 || detailInsertResult < 1) {
+            throw new OperationErrorException(ErrorCode.FAIL_TO_SET_REGISTER);
+        }
+    }
+
+    // 단어 세트 수정
+    @Override
+    public void modifySoloStudy(SoloStudyModifyReqVO requestVO) {
+        // 단어 세트 수정 시 상세 내역 삭제
+        int detailDeleteResult = studyMapper.wordSetDetailDelete(requestVO);
+        int detailModifyResult = studyMapper.wordSetDetailModify(requestVO);
+        if (detailModifyResult < 1 || detailDeleteResult < 1) {
+            throw new OperationErrorException(ErrorCode.FAIL_TO_SET_MODIFY);
+        }
+    }
+
+    // 단어 세트 삭제
+    @Override
+    public void removeSoloStudy(SoloStudyRemoveReqVO requestVO) {
+        if (studyMapper.wordSetRemove(requestVO) < 1) {
+            throw new OperationErrorException(ErrorCode.FAIL_TO_SET_REMOVE);
+        }
+    }
+
+    // 단어 셋트 목록 조회
+    @Override
+    public ArrayList<SoloStudyGetUserListResVO> getSetList(UsernameReqVO usernameReqVO) {
+        return studyMapper.getSetList(usernameReqVO);
+    }
+
+    // 단어 셋트 목록 상세 조회
+    @Override
+    public ArrayList<GetWordSetDetailListResVO> getSetDetailList(GetWordSetDetailListReqVO requestVO) {
+        return studyMapper.getSetDetailList(requestVO);
+    }
+
+    // 단어 세트 수정을 위한 목록 조회
+    @Override
+    public GetModifyDataResVO getModifyDataList(GetWordSetDetailListReqVO requestVO) {
+        GetModifyDataResVO data = studyMapper.getModifyDataList(requestVO);
+        ArrayList<WordInfo> list = studyMapper.getModifyDataDetailList(requestVO);
+        data.setWordList(list);
+        return data;
+    }
+
+    // 세트 목록 전체 조회
+    @Override
+    public PageResponse<SoloStudyGetUserListResVO> getSetListAll(GetSetStudyDataListParamVO requestVO) {
+        Integer page = requestVO.getPage();
+        Integer size = requestVO.getSize();
+        requestVO.setOffset((page - 1) * size);
+
+        // 목록 조회
+        ArrayList<SoloStudyGetUserListResVO> setList = studyMapper.getSetListAll(requestVO);
+
+        // 총 데이터 수 계산
+        int totalElements = setList.size() != 0 ? setList.get(0).getTotalElements() : 0;
+        // 총 페이지 수 계산
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        PageResponse<SoloStudyGetUserListResVO> responseData = PageResponse.<SoloStudyGetUserListResVO>builder()
+                .content(setList)
+                .page(page)
+                .size(size)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .build();
+        return responseData;
     }
 
 

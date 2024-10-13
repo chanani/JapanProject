@@ -37,6 +37,7 @@ import NoticeDetail from "./page/notice/NoticeDetail";
 import Choice from "./page/study/Choice";
 import SoloStudy from "./page/study/SoloStudy";
 import SoloAdd from "./page/study/SoloAdd";
+import SetStudy from "./page/study/SetStudy.jsx";
 
 function App() {
   return (
@@ -84,7 +85,8 @@ function App() {
               <Route path="/translator" element={<TranslatorPage />}/>
               <Route path="/notice-detail" element={<NoticeDetail />}/>
               <Route path="/study" element={<Study />}/>
-              <Route path="choice" element={<Choice />} />
+              <Route path="/choice" element={<Choice />} />
+              <Route path="/set-study" element={<SetStudy />} />
               <Route path="/solo-study" element={<SoloStudy />} />
               <Route path="/solo-study/add-word" element={<SoloAdd />} />
             </Routes>

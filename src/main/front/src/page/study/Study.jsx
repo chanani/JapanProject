@@ -16,6 +16,8 @@ import {tokenInfoContext} from "../../component/TokenInfoProvider";
 
 const Study = () => {
     const location = useLocation();
+    let navigator = useNavigate();
+    const {soloWord} = location.state || {}; // 넘겨받은 데이터
     const {userRole, username} = useContext(tokenInfoContext);
     const [word, setWord] = useState([]); // 단어 데이터
     const [current, setCurrent] = useState(0); // 현재 인덱스
@@ -31,7 +33,7 @@ const Study = () => {
     const [isEndReached, setIsEndReached] = useState(false); // 단어 목록 높이 관리
     const [listChangeBtn, setListChangeBtn] = useState(false) // 단어 목록 숨김 버튼 false 뜻
     const [studyLevel, setStudyLevel] = useState(1); // 테스트 레벨
-    let navigator = useNavigate();
+    const [soloStudyState, setSoloStudyState] = useState(false); // 세트 학습에서 왔는지 여부
 
     // 단위 뒤집는 핸들러
     const handleMeaning = () => {
@@ -60,13 +62,13 @@ const Study = () => {
     }
     // +1 핸들러
     const handleNext = () => {
-        setCurrent((current) => {
-            if (current >= word.length - 1) {
+        setCurrent((prevCurrent) => {
+            if (prevCurrent >= word.length - 1) {
                 toast.error('더 이상 단어가 없습니다.');
-                return current; // 그대로 유지
+                return prevCurrent; // 그대로 유지
             }
             setMeaning(false);
-            return current + 1;
+            return prevCurrent + 1;
         });
     }
     // -1 핸들러
@@ -80,7 +82,6 @@ const Study = () => {
             return current - 1;
         });
     }
-
     // 자동 넘기기 핸들러
     const handlePlay = () => {
         setPlay((play) => !play);
@@ -107,7 +108,6 @@ const Study = () => {
             clearInterval(autoPlayInterval);
         };
     }, [play, word?.length]);
-
     // 키보드 입력 감지
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -128,13 +128,12 @@ const Study = () => {
         return () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, []);
+    }, [word]);
 
-    // help 상태 관리
+    // 이용방법 상태 관리
     const handleHelpChange = (event) => {
         setHelp(event.target.checked);
     };
-
     // 히라가나와 가타가나 보이기, 숨기기 상태 관리
     const handleBlackContent = (type) => {
 
@@ -147,39 +146,32 @@ const Study = () => {
             setChinese((current) => !current);
         }
     }
-
     // 단어 목록 보이기, 숨기기 핸들러
     const handleShowList = () => {
         setShowList((current) => !current);
     }
-
     // 단어 목록의 뜻 보이기, 숨기기
     const listContentToggle = () => {
         setListHiddenContent((current) => !current);
     }
-
     // 단어 목록의 단어 보이기, 숨기기
     const listWordToggle = () => {
         setListHiddenWord((current) => !current);
     }
-
     // 단어 목록 버튼(단어 -> 뜻, 뜻 -> 단어)
     const handleChangeToggle = () => {
         setListChangeBtn((current) => !current);
     }
-
     // 개별 블라인드 제거
     const handleChangeCancelBlind = (event) => {
         const target = event.target; // 클릭된 요소를 가져옴
         target.classList.remove('word-blind'); // 'word-blind' 클래스를 제거
     }
-
     // level 변경
     const handleLevelChange = (level) => {
         setStudyLevel(level);
         setCurrent(0);
     }
-
     // 선택 학습으로 이동
     const moveChoice = () => {
         navigator("/choice");
@@ -188,6 +180,11 @@ const Study = () => {
     // 단어 및 즐겨찾기 가져오기
     useEffect(() => {
         // location은 즐겨 찾기 목록에서 해당 페이지로 이동될 때 작동
+        if (soloWord && Array.isArray(soloWord)) {
+            setSoloStudyState(true);
+            setWord(soloWord)
+            return;
+        }
         const arr = location.state ? location.state.arr : [];
         if (arr?.length !== 0) setWord(arr);
         else {
@@ -197,7 +194,7 @@ const Study = () => {
                 })
                 .catch((e) => toast.error('데이터를 불러오는 중 에러가 발생하였습니다. 관리자에게 문의해주세요.'));
         }
-    }, [studyLevel, username]);
+    }, [studyLevel, username, soloWord]);
 
     // 단어 목록 높이 감지 중간이 보일 때 버튼 표시
     useEffect(() => {
@@ -276,45 +273,53 @@ const Study = () => {
                         <div className="progress-bar">
                             <div
                                 className="progress-bar-fill"
-                                style={{width: `${(current / (word.length - 1)) * 100}%`}}
+                                style={{width: `${(current / (word?.length - 1)) * 100}%`}}
                             ></div>
                         </div>
                         <div className='on-header-box'>
                             <div className="on-header-left-box">
-                                {word?.length > 0 && current >= 0 && word[current].wordFavorite === false ?
-                                    <FaRegStar size={21} onClick={() => handleStar(current)}/>
-                                    :
-                                    <FaStar size={21} onClick={() => handleStar(current)}/>
-                                }
+                                {!soloStudyState && (
+                                    word?.length > 0 && current >= 0 && word[current].wordFavorite === false ?
 
-                                <Audio inputData={word[current]?.wordContent}/>
-                            </div>
+                                        <FaRegStar size={21} onClick={() => handleStar(current)}/>
+                                        :
+                                        <FaStar size={21} onClick={() => handleStar(current)}/>
+                                )}
+
+                                {word?.length > 0 && current >= 0 && word[current] && (
+                                    <Audio inputData={word[current]?.wordContent}/>
+                                )}                            </div>
 
 
                         </div>
 
                         <div className='on-word-box' onClick={handleMeaning}>
-                            {meaning ? word[current]?.wordMeaning :
-                                word[current]?.wordChinese === null || word[current]?.wordChinese === '' ?
-                                    <div className="only-content">
-                                        <p>{word[current]?.wordContent}</p>
-                                    </div>
-                                    :
-                                    <div className="content-and-chinese">
-                                        {hiragana ?
-                                            <p className="content-and-chinese-content">{word[current]?.wordContent}</p>
-                                            :
-                                            <div className="content-block-box"></div>
-                                        }
-                                        {chinese ?
-                                            <p>{word[current]?.wordChinese}</p>
-                                            :
-                                            <div className="chinese-block-box"></div>
-                                        }
-                                    </div>
-
-                            }
+                            {word?.length > 0 && current >= 0 && word[current] && (
+                                meaning ? (
+                                    <p>{word[current]?.wordMeaning}</p>
+                                ) : (
+                                    word[current]?.wordChinese === null || word[current]?.wordChinese === '' ? (
+                                        <div className="only-content">
+                                            <p>{word[current]?.wordContent}</p>
+                                        </div>
+                                    ) : (
+                                        <div className="content-and-chinese">
+                                            {hiragana ? (
+                                                <p className="content-and-chinese-content">{word[current]?.wordContent}</p>
+                                            ) : (
+                                                <div className="content-block-box"></div>
+                                            )}
+                                            {chinese ? (
+                                                <p>{word[current]?.wordChinese}</p>
+                                            ) : (
+                                                <div className="chinese-block-box"></div>
+                                            )}
+                                        </div>
+                                    )
+                                )
+                            )}
                         </div>
+
                         {help ?
                             meaning ?
                                 <div className="help-box">
@@ -360,23 +365,26 @@ const Study = () => {
                             </div>
                         </div>
 
-                        <div className='on-click-box'>
+                        <div className='click-mid'>
+                            {word?.length > 0 && (
+                                <>
+                                    {current === 0 ? (
+                                        <FaRegArrowAltCircleLeft size={35} color='#d2cfcf'/>
+                                    ) : (
+                                        <FaRegArrowAltCircleLeft size={35} onClick={handleBack} color='#4e4e4e'/>
+                                    )}
 
-                            <div className='click-mid'>
-                                {current === 0 ?
-                                    <FaRegArrowAltCircleLeft size={35} color='#d2cfcf'/>
-                                    :
-                                    <FaRegArrowAltCircleLeft size={35} onClick={handleBack} color='#4e4e4e'/>}
+                                    <p>{current + 1} / {word.length}</p>
 
-                                <p>{current + 1} / {word.length}</p>
-                                {current === word.length - 1 ?
-                                    <FaRegArrowAltCircleRight size={35} color='#d2cfcf'/>
-                                    :
-                                    <FaRegArrowAltCircleRight size={35} onClick={handleNext} color='#4e4e4e'/>
-                                }
-                            </div>
-
+                                    {current === word.length - 1 ? (
+                                        <FaRegArrowAltCircleRight size={35} color='#d2cfcf'/>
+                                    ) : (
+                                        <FaRegArrowAltCircleRight size={35} onClick={handleNext} color='#4e4e4e'/>
+                                    )}
+                                </>
+                            )}
                         </div>
+
 
                         {/* 레벨 박스, 한자, 히라가나 숨김 박스 */}
                         <div className="study-level-change-box">
@@ -430,7 +438,7 @@ const Study = () => {
                     <div className="study-page-word-list-box">
 
                         <div className="study-page-word-list-title-box" onClick={handleShowList}>
-                            <p>학습 단어 목록({word.length})</p>
+                            <p>학습 단어 목록({word?.length || 0})</p>
                             {showList ? <IoIosArrowDown size={20}/> : <IoIosArrowUp size={20}/>}
                         </div>
 
@@ -453,11 +461,13 @@ const Study = () => {
                                     </div>
 
                                     <div className="study-page-word-list-btn">
-                                        {word.length > 0 && current >= 0 && word[index].wordFavorite === false ?
-                                            <FaRegStar size={21} onClick={() => handleStar(index)}/>
-                                            :
-                                            <FaStar size={21} onClick={() => handleStar(index)}/>
-                                        }
+                                        {!soloStudyState && word.length > 0 && current >= 0 && (
+                                            word[index].wordFavorite === false ? (
+                                                <FaRegStar size={21} onClick={() => handleStar(index)}/>
+                                            ) : (
+                                                <FaStar size={21} onClick={() => handleStar(index)}/>
+                                            )
+                                        )}
                                         <Audio inputData={item?.wordContent}/>
                                     </div>
 

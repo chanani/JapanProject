@@ -16,7 +16,8 @@ const usePagination = ({ totalItems, itemsPerPage, pagesPerRange }) => {
         totalPages,
         startPage,
         endPage,
-        handlePageChange
+        handlePageChange,
+        setCurrentPage
     };
 };
 

@@ -13,6 +13,7 @@
     font-weight: 600;
     color: #014c8c;
 }
+
 .solo-study-header {
     font-size: 25px;
     font-weight: 700;
@@ -59,7 +60,6 @@
 }
 
 
-
 .solo-study-title {
     font-size: 16px;
     font-weight: 600;
@@ -85,7 +85,8 @@
     display: flex;
     align-items: center;
 }
-.solo-study-write  img {
+
+.solo-study-write img {
     width: 24px;
     height: 24px;
     margin-right: 5px;
@@ -96,7 +97,113 @@
     bottom: 10px;
     right: 20px;
     z-index: 1;
+    display: flex;
+    align-items: center;
 }
+
+.solo-study-setting-box > svg {
+    margin-left: 5px;
+}
+
+.solo-study-setting-box > p {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* 뒷 배경 흐리게 */
+.solo-study-modal-back-ground {
+    width: 100%;
+    height: 100%;
+}
+
+.solo-study-modal-back-ground::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(8, 11, 35, 0.5); /* 배경 어둡게 */
+    z-index: 1001;
+    backdrop-filter: blur(1px); /* 배경 흐리게 */
+}
+
+.solo-study-modal-all {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.1);
+    border-radius: 10px;
+    z-index: 1002;
+    padding: 24px 32px 9px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+.solo-study-modal-all > div {
+    width: 100%;
+    border: 2px solid #edeff5;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #212121;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+
+}
+
+.solo-study-modal-all > div:hover {
+    border: 2px solid #bbc4fbab;
+}
+.solo-study-modal-all > div:hover p{
+    border-bottom: 4px solid #dc96fd;
+    color: #dc96fd;
+}
+
+.solo-study-modal-all > div > p {
+    padding-bottom: 7px;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
+.solo-study-modal-move > p {
+    border-bottom: 4px solid #2fb7f6;
+}
+
+.solo-study-modal-modify > p {
+    border-bottom: 4px solid #c6f16c;
+
+}
+
+.solo-study-modal-remove > p {
+    border-bottom: 4px solid #ff8247;
+}
+
+.solo-study-modal-all > button {
+    width: 100%;
+    height: 50px;
+    border: 2px solid #edeff5;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #56607c;
+    background-color: #ebebeb;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
+
+.solo-study-modal-all > button:hover {
+    background-color: #b1b1b1ab;
+}
+
 /* 500 이하 */
 @media (max-width: 500px) {
     .solo-study-all {
@@ -106,6 +213,10 @@
 
     .solo-study-content-all {
         grid-template-columns: repeat(1, 1fr);
+    }
+
+    .solo-study-modal-all {
+        width: 95%;
     }
 
 }
@@ -118,7 +229,11 @@
     }
 
     .solo-study-content-all {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .solo-study-modal-all {
+        width: 80%;
     }
 
 }
@@ -132,5 +247,9 @@
 
     .solo-study-content-all {
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    .solo-study-modal-all {
+        width: 30%;
     }
 }

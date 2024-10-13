@@ -62,8 +62,11 @@ public enum ErrorCode {
     // test
     WRONG_PARAM_LEVEL(HttpStatus.BAD_REQUEST, "단계는 필수입니다."),
 
-    // test
-    FAIL_TO_FAVORITE(HttpStatus.BAD_REQUEST, "즐겨찾기 추가에 실패하였습니다.");
+    // study
+    FAIL_TO_FAVORITE(HttpStatus.INTERNAL_SERVER_ERROR, "즐겨찾기 추가에 실패하였습니다."),
+    FAIL_TO_SET_REGISTER(HttpStatus.INTERNAL_SERVER_ERROR, "단어 세트 등록에 실패하였습니다."),
+    FAIL_TO_SET_REMOVE(HttpStatus.INTERNAL_SERVER_ERROR, "단어 세트 삭제에 실패하였습니다."),
+    FAIL_TO_SET_MODIFY(HttpStatus.INTERNAL_SERVER_ERROR, "단어 세트 수정에 실패하였습니다.");
 
 
 

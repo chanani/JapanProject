@@ -2,16 +2,15 @@ package com.project.thejapenproject.controller;
 
 
 import com.project.thejapenproject.command.ResponseData;
+import com.project.thejapenproject.command.UsernameReqVO;
 import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
+import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.study.service.StudyService;
-import com.project.thejapenproject.study.vo.ResultFavoriteCheckResVO;
-import com.project.thejapenproject.study.vo.StudyChoiceResVO;
-import com.project.thejapenproject.study.vo.param.ResultAddFavoriteParamVO;
-import com.project.thejapenproject.study.vo.param.ResultFavoriteCheckParamVO;
-import com.project.thejapenproject.study.vo.param.StudyChoiceParamVO;
+import com.project.thejapenproject.study.vo.*;
+import com.project.thejapenproject.study.vo.param.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -95,6 +94,11 @@ public class StudyController {
                 .build();
     }
 
+    /**
+     * 선택 학습 페이지 즐겨찾기 추가, 삭제 API
+     * @param favoriteVO
+     * @return
+     */
     @GetMapping("/choice-result-addFavorite")
     public ResponseData resultAddFavorite(@Valid @ModelAttribute ResultAddFavoriteParamVO favoriteVO) {
         studyService.resultAddFavorite(favoriteVO);
@@ -105,5 +109,132 @@ public class StudyController {
                 .build();
     }
 
+    /**
+     * 셋트 단어 등록 시 단어 조회 API
+     * @param searchVO
+     * @return
+     */
+    @GetMapping("/solo-study-search")
+    public ResponseData getSoloStudySearch(@Valid @ModelAttribute SoloStudyGetSearchDataParamVO searchVO) {
 
+        PageResponse<SoloStudyGetSearchDataResVO> wordList = studyService.getSoleStudySearchData(searchVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(wordList)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+    /**
+     * 단어 셋트 등록 API
+     * @param requestVO
+     * @return
+     */
+    @PostMapping("/solo-study-register")
+    public ResponseData registerSoloStudy(@Valid @RequestBody SoloStudyRegisterReqVO requestVO) {
+
+        studyService.registerSoloStudy(requestVO);
+
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+    /**
+     * 단어 셋트 수정 API
+     * @param requestVO
+     * @return
+     */
+    @PostMapping("/solo-study-modify")
+    public ResponseData modifySoloStudy(@Valid @RequestBody SoloStudyModifyReqVO requestVO) {
+        studyService.modifySoloStudy(requestVO);
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+    /**
+     * 단어 셋트 수정 API
+     * @param requestVO
+     * @return
+     */
+    @PostMapping("/solo-study-remove")
+    public ResponseData removeSoloStudy(@Valid @RequestBody SoloStudyRemoveReqVO requestVO) {
+        studyService.removeSoloStudy(requestVO);
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+    /**
+     * 단어 셋트 목록 조회 API
+     * @param usernameReqVO
+     * @return
+     */
+    @PostMapping("/get-set-data")
+    public ResponseData getWordSetData(@Valid @RequestBody UsernameReqVO usernameReqVO) {
+
+        ArrayList<SoloStudyGetUserListResVO> setList = studyService.getSetList(usernameReqVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(setList)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+    /**
+     * 단어 셋트 전체 목록 조회 API
+     */
+    @NoneAuth
+    @GetMapping("/get-set-data-all")
+    public ResponseData getWordSetDataAll(@Valid @ModelAttribute GetSetStudyDataListParamVO requestVO) {
+        PageResponse<SoloStudyGetUserListResVO> setList = studyService.getSetListAll(requestVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(setList)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+    /**
+     * 단어 세트 상세 목록 조회 API
+     * @param requestVO
+     * @return
+     */
+    @NoneAuth
+    @PostMapping("/get-set-detail-data")
+    public ResponseData getWordSetDetailData(@Valid @RequestBody GetWordSetDetailListReqVO requestVO) {
+
+        ArrayList<GetWordSetDetailListResVO> setList = studyService.getSetDetailList(requestVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(setList)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+    /**
+     * 수정 페이지로 진입 시 데이터 조회 API
+     * @param requestVO
+     * @return
+     */
+    @PostMapping("/get-modify-data")
+    public ResponseData getModifyDataList(@Valid @RequestBody GetWordSetDetailListReqVO requestVO) {
+
+        GetModifyDataResVO setList = studyService.getModifyDataList(requestVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(setList)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
 }

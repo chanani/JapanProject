@@ -84,15 +84,16 @@
     font-size: 25px;
 }
 
-.click-mid {
+.click-mid  {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    margin-bottom: 15px;
 }
 
-.click-mid > p {
+.click-mid p {
     margin: 0 20px;
-
+    font-size: 18px;
 }
 
 .click-mid > svg,

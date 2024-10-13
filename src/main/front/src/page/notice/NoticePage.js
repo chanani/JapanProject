@@ -97,6 +97,7 @@ const NoticePage = () => {
                     totalPages={totalPages}
                     handlePageChange={handlePageChange}
                     pagesPerRange={pagesPerRange}
+                    divMargin={"30px 0"}
                 />
 
             </div>

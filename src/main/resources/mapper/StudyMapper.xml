@@ -69,11 +69,11 @@
         SELECT word_num
         FROM favorites
         WHERE username = #{username}
-          AND word_num in (
-              <foreach collection="wordNum" item="word" separator=",">
-                  #{word}
-              </foreach>
-            )
+        AND word_num in (
+        <foreach collection="wordNum" item="word" separator=",">
+            #{word}
+        </foreach>
+        )
     </select>
 
     <!-- 현재 즐겨 찾기 여부 확인 -->
@@ -100,8 +100,191 @@
     <!-- 선택 학습 결과 페이지 즐겨찾기 삭제 -->
     <delete id="resultDeleteFavorite"
             parameterType="com.project.thejapenproject.study.vo.param.ResultAddFavoriteParamVO">
-        DELETE FROM favorites
+        DELETE
+        FROM favorites
         WHERE username = #{username}
-        AND word_num = #{wordNum}
+          AND word_num = #{wordNum}
     </delete>
+
+    <!-- 개인 학습 페이지 단어 검색 및 조회 -->
+    <select id="getSoleStudySearchData"
+            parameterType="com.project.thejapenproject.study.vo.param.SoloStudyGetSearchDataParamVO"
+            resultType="com.project.thejapenproject.study.vo.SoloStudyGetSearchDataResVO">
+        SELECt word_num,
+        word_content,
+        word_meaning,
+        word_chinese,
+        COUNT(*) OVER() AS total_elements
+        FROM word
+        WHERE state = 0
+        AND (word_content LIKE '%${keyword}%'
+        OR word_meaning LIKE '%${keyword}%')
+        ORDER BY
+        <choose>
+            <when test='wordSort == "DESC" and timeSort == "DESC"'>
+                word_content DESC, word_num DESC
+            </when>
+            <when test='wordSort == "DESC" and timeSort == "ASC"'>
+                word_content DESC, word_num ASC
+            </when>
+            <when test='wordSort == "ASC" and timeSort == "DESC"'>
+                word_num DESC, word_content ASC
+            </when>
+            <otherwise>
+                word_content ASC, word_num ASC
+            </otherwise>
+        </choose>
+        limit #{size} offset #{offset};
+    </select>
+
+    <!-- 세트 단어 등록 -->
+    <insert id="wordSetInsert"
+            parameterType="com.project.thejapenproject.study.vo.SoloStudyRegisterReqVO">
+        INSERT INTO word_set(username,
+                             ws_title)
+        VALUES (#{username},
+                #{setTitle})
+    </insert>
+
+    <!-- 세트 단어 상세 내용 등록 -->
+    <insert id="wordSetDetailInsert"
+            parameterType="com.project.thejapenproject.study.vo.SoloStudyRegisterReqVO">
+        <selectKey resultType="integer" keyProperty="wsNum" order="BEFORE">
+            SELECT ws_num
+            FROM word_set
+            WHERE username = #{username}
+            ORDER BY ws_num DESC
+            limit 1
+        </selectKey>
+        INSERT INTO word_set_detail(ws_num,
+        wsd_meaning,
+        wsd_content,
+        wsd_chinese,
+        username)
+        VALUES
+        <foreach collection="wordList" separator="," item="item">
+            (#{wsNum},
+            #{item.wordMeaning},
+            #{item.wordContent},
+            #{item.wordChinese},
+            #{username})
+        </foreach>
+    </insert>
+
+    <!-- 단어 세트 목록 조회 -->
+    <select id="getSetList"
+            parameterType="com.project.thejapenproject.command.UsernameReqVO"
+            resultType="com.project.thejapenproject.study.vo.SoloStudyGetUserListResVO">
+        SELECT WS.username,
+               WS.ws_num,
+               WS.ws_title,
+               WS.ws_hits,
+               COUNT(*) AS total_count,
+               I.image_path AS user_icon_path
+        FROM word_set WS
+            JOIN word_set_detail WSD
+        ON WS.ws_num = WSD.ws_num
+            JOIN image I
+            ON (WS.username = I.username AND I.state = 0)
+        WHERE WS.state = 0
+          AND WSD.state = 0
+          AND WS.username = #{username}
+        GROUP BY WSD.ws_num, I.image_path
+        ORDER BY WSD.ws_num DESC
+    </select>
+
+    <!-- 단어 세트 목록 상세 조회 -->
+    <select id="getSetDetailList"
+            parameterType="com.project.thejapenproject.study.vo.GetWordSetDetailListReqVO"
+            resultType="com.project.thejapenproject.study.vo.GetWordSetDetailListResVO">
+        SELECT wsd_meaning AS word_meaning,
+               wsd_chinese AS word_chinese,
+               wsd_content AS word_content
+        FROM word_set_detail
+        WHERE ws_num = #{wsNum}
+          AND state = 0
+        ORDER BY RAND()
+    </select>
+
+    <!-- 단어 세트 수정을 위한 목록 조회 -->
+    <select id="getModifyDataList"
+            parameterType="com.project.thejapenproject.study.vo.GetWordSetDetailListReqVO"
+            resultType="com.project.thejapenproject.study.vo.GetModifyDataResVO">
+        SELECT ws_num,
+               ws_title
+        FROM word_set
+        WHERE ws_num = #{wsNum}
+          AND state = 0
+          AND username = #{username}
+    </select>
+
+    <select id="getModifyDataDetailList"
+            parameterType="com.project.thejapenproject.study.vo.GetWordSetDetailListReqVO"
+            resultType="com.project.thejapenproject.study.vo.WordInfo">
+        SELECT wsd_content AS word_content,
+               wsd_meaning AS word_meaning,
+               wsd_chinese AS word_chinese
+        FROM word_set_detail
+        WHERE state = 0
+          AND ws_num = #{wsNum}
+          AND username = #{username}
+        ORDER BY wsd_num ASC
+    </select>
+
+    <!-- 단어 세트 수정 시 상세 내역 삭제 -->
+    <delete id="wordSetDetailDelete"
+            parameterType="com.project.thejapenproject.study.vo.SoloStudyModifyReqVO">
+        DELETE FROM word_set_detail
+        WHERE ws_num = #{wsNum}
+    </delete>
+
+    <!-- 단어 세트 수정 -->
+    <insert id="wordSetDetailModify"
+            parameterType="com.project.thejapenproject.study.vo.SoloStudyModifyReqVO">
+        INSERT INTO word_set_detail(ws_num,
+                                    wsd_meaning,
+                                    wsd_content,
+                                    wsd_chinese,
+                                    username)
+        VALUES
+        <foreach collection="wordList" separator="," item="item">
+            (#{wsNum},
+            #{item.wordMeaning},
+            #{item.wordContent},
+            #{item.wordChinese},
+            #{username})
+        </foreach>
+    </insert>
+
+    <!-- 단어 세트 삭제 -->
+    <update id="wordSetRemove"
+            parameterType="com.project.thejapenproject.study.vo.SoloStudyRemoveReqVO">
+        UPDATE word_set
+        SET state = 1,
+            updated_at = NOW()
+        WHERE ws_num = #{wsNum}
+    </update>
+
+    <select id="getSetListAll"
+            resultType="com.project.thejapenproject.study.vo.SoloStudyGetUserListResVO">
+        SELECT WS.username,
+               WS.ws_num,
+               WS.ws_title,
+               WS.ws_hits,
+               COUNT(*)     AS total_count,
+               I.image_path AS user_icon_path,
+               COUNT(*)        OVER() AS total_elements
+        FROM word_set WS
+                 JOIN word_set_detail WSD
+                      ON WS.ws_num = WSD.ws_num
+                 JOIN image I
+                      ON (WS.username = I.username AND I.state = 0)
+        WHERE WS.state = 0
+          AND WSD.state = 0
+        GROUP BY WSD.ws_num, I.image_path
+        ORDER BY WSD.ws_num DESC
+            limit #{size}
+        offset #{offset}
+    </select>
+
 </mapper>

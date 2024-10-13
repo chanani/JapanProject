@@ -1,39 +1,110 @@
 import "../../styles/study/SoloStudy.css"
 import {FaPlus} from "react-icons/fa6";
-import {IoSettingsOutline} from "react-icons/io5";
 import {useNavigate} from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
+import {tokenInfoContext} from "../../component/TokenInfoProvider";
+import {toast} from "react-toastify";
+import {axiosInstance} from "../../api";
+import {TiHeartOutline, TiHeartFullOutline} from "react-icons/ti";
+
 
 const SoloStudy = () => {
     const navigator = useNavigate();
+    const {userRole, username} = useContext(tokenInfoContext);
+    const [data, setData] = useState([]); // 세트 단어 목록
+    const [choiceModal, setChoiceModal] = useState(false); // 선택창 모달 여부
+    const [choiceSetNum, setChoiceSetNum] = useState(0);
 
+    // 등록 페이지로 이동
     const handleAddPage = () => {
         navigator("/solo-study/add-word");
         window.scrollTo(0, 0);
     }
+    // 모달 여는 핸들러
+    const handleOnModal = (index) => {
+        setChoiceModal(true);
+        setChoiceSetNum(data[index].wsNum);
+    }
 
-    const data = [
-        {
-        title: "안녕하세요 저는 한국인입",
-        content: "내용입니다.",
-        count: 10,
-        writer: "chanhan12"
-    },
-        {
-            title: "타이틀 2입니다.",
-            content: "내용 2입니다.",
-            count: 200,
-            writer: "chanhan12"
-        }, {
-            title: "타이틀 2입니다.",
-            content: "내용 2입니다.",
-            count: 20,
-            writer: "chanhan12"
-        }, {
-            title: "타이틀 2입니다.",
-            content: "내용 2입니다.",
-            count: 20,
-            writer: "chanhan12"
-        }];
+    // 학습페이지로 이동하는 핸들러
+    const handleStudyPage = () => {
+        getDetailDataAPI(choiceSetNum)
+    }
+
+    // 수정페이지로 이동하는 핸들러
+    const handleModifyPage = () => {
+        setModifyDataAPI(choiceSetNum)
+    }
+
+    // 목록 페이지로 이동하는 핸들러
+    const handleListMove = () => {
+        navigator("/set-study")
+    }
+
+    // 삭제 핸들러
+    const handleRemove = () => {
+        // eslint-disable-next-line no-restricted-globals
+        if (confirm("단어 세트 목록을 삭제하시겠습니까?")) {
+            setRemoveAPI(choiceSetNum);
+        }
+    }
+
+
+    // 학습 페이지로 가기 위해 단어 목록 조회 API
+    const getDetailDataAPI = (wsNum) => {
+        axiosInstance.post('study/get-set-detail-data', {
+            username: username,
+            wsNum: wsNum
+        })
+            .then((res) => {
+                navigator('/study', {state: {soloWord: res.data.data}});
+            })
+            .catch((err) => toast.error(err));
+    }
+
+    // 수정 페이지로 가기 위해 단어 목록 조회 API
+    const setModifyDataAPI = (wsNum) => {
+        axiosInstance.post('study/get-modify-data', {
+            username: username,
+            wsNum: wsNum
+        })
+            .then((res) => {
+                navigator('/solo-study/add-word', {state: {soloWord: res.data.data}});
+            })
+            .catch((err) => toast.error(err));
+    }
+
+    // 세트 단어 삭제 API
+    const setRemoveAPI = (wsNum) => {
+        axiosInstance.post('study/solo-study-remove', {
+            username: username,
+            wsNum: wsNum
+        }).then((res) => {
+            setChoiceModal(false);
+            getDataAPI();
+        }).catch((err) => toast.error(err));
+    }
+
+    // 데이터 조회 API
+    const getDataAPI = () => {
+        axiosInstance.post('study/get-set-data', {
+            username: username
+        })
+            .then((res) => {
+                setData(res.data.data);
+            })
+            .catch((e) => toast.error('조회 중 오류가 발생하였습니다.'));
+    }
+    // 데이터 조회
+    useEffect(() => {
+        if (userRole === "none") {
+            toast.error('로그인 후 이용해주세요.');
+            navigator("/set-study")
+        } else {
+            getDataAPI();
+        }
+    }, []);
+
 
     return (
         <div className="solo-study-container">
@@ -48,28 +119,30 @@ const SoloStudy = () => {
 
                 <div className="solo-study-content-all">
                     {data?.map((item, index) => (
-                        <div className="solo-study-content-box" key={index}>
+                        <div className="solo-study-content-box" key={index}
+                             onClick={() => handleOnModal(index)}>
                             <div className="solo-study-title">
-                                <p>{item.title}</p>
+                                <p>{item.wsTitle}</p>
                             </div>
                             <div className="solo-study-count">
-                                <p>{item.count} 단어</p>
+                                <p>{item.totalCount} 단어</p>
                             </div>
                             <div className="solo-study-write">
                                 <img
                                     className="header-user-icon"
-                                    src={`https://lg.thejapan.today/icon-image/스크린샷 2024-08-29 오후 4.48.30.png`}
+                                    src={`https://lg.thejapan.today/icon-image/${item?.userIconPath}`}
                                     alt="이미지"
                                     onError={(e) => {
                                         e.target.onerror = null;
                                         e.target.src = "/default_icon.svg";
                                     }}
                                 />
-                                <p>{item.writer}</p>
+                                <p>{username}</p>
 
                             </div>
                             <div className="solo-study-setting-box">
-                                <IoSettingsOutline size={20}/>
+                                <p>{item.wsHits}</p>
+                                <TiHeartOutline size={20}/>
                             </div>
                         </div>
                     ))}
@@ -77,7 +150,34 @@ const SoloStudy = () => {
                          onClick={handleAddPage}>
                         <FaPlus size={28} color="rgb(130 129 129)"/>
                     </div>
+
                 </div>
+
+                <div className='set-study-my-page'>
+                    <button onClick={handleListMove}>단어 세트 목록으로</button>
+                </div>
+
+                {choiceModal &&
+                    <div className="solo-study-modal-back-ground">
+                        <div className="solo-study-modal-all">
+                            <div onClick={handleStudyPage}
+                                 className="solo-study-modal-move">
+                                <p>단어 학습</p>
+                            </div>
+                            <div onClick={handleModifyPage}
+                                 className="solo-study-modal-modify">
+                                <p>수정하기</p>
+                            </div>
+                            <div onClick={handleRemove}
+                                 className="solo-study-modal-remove">
+                                <p>삭제하기</p>
+                            </div>
+                            <button onClick={() => setChoiceModal(false)}>목록으로</button>
+                        </div>
+
+
+                    </div>
+                }
 
             </div>
         </div>
