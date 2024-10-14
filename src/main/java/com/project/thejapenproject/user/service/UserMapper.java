@@ -26,6 +26,6 @@ public interface UserMapper {
     // user image 조회
     public String getUserIcon(GetUserIconReqVO getUserIconReqVO);
 
-
-
+    // 권한 조회
+    public String getRole(String username);
 }

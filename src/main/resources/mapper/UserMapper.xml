@@ -84,4 +84,12 @@
              image I ON U.username = I.username AND I.state = 0
         WHERE U.username = #{username}
     </select>
+
+    <!-- 권한 조회 -->
+    <select id="getRole"
+        resultType="java.lang.String">
+        SELECT role
+        FROM user
+        WHERE username = #{username}
+    </select>
 </mapper>

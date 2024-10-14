@@ -2,6 +2,7 @@ package com.project.thejapenproject.user.service;
 
 import com.project.thejapenproject.command.GetUserIconReqVO;
 import com.project.thejapenproject.command.UserVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    public UserMapper usermapper;
+    public final UserMapper usermapper;
 
     public UserServiceImpl(UserMapper usermapper) {
         this.usermapper = usermapper;
@@ -63,6 +64,12 @@ public class UserServiceImpl implements UserService{
     @Override
     public String getUserIcon(GetUserIconReqVO getUserIconReqVO) {
         return usermapper.getUserIcon(getUserIconReqVO);
+    }
+
+    // 권한 조회
+    @Override
+    public String getRole(String username) {
+        return usermapper.getRole(username);
     }
 
 }
