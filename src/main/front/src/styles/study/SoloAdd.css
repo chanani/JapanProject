@@ -197,6 +197,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
 }
 
 .solo-add-btn-box > button {
@@ -268,7 +269,7 @@
 
 .solo-add-word-search-title-box {
     border-bottom: 1px solid rgb(237 239 245);
-    padding-bottom: 15px;
+    padding-bottom: 10px;
 }
 
 .solo-add-word-search-title {
@@ -287,6 +288,7 @@
     margin-top: 15px;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .solo-add-word-search-search-box > input {
@@ -308,12 +310,135 @@
 }
 
 .solo-add-word-search-search-box > svg {
-    color : rgb(114 114 114);
+    color: rgb(114 114 114);
     cursor: pointer;
     transition: all .12s cubic-bezier(.47, 0, .745, .715);
 }
+
 .solo-add-word-search-search-box > svg:hover {
-    color : #5d9cff;
+    color: #5d9cff;
+}
+
+
+/* 선택된 단어 목록 */
+.solo-add-word-search-choice-sub-title {
+    margin-top: 15px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #383838;
+}
+
+.solo-add-word-search-choice-box {
+    display: flex; /* 가로로 정렬 */
+    flex-wrap: nowrap; /* 가로로 넘치는 부분을 감싸지 않도록 설정 */
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    white-space: nowrap; /* 텍스트가 줄바꿈되지 않도록 설정 */
+    padding: 10px 0 0 0;
+    gap: 10px; /* 단어 간 간격 조정 */
+}
+
+.add-word-search-choice-word {
+    border: 2px solid #a9b7ff;
+    border-radius: 8px;
+    padding: 10px;
+    width: 90px; /* 단어 박스의 최소 너비 설정 */
+    flex-shrink: 0; /* 축소되지 않도록 설정 */
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.add-word-search-choice-word p {
+    white-space: nowrap; /* 줄바꿈 금지 */
+    overflow: hidden; /* 넘치는 텍스트 숨기기 */
+    text-overflow: ellipsis; /* 넘치는 부분을 ...으로 표시 */
+    margin: 0; /* 여백 제거 */
+    padding: 0; /* 여백 제거 */
+    color: #4a4a4a;
+}
+
+.solo-add-word-search-choice-box::-webkit-scrollbar {
+    height: 4px; /* 스크롤바 높이 설정 */
+}
+
+.solo-add-word-search-choice-box::-webkit-scrollbar-thumb {
+    background-color: #849cfb; /* 스크롤바 색상 */
+    border-radius: 10px;
+}
+
+.solo-add-word-search-choice-box::-webkit-scrollbar-track {
+    background-color: #f0f0f0; /* 스크롤바 트랙 색상 */
+}
+
+.add-word-search-choice-word > svg {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    color: #4a4a4a;
+    cursor: pointer;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
+
+.add-word-search-choice-word > svg:hover {
+    color: #f38181;
+}
+
+/* 단어 목록 */
+.solo-add-word-search-choice-sub-title2 {
+    margin-top: 15px;
+    font-size: 17px;
+    font-weight: 600;
+    color: #383838;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.solo-add-word-search-choice-sub-title2 > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.solo-add-word-search-word {
+    margin-left: 5px;
+}
+.solo-add-word-search-time:hover,
+.solo-add-word-search-word:hover{
+    color: #009ce4;
+}
+
+.solo-add-word-search-data-box {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.solo-add-word-search-data-content-box {
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+    border: 2px solid #d6d7db;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: flex;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.05), 0 0px 0px rgba(0, 0, 0, 0);
+    cursor: pointer;
+}
+
+.solo-add-word-search-data-content-box:hover {
+    border: 2px solid #5d9cff;
+}
+
+.solo-add-word-search-data-content-meaning{
+    width : 30%;
+}
+
+.solo-add-word-page-nation .notice-pageNation {
+    margin : 10px 0 !important;
 }
 
 
@@ -341,6 +466,13 @@
     .solo-add-word-search-title-content {
         font-size: 21px;
     }
+
+    .solo-add-word-search-data-content-box {
+        flex-direction: column;
+    }
+    .solo-add-word-search-data-content-box {
+        padding: 3px 10px 3px 16px;
+    }
 }
 
 /* 500 이상 */
@@ -360,6 +492,9 @@
 
     .solo-add-word-search-title-content {
         font-size: 27px;
+    }
+    .solo-add-word-search-data-content-box {
+        padding: 10px 10px 10px 16px;
     }
 
 }

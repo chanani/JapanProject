@@ -42,7 +42,7 @@ axiosInstance.interceptors.response.use((response) => {
                 {headers: {'Authorization': `${cookies.accessToken}`},}
             );
             const {data} = response;
-            setTokenCookies(data.data.refreshToken, data.data.accessToken, cookies.usename);
+            setTokenCookies(data.data.refreshToken, data.data.accessToken, cookies.username);
             originalRequest.headers.Authorization = `${data?.data?.accessToken}`;
             return axios(originalRequest);
         } catch (refreshError) {

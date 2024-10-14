@@ -1,15 +1,28 @@
 import "../../styles/study/SoloAdd.css"
 import {IoMdArrowDropright} from "react-icons/io";
-import {useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import {FaRegTrashAlt} from "react-icons/fa";
 import {IoSearch} from "react-icons/io5";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
+import {IoIosCloseCircleOutline} from "react-icons/io";
+import {FaSortAlphaDown, FaSortAlphaUp, FaSortNumericDown, FaSortNumericUp} from "react-icons/fa";
+import {toast} from "react-toastify";
+import {axiosInstance} from "../../api";
+import PageNation from "../../component/PageNation";
+import usePagination from "../../hook/usePagination";
+import {tokenInfoContext} from "../../component/TokenInfoProvider";
 
 const SoloAdd = () => {
     const navigator = useNavigate();
+    const location = useLocation();
+    const {username} = useContext(tokenInfoContext);
+    const {soloWord} = location.state || {}; // 넘겨받은 데이터
+    const [pageState, setPageState] = useState("add");
+    const [wsNum, setWsNum] = useState(0);
     const [title, setTitle] = useState(""); // 제목
     const [data, setData] = useState([]); // 단어 목록
     const [searchWordOn, setSearchWordOn] = useState(false); // 검색 모달 활성화 여부
+    const titleInputRef = useRef(null); // 제목 입력 안했을 경우 focus
 
     // 제목 변경 핸들러
     const handleTitleChange = (e) => {
@@ -33,6 +46,7 @@ const SoloAdd = () => {
         }]);
     }
 
+
     // 단어 목록 삭제 핸들러
     const handleRemoveWord = (index) => {
         const newData = [...data];
@@ -44,10 +58,55 @@ const SoloAdd = () => {
     const handleBack = () => {
         navigator("/solo-study");
     }
+    // 등록하기 API
+    const addAPI = () => {
+        axiosInstance.post('study/solo-study-register',
+            {
+                username: username,
+                wordList: data,
+                setTitle: title
+            })
+            .then((res) => {
+                navigator("/solo-study");
+                toast.success('단어 세트가 생성되었습니다.')
+            })
+            .catch((e) => toast.error('등록 중 오류가 발생하였습니다.'));
+    }
+    // 수정하기 API
+    const modifyAPI = () => {
+        axiosInstance.post('study/solo-study-modify',
+            {
+                wsNum : wsNum,
+                username: username,
+                wordList: data,
+                setTitle: title
+            })
+            .then((res) => {
+                navigator("/solo-study");
+                toast.success('단어 세트가 생성되었습니다.')
+            })
+            .catch((e) => toast.error('등록 중 오류가 발생하였습니다.'));
+    }
 
     // 등록하기 핸들러
     const handleSubmit = () => {
-
+        if (title === '') {
+            if (title === '') {
+                toast.error('제목을 입력해주세요.');
+                titleInputRef.current.focus(); // 포커스 주기
+                return;
+            }
+        }
+        if (data.length === 0) return toast.error('단어를 추가해주세요.');
+        // 단어 목록의 각 항목이 유효한지 확인
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].wordContent.trim() === '' || data[i].wordMeaning.trim() === '') {
+                toast.error(`단어와 뜻은 모두 입력해야 합니다. 항목 ${i + 1}을 확인하세요.`);
+                return;
+            }
+        }
+        if (pageState === 'add') addAPI();
+        if (pageState === 'modify') modifyAPI();
     }
 
     // 단어 검색 모달 토큰 핸들러
@@ -55,20 +114,143 @@ const SoloAdd = () => {
         setSearchWordOn((current) => !current);
     }
 
-    const data1 = [{
-        wordContent: "dadad",
-        wordMeaning: "한글로 해석합니다.",
-        wordChinese: "중국어",
-    }, {
-        wordContent: "qwer",
-        wordMeaning: "한글로 해석2합니다.",
-        wordChinese: "중국어",
-    }, {
-        wordContent: "zxcv",
-        wordMeaning: "한글로 해석1합니다.",
-        wordChinese: "중국어1",
-    }];
+    // 수정 페이지로 진입 시 데이터 저장
+    useEffect(() => {
+        if (soloWord) {
+            setData(soloWord.wordList)
+            setTitle(soloWord.wsTitle)
+            setPageState("modify")
+            setWsNum(soloWord.wsNum);
+        }
+    }, [soloWord]);
 
+
+    // modal에서 사용하는 state
+    const [wordSort, setWordSort] = useState("ASC"); // 글씨 정렬 관리
+    const [timeSort, setTimeSort] = useState("ASC"); // 시간 정렬 관리
+    const [choiceWord, setChoiceWord] = useState([]); // 검색 페이지에서 선택한 단어 관리
+    const [keyword, setKeyword] = useState(""); // 검색 단어
+    const [searchData, setSearchData] = useState([]); // 검색해서 추가한 데이터
+    const [totalSearchData, setTotalSearchData] = useState(0);
+
+    const dataPerPage = 5; // 보여줄 목록 수
+    const pagesPerRange = 5; // 표시할 페이지 수
+
+    // 페이지 네이션 hook 관리
+    const {
+        currentPage,
+        totalPages,
+        startPage,
+        endPage,
+        handlePageChange,
+        setCurrentPage
+    } = usePagination({
+        totalItems: totalSearchData,
+        itemsPerPage: dataPerPage,
+        pagesPerRange
+    });
+
+    // 검색 키워드 변경 핸들러
+    const handleChangeKeyword = (e) => {
+        setKeyword(e.target.value);
+    }
+
+    // 정렬 핸들러
+    const handleWordSort = (e) => {
+        const sortType = e.currentTarget.getAttribute('data-sort-type');
+
+        if (sortType === 'Time') {
+            setTimeSort(prev => prev === 'ASC' ? 'DESC' : 'ASC');
+        } else if (sortType === 'Word') {
+            setWordSort(prev => prev === 'ASC' ? 'DESC' : 'ASC');
+        }
+
+    }
+
+    // 검색 버튼 핸들러
+    const handleGetSearchData = () => {
+        searchAPI();
+    }
+
+    // 검색 API
+    const searchAPI = () => {
+        axiosInstance.get('study/solo-study-search', {
+            params: {
+                keyword: keyword,
+                page: currentPage,
+                size: dataPerPage,
+                timeSort: timeSort,
+                wordSort: wordSort
+            }
+        })
+            .then((res) => {
+                setSearchData(res.data.data.content);
+                setTotalSearchData(res.data.data.totalElements);
+            })
+            .catch(e => toast.error('검색중 오류가 발생하였습니다.'));
+    }
+
+    // 검색 단어 추가 핸들러
+    const handleChoice = (e, index) => {
+        // 선택한 단어 데이터 가져오기
+        const chosenWord = searchData[index];
+
+        // 선택한 단어가 이미 searchData에 있는지 확인
+        const isAlreadyChosen = choiceWord.some((word) => word.wordNum === chosenWord.wordNum);
+
+        // 선택된 단어가 없을 경우에만 searchData에 추가
+        if (isAlreadyChosen) return toast.error('이미 추가된 단어입니다.');
+
+        setChoiceWord((prevData) => [...prevData, chosenWord]);
+    }
+
+    // 선택된 단어 삭제 핸들러
+    const handleChoiceDelete = (index) => {
+        const updatedChoiceWord = [...choiceWord];
+        updatedChoiceWord.splice(index, 1); // 해당 인덱스의 아이템 제거
+        setChoiceWord(updatedChoiceWord);
+    }
+
+    // 단어 검색 데이터 전체를 단어 목록에 추가
+    const handleSearchWordSubmit = () => {
+        setData((prevData) => {
+            // 기존 단어 목록에 searchData 추가
+            const newData = [...prevData];
+
+            choiceWord.forEach(item => {
+                // 중복된 단어를 추가하지 않도록 체크
+                const isAlreadyAdded = newData.some(word => word.wordContent === item.wordContent);
+                if (!isAlreadyAdded) {
+                    newData.push({
+                        wordContent: item.wordContent,
+                        wordMeaning: item.wordMeaning,
+                        wordChinese: item.wordChinese,
+                    });
+                }
+            });
+
+            return newData;
+        });
+
+        // 모달 닫기
+        closeModal();
+    }
+    // 모달 닫쳤을 때
+    const closeModal = () => {
+        setSearchWordOn(false);
+        setChoiceWord([]);
+        setCurrentPage(1);
+        setWordSort("ASC");
+        setTimeSort("ASC");
+        setKeyword("");
+    }
+
+    // 검색 페이지 데이터 조회
+    useEffect(() => {
+        if (searchWordOn) {
+            searchAPI();
+        }
+    }, [wordSort, timeSort, currentPage, searchWordOn]);
 
     return (
         <div className="solo-add-container">
@@ -86,6 +268,7 @@ const SoloAdd = () => {
                         <p>제목({title.length}/20)</p>
                     }
                     <input
+                        ref={titleInputRef} // 추가: ref 속성으로 제목 입력란에 ref 연결
                         className={(title !== "" ? "solo-add-title-input-value" :
                             "solo-add-title-input-not-value")}
                         type="text"
@@ -102,7 +285,7 @@ const SoloAdd = () => {
                     <div className="solo-add-content-all-title">
                         <div className="solo-add-content-all-title-box">
                             <IoMdArrowDropright/>
-                            <p>직접 단어 추가</p>
+                            <p>직접 단어 추가({data.length})</p>
                         </div>
                         <div className="solo-add-word-search"
                              onClick={handleSearchWord}>
@@ -112,7 +295,7 @@ const SoloAdd = () => {
                     </div>
 
                     <div className="solo-add-word-all">
-                        {data.map((item, index) => (
+                        {data?.map((item, index) => (
                             <div className="solo-add-word-box" key={index}>
                                 <div className="solo-add-word-header">
                                     <p>{index + 1}</p>
@@ -172,24 +355,92 @@ const SoloAdd = () => {
                             </div>
 
                             <div className="solo-add-word-search-search-box">
-                                <input type="text"/>
-                                <IoSearch size={25} />
+                                <input type="text"
+                                       value={keyword}
+                                       onChange={handleChangeKeyword}/>
+                                <IoSearch size={25}
+                                          onClick={handleGetSearchData}/>
+                            </div>
+
+                            <div className="solo-add-word-search-choice-sub-title">
+                                <p>선택된 단어({choiceWord.length})</p>
                             </div>
 
                             <div className="solo-add-word-search-choice-box">
-                                aaa
+
+                                {choiceWord?.map((item, index) => (
+                                    <div className="add-word-search-choice-word" key={index}>
+                                        <p>{item.wordContent}</p>
+                                        <IoIosCloseCircleOutline onClick={() => handleChoiceDelete(index)}/>
+                                    </div>
+                                ))}
+                                {choiceWord?.length === 0 &&
+                                    <div className="add-word-search-not-choice-word">
+                                        <p>선택된 단어가 없습니다.</p>
+                                    </div>
+                                }
+
+                            </div>
+
+                            <div className="solo-add-word-search-choice-sub-title2">
+                                <p>단어 목록</p>
+                                <div>
+                                    {timeSort === 'ASC' ?
+                                        <div data-sort-type="Time"
+                                             className="solo-add-word-search-time"
+                                             onClick={handleWordSort}>
+                                            <FaSortNumericDown size={24}/>
+                                        </div>
+                                        :
+                                        <div data-sort-type="Time"
+                                             className="solo-add-word-search-time"
+                                             onClick={handleWordSort}>
+                                            <FaSortNumericUp size={24}/>
+                                        </div>
+                                    }
+                                    {wordSort === 'ASC' ?
+                                        <div data-sort-type="Word"
+                                             className="solo-add-word-search-word"
+                                             onClick={handleWordSort}>
+                                            <FaSortAlphaDown size={24}/>
+                                        </div>
+                                        :
+                                        <div data-sort-type="Word"
+                                             className="solo-add-word-search-word"
+                                             onClick={handleWordSort}>
+                                            <FaSortAlphaUp size={24}/>
+                                        </div>
+                                    }
+                                </div>
                             </div>
 
                             <div className="solo-add-word-search-data-box">
-
+                                {searchData?.map((item, index) => (
+                                    <div className="solo-add-word-search-data-content-box" key={index}
+                                         onClick={(e) => handleChoice(e, index)}>
+                                        <p className="solo-add-word-search-data-content-meaning">{item.wordMeaning}</p>
+                                        <p className="solo-add-word-search-data-content-content">{item.wordContent}({item.wordChinese})</p>
+                                    </div>
+                                ))}
                             </div>
+
+                            <PageNation
+                                currentPage={currentPage}
+                                startPage={startPage}
+                                endPage={endPage}
+                                totalPages={totalPages}
+                                handlePageChange={handlePageChange}
+                                pagesPerRange={pagesPerRange}
+                                divMargin={"10px 0"}
+                            />
 
                             <div className="solo-add-btn-box solo-add-word-search-btn-box">
                                 <button className="solo-add-btn-home"
-                                        onClick={handleSearchWord}>취소
+                                        onClick={closeModal}>취소
                                 </button>
                                 <button className="solo-add-btn-submit"
-                                        >추가하기
+                                        onClick={handleSearchWordSubmit}
+                                >추가하기
                                 </button>
                             </div>
 
