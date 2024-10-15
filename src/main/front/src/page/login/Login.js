@@ -9,6 +9,7 @@ import FindInfo from "../../component/FindInfo";
 import {toast} from "react-toastify";
 import {FaRegEyeSlash} from "react-icons/fa";
 import {MdOutlineRemoveRedEye} from "react-icons/md";
+import {setTokenCookies} from "../../util/cookies";
 
 function Login() {
     const navigator = useNavigate();
@@ -73,7 +74,12 @@ function Login() {
         })
             .then((res) => {
                 if (res.status === 200) {
-                    setCookies(res.data.data.accessToken, res.data.data.refreshToken, username);
+                    setTokenCookies({
+                        refreshToken: res.data.data.refreshToken,
+                        accessToken : res.data.data.accessToken,
+                        username : res.data.data.username
+                    })
+                    //setCookies(res.data.data.accessToken, res.data.data.refreshToken, res.data.data.username);
                     toast.success("반갑습니다 *_*");
                     //navigate("/");
                     window.location = "/";

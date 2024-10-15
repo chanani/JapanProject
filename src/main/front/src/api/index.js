@@ -1,7 +1,6 @@
 import axios from "axios"
 import {Cookies} from "react-cookie"
 import {getTokenCookies, removeTokenCookies, setTokenCookies} from "../util/cookies";
-import {toast} from "react-toastify";
 
 export const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_URL_JAVA,
@@ -42,7 +41,12 @@ axiosInstance.interceptors.response.use((response) => {
                 {headers: {'Authorization': `${cookies.accessToken}`},}
             );
             const {data} = response;
-            setTokenCookies(data.data.refreshToken, data.data.accessToken, cookies.username);
+            console.log("data : ", data)
+            setTokenCookies({
+                refreshToken: data.data.refreshToken,
+                accessToken : data.data.accessToken,
+                username : data.data.username
+            });
             originalRequest.headers.Authorization = `${data?.data?.accessToken}`;
             return axios(originalRequest);
         } catch (refreshError) {

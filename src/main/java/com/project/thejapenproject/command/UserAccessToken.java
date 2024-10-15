@@ -15,4 +15,6 @@ public class UserAccessToken {
     private String accessToken;
     @JsonProperty("refreshToken")
     private String refreshToken;
+    @JsonProperty("username")
+    private String username;
 }
