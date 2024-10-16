@@ -11,6 +11,9 @@ import {axiosInstance} from "../../api";
 import PageNation from "../../component/PageNation";
 import usePagination from "../../hook/usePagination";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
+import { GrPowerReset } from "react-icons/gr";
+import {debounce} from "lodash";
+
 
 const SoloAdd = () => {
     const navigator = useNavigate();
@@ -76,7 +79,7 @@ const SoloAdd = () => {
     const modifyAPI = () => {
         axiosInstance.post('study/solo-study-modify',
             {
-                wsNum : wsNum,
+                wsNum: wsNum,
                 username: username,
                 wordList: data,
                 setTitle: title
@@ -132,6 +135,7 @@ const SoloAdd = () => {
     const [keyword, setKeyword] = useState(""); // 검색 단어
     const [searchData, setSearchData] = useState([]); // 검색해서 추가한 데이터
     const [totalSearchData, setTotalSearchData] = useState(0);
+    const [isSearching, setIsSearching] = useState(true); // 검색 초기화 시 사용
 
     const dataPerPage = 5; // 보여줄 목록 수
     const pagesPerRange = 5; // 표시할 페이지 수
@@ -154,7 +158,17 @@ const SoloAdd = () => {
     const handleChangeKeyword = (e) => {
         setKeyword(e.target.value);
     }
-
+    // 검색 인풋 엔터 핸들러
+    const handleOnkeyDownKeyword = (e) => {
+        if(e.keyCode !== 13) return;
+        searchAPI();
+    }
+    // 검색 초기화 핸들러
+    const handleSearchReset = () => {
+        setKeyword("");
+        setCurrentPage(1);
+        setIsSearching(true)
+    }
     // 정렬 핸들러
     const handleWordSort = (e) => {
         const sortType = e.currentTarget.getAttribute('data-sort-type');
@@ -174,6 +188,7 @@ const SoloAdd = () => {
 
     // 검색 API
     const searchAPI = () => {
+        console.log("api")
         axiosInstance.get('study/solo-study-search', {
             params: {
                 keyword: keyword,
@@ -186,8 +201,12 @@ const SoloAdd = () => {
             .then((res) => {
                 setSearchData(res.data.data.content);
                 setTotalSearchData(res.data.data.totalElements);
+                setIsSearching(false); // API 호출 후 로딩 종료
             })
-            .catch(e => toast.error('검색중 오류가 발생하였습니다.'));
+            .catch(e => {
+                toast.error('검색중 오류가 발생하였습니다.');
+                setIsSearching(false);
+            });
     }
 
     // 검색 단어 추가 핸들러
@@ -247,10 +266,12 @@ const SoloAdd = () => {
 
     // 검색 페이지 데이터 조회
     useEffect(() => {
-        if (searchWordOn) {
+        if (isSearching && searchWordOn) {
             searchAPI();
+            setIsSearching(false); // API 호출 후 플래그 리셋
         }
-    }, [wordSort, timeSort, currentPage, searchWordOn]);
+    }, [isSearching, wordSort, timeSort, currentPage, searchWordOn]);
+
 
     return (
         <div className="solo-add-container">
@@ -357,9 +378,12 @@ const SoloAdd = () => {
                             <div className="solo-add-word-search-search-box">
                                 <input type="text"
                                        value={keyword}
-                                       onChange={handleChangeKeyword}/>
+                                       onChange={handleChangeKeyword}
+                                       onKeyDown={handleOnkeyDownKeyword}/>
                                 <IoSearch size={25}
                                           onClick={handleGetSearchData}/>
+                                <GrPowerReset size={25}
+                                onClick={handleSearchReset}/>
                             </div>
 
                             <div className="solo-add-word-search-choice-sub-title">

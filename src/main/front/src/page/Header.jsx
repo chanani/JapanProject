@@ -14,7 +14,7 @@ import {toast} from "react-toastify";
 
 function Header() {
     const navigate = useNavigate();
-    const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+    const {userRole, username} = useContext(tokenInfoContext);
     const cookie = new Cookies();
 
     const alarmRef = useRef(false);
@@ -27,7 +27,7 @@ function Header() {
 
 
     // 학습페이지 Link list
-    const studyLink = [["/study", "단어 학습"], ["/choice", "단어 선택 학습"], ["/set-study", '단어 세트 학습'],["/schoolPage", '단계별 학습']];
+    const studyLink = [["/study", "단어 학습"], ["/choice", "단어 선택 학습"], ["/set-study", '단어 세트 학습'], ["/schoolPage", '단계별 학습']];
     //　테스트 페이지 Link list
     const testLink = [["/test/easy", "단어 테스트 1단계"], ["/test/middle", "단어 테스트 2단계"], ["/test/hard", "단어 테스트 3단계"]];
     // 마이페이지 Link list
@@ -105,7 +105,7 @@ function Header() {
         navigate("/join");
     }
     // 홈으로 이동 핸들러
-    const handlehome = () => {
+    const handleHome = () => {
         navigate("/");
     }
 
@@ -163,8 +163,8 @@ function Header() {
 
     // 유저 이미지 불러오기
     useEffect(() => {
-        if (userRole != 'none') userIconHandler();
-    }, [])
+        if (userRole !== 'none') userIconHandler();
+    }, [userRole])
 
     // if (window.location.pathname === '/login' || window.location.pathname === "/join") return null;
 
@@ -176,7 +176,7 @@ function Header() {
             </div>
             <div className="left-menu">
 
-                <div className="site-name-box" onClick={handlehome}>
+                <div className="site-name-box" onClick={handleHome}>
                     <img className="header-logo" src={Logo} alt="Logo"/>
                 </div>
                 <div className="header-category-box">

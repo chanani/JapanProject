@@ -500,7 +500,9 @@
     background-color: #d0d0ff;
 }
 
-
+.only-content > p {
+    padding-bottom: 27px;
+}
 
 
 /* 500 이하 */

@@ -207,7 +207,7 @@ const Study = () => {
                     setShowButton(false);
                 }
             },
-            {threshold: 0.25} // 요소가 50% 보일 때 트리거
+            {threshold: 0.1} // 요소가 50% 보일 때 트리거
         );
         if (target) {
             observer.observe(target);

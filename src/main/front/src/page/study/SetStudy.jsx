@@ -57,6 +57,7 @@ const SetStudy = () => {
         })
             .then((res) => {
                 navigator('/study', {state: {soloWord: res.data.data}});
+                window.scroll(0,0)
             })
             .catch((err) => toast.error(err));
     }
