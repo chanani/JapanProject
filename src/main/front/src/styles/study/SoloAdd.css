@@ -463,6 +463,7 @@
     .solo-add-word-search-modal {
         width: 100%;
         height: 100%;
+        overflow-y: scroll;
     }
 
     .solo-add-word-search-title-content {
@@ -473,8 +474,10 @@
         flex-direction: column;
     }
     .solo-add-word-search-data-content-box {
-        padding: 3px 10px 3px 16px;
+        padding: 4px 10px 4px 16px;
     }
+
+
 }
 
 /* 500 이상 */

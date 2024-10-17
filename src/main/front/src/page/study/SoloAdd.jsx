@@ -159,7 +159,7 @@ const SoloAdd = () => {
         setKeyword(e.target.value);
     }
     // 검색 인풋 엔터 핸들러
-    const handleOnkeyDownKeyword = (e) => {
+    const handleOnKeyDownKeyword = (e) => {
         if(e.keyCode !== 13) return;
         searchAPI();
     }
@@ -172,7 +172,7 @@ const SoloAdd = () => {
     // 정렬 핸들러
     const handleWordSort = (e) => {
         const sortType = e.currentTarget.getAttribute('data-sort-type');
-
+        setIsSearching(true)
         if (sortType === 'Time') {
             setTimeSort(prev => prev === 'ASC' ? 'DESC' : 'ASC');
         } else if (sortType === 'Word') {
@@ -188,7 +188,6 @@ const SoloAdd = () => {
 
     // 검색 API
     const searchAPI = () => {
-        console.log("api")
         axiosInstance.get('study/solo-study-search', {
             params: {
                 keyword: keyword,
@@ -272,6 +271,10 @@ const SoloAdd = () => {
         }
     }, [isSearching, wordSort, timeSort, currentPage, searchWordOn]);
 
+    // 페이지 변경될 떄 searching state true로 변경
+    useEffect(() => {
+        setIsSearching(true)
+    }, [currentPage]);
 
     return (
         <div className="solo-add-container">
@@ -371,7 +374,7 @@ const SoloAdd = () => {
                     <div className="solo-add-word-search-back-ground">
                         <div className="solo-add-word-search-modal">
                             <div className="solo-add-word-search-title-box">
-                                <p className="solo-add-word-search-title">단어 검색</p>
+                                {/*<p className="solo-add-word-search-title">단어 검색</p>*/}
                                 <p className="solo-add-word-search-title-content">추가하고 싶은 단어를 선택해주세요!</p>
                             </div>
 
@@ -379,7 +382,7 @@ const SoloAdd = () => {
                                 <input type="text"
                                        value={keyword}
                                        onChange={handleChangeKeyword}
-                                       onKeyDown={handleOnkeyDownKeyword}/>
+                                       onKeyDown={handleOnKeyDownKeyword}/>
                                 <IoSearch size={25}
                                           onClick={handleGetSearchData}/>
                                 <GrPowerReset size={25}
@@ -443,7 +446,7 @@ const SoloAdd = () => {
                                     <div className="solo-add-word-search-data-content-box" key={index}
                                          onClick={(e) => handleChoice(e, index)}>
                                         <p className="solo-add-word-search-data-content-meaning">{item.wordMeaning}</p>
-                                        <p className="solo-add-word-search-data-content-content">{item.wordContent}({item.wordChinese})</p>
+                                        <p className="solo-add-word-search-data-content-content">{item.wordContent}{item.wordChinese && "(" + item.wordChinese + ")"}</p>
                                     </div>
                                 ))}
                             </div>

@@ -500,7 +500,8 @@
     background-color: #d0d0ff;
 }
 
-.only-content > p {
+.only-content > p,
+.only-word > p {
     padding-bottom: 27px;
 }
 

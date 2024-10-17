@@ -243,14 +243,12 @@
 }
 
 .choice-level-title {
-    font-size: 18px;
     font-weight: 600;
     color: #56607c;
     margin-bottom: 5px;
 }
 
 .choice-level-title-content {
-    font-size: 32px;
     font-weight: 700;
 }
 
@@ -481,6 +479,14 @@
         width: 100%;
         margin-bottom: 15px;
     }
+
+    .choice-level-title-content {
+        font-size: 20px;
+    }
+
+    .choice-level-title {
+        font-size: 15px;
+    }
 }
 
 
@@ -531,6 +537,14 @@
 
     .choice-level-box-number-box-content > div {
         width: 23%;
+    }
+
+    .choice-level-title-content {
+        font-size: 32px;
+    }
+
+    .choice-level-title {
+        font-size: 18px;
     }
 
 

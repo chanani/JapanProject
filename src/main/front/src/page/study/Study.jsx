@@ -296,7 +296,9 @@ const Study = () => {
                         <div className='on-word-box' onClick={handleMeaning}>
                             {word?.length > 0 && current >= 0 && word[current] && (
                                 meaning ? (
-                                    <p>{word[current]?.wordMeaning}</p>
+                                    <div className="only-word">
+                                        <p>{word[current]?.wordMeaning}</p>
+                                    </div>
                                 ) : (
                                     word[current]?.wordChinese === null || word[current]?.wordChinese === '' ? (
                                         <div className="only-content">
