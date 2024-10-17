@@ -1,0 +1,237 @@
+.choice-test-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 5px;
+    background-color: white;
+    width: 100%;
+}
+.choice-test-all {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.choice-test-header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.choice-test-header > p {
+    font-size: 16px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+/* Progress bar container */
+.choice-test-progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+}
+
+/* Fill element */
+.choice-test-progress-bar-fill {
+    height: 100%;
+    background-color: #2ac4f8;
+    border-radius: 10px;
+    transition: width 0.3s ease-in-out;
+}
+
+/* content box */
+.choice-test-content-box {
+    background-color: white;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
+    border-radius: 10px;
+    padding: 20px 32px 16px;
+    margin-bottom: 50px;
+    position: relative;
+}
+
+.choice-test-content-header-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.choice-test-content-header-left > p {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.choice-test-content-header-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.choice-test-content-header-right > svg {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+/* 뜻 box */
+.choice-test-content-content-box {
+    margin-bottom: 30px;
+}
+
+.choice-test-content-content-box > .choice-test-content-word-content {
+    font-size: 23px;
+    margin-bottom: 75px;
+}
+
+.choice-test-content-content-box > .choice-test-content-info {
+    font-size: 14px;
+    font-weight: 650;
+    color: rgb(86, 96, 124);
+}
+
+.choice-test-content-content-box > .choice-test-content-info-ok {
+    font-size: 14px;
+    font-weight: 650;
+    color: rgb(0 157 1);
+}
+
+.choice-test-content-content-box > .choice-test-content-info-fail {
+    font-size: 14px;
+    font-weight: 650;
+    color: rgb(244 73 73);
+}
+
+/* 단어 목록 box */
+
+.choice-test-content-choice-example-box {
+    border: 2px solid rgb(237 239 245);
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    cursor: pointer;
+}
+
+.choice-test-content-choice-example-box:hover {
+    background-color: #d0d0ff;
+}
+
+.choice-test-example-index {
+    padding: 2px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    border-radius: 50%;
+    background-color: #e3e5eb;
+    margin-right: 10px;
+
+}
+
+.choice-test-example-word {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* i do not know*/
+.choice-test-content-i-do-not-know-box {
+    width: 100%;
+    margin-top: 15px;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.choice-test-content-i-do-not-know-box > div {
+    width: 135px;
+    height: 40px;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    color: #4255ff;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    cursor: pointer;
+}
+
+.choice-test-content-i-do-not-know-box > div:hover {
+    background-color: #e5eaff7d;
+}
+
+
+.choice-test-content-choice-box {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* 간격 설정 */
+}
+
+.choice-test-content-choice-example-box {
+    flex: 1 1 100%; /* 기본적으로 100% 차지 (한 줄에 1개) */
+}
+
+@media (min-width: 1000px) {
+    .choice-test-content-choice-example-box {
+        flex: 1 1 calc(50% - 20px); /* 1000px 이상일 때 한 줄에 2개 */
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+/* 500 이하 */
+@media (max-width: 500px) {
+    .choice-test-all {
+        width: 95%;
+        margin-top: 20px;
+    }
+    .choice-test-content-box {
+        width: 100%;
+    }
+
+}
+
+
+/* 500 이상 */
+@media (min-width: 500px) {
+    .choice-test-all {
+        width: 90%;
+        margin-top: 20px;
+    }
+    .choice-test-content-box {
+        width: 100%;
+    }
+
+
+
+}
+
+/* 1000 이상 */
+@media (min-width: 1000px) {
+    .choice-test-all {
+        width: 70%;
+    }
+
+    .choice-test-content-box {
+        width: 770px;
+    }
+
+}
