@@ -2,15 +2,27 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 5px;
+    padding: 10px 5px 0 5px;
     background-color: white;
     width: 100%;
+    position: relative;
+
 }
 .choice-test-all {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.choice-test-title-box {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+.choice-test-title-box > p {
+    padding-bottom: 5px;
+    border-bottom: 3px solid #2668f1;
 }
 .choice-test-header {
     width: 100%;
@@ -19,6 +31,8 @@
     align-items: center;
     flex-direction: column;
     margin-bottom: 30px;
+    position: fixed;
+    z-index: 3;
 }
 
 .choice-test-header > p {
@@ -61,22 +75,28 @@
     width: 100%;
     margin-bottom: 30px;
 }
-
-.choice-test-content-header-left > p {
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.choice-test-content-header-right {
+.choice-test-content-header-left {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
-.choice-test-content-header-right > svg {
-    margin-left: 10px;
+.choice-test-content-header-left > p {
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 5px;
+}
+.choice-test-content-header-left  svg {
+    width: 16px;
+    height: 16px;
     cursor: pointer;
 }
+
+.choice-test-content-header-right > p {
+    font-size: 14px;
+    font-weight: 600;
+    color: #777777;
+}
+
 
 /* 뜻 box */
 .choice-test-content-content-box {
@@ -150,6 +170,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
 .choice-test-content-i-do-not-know-box > div {
@@ -188,7 +209,11 @@
 }
 
 
-
+/* 정답 클릭 */
+.choice-text-check-answer {
+    border: 2px solid #7cb1ef;
+    background-color: #8bc1ff;
+}
 
 
 
@@ -206,7 +231,9 @@
     .choice-test-content-box {
         width: 100%;
     }
-
+    .choice-test-header {
+        top: 48px;
+    }
 }
 
 
@@ -218,6 +245,9 @@
     }
     .choice-test-content-box {
         width: 100%;
+    }
+    .choice-test-header {
+        top: 48px;
     }
 
 
@@ -233,5 +263,7 @@
     .choice-test-content-box {
         width: 770px;
     }
-
+    .choice-test-header {
+        top: 72px;
+    }
 }
