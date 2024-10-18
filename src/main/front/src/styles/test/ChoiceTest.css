@@ -1,4 +1,4 @@
-.choice-test-container{
+.choice-test-container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,6 +8,7 @@
     position: relative;
 
 }
+
 .choice-test-all {
     display: flex;
     flex-direction: column;
@@ -20,10 +21,12 @@
     font-weight: 600;
     margin-bottom: 30px;
 }
+
 .choice-test-title-box > p {
     padding-bottom: 5px;
     border-bottom: 3px solid #2668f1;
 }
+
 .choice-test-header {
     width: 100%;
     display: flex;
@@ -75,17 +78,20 @@
     width: 100%;
     margin-bottom: 30px;
 }
+
 .choice-test-content-header-left {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .choice-test-content-header-left > p {
     font-size: 14px;
     font-weight: 600;
     margin-right: 5px;
 }
-.choice-test-content-header-left  svg {
+
+.choice-test-content-header-left svg {
     width: 16px;
     height: 16px;
     cursor: pointer;
@@ -212,9 +218,70 @@
 /* 정답 클릭 */
 .choice-text-check-answer {
     border: 2px solid #7cb1ef;
-    background-color: #8bc1ff;
+    background-color: #c7dcf5;
 }
 
+
+/* 정답, 오답 */
+.test-answer-ok-box {
+    border: 2px #4cbc5c dashed;
+    background-color: #c3ffcd70;
+
+}
+
+.test-answer-fail-box {
+    border: 2px #ff0000bf dashed;
+    background-color: #ffc4c470;
+}
+
+/** 채점 후 페이지 **/
+/* 최상단 점수 내용 */
+.choice-test-answer-title {
+    margin-bottom: 15px;
+
+}
+
+.choice-test-answer-title-point {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.choice-test-answer-title-content {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.choice-test-result-data-box {
+    display: flex;
+    justify-content: start;
+}
+
+.choice-result-data-graph-box,
+.choice-result-recommend-box{
+    width: 50%;
+}
+
+.choice-result-data-graph-title,
+.choice-result-recommend-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #929bb4;
+    margin-bottom: 15px;
+}
+
+.choice-result-data-graph-content{
+    display: flex;
+    justify-content: start;
+}
+
+.choice-result-data-graph {
+    width: 80px;
+    height: 80px;
+}
 
 
 
@@ -226,11 +293,15 @@
 @media (max-width: 500px) {
     .choice-test-all {
         width: 95%;
-        margin-top: 20px;
+        margin-top: 15px;
     }
-    .choice-test-content-box {
+
+    .choice-test-content-box,
+    .choice-test-answer-title,
+    .choice-test-result-data-box {
         width: 100%;
     }
+
     .choice-test-header {
         top: 48px;
     }
@@ -241,15 +312,18 @@
 @media (min-width: 500px) {
     .choice-test-all {
         width: 90%;
-        margin-top: 20px;
+        margin-top: 15px;
     }
-    .choice-test-content-box {
+
+    .choice-test-content-box,
+    .choice-test-answer-title,
+    .choice-test-result-data-box {
         width: 100%;
     }
+
     .choice-test-header {
         top: 48px;
     }
-
 
 
 }
@@ -260,9 +334,12 @@
         width: 70%;
     }
 
-    .choice-test-content-box {
+    .choice-test-content-box,
+    .choice-test-answer-title,
+    .choice-test-result-data-box {
         width: 770px;
     }
+
     .choice-test-header {
         top: 72px;
     }

@@ -47,6 +47,7 @@
                word_chinese
         FROM word
         WHERE word_level = #{level}
+        AND word_week not in (1,2)
         ORDER by RAND()
             LIMIT #{number}
     </select>
