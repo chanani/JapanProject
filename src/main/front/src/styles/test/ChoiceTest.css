@@ -257,13 +257,10 @@
 
 .choice-test-result-data-box {
     display: flex;
-    justify-content: start;
+    margin-bottom: 30px;
 }
 
-.choice-result-data-graph-box,
-.choice-result-recommend-box{
-    width: 50%;
-}
+
 
 .choice-result-data-graph-title,
 .choice-result-recommend-title {
@@ -274,19 +271,62 @@
 }
 
 .choice-result-data-graph-content{
+    width: 100%;
     display: flex;
     justify-content: start;
 }
-
 .choice-result-data-graph {
+    width: 100px;
+    padding-left: 10px;
+}
+
+.choice-result-data-graph-svg {
     width: 80px;
     height: 80px;
 }
 
+.choice-result-data-point {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
+.choice-result-data-point {
+    font-size: 17px;
+    font-weight: 600;
+    padding-left: 17px;
+}
 
+.choice-result-data-point > div {
+    width: 100%;
+    display: flex;
+    margin-bottom: 3px;
+}
 
+.choice-result-data-point-title {
+    margin-right: 35px;
+}
 
+.choice-result-data-point-count {
+    border-radius: 20px;
+    width: 44px;
+    text-align: center;
+}
+
+.choice-result-data-point-ok-box {
+    color: #4cbc5c;
+}
+.choice-result-data-point-ok-box > .choice-result-data-point-count {
+    border : 1px solid #4cbc5c;
+}
+.choice-result-data-point-fail-box {
+    color: rgb(255 159 89);
+}
+
+.choice-result-data-point-fail-box > .choice-result-data-point-count {
+    border : 1px solid rgb(255 159 89);
+}
 
 
 /* 500 이하 */
@@ -305,6 +345,19 @@
     .choice-test-header {
         top: 48px;
     }
+    .choice-test-result-data-box {
+     flex-direction: column;
+    }
+    .choice-result-data-point {
+        width: 70%;
+    }
+    .choice-result-data-graph-box,
+    .choice-result-recommend-box{
+        width: 100%;
+    }
+    .choice-result-data-graph-box {
+        margin-bottom: 20px;
+    }
 }
 
 
@@ -321,10 +374,19 @@
         width: 100%;
     }
 
-    .choice-test-header {
-        top: 48px;
+    .choice-test-result-data-box {
+        flex-direction: column;
     }
-
+    .choice-result-data-point {
+        width: 70%;
+    }
+    .choice-result-data-graph-box,
+    .choice-result-recommend-box{
+        width: 100%;
+    }
+    .choice-result-data-graph-box {
+        margin-bottom: 20px;
+    }
 
 }
 
@@ -342,5 +404,16 @@
 
     .choice-test-header {
         top: 72px;
+    }
+
+    .choice-result-data-point {
+        width: 43%;
+    }
+
+    .choice-test-result-data-box {
+        flex-direction: row;
+    }
+    .choice-result-data-graph-box {
+        margin-bottom: 0;
     }
 }

@@ -4,7 +4,7 @@ import GrayAndBlue from "../../component/button/GrayAndBlue";
 import {useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {axiosInstance} from "../../api";
-import {CircularProgressbar} from 'react-circular-progressbar';
+import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 const ChoiceTest = () => {
@@ -113,21 +113,32 @@ const ChoiceTest = () => {
                             </div>
                             <div className="choice-result-data-graph-content">
                                 <div className="choice-result-data-graph">
-                                    <CircularProgressbar
-                                        value={answerList.filter(item => item === 1).length * 10}
-                                        text={`${answerList.filter(item => item === 1).length * 10}%`}
-                                        size={"15px"}
-                                    />
+                                    <div className="choice-result-data-graph-svg">
+                                        <CircularProgressbar
+                                            value={answerList.filter(item => item === 1).length * 10}
+                                            text={`${answerList.filter(item => item === 1).length * 10}%`}
+                                            size={"15px"}
+                                            styles={buildStyles({
+                                                textSize: '20px',
+                                                // How long animation takes to go from one percentage to another, in seconds
+                                                pathTransitionDuration: 0.3,
+                                                pathColor: `#4cbc5c`,
+                                                textColor: 'rgb(108 123 255)',
+                                                trailColor: 'rgb(255 159 89)',
+                                                backgroundColor: '#3e98c7',
+                                            })}
+                                        />
+                                    </div>
 
                                 </div>
                                 <div className="choice-result-data-point">
-                                    <div>
-                                        <span>정답</span>
-                                        <span>3</span>
+                                    <div className="choice-result-data-point-ok-box">
+                                        <span className="choice-result-data-point-title">정답</span>
+                                        <span className="choice-result-data-point-count"> {answerList.filter(item => item === 1).length}</span>
                                     </div>
-                                    <div>
-                                        <span>오답</span>
-                                        <span>7</span>
+                                    <div className="choice-result-data-point-fail-box">
+                                        <span className="choice-result-data-point-title">오답</span>
+                                        <span className="choice-result-data-point-count">{answerList.length}</span>
                                     </div>
                                 </div>
                             </div>
