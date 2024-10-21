@@ -6,9 +6,11 @@ import {toast} from "react-toastify";
 import {axiosInstance} from "../../api";
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import {useNavigate} from "react-router-dom";
 
 const ChoiceTest = () => {
 
+    const navigator = useNavigate();
     // 최종 제출 여부
     const [submitState, setSubmitState] = useState(false);
     // 1 = 정답, 2 = 오답, 3 = 모르겠음
@@ -16,7 +18,8 @@ const ChoiceTest = () => {
     // 인덱스가 아닌 입려한 정답의 번호가 들어감
     const [choiceList, setChoiceList] = useState(new Array(10).fill(0)); // 입력한 답 목록 (기본값 0)
     const [word, setWord] = useState([]); // 조회한 단어 목록
-    const contentText = ["너무 잘하셨어요! 학습한 보람이 있네요!", "걱정하지 마세요, 아직 배우고 있잖아요!"]
+    const contentText = ["너무 잘하셨어요! 학습한 보람이 있네요!", "걱정하지 마세요, 아직 배우고 있잖아요!"];
+
     // 답 클릭 핸들러(모르겠음은 5로 데이터 전달)
     const handleSetAnswer = (index, answerIndex) => {
         let answer = word[index].wordContent + (word[index].wordChinese && "(" + word[index].wordChinese + ")");
@@ -37,18 +40,10 @@ const ChoiceTest = () => {
     // 최종 제출 핸들러
     const handleSubmit = () => {
         let notChoiceAnswer = choiceList.filter(item => item === 0).length;
-        console.log("check", notChoiceAnswer)
-
         if (notChoiceAnswer > 0) return toast.error("정답을 모두 선택해주세요.");
-        console.log("return")
         setSubmitState(true);
         window.scroll(0, 0);
     }
-
-    useEffect(() => {
-        console.log(answerList)
-        console.log(choiceList)
-    }, [answerList]);
 
     // 단어 목록 조회 API
     const getWordListAPI = () => {
@@ -59,9 +54,13 @@ const ChoiceTest = () => {
             }
         })
             .then((res) => {
-                console.log("res", res.data.data)
                 setWord(res.data.data);
             })
+    }
+
+    // 추천 목록으로 이동 핸들러
+    const handleMovePage = (path) => {
+        navigator(path);
     }
 
     // 단어 목록 조회 useEffect
@@ -72,7 +71,7 @@ const ChoiceTest = () => {
 
     return (
         <div className="choice-test-container">
-            <div className="choice-test-all">
+            <div className={"choice-test-all " + (!submitState ? "choice-test-all-margin-top" : "")}>
                 {!submitState ?
                     <div className="choice-test-header">
                         <div className="choice-test-progress-bar">
@@ -134,7 +133,8 @@ const ChoiceTest = () => {
                                 <div className="choice-result-data-point">
                                     <div className="choice-result-data-point-ok-box">
                                         <span className="choice-result-data-point-title">정답</span>
-                                        <span className="choice-result-data-point-count"> {answerList.filter(item => item === 1).length}</span>
+                                        <span
+                                            className="choice-result-data-point-count"> {answerList.filter(item => item === 1).length}</span>
                                     </div>
                                     <div className="choice-result-data-point-fail-box">
                                         <span className="choice-result-data-point-title">오답</span>
@@ -147,8 +147,28 @@ const ChoiceTest = () => {
                             <div className="choice-result-recommend-title">
                                 <p>추천 목록</p>
                             </div>
-                            <div></div>
-                            <div></div>
+
+                            <div className="choice-result-recommend-link-box"
+                                 onClick={() => handleMovePage("/study")}>
+                                <div className="choice-result-recommend-link-image">
+                                    <img src="/svg/choice1.svg" alt="이미지"/>
+                                </div>
+                                <div>
+                                    <p className="choice-result-recommend-link-title">단어 학습하기</p>
+                                    <p className="choice-result-recommend-link-content">테스트를 보기 전 단어 학습을 해보세요!</p>
+                                </div>
+                            </div>
+
+                            <div className="choice-result-recommend-link-box"
+                                 onClick={() => handleMovePage("/test/easy")}>
+                                <div>
+                                    <img src="/svg/test1.svg" alt="이미지"/>
+                                </div>
+                                <div>
+                                    <p className="choice-result-recommend-link-title">단답형 테스트하기</p>
+                                    <p className="choice-result-recommend-link-content">단답형 테스트에 도전해보세요!</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 }
@@ -171,7 +191,12 @@ const ChoiceTest = () => {
                             <p className="choice-test-content-word-content">{item?.wordMeaning}</p>
 
 
-                            {submitState && contentText[answerList[index] - 1]}
+                            {submitState &&
+                                <div
+                                    className={answerList[index] === 1 ? "choice-result-content-ok-box" : "choice-result-content-fail-box"}>
+                                    <p>{answerList[index] === 1 ? contentText[0] : contentText[1]}</p>
+                                </div>
+                            }
 
                         </div>
 
@@ -187,7 +212,7 @@ const ChoiceTest = () => {
                                                      (answerList[index] !== 1 && choiceList[index] - 1 === answerIndex) ? "test-answer-fail-box "
                                                          : (word[index].wordContentList[answerIndex] === word[index].wordContent + (word[index].wordChinese && "(" + word[index].wordChinese + ")")) ? "test-answer-ok-box " : ""
                                          )}
-                                     onClick={() => handleSetAnswer(index, answerIndex)}
+                                     onClick={submitState ? undefined : () => handleSetAnswer(index, answerIndex)}
                                      key={answerIndex}>
                                     <div className="choice-example-index">{answerIndex + 1}</div>
                                     <div className="choice-example-word">{item}</div>
@@ -197,7 +222,7 @@ const ChoiceTest = () => {
 
                         {!submitState &&
                             <div className="choice-test-content-i-do-not-know-box"
-                                 onClick={() => handleSetAnswer(index, 5)}>
+                                 onClick={() => handleSetAnswer(index, 5) }>
                                 <div className={(answerList[index] === 3 ? "choice-text-check-answer" : "")}>
                                     <p>잘 모르시겠어요?</p>
                                 </div>
@@ -211,9 +236,9 @@ const ChoiceTest = () => {
                 <GrayAndBlue
                     width="70%"
                     text1={"홈으로"}
-                    text2={"제출하기"}
-                    homePath={handleSubmit}
-                    movePath={"/"}
+                    text2={submitState ? "제출하기" : "저장하기"}
+                    homePath={"/"}
+                    movePath={handleSubmit}
                 />
 
             </div>

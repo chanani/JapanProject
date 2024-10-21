@@ -243,7 +243,7 @@
 
 .choice-test-answer-title-point {
     font-weight: 600;
-    margin-bottom: 8px;
+    margin-bottom: 3px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -251,13 +251,12 @@
 }
 
 .choice-test-answer-title-content {
-    font-size: 30px;
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .choice-test-result-data-box {
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 
@@ -277,7 +276,7 @@
 }
 .choice-result-data-graph {
     width: 100px;
-    padding-left: 10px;
+    padding-left: 5px;
 }
 
 .choice-result-data-graph-svg {
@@ -294,8 +293,8 @@
 
 .choice-result-data-point {
     font-size: 17px;
-    font-weight: 600;
-    padding-left: 17px;
+    font-weight: 700;
+    padding-left: 12px;
 }
 
 .choice-result-data-point > div {
@@ -328,11 +327,64 @@
     border : 1px solid rgb(255 159 89);
 }
 
+.choice-result-recommend-box img {
+    width: 35px;
+    height: 35px;
+    margin-right: 13px;
+}
+
+.choice-result-recommend-link-box {
+    border: 1px solid #ecebeb;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.14), 0 0px 0px rgba(0, 0, 0, 0);
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    cursor: pointer;
+}
+
+.choice-result-recommend-link-image {
+    display: flex;
+}
+
+.choice-result-recommend-link-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #6e7be9;
+}
+
+.choice-result-recommend-link-content {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.choice-result-recommend-link-box:hover {
+    border: 1px solid #9da9f3;
+    box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.3), 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+/* 정답 문구 */
+.choice-result-content-ok-box{
+    font-size: 14px;
+    font-weight: 650;
+    color: rgb(0 157 1);
+}
+
+.choice-result-content-fail-box {
+    font-size: 14px;
+    font-weight: 650;
+    color: rgb(244 73 73);
+}
+
 
 /* 500 이하 */
 @media (max-width: 500px) {
     .choice-test-all {
         width: 95%;
+    }
+    .choice-test-all-margin-top {
         margin-top: 15px;
     }
 
@@ -358,6 +410,10 @@
     .choice-result-data-graph-box {
         margin-bottom: 20px;
     }
+    .choice-test-answer-title-content {
+        font-size: 15px;
+    }
+
 }
 
 
@@ -365,6 +421,9 @@
 @media (min-width: 500px) {
     .choice-test-all {
         width: 90%;
+
+    }
+    .choice-test-all-margin-top {
         margin-top: 15px;
     }
 
@@ -387,7 +446,9 @@
     .choice-result-data-graph-box {
         margin-bottom: 20px;
     }
-
+    .choice-test-answer-title-content {
+        font-size: 30px;
+    }
 }
 
 /* 1000 이상 */

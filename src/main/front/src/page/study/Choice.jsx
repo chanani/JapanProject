@@ -101,7 +101,6 @@ const Choice = () => {
             }
         })
             .then((res) => {
-                console.log(res.data.data)
                 setWord(res.data.data);
             })
             .catch(e => toast.error('단어를 불러오는 중 오류가 발생하였습니다.'));

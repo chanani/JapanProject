@@ -7,13 +7,14 @@ const GrayAndBlue = ({width, text1, text2, homePath, movePath}) => {
     const [homeHover, setHomeHover] = useState(false);
     const [submitHover, setSubmitHover] = useState(false);
 
+    // 홈 또는 목록으로 가는 핸들러
     const handleHome = () => {
         navigate(homePath)
     }
 
     const handleMove = () => {
-        homePath()
-        //navigate(movePath);
+        //homePath()
+        movePath();
     }
 
     const grayAndBlueBtn = () => {
