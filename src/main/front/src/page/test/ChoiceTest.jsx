@@ -7,6 +7,9 @@ import {axiosInstance} from "../../api";
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {useNavigate} from "react-router-dom";
+import { IoClose, } from "react-icons/io5";
+import { CgMenuRound } from "react-icons/cg";
+
 
 const ChoiceTest = () => {
 
@@ -19,6 +22,8 @@ const ChoiceTest = () => {
     const [choiceList, setChoiceList] = useState(new Array(10).fill(0)); // 입력한 답 목록 (기본값 0)
     const [word, setWord] = useState([]); // 조회한 단어 목록
     const contentText = ["너무 잘하셨어요! 학습한 보람이 있네요!", "걱정하지 마세요, 아직 배우고 있잖아요!"];
+    const [sideBar, setSideBar] = useState(true);
+
 
     // 답 클릭 핸들러(모르겠음은 5로 데이터 전달)
     const handleSetAnswer = (index, answerIndex) => {
@@ -61,6 +66,11 @@ const ChoiceTest = () => {
     // 추천 목록으로 이동 핸들러
     const handleMovePage = (path) => {
         navigator(path);
+    }
+
+    // 사이드바 토글 핸들러
+    const handleSideBarToggle = () => {
+        setSideBar((current) => !current);
     }
 
     // 단어 목록 조회 useEffect
@@ -222,7 +232,7 @@ const ChoiceTest = () => {
 
                         {!submitState &&
                             <div className="choice-test-content-i-do-not-know-box"
-                                 onClick={() => handleSetAnswer(index, 5) }>
+                                 onClick={() => handleSetAnswer(index, 5)}>
                                 <div className={(answerList[index] === 3 ? "choice-text-check-answer" : "")}>
                                     <p>잘 모르시겠어요?</p>
                                 </div>
@@ -241,7 +251,34 @@ const ChoiceTest = () => {
                     movePath={handleSubmit}
                 />
 
-            </div>
+
+                <div className={`choice-test-side-box ${sideBar ? 'side-box-visible' : 'side-box-hidden'}`}>
+                    <div className="choice-test-side-toggle-box" onClick={handleSideBarToggle}>
+                        <IoClose/>
+                        <p>목록 숨기기</p>
+                    </div>
+                    <div className="choice-test-side-title-box">
+                        <p>문제 목록</p>
+                    </div>
+                    <div className="choice-test-side-content-box">
+                        {choiceList.map((item, index) => (
+                            <div className="choice-test-side-content-choice-box" key={index}>
+                                <div className="choice-test-side-content-test-number">{index + 1}</div>
+                                <div className="choice-test-side-content-test-choice">{item !== 0 ? item : ""}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {!sideBar &&
+                    <div className="choice-test-side-on-btn"
+                    onClick={handleSideBarToggle}>
+                        <CgMenuRound size={35} color="#717082"/>
+                    </div>
+                }
+
+
+                    </div>
         </div>
     )
 }
