@@ -1,5 +1,5 @@
 import '../styles/Header.css';
-import Logo from '../image/default_icon.png';
+import Logo from '../image/default_icon11.svg';
 import {useContext, useEffect, useRef, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import {tokenInfoContext} from '../component/TokenInfoProvider';

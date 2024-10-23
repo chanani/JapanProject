@@ -379,18 +379,7 @@
     color: rgb(244 73 73);
 }
 
-/* 사이드 바 */
-.choice-test-side-toggle-box {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    font-weight: 600;
-    color: #63687ac7;
-    margin-bottom: 12px;
-}
-.choice-test-side-toggle-box > svg {
-    margin-right: 5px;
-}
+
 .choice-test-side-title-box {
     font-size: 15px;
     font-weight: 700;
@@ -491,6 +480,22 @@
     .choice-test-answer-title-content {
         font-size: 30px;
     }
+
+    /* 사이드 바 */
+    .choice-test-side-toggle-box {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #63687ac7;
+        margin-bottom: 12px;
+        cursor: pointer;
+    }
+    .choice-test-side-toggle-box > svg {
+        margin-right: 5px;
+    }
+
+
 }
 
 /* 1000 이상 */
@@ -522,7 +527,7 @@
 
     .choice-test-side-box {
         position: fixed;
-        top: 130px;
+        top: 95px;
         left: 10px;
         width: 10%;
         transition: transform 0.3s ease-in-out;
@@ -535,9 +540,23 @@
 
     .choice-test-side-on-btn {
         position: fixed;
-        top: 100px;
+        top: 93px;
         left: 20px;
         cursor: pointer;
+    }
+
+    /* 사이드 바 */
+    .choice-test-side-toggle-box {
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 600;
+        color: #63687ac7;
+        margin-bottom: 12px;
+        cursor: pointer;
+    }
+    .choice-test-side-toggle-box > svg {
+        margin-right: 5px;
     }
 
 }

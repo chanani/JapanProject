@@ -24,18 +24,8 @@ header .left-menu {
     align-items: center;
 }
 
-.site-name-box, .header-category-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+.site-name-box {
 
-
-
-.site-name-box > h2 {
-    font-size: 25px;
-    font-weight: 900;
-    margin-right: 5px;
 }
 
 .header-category-box > div {
@@ -272,10 +262,21 @@ header .left-menu {
         padding: 8px 16px;
     }
 
+    .site-name-box {
+        width: 180px;
+        height: 55px;
+        position: absolute;
+        top: -9px;
+        left: 51%;
+        transform: translate(-50%, 0);
+        overflow: hidden;
+    }
     .header-logo {
-        height: 153px;
-        width: 160px;
-        padding-top: 11px;
+        width: 180px;
+        height: 157px;
+        position: absolute;
+        top: -38px;
+        left: -10px;
     }
 
     .mobile-left-box,
@@ -331,11 +332,22 @@ header .left-menu {
         padding: 8px 16px;
     }
 
+    .site-name-box {
+        width: 180px;
+        height: 55px;
+        position: absolute;
+        top: -9px;
+        left: 51%;
+        transform: translate(-50%, 0);
+        overflow: hidden;
+    }
     .header-logo {
-        height: 153px;
-        width: 160px;
-        padding-top: 11px;
-        padding-left: 12px;
+        width: 180px;
+        height: 157px;
+        position: absolute;
+        top: -38px;
+        left: -10px;
+
     }
 
     .mobile-left-box,
@@ -385,12 +397,21 @@ header .left-menu {
         height: 72px;
         padding: 0 32px 0 135px;
     }
-    .header-logo {
-        width: 200px;
-        height: 193px;
+    .site-name-box {
+        width: 180px;
+        height: 72px;
         position: absolute;
-        top: -63px;
-        left: -18px;
+        top: 0px;
+        left: 0px;
+        transform: translate(0, 0);
+        overflow: hidden;
+    }
+    .header-logo {
+        width: 180px;
+        height: 157px;
+        position: absolute;
+        top: -38px;
+        left: -10px;
     }
 
     .mobile-left-box,
