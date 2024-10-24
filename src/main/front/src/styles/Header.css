@@ -385,6 +385,7 @@ header .left-menu {
         height: 35px;
         border-radius: 50%;
     }
+
 }
 
 
@@ -412,6 +413,7 @@ header .left-menu {
         position: absolute;
         top: -38px;
         left: -10px;
+        cursor: pointer;
     }
 
     .mobile-left-box,
