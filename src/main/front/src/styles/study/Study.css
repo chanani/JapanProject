@@ -401,7 +401,7 @@
 
 .word-blind {
     color: transparent;
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+    text-shadow: 0 0 18px rgb(0 0 0);
     cursor: pointer;
     background: repeating-linear-gradient(
             45deg,

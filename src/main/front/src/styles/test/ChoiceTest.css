@@ -410,7 +410,14 @@
 
 }
 
-
+.choice-test-side-toggle-box > svg {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+}
+.choice-test-side-title-box {
+    margin-top: 20px;
+}
 /* 500 이하 */
 @media (max-width: 500px) {
     .choice-test-all {
@@ -475,7 +482,7 @@
         box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
         position: fixed;
         bottom: 0;
-        width: 220px;
+        width: 360px;
         transition: transform 0.5s ease-in-out;
         transform: translateY(150%);
     }
@@ -491,11 +498,11 @@
         justify-content: center;
     }
     .choice-test-side-content-box {
-        padding: 0 66px;
+        padding: 0 138px;
     }
 
     .choice-test-side-box.side-box-visible {
-        transform: translateY(338px);
+        transform: translateY(331px);
         transition: all .3s cubic-bezier(.47, 0, .745, .715);
     }
 
@@ -505,9 +512,9 @@
     }
 
     .choice-test-side-box.side-box-visible:hover {
-        width: 230px;
-        height: 367px;
-        box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.5), 0 0px 0px rgba(0, 0, 0, 0);
+        width: 360px;
+        height: 351px;
+        box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.7), 0 0px 0px rgba(0, 0, 0, 0);
     }
     .choice-test-side-on-btn {
         display: none;
@@ -577,7 +584,7 @@
         box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
         position: fixed;
         bottom: 0;
-        width: 220px;
+        width: 360px;
         transition: transform 0.5s ease-in-out;
         transform: translateY(150%);
     }
@@ -593,11 +600,11 @@
         justify-content: center;
     }
     .choice-test-side-content-box {
-        padding: 0 66px;
+        padding: 0 138px;
     }
 
     .choice-test-side-box.side-box-visible {
-        transform: translateY(338px);
+        transform: translateY(331px);
         transition: all .3s cubic-bezier(.47, 0, .745, .715);
     }
 
@@ -607,9 +614,9 @@
     }
 
     .choice-test-side-box.side-box-visible:hover {
-        width: 230px;
-        height: 367px;
-        box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.5), 0 0px 0px rgba(0, 0, 0, 0);
+        width: 362px;
+        height: 351px;
+        box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.7), 0 0px 0px rgba(0, 0, 0, 0);
     }
     .choice-test-side-on-btn {
         display: none;

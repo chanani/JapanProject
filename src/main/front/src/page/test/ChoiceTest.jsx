@@ -9,6 +9,8 @@ import 'react-circular-progressbar/dist/styles.css';
 import {useNavigate} from "react-router-dom";
 import { IoClose, } from "react-icons/io5";
 import { CgMenuRound } from "react-icons/cg";
+import { FaCheck } from "react-icons/fa";
+import {green} from "@mui/material/colors";
 
 
 const ChoiceTest = () => {
@@ -148,7 +150,7 @@ const ChoiceTest = () => {
                                     </div>
                                     <div className="choice-result-data-point-fail-box">
                                         <span className="choice-result-data-point-title">오답</span>
-                                        <span className="choice-result-data-point-count">{answerList.length}</span>
+                                        <span className="choice-result-data-point-count">{answerList.filter(item => item !== 1).length}</span>
                                     </div>
                                 </div>
                             </div>
@@ -255,7 +257,6 @@ const ChoiceTest = () => {
                 <div className={`choice-test-side-box ${sideBar ? 'side-box-visible' : 'side-box-hidden'}`}>
                     <div className="choice-test-side-toggle-box" onClick={handleSideBarToggle}>
                         <IoClose/>
-                        <p>목록 숨기기</p>
                     </div>
                     <div className="choice-test-side-title-box">
                         <p>문제 목록</p>
@@ -263,8 +264,13 @@ const ChoiceTest = () => {
                     <div className="choice-test-side-content-box">
                         {choiceList.map((item, index) => (
                             <div className="choice-test-side-content-choice-box" key={index}>
-                                <div className="choice-test-side-content-test-number">{index + 1}</div>
-                                <div className="choice-test-side-content-test-choice">{item !== 0 ? item : ""}</div>
+                                <div className="choice-test-side-content-test-number">
+                                    {!submitState ? index + 1 :
+                                    answerList[index] === 1 ? <FaCheck color={"#4cbc5c"}/> : <IoClose color={"#ff0000bf"}/>}
+                                </div>
+                                <div className="choice-test-side-content-test-choice">
+                                    {item !== 0 ? item : ""}
+                                </div>
                             </div>
                         ))}
                     </div>
