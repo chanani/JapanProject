@@ -6,6 +6,7 @@
     background-color: white;
     width: 100%;
 }
+
 .study-on-header-box {
     transition: transform 0.6s ease;
 }
@@ -42,7 +43,6 @@
 }
 
 
-
 /* 단어 박스 */
 .on-word-box {
     height: 150px;
@@ -67,6 +67,7 @@
     height: 30px;
     background: #d1cfcf;
 }
+
 .chinese-block-box {
     width: 100px;
     background: #d1cfcf;
@@ -84,7 +85,7 @@
     font-size: 25px;
 }
 
-.click-mid  {
+.click-mid {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -227,6 +228,7 @@
     align-items: center;
     margin: 15px 0 30px 0;
 }
+
 .study-page-test-type-box > div {
     background-color: #f6f7fb;
     border-radius: .5rem;
@@ -241,6 +243,7 @@
     transition: all .12s cubic-bezier(.47, 0, .745, .715);
 
 }
+
 .study-page-test-type-box > div:hover {
     background-color: #d0d0ff;
 }
@@ -250,6 +253,7 @@
     height: 40px;
     margin-bottom: 7px;
 }
+
 .study-page-test-type-box p {
     font-size: 16px;
     font-weight: 600;
@@ -260,7 +264,7 @@
     width: 100%;
     background-color: #f6f7fb;
     border-radius: 10px;
-    padding : 10px 20px;
+    padding: 10px 20px;
     height: 70px;
     display: flex;
     flex-direction: row;
@@ -317,15 +321,12 @@
 }
 
 .word-on {
-   border: 1px solid #5d9cff;
+    border: 1px solid #5d9cff;
 }
 
 .word-off {
     color: #d1cfcf;
 }
-
-
-
 
 
 /* 단어 전체 리스트 */
@@ -338,6 +339,7 @@
     margin: 35px 0 15px 0;
     cursor: pointer;
 }
+
 .study-page-word-list-title-box > p {
     margin-right: 5px;
 }
@@ -356,7 +358,7 @@
 
 .study-page-word-list-content-box {
     padding: 20px 20px 3px 20px;
-    border :none;
+    border: none;
     background-color: #f6f7fb;
     border-radius: 10px;
     transition: max-height 0.5s ease-out, opacity 0.5s ease-out;
@@ -405,7 +407,6 @@
     cursor: pointer;
     background: repeating-linear-gradient(
             45deg,
-
             rgba(255, 255, 255, 0.25) 10px,
             rgba(255, 255, 255, 0.25) 20px
     );
@@ -416,7 +417,8 @@
     display: flex;
 
 }
-.study-page-word-list-btn >svg {
+
+.study-page-word-list-btn > svg {
     cursor: pointer;
     margin-left: 10px;
 }
@@ -451,9 +453,11 @@
     bottom: -95px; /* 마지막 아이템 하단에 배치 */
     right: 20px;
 }
+
 .study-white-box {
     height: 106px;
 }
+
 .change-btn-box-position {
     height: 100%;
     display: flex;
@@ -482,11 +486,12 @@
     cursor: pointer;
     transition: all .12s cubic-bezier(.47, 0, .745, .715);
 }
-.change-position-text:hover{
+
+.change-position-text:hover {
     background-color: #d0d0ff;
 }
 
-.change-position-btn{
+.change-position-btn {
     width: 30%;
     height: 100%;
     display: flex;
@@ -508,10 +513,11 @@
 
 /* 500 이하 */
 @media (max-width: 500px) {
-    .study-page-mid{
+    .study-page-mid {
         width: 95%;
         margin-top: 20px;
     }
+
     .on-word-box {
         height: 230px;
         font-size: 40px;
@@ -531,9 +537,11 @@
         flex-direction: column;
 
     }
+
     .study-level-box {
         width: 70%;
     }
+
     .study-level-box > div {
         width: 25%;
     }
@@ -541,10 +549,11 @@
 
 /* 500 이상 */
 @media (min-width: 500px) {
-    .study-page-mid{
+    .study-page-mid {
         width: 90%;
         margin-top: 30px;
     }
+
     .on-word-box {
         height: 280px;
         font-size: 45px;
@@ -558,16 +567,20 @@
     .help-box {
         font-size: 15px;
     }
+
     .study-page-word-list-word {
         display: flex;
         flex-direction: row;
     }
+
     .study-page-word-list-word-content {
         width: 40%;
     }
+
     .study-level-box {
         width: 60%;
     }
+
     .study-level-box > div {
         width: 30%;
     }
@@ -575,10 +588,11 @@
 
 /* 1000 이상 */
 @media (min-width: 1000px) {
-    .study-page-mid{
+    .study-page-mid {
         width: 70%;
         margin-top: 40px;
     }
+
     .on-word-box {
         height: 330px;
         font-size: 50px;
@@ -592,9 +606,11 @@
     .help-box {
         font-size: 16px;
     }
+
     .study-level-box {
         width: 50%;
     }
+
     .study-level-box > div {
         width: 30%;
     }

@@ -10,9 +10,8 @@ import {useNavigate} from "react-router-dom";
 import { IoClose, } from "react-icons/io5";
 import { CgMenuRound } from "react-icons/cg";
 import { FaCheck } from "react-icons/fa";
-import {green} from "@mui/material/colors";
 
-
+// 단어 선택 테스트
 const ChoiceTest = () => {
 
     const navigator = useNavigate();
@@ -24,8 +23,8 @@ const ChoiceTest = () => {
     const [choiceList, setChoiceList] = useState(new Array(10).fill(0)); // 입력한 답 목록 (기본값 0)
     const [word, setWord] = useState([]); // 조회한 단어 목록
     const contentText = ["너무 잘하셨어요! 학습한 보람이 있네요!", "걱정하지 마세요, 아직 배우고 있잖아요!"];
-    const [sideBar, setSideBar] = useState(true);
-
+    const [sideBar, setSideBar] = useState(true); // 사이드 바 여부
+    const [studyTime, setStudyTime] = useState(0); // 테스트 시간
 
     // 답 클릭 핸들러(모르겠음은 5로 데이터 전달)
     const handleSetAnswer = (index, answerIndex) => {
@@ -75,11 +74,37 @@ const ChoiceTest = () => {
         setSideBar((current) => !current);
     }
 
+    // studyTime을 시, 분, 초 형식으로 변환하는 핸들러
+    const formatStudyTime = (timeInSeconds) => {
+        const hours = Math.floor(timeInSeconds / 3600);
+        const minutes = Math.floor((timeInSeconds % 3600) / 60);
+        const seconds = timeInSeconds % 60;
+
+        if (hours > 0) {
+            return `${hours}시간 ${minutes}분 ${seconds}초`;
+        } else if (minutes > 0) {
+            return `${minutes}분 ${seconds}초`;
+        } else {
+            return `${seconds}초`;
+        }
+    };
+
     // 단어 목록 조회 useEffect
     useEffect(() => {
         getWordListAPI();
     }, []);
 
+    // 테스트 시간 계산
+    useEffect(() => {
+        const timer = setInterval(() => {
+            if (!submitState) { // 제출 전까지 시간을 증가시킴
+                setStudyTime((prevTime) => prevTime + 1);
+            }
+        }, 1000); // 1초마다 증가
+
+        // 컴포넌트 언마운트 또는 제출 시 타이머 정리
+        return () => clearInterval(timer);
+    }, [submitState]);
 
     return (
         <div className="choice-test-container">
@@ -120,7 +145,7 @@ const ChoiceTest = () => {
                     <div className="choice-test-result-data-box">
                         <div className="choice-result-data-graph-box">
                             <div className="choice-result-data-graph-title">
-                                <p>테스트 시간 : 1분</p>
+                                <p>테스트 시간 : {formatStudyTime(studyTime)}</p>
                             </div>
                             <div className="choice-result-data-graph-content">
                                 <div className="choice-result-data-graph">
