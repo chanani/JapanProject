@@ -1,7 +1,7 @@
 package com.project.thejapenproject.test.service;
 
 import com.project.thejapenproject.command.TestItemVO;
-import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
 import com.project.thejapenproject.test.vo.GetTestListResVO;
 import com.project.thejapenproject.test.vo.TestRecordRegisterReqVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -22,5 +22,9 @@ public interface TestMapper {
     public int recordData(@Param("list") ArrayList<TestItemVO> list,
                           @Param("username")String username);
 
+    // 선택 단에 테스트 문제 풀이 테이블에 저장
+    public int registerChoiceTestResult(ChoiceTestSaveReqVO choiceTestSaveReqVO);
 
+    // 선택 단에 테스트 문제 풀이 상세 테이블에 저장
+    public int registerChoiceTestResultDetail(ChoiceTestSaveReqVO choiceTestSaveReqVO);
 }

@@ -1,6 +1,5 @@
 package com.project.thejapenproject.study.service;
 
-import com.project.thejapenproject.command.NoticeVO;
 import com.project.thejapenproject.command.UsernameReqVO;
 import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.command.exception.OperationErrorException;
@@ -8,8 +7,8 @@ import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.study.vo.*;
 import com.project.thejapenproject.study.vo.param.*;
+import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +53,7 @@ public class StudyServiceImpl implements StudyService {
             // 예제 단어 데이터를 choice 객체에 설정
             ArrayList<String> wordContentList = new ArrayList<>();
 
+            // 히라가나에 한자 추가하기
             for (StudyChoiceExampleVO example : exampleData) {
                 String wordContent = example.getWordContent();
                 if (!example.getWordChinese().equals("")) {
@@ -212,6 +212,8 @@ public class StudyServiceImpl implements StudyService {
                 .build();
         return responseData;
     }
+
+
 
 
 }

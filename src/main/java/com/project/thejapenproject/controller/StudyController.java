@@ -237,4 +237,6 @@ public class StudyController {
                 .message(ErrorCode.SUCCESS.getMessage())
                 .build();
     }
+
+
 }

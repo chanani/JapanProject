@@ -2,10 +2,14 @@ package com.project.thejapenproject.test.service;
 
 import com.project.thejapenproject.command.TestItemVO;
 import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.command.exception.OperationErrorException;
+import com.project.thejapenproject.command.exception.code.ErrorCode;
+import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
 import com.project.thejapenproject.test.vo.GetTestListResVO;
 import com.project.thejapenproject.test.vo.TestRecordRegisterReqVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
@@ -30,7 +34,19 @@ public class TestServiceImpl implements TestService{
         return testMapper.recordData(list, username);
     }
 
+    // 선택 단어 테스트 데이터 저장
+    @Override
+    @Transactional
+    public void registerChoiceTest(ChoiceTestSaveReqVO choiceTestSaveReqVO) {
+        // 선택 단에 테스트 문제 풀이 테이블에 저장
+        int result = testMapper.registerChoiceTestResult(choiceTestSaveReqVO);
+        // 선택 단에 테스트 문제 풀이 상세 테이블에 저장
+        int detailResult = testMapper.registerChoiceTestResultDetail(choiceTestSaveReqVO);
 
+        if(result < 1 || detailResult < 1){
+            throw new OperationErrorException(ErrorCode.FAIL_TO_CHOICE_TEST_REGISTER);
+        }
+    }
 
 
 }

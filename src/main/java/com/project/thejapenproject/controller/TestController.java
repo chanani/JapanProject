@@ -1,17 +1,17 @@
 package com.project.thejapenproject.controller;
 
+import com.project.thejapenproject.command.ResponseData;
 import com.project.thejapenproject.command.TestItemVO;
-import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
+import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
 import com.project.thejapenproject.test.service.TestService;
 import com.project.thejapenproject.test.vo.GetTestListResVO;
 import com.project.thejapenproject.test.vo.TestRecordRegisterReqVO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.*;
 
-@Controller
+@RestController
 @RequestMapping("/test")
 @RequiredArgsConstructor
 public class TestController {
@@ -70,5 +70,22 @@ public class TestController {
         } else {
             return ResponseEntity.ok("실패");
         }
+    }
+
+
+    /**
+     * 선택 단어 테스트 데이터 저장 API
+     * @param choiceTestSaveReqVO
+     * @return
+     */
+    @PostMapping("/choice-test-register")
+    public ResponseData choiceTestRegister(@Valid @RequestBody ChoiceTestSaveReqVO choiceTestSaveReqVO){
+        System.out.println("choiceTestSaveReqVO = " + choiceTestSaveReqVO);
+        testService.registerChoiceTest(choiceTestSaveReqVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message("정상적으로 저장 되었습니다.")
+                .build();
     }
 }

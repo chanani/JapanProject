@@ -52,4 +52,58 @@
         </foreach>
     </insert>
 
+    <!-- 선택 단에 테스트 문제 풀이 테이블에 저장 -->
+    <insert id="registerChoiceTestResult"
+            parameterType="com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO">
+        <selectKey resultType="Integer" order="AFTER" keyProperty="ctrNum">
+            SELECT ctr_num
+            FROM choice_test_result
+            WHERE username = #{username}
+            ORDER BY ctr_num DESC
+            limit 1
+        </selectKey>
+        INSERT INTO choice_test_result (username,
+                                        ctr_total_count,
+                                        ctr_answer_count,
+                                        ctr_inAnswer_count,
+                                        state,
+                                        created_at)
+        VALUES (#{username},
+                #{ctrTotalCount},
+                #{ctrAnswerCount},
+                #{ctrInAnswerCount},
+                0,
+                NOW())
+    </insert>
+
+    <!-- 선택 단에 테스트 문제 풀이 상세 테이블에 저장 -->
+    <insert id="registerChoiceTestResultDetail"
+            parameterType="com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO">
+        INSERT INTO choice_test_result_detail (ctr_num,
+                                               word_num,
+                                               ctrd_question_one,
+                                               ctrd_question_two,
+                                               ctrd_question_three,
+                                               ctrd_question_four,
+                                               ctrd_question_answer,
+                                               ctrd_choice_num,
+                                               ctrd_result,
+                                               state,
+                                               created_at)
+        VALUES
+            <foreach collection="ctrdContent" item="vo" separator="," >
+                (#{ctrNum},
+                #{vo.wordNum},
+                #{vo.ctrdQuestionOne},
+                #{vo.ctrdQuestionTwo},
+                #{vo.ctrdQuestionThree},
+                #{vo.ctrdQuestionFour},
+                #{vo.ctrdQuestionAnswer},
+                #{vo.ctrdChoiceNum},
+                #{vo.ctrdResult},
+                0,
+                NOW()
+                )
+            </foreach>
+    </insert>
 </mapper>

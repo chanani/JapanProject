@@ -1,15 +1,16 @@
 import "../../styles/test/ChoiceTest.css"
 import Audio from "../../component/Audio";
 import GrayAndBlue from "../../component/button/GrayAndBlue";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {axiosInstance} from "../../api";
 import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import {useNavigate} from "react-router-dom";
-import { IoClose, } from "react-icons/io5";
-import { CgMenuRound } from "react-icons/cg";
-import { FaCheck } from "react-icons/fa";
+import {IoClose,} from "react-icons/io5";
+import {CgMenuRound} from "react-icons/cg";
+import {FaCheck} from "react-icons/fa";
+import {tokenInfoContext} from "../../component/TokenInfoProvider";
 
 // 단어 선택 테스트
 const ChoiceTest = () => {
@@ -25,6 +26,7 @@ const ChoiceTest = () => {
     const contentText = ["너무 잘하셨어요! 학습한 보람이 있네요!", "걱정하지 마세요, 아직 배우고 있잖아요!"];
     const [sideBar, setSideBar] = useState(true); // 사이드 바 여부
     const [studyTime, setStudyTime] = useState(0); // 테스트 시간
+    const {username, userRole} = useContext(tokenInfoContext);
 
     // 답 클릭 핸들러(모르겠음은 5로 데이터 전달)
     const handleSetAnswer = (index, answerIndex) => {
@@ -45,10 +47,54 @@ const ChoiceTest = () => {
 
     // 최종 제출 핸들러
     const handleSubmit = () => {
-        let notChoiceAnswer = choiceList.filter(item => item === 0).length;
-        if (notChoiceAnswer > 0) return toast.error("정답을 모두 선택해주세요.");
-        setSubmitState(true);
-        window.scroll(0, 0);
+        console.log("submitState", submitState);
+        if (!submitState) {
+            let notChoiceAnswer = choiceList.filter(item => item === 0).length;
+            if (notChoiceAnswer > 0) return toast.error("정답을 모두 선택해주세요.");
+            setSubmitState(true);
+            window.scroll(0, 0);
+        } else {
+            if(userRole === 'none') return toast.error('로그인 후 이용해주세요.');
+            choiceTestSaveAPI();
+        }
+    }
+
+    // 테스트 내용 저장 API
+    const choiceTestSaveAPI = () => {
+        let answerCount = answerList.filter(item => item === 1).length;
+        let inAnswerCount = answerList.filter(item => item !== 1).length;
+        let ctrdContent = new Array(10).fill(0);
+        for(let i = 0; i < ctrdContent.length; i++) {
+            let wordInfo = word[i];
+            // 정답 내용
+            let answerKeyword = wordInfo.wordContent + (wordInfo.wordChinese && "(" + wordInfo.wordChinese + ")");
+            // 정답 번호
+            let answerNumber = wordInfo.wordContentList.findIndex(item => item === answerKeyword);
+            ctrdContent[i] = {
+                wordNum : wordInfo.wordNum,
+                ctrdQuestionOne : wordInfo.wordContentList[0],
+                ctrdQuestionTwo : wordInfo.wordContentList[1],
+                ctrdQuestionThree : wordInfo.wordContentList[2],
+                ctrdQuestionFour : wordInfo.wordContentList[3],
+                ctrdQuestionAnswer : answerNumber + 1,
+                ctrdChoiceNum : choiceList[i],
+                ctrdResult : answerList[i] === 1 ? 'Y' : 'N'
+            }
+        }
+
+        axiosInstance.post('/test/choice-test-register',{
+            username : username,
+            ctrTotalCount : word.length,
+            ctrAnswerCount : answerCount,
+            ctrInAnswerCount : inAnswerCount,
+            ctrdContent : ctrdContent,
+        })
+            .then((res) => {
+                console.log(res.data)
+                toast.success('정상적으로 저장되었습니다.');
+                navigator("/mypage/record");
+            })
+            .catch((e) => toast.error('테스트 저장 중 오류가 발생하였습니다.'))
     }
 
     // 단어 목록 조회 API
@@ -88,6 +134,11 @@ const ChoiceTest = () => {
             return `${seconds}초`;
         }
     };
+
+    // 홈으로 이동 핸들러
+    const handleHome = () => {
+        navigator("/");
+    }
 
     // 단어 목록 조회 useEffect
     useEffect(() => {
@@ -175,7 +226,8 @@ const ChoiceTest = () => {
                                     </div>
                                     <div className="choice-result-data-point-fail-box">
                                         <span className="choice-result-data-point-title">오답</span>
-                                        <span className="choice-result-data-point-count">{answerList.filter(item => item !== 1).length}</span>
+                                        <span
+                                            className="choice-result-data-point-count">{answerList.filter(item => item !== 1).length}</span>
                                     </div>
                                 </div>
                             </div>
@@ -270,13 +322,17 @@ const ChoiceTest = () => {
                     </div>
                 ))}
 
-                <GrayAndBlue
-                    width="70%"
-                    text1={"홈으로"}
-                    text2={submitState ? "제출하기" : "저장하기"}
-                    homePath={"/"}
-                    movePath={handleSubmit}
-                />
+
+                <div className="choice-test-btn-box">
+                    <button className="choice-test-btn-home"
+                            onClick={handleHome}>
+                        홈으로
+                    </button>
+                    <button className="choice-test-btn-submit"
+                            onClick={handleSubmit}>
+                        {submitState ? "저장하기" : "제출하기"}
+                    </button>
+                </div>
 
 
                 <div className={`choice-test-side-box ${sideBar ? 'side-box-visible' : 'side-box-hidden'}`}>
@@ -291,7 +347,8 @@ const ChoiceTest = () => {
                             <div className="choice-test-side-content-choice-box" key={index}>
                                 <div className="choice-test-side-content-test-number">
                                     {!submitState ? index + 1 :
-                                    answerList[index] === 1 ? <FaCheck color={"#4cbc5c"}/> : <IoClose color={"#ff0000bf"}/>}
+                                        answerList[index] === 1 ? <FaCheck color={"#4cbc5c"}/> :
+                                            <IoClose color={"#ff0000bf"}/>}
                                 </div>
                                 <div className="choice-test-side-content-test-choice">
                                     {item !== 0 ? item : ""}
@@ -303,13 +360,13 @@ const ChoiceTest = () => {
 
                 {!sideBar &&
                     <div className="choice-test-side-on-btn"
-                    onClick={handleSideBarToggle}>
+                         onClick={handleSideBarToggle}>
                         <CgMenuRound size={35} color="#717082"/>
                     </div>
                 }
 
 
-                    </div>
+            </div>
         </div>
     )
 }

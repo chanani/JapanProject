@@ -415,9 +415,45 @@
     right: 15px;
     top: 15px;
 }
+
 .choice-test-side-title-box {
     margin-top: 20px;
 }
+
+/* 버튼 박스 */
+.choice-test-btn-box {
+    width: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+.choice-test-btn-box > button {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    width : 47%;
+}
+.choice-test-btn-home {
+    border: 2px solid #d9dde8;
+    background-color: white;
+    color: #56607c;
+}
+.choice-test-btn-home:hover {
+    background-color: #e4e5e587;
+}
+.choice-test-btn-submit {
+    border: 2px solid #4255ff;
+    background-color: #4255ff;
+    color: white;
+}
+.choice-test-btn-submit:hover {
+    border: 2px solid #4c16f9;
+    background-color: #4c16f9;
+}
+
 /* 500 이하 */
 @media (max-width: 500px) {
     .choice-test-all {
@@ -490,13 +526,14 @@
     .choice-test-side-toggle-box {
         padding-top: 20px;
     }
+
     .choice-test-side-toggle-box,
-    .choice-test-side-title-box
-    {
+    .choice-test-side-title-box {
         display: flex;
         align-items: center;
         justify-content: center;
     }
+
     .choice-test-side-content-box {
         padding: 0 138px;
     }
@@ -516,6 +553,7 @@
         height: 351px;
         box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.7), 0 0px 0px rgba(0, 0, 0, 0);
     }
+
     .choice-test-side-on-btn {
         display: none;
     }
@@ -592,13 +630,14 @@
     .choice-test-side-toggle-box {
         padding-top: 20px;
     }
+
     .choice-test-side-toggle-box,
-    .choice-test-side-title-box
-     {
+    .choice-test-side-title-box {
         display: flex;
         align-items: center;
         justify-content: center;
     }
+
     .choice-test-side-content-box {
         padding: 0 138px;
     }
@@ -618,6 +657,7 @@
         height: 351px;
         box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.7), 0 0px 0px rgba(0, 0, 0, 0);
     }
+
     .choice-test-side-on-btn {
         display: none;
     }
@@ -696,9 +736,10 @@
     .choice-test-side-title-box {
         justify-content: start;
     }
+
     .choice-test-side-box.side-box-visible {
         transform: translateY(0px);
-        border-radius : 8px;
+        border-radius: 8px;
     }
 
     .choice-test-side-box.side-box-visible:hover {
@@ -709,6 +750,7 @@
     .side-box-hidden.side-box-hidden {
         transform: translateX(-150%);
     }
+
     .choice-test-side-on-btn {
         display: block;
     }
