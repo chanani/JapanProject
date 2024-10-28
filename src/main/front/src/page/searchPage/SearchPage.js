@@ -56,7 +56,7 @@ const Search = () => {
     const doubleRequest = async () => {
         await axios.get(`${process.env.REACT_APP_URL_ELASTICSEARCH}notice,word/_search`, {
             params: {
-                size: 1000,
+                size: 10000,
                 q: `word_meaning:${allKeyword} OR word_content:${allKeyword} OR notice_title:${allKeyword} OR notice_content:${allKeyword}`
             },
             auth: {
@@ -74,13 +74,14 @@ const Search = () => {
         requestWordData();
         requestNoticeData();
     }
+
     // elasticsearch로 word 데이터 요청
     const requestWordData = async () => {
         if (!!!wordKeyword) return toast.error("검색어를 입력해주세요.");
         await axios.get(`${process.env.REACT_APP_URL_ELASTICSEARCH}word/_search`, {
             params: {
-                size: 1000,
-                q: `word_meaning:${wordKeyword} OR word_content:${wordKeyword}`
+                size: 10000,
+                q: `word_meaning:${wordKeyword} OR word_content:${wordKeyword} OR word_chinese:${wordKeyword}`
             },
             auth: {
                 username: 'elastic',
@@ -99,7 +100,7 @@ const Search = () => {
         if (!!!noticeKeyword) return toast.error("검색어를 입력해주세요.");
         await axios.get(`${process.env.REACT_APP_URL_ELASTICSEARCH}notice/_search`, {
             params: {
-                size: 1000,
+                size: 10000,
                 q: `notice_title:${noticeKeyword} OR notice_content:${noticeKeyword}`
             },
             auth: {
@@ -112,26 +113,10 @@ const Search = () => {
             })
             .catch((e) => toast.error("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요."))
     }
-    // elasticsearch server로 호출 테스트
-    const testBtn = async () => {
-        await axios.get(`${process.env.REACT_APP_URL_ELASTICSEARCH}univ/_search`, {
-            params: {
-                size: 1000,
-            },
-            auth: {
-                username: 'elastic',
-                password: 'thejapan'
-            }
-        })
-            .then((res) => {
-                console.log(res.data)
-            })
-            .catch((e) => toast.error("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요."))
-    }
+
 
     return (
         <div className="search-box-all">
-            <input type="button" onClick={testBtn} value="asd" style={{display: "none"}}/>
             <div className="search-box">
 
                 <div className="search-all-box">

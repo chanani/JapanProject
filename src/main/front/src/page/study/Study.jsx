@@ -176,6 +176,10 @@ const Study = () => {
     const moveChoice = () => {
         navigator("/choice");
     }
+    // 단어 선택 테스트로 이동
+    const moveChoiceTest = () => {
+        navigator("/choice-test")
+    }
 
     // 단어 및 즐겨찾기 가져오기
     useEffect(() => {
@@ -427,7 +431,7 @@ const Study = () => {
                             <p>학습</p>
                         </div>
                         <div className="study-page-test-box">
-                            <img src="/svg/test1.svg" alt=""/>
+                            <img src="/svg/test1.svg" alt="" onClick={moveChoiceTest}/>
                             <p>테스트</p>
                         </div>
                         <div className="study-page-card-box" onClick={() => toast.error("아직 준비중입니다.")}>
