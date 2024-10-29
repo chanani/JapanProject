@@ -5,7 +5,6 @@ import {useNavigate} from "react-router-dom";
 import moment from "moment";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
-import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 import usePagination from "../../hook/usePagination";
 import PageNation from "../../component/PageNation";
 
@@ -16,8 +15,7 @@ const RecordPage = () => {
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [totalRecord, setTotalRecord] = useState(0);
-
-
+    const [category, setCategory] = useState(1);
 
     const noticesPerPage = 5; // 보여줄 목록 수
     const pagesPerRange = 5; // 표시할 페이지 수
@@ -34,7 +32,6 @@ const RecordPage = () => {
         itemsPerPage: noticesPerPage,
         pagesPerRange
     });
-
 
 
     // 상세페이지로 이동하는 핸들러
@@ -88,12 +85,28 @@ const RecordPage = () => {
             <div className="recordPage-page-mid">
 
                 <div className="recordPage-info">
-                    {data?.length === 0 ?
-                        <p>학습 기록이 존재하지 않습니다.</p>
-                        :
-                        <p>{username}님의 기록</p>
-                    }
+                    <p>테스트 기록</p>
                 </div>
+
+                <div className="recordPage-category-box">
+                    <div
+                        className={(category === 1 ? "recordPage-category-box-choice" : "recordPage-category-box-not-choice")}
+                        onClick={() => setCategory(1)}
+                    >단어 선택 테스트
+                    </div>
+                    <div
+                        className={(category === 2 ? "recordPage-category-box-choice" : "recordPage-category-box-not-choice")}
+                        onClick={() => setCategory(2)}
+                    >
+                        단답형 테스트
+                    </div>
+                    <div
+                        className={(category === 3 ? "recordPage-category-box-choice" : "recordPage-category-box-not-choice")}
+                        onClick={() => setCategory(3)}>
+                        카드 맞추기
+                    </div>
+                </div>
+
 
                 {data?.map((item, index) => (
                     <div className="recordPage-score" key={index}
