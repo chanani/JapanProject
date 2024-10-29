@@ -1,10 +1,12 @@
 package com.project.thejapenproject.mypage.service;
 
 import com.project.thejapenproject.command.*;
+import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
 import com.project.thejapenproject.mypage.vo.UserMypageResVO;
 import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
+import com.project.thejapenproject.mypage.vo.ChoiceRecordListResVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,4 +30,6 @@ public interface MypageMapper {
     // 프로필 이미지 수정
     public int userImageChange(@Param("fileName") String fileName, @Param("username") String username);
 
+    // 단어 선택 테스트 내역 조회
+    ArrayList<ChoiceRecordListResVO> choiceRecordList(GetRecordListParamVO getRecordListParamVO);
 }

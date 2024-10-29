@@ -4,13 +4,9 @@ import com.project.thejapenproject.command.*;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
-import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.mypage.service.MypageService;
-import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
-import com.project.thejapenproject.mypage.vo.UserMypageResVO;
-import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
-import com.project.thejapenproject.mypage.vo.UserWithdrawalReqVO;
+import com.project.thejapenproject.mypage.vo.*;
 import com.project.thejapenproject.mypage.vo.param.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,7 +30,6 @@ public class MypageController {
      * 마이페이지 유저 정보 조회 API
      * @param usernameParamVO
      */
-    @NoneCheckToken
     @GetMapping("/data")
     public ResponseEntity<UserMypageResVO> myInfo(@Valid @ModelAttribute UsernameParamVO usernameParamVO) {
 
@@ -50,7 +45,6 @@ public class MypageController {
      * 유저 정보 변경 API
      * @param userInfoModifyReqVO
      */
-    @NoneCheckToken
     @PostMapping("/update")
     public ResponseEntity<String> modifyInfo(@Valid @RequestBody UserInfoModifyReqVO userInfoModifyReqVO) {
 
@@ -63,7 +57,6 @@ public class MypageController {
     /**
      * 회원 탈퇴 API
      */
-    @NoneCheckToken
     @PostMapping("/withdrawal")
     public ResponseEntity<String> withdrawal(@Valid @RequestBody UserWithdrawalReqVO userWithdrawalReqVO) {
 
@@ -77,7 +70,6 @@ public class MypageController {
      *
      * @Param map : username을 통해 목록 조회
      **/
-    @NoneCheckToken
     @PostMapping("/favorite")
     public ResponseEntity<ArrayList<WordVO>> favoriteList(@Valid @RequestBody UsernameParamVO usernameParamVO) {
 
@@ -87,11 +79,10 @@ public class MypageController {
     }
 
     /**
-     * 학습 기록 조회 API
+     * 단답형 학습 기록 조회 API
      *
      * @Param username : username을 통해 목록 조회
      **/
-    @NoneCheckToken
     @GetMapping("/record")
     public ResponseData recordList(@Valid @ModelAttribute GetRecordListParamVO getRecordListParamVO) {
         PageResponse<RecordVO> list = mypageService.recordList(getRecordListParamVO);
@@ -104,11 +95,10 @@ public class MypageController {
     }
 
     /**
-     * 학습 기록 상세 조회 API
+     * 단답형 학습 기록 상세 조회 API
      *
      * @Param map : username과 record 테이블의 PK를 통해 조회
      **/
-    @NoneCheckToken
     @PostMapping("/recordDetails")
     public ResponseEntity<ArrayList<RecordDetailsVO>> recordDetailList(@Valid @RequestBody GetRecordDetailsReqVO getRecordDetailsReqVO) {
         ArrayList<RecordDetailsVO> list = mypageService.recordDetails(getRecordDetailsReqVO);
@@ -116,17 +106,36 @@ public class MypageController {
         return ResponseEntity.ok(list);
     }
 
+
     /**
-     * 학습 기록 삭제 API
+     * 단답형 학습 기록 삭제 API
      *
      * @Param record_num : record 테이블의 PK를 통해 삭제
      **/
-    @NoneCheckToken
     @PostMapping("/deleteRecord")
     public ResponseEntity<String> deleteRecord(@Valid @RequestBody RecordNumParamVO recordNumParamVO) throws Exception {
         mypageService.deleteRecord(recordNumParamVO.getRecordNum());
         return ResponseEntity.ok("성공");
     }
+
+
+    /**
+     * 단어 선택 학습 기록 조회 API
+     *
+     * @Param username : username을 통해 목록 조회
+     **/
+    @GetMapping("/choice-record")
+    public ResponseData choiceRecordList(@Valid @ModelAttribute GetRecordListParamVO getRecordListParamVO) {
+        PageResponse<ChoiceRecordListResVO> list = mypageService.choiceRecordList(getRecordListParamVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(list)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+
 
     /**
      * 단계별 학습 API

@@ -63,6 +63,22 @@
         limit #{size} offset #{offset}
     </select>
 
+    <select id="choiceRecordList"
+            parameterType="com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO"
+            resultType="com.project.thejapenproject.mypage.vo.ChoiceRecordListResVO">
+        SELECT ctr_num,
+               username,
+               ctr_total_count,
+               ctr_answer_count,
+               ctr_inAnswer_count,
+               created_at,
+               COUNT(*) OVER() AS total_elements
+        FROM choice_test_result
+        WHERE username = #{username}
+        ORDER BY ctr_num DESC
+        limit #{size} offset #{offset}
+    </select>
+
     <!-- 유저의 학습 상세 내용 조회 -->
     <select id="recordDetails"
             parameterType="com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO"

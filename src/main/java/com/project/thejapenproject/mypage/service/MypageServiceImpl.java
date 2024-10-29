@@ -5,11 +5,11 @@ import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.utils.PageResponse;
-import com.project.thejapenproject.inquiry.vo.InquiryGetListResVO;
 import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
 import com.project.thejapenproject.mypage.vo.UserMypageResVO;
 import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
+import com.project.thejapenproject.mypage.vo.ChoiceRecordListResVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -99,6 +99,29 @@ public class MypageServiceImpl implements MypageService{
         if(mypageMapper.userImageChange(fileName, username) < 1){
             throw new OperationErrorException(ErrorCode.FAIL_TO_IMAGE);
         }
+    }
+
+    // 단어 선택 테스트 내역 조회
+    @Override
+    public PageResponse<ChoiceRecordListResVO> choiceRecordList(GetRecordListParamVO getRecordListParamVO) {
+        Integer page = getRecordListParamVO.getPage();
+        Integer size = getRecordListParamVO.getSize();
+        getRecordListParamVO.setOffset((page - 1) * size);
+
+        ArrayList<ChoiceRecordListResVO> choiceRecordList = mypageMapper.choiceRecordList(getRecordListParamVO);
+        // 총 데이터 수 계산
+        int totalElements = choiceRecordList.size() != 0 ? choiceRecordList.get(0).getTotalElements() : 0;
+        // 총 페이지 수 계산
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        PageResponse<ChoiceRecordListResVO> responseData = PageResponse.<ChoiceRecordListResVO>builder()
+                .content(choiceRecordList)
+                .page(page)
+                .size(size)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .build();
+        return responseData;
     }
 
 
