@@ -1,12 +1,11 @@
 import "../../styles/test/ChoiceTest.css"
 import Audio from "../../component/Audio";
-import GrayAndBlue from "../../component/button/GrayAndBlue";
 import {useContext, useEffect, useState} from "react";
 import {toast} from "react-toastify";
 import {axiosInstance} from "../../api";
-import {CircularProgressbar, buildStyles} from 'react-circular-progressbar';
+import {buildStyles, CircularProgressbar} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {IoClose,} from "react-icons/io5";
 import {CgMenuRound} from "react-icons/cg";
 import {FaCheck} from "react-icons/fa";
@@ -27,6 +26,10 @@ const ChoiceTest = () => {
     const [sideBar, setSideBar] = useState(true); // 사이드 바 여부
     const [studyTime, setStudyTime] = useState(0); // 테스트 시간
     const {username, userRole} = useContext(tokenInfoContext);
+
+    // 마이페이지에서 전달된 시험 내용 데이터
+    const location = useLocation();
+    const { ctr, answer } = location.state || {};
 
     // 답 클릭 핸들러(모르겠음은 5로 데이터 전달)
     const handleSetAnswer = (index, answerIndex) => {
@@ -54,7 +57,7 @@ const ChoiceTest = () => {
             setSubmitState(true);
             window.scroll(0, 0);
         } else {
-            if(userRole === 'none') return toast.error('로그인 후 이용해주세요.');
+            if (userRole === 'none') return toast.error('로그인 후 이용해주세요.');
             choiceTestSaveAPI();
         }
     }
@@ -64,33 +67,36 @@ const ChoiceTest = () => {
         let answerCount = answerList.filter(item => item === 1).length;
         let inAnswerCount = answerList.filter(item => item !== 1).length;
         let ctrdContent = new Array(10).fill(0);
-        for(let i = 0; i < ctrdContent.length; i++) {
+        for (let i = 0; i < ctrdContent.length; i++) {
             let wordInfo = word[i];
             // 정답 내용
             let answerKeyword = wordInfo.wordContent + (wordInfo.wordChinese && "(" + wordInfo.wordChinese + ")");
             // 정답 번호
             let answerNumber = wordInfo.wordContentList.findIndex(item => item === answerKeyword);
             ctrdContent[i] = {
-                wordNum : wordInfo.wordNum,
-                ctrdQuestionOne : wordInfo.wordContentList[0],
-                ctrdQuestionTwo : wordInfo.wordContentList[1],
-                ctrdQuestionThree : wordInfo.wordContentList[2],
-                ctrdQuestionFour : wordInfo.wordContentList[3],
-                ctrdQuestionAnswer : answerNumber + 1,
-                ctrdChoiceNum : choiceList[i],
-                ctrdResult : answerList[i] === 1 ? 'Y' : 'N'
+                wordNum: wordInfo.wordNum,
+                ctrdAnswerContent: wordInfo.wordContent,
+                ctrdAnswerMeaning: wordInfo.wordMeaning,
+                ctrdAnswerChinese: wordInfo.wordChinese,
+                ctrdQuestionOne: wordInfo.wordContentList[0],
+                ctrdQuestionTwo: wordInfo.wordContentList[1],
+                ctrdQuestionThree: wordInfo.wordContentList[2],
+                ctrdQuestionFour: wordInfo.wordContentList[3],
+                ctrdQuestionAnswer: answerNumber + 1,
+                ctrdChoiceNum: choiceList[i],
+                ctrdResult: answerList[i] === 1 ? 'Y' : 'N'
             }
         }
 
-        axiosInstance.post('/test/choice-test-register',{
-            username : username,
-            ctrTotalCount : word.length,
-            ctrAnswerCount : answerCount,
-            ctrInAnswerCount : inAnswerCount,
-            ctrdContent : ctrdContent,
+        axiosInstance.post('/test/choice-test-register', {
+            username: username,
+            ctrTotalCount: word.length,
+            ctrAnswerCount: answerCount,
+            ctrInAnswerCount: inAnswerCount,
+            ctrdContent: ctrdContent,
+            ctrTime: studyTime
         })
             .then((res) => {
-                console.log(res.data)
                 toast.success('정상적으로 저장되었습니다.');
                 navigator("/mypage/record");
             })
@@ -140,9 +146,48 @@ const ChoiceTest = () => {
         navigator("/");
     }
 
+    // 마이페이지에서 넘어왔을 떄
+    const toMyPage = () => {
+        setSubmitState(true); // 시험 완료 상태로 변경
+        // data와 같은 데이터로 초기화
+        let newWord = answer.map((item, i) => {
+            let wordContentList = [item.ctrdQuestionOne, item.ctrdQuestionTwo, item.ctrdQuestionThree, item.ctrdQuestionFour];
+            let newWord = {
+                wordChinese : item.ctrdAnswerChinese,
+                wordContent : item.ctrdAnswerContent,
+                wordMeaning : item.ctrdAnswerMeaning,
+                wordNum : item.wordNum,
+                wordContentList : wordContentList,
+            }
+
+            setChoiceList((prevChoiceList) => {
+                const updatedChoiceList = [...prevChoiceList];
+                updatedChoiceList[i] = item.ctrdChoiceNum; // index에 값 추가 또는 업데이트
+                return updatedChoiceList;
+            });
+
+            setAnswerList((prevAnswerList) => {
+                const updatedAnswerList = [...prevAnswerList];
+                updatedAnswerList[i] = item.ctrdChoiceNum === item.ctrdQuestionAnswer ? 1 : 2; // index에 값 추가 또는 업데이트
+                return updatedAnswerList;
+            });
+
+            return newWord;
+        });
+        setWord(newWord);
+        setStudyTime(ctr.ctrTime)
+
+
+    }
+
     // 단어 목록 조회 useEffect
     useEffect(() => {
-        getWordListAPI();
+        if (ctr == null || answer == null) {
+            return getWordListAPI();
+        } else {
+            console.log(answer)
+            toMyPage();
+        }
     }, []);
 
     // 테스트 시간 계산
@@ -330,7 +375,7 @@ const ChoiceTest = () => {
                     </button>
                     <button className="choice-test-btn-submit"
                             onClick={handleSubmit}>
-                        {submitState ? "저장하기" : "제출하기"}
+                        {!submitState ? "제출하기" : "저장하기"}
                     </button>
                 </div>
 

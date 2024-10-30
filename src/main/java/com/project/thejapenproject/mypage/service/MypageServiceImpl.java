@@ -5,11 +5,9 @@ import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.utils.PageResponse;
-import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
-import com.project.thejapenproject.mypage.vo.UserMypageResVO;
-import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
+import com.project.thejapenproject.mypage.vo.*;
+import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
-import com.project.thejapenproject.mypage.vo.ChoiceRecordListResVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -122,6 +120,12 @@ public class MypageServiceImpl implements MypageService{
                 .totalPages(totalPages)
                 .build();
         return responseData;
+    }
+
+    // 단어 선택 테스트 상새 내역 조회
+    @Override
+    public ArrayList<ChoiceRecordListDetailResVO> choiceRecordDetailList(ChoiceRecordDetailParamVO choiceRecordDetailParamVO) {
+        return mypageMapper.choiceRecordDetailList(choiceRecordDetailParamVO);
     }
 
 

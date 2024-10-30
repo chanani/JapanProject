@@ -27,8 +27,14 @@ public class ChoiceTestSaveReqVO {
     @NotNull(message = "오답 문제 수는 필수입니다.")
     private Integer ctrInAnswerCount;
 
+    @NotNull(message = "풀이 시간은 필수입니다.")
+    private Integer ctrTime;
+
+
     @NotNull(message = "문제 정보는 필수입니다.")
     private ArrayList<ChoiceTestDetailVO> ctrdContent;
+
+
 
     private Integer ctrNum;
 }

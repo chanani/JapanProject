@@ -37,4 +37,15 @@ public class ChoiceTestDetailVO {
 
     @NotBlank(message = "정답 여부는 필수 입니다.")
     private String ctrdResult;
+
+    @NotBlank(message = "정답 내용은 필수입니다.")
+    private String ctrdAnswerContent;
+
+    @NotBlank(message = "정답 뜻은 필수입니다.")
+    private String ctrdAnswerMeaning;
+
+    @NotBlank(message = "정답 한자는 필수입니다.")
+    private String ctrdAnswerChinese;
+
+
 }

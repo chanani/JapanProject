@@ -2,11 +2,9 @@ package com.project.thejapenproject.mypage.service;
 
 import com.project.thejapenproject.command.*;
 import com.project.thejapenproject.common.utils.PageResponse;
-import com.project.thejapenproject.mypage.vo.GetRecordDetailsReqVO;
-import com.project.thejapenproject.mypage.vo.UserMypageResVO;
-import com.project.thejapenproject.mypage.vo.UserInfoModifyReqVO;
+import com.project.thejapenproject.mypage.vo.*;
+import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
-import com.project.thejapenproject.mypage.vo.ChoiceRecordListResVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,4 +30,7 @@ public interface MypageMapper {
 
     // 단어 선택 테스트 내역 조회
     ArrayList<ChoiceRecordListResVO> choiceRecordList(GetRecordListParamVO getRecordListParamVO);
+
+    // 단어 선택 테스트 상새 내역 조회
+    ArrayList<ChoiceRecordListDetailResVO> choiceRecordDetailList(ChoiceRecordDetailParamVO choiceRecordDetailParamVO);
 }

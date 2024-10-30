@@ -37,8 +37,8 @@ const RecordPage = () => {
     });
 
 
-    // 상세페이지로 이동하는 핸들러
-    const handleContent = async (index) => {
+    // 단답형 상세페이지로 이동하는 핸들러
+    const handleSortResultPage = async (index) => {
         try {
             let num = sortData[index]?.recordNum;
             let kind = sortData[index]?.recordKind;
@@ -57,6 +57,27 @@ const RecordPage = () => {
             toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
         }
     };
+
+    // 단어 선택 테스트 결과 상세페이지로 이동하는 핸들러
+    const handleChoiceTestResultPage = async (index) => {
+        console.log('choiceData',choiceData[index])
+        try {
+            let ctr = choiceData[index];
+
+            const response = await axiosInstance.get('mypage/choice-record-detail', {
+                    params : {
+                        ctrNum : ctr.ctrNum
+                    }
+                }
+            )
+            const answer = response.data.data;
+            navigate("/choice-test", {state: { ctr, answer }});
+            window.scrollTo(0, 0);
+        } catch (e) {
+            toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
+        }
+    }
+
 
     // 단답형 테스트 목록 조회
     const getSortRecordAPI = () => {
@@ -92,6 +113,21 @@ const RecordPage = () => {
             })
     }
 
+    // studyTime을 시, 분, 초 형식으로 변환하는 핸들러
+    const formatStudyTime = (timeInSeconds) => {
+        const hours = Math.floor(timeInSeconds / 3600);
+        const minutes = Math.floor((timeInSeconds % 3600) / 60);
+        const seconds = timeInSeconds % 60;
+
+        if (hours > 0) {
+            return `${hours}시간 ${minutes}분 ${seconds}초`;
+        } else if (minutes > 0) {
+            return `${minutes}분 ${seconds}초`;
+        } else {
+            return `${seconds}초`;
+        }
+    };
+
     // 페이지 권한 및 데이터 가져오기
     useEffect(() => {
         if (userRole === "none") {
@@ -108,6 +144,7 @@ const RecordPage = () => {
         setCurrentPage(1);
     }
 
+    // 카테고리 변경 시 데이터 조회
     useEffect(() => {
         if (category === 'sort') return getSortRecordAPI();
         if (category === 'choice') return getChoiceRecordAPI();
@@ -148,9 +185,11 @@ const RecordPage = () => {
                 {category === 'choice' &&
                     choiceData?.map((item, index) => (
                         <div className="recordPage-score" key={index}
-                             onClick={(event) => handleContent(index)}>
+                             onClick={(event) => handleChoiceTestResultPage(index)}>
                             <div className="score-header">
                                 <div>{username}</div>
+                                <div style={{fontSize: "13px"}}>⏐</div>
+                                <div className="level">{formatStudyTime(item.ctrTime)}</div>
                             </div>
                             <div className="score-content">
                                 <div className="point">{item.ctrAnswerCount * 10}점</div>
@@ -163,11 +202,13 @@ const RecordPage = () => {
                 {category === 'sort' &&
                     sortData?.map((item, index) => (
                         <div className="recordPage-score" key={index}
-                             onClick={(event) => handleContent(index)}>
+                             onClick={(event) => handleSortResultPage(index)}>
                             <div className="score-header">
-                                <div className="level">{item.recordLevel}단계</div>
-                                <div style={{fontSize: "13px"}}>⏐</div>
+
+
                                 <div>{username}</div>
+                                <div style={{fontSize: "13px"}}>⏐</div>
+                                <div className="level">{item.recordLevel}단계</div>
                             </div>
                             <div className="score-content">
                                 <div className="point">{item.recordPoint}점</div>

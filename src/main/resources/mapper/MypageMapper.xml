@@ -63,6 +63,7 @@
         limit #{size} offset #{offset}
     </select>
 
+    <!-- 단어 선택 테스트 내역 조회 -->
     <select id="choiceRecordList"
             parameterType="com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO"
             resultType="com.project.thejapenproject.mypage.vo.ChoiceRecordListResVO">
@@ -71,13 +72,39 @@
                ctr_total_count,
                ctr_answer_count,
                ctr_inAnswer_count,
+               ctr_time,
                created_at,
                COUNT(*) OVER() AS total_elements
         FROM choice_test_result
         WHERE username = #{username}
+          AND state = 0
         ORDER BY ctr_num DESC
         limit #{size} offset #{offset}
     </select>
+
+    <!-- 단어 선택 테스트 내역 상세 조회 -->
+    <select id="choiceRecordDetailList"
+            parameterType="com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO"
+            resultType="com.project.thejapenproject.mypage.vo.ChoiceRecordListDetailResVO">
+        SELECT ctrd_num,
+               word_num,
+               ctrd_question_one,
+               ctrd_question_two,
+               ctrd_question_three,
+               ctrd_question_four,
+               ctrd_question_answer,
+               ctrd_choice_num,
+               ctrd_answer_content,
+               ctrd_answer_meaning,
+               ctrd_answer_chinese,
+               ctrd_result,
+               created_at
+        FROM choice_test_result_detail
+        WHERE ctr_num = #{ctrNum}
+          AND state = 0
+        ORDER BY ctrd_num ASC
+    </select>
+
 
     <!-- 유저의 학습 상세 내용 조회 -->
     <select id="recordDetails"

@@ -136,6 +136,24 @@ public class MypageController {
     }
 
 
+    /**
+     * 단어 선택 학습 기록 상세 조회 API
+     *
+     * @Param username : username을 통해 목록 조회
+     **/
+    @GetMapping("/choice-record-detail")
+    public ResponseData choiceRecordDetailList(@Valid @ModelAttribute ChoiceRecordDetailParamVO choiceRecordDetailParamVO) {
+        ArrayList<ChoiceRecordListDetailResVO> list = mypageService.choiceRecordDetailList(choiceRecordDetailParamVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(list)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+
+
 
     /**
      * 단계별 학습 API
