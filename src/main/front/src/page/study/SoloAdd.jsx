@@ -12,7 +12,6 @@ import PageNation from "../../component/PageNation";
 import usePagination from "../../hook/usePagination";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import { GrPowerReset } from "react-icons/gr";
-import {debounce} from "lodash";
 
 
 const SoloAdd = () => {
@@ -136,6 +135,7 @@ const SoloAdd = () => {
     const [searchData, setSearchData] = useState([]); // 검색해서 추가한 데이터
     const [totalSearchData, setTotalSearchData] = useState(0);
     const [isSearching, setIsSearching] = useState(true); // 검색 초기화 시 사용
+    const [favoriteState, setFavoriteState] = useState(false);
 
     const dataPerPage = 5; // 보여줄 목록 수
     const pagesPerRange = 5; // 표시할 페이지 수
@@ -167,7 +167,8 @@ const SoloAdd = () => {
     const handleSearchReset = () => {
         setKeyword("");
         setCurrentPage(1);
-        setIsSearching(true)
+        setIsSearching(true);
+        setFavoriteState(false);
     }
     // 정렬 핸들러
     const handleWordSort = (e) => {
@@ -206,6 +207,29 @@ const SoloAdd = () => {
                 toast.error('검색중 오류가 발생하였습니다.');
                 setIsSearching(false);
             });
+    }
+
+    // 즐겨찾기 목록 조회
+    const favoriteListHandle = () => {
+        if(!window.confirm('즐겨찾기 목록을 불러오시겠습니까?')) return;
+        setCurrentPage(1);
+        favoriteListAPI();
+    }
+
+    // 즐겨찾기 목록 조회 API
+    const favoriteListAPI = () => {
+        axiosInstance.post('study/get-favorite-list', {
+            username : username,
+            page : currentPage,
+            size : dataPerPage,
+        })
+            .then((res) => {
+                console.log(res.data);
+                setSearchData(res.data.data.content);
+                setTotalSearchData(res.data.data.totalElements);
+                setFavoriteState(true);
+            })
+            .catch(e => {toast.error('즐겨찾기 조회 중 오류가 발생하였습니다.')})
     }
 
     // 검색 단어 추가 핸들러
@@ -256,6 +280,7 @@ const SoloAdd = () => {
     // 모달 닫쳤을 때
     const closeModal = () => {
         setSearchWordOn(false);
+        setFavoriteState(false);
         setChoiceWord([]);
         setCurrentPage(1);
         setWordSort("ASC");
@@ -266,6 +291,11 @@ const SoloAdd = () => {
     // 검색 페이지 데이터 조회
     useEffect(() => {
         if (isSearching && searchWordOn) {
+            if(favoriteState){
+                setIsSearching(false);
+                favoriteListAPI();
+                return;
+            }
             searchAPI();
             setIsSearching(false); // API 호출 후 플래그 리셋
         }
@@ -274,7 +304,7 @@ const SoloAdd = () => {
     // 페이지 변경될 떄 searching state true로 변경
     useEffect(() => {
         setIsSearching(true)
-    }, [currentPage]);
+    }, [currentPage,favoriteState]);
 
     return (
         <div className="solo-add-container">
@@ -412,6 +442,8 @@ const SoloAdd = () => {
                             <div className="solo-add-word-search-choice-sub-title2">
                                 <p>단어 목록</p>
                                 <div>
+                                    <button className="solo-add-word-favorite-btn"
+                                    onClick={favoriteListHandle}>즐겨찾기 목록</button>
                                     {timeSort === 'ASC' ?
                                         <div data-sort-type="Time"
                                              className="solo-add-word-search-time"

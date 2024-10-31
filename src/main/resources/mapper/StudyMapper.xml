@@ -288,4 +288,22 @@
         offset #{offset}
     </select>
 
+    <!-- 즐겨찾기 목록 조회 -->
+    <select id="getFavoriteList"
+            parameterType="com.project.thejapenproject.study.vo.GetFavoriteListReqVO"
+            resultType="com.project.thejapenproject.study.vo.GetFavoriteListResVO">
+        SELECT F.word_num,
+               W.word_meaning,
+               W.word_chinese,
+               W.word_content,
+               COUNT(*) OVER() AS total_elements
+        FROM favorites F
+                 JOIN word W
+                      ON F.word_num = W.word_num
+        WHERE F.username = #{username}
+        ORDER BY F.favorite_regdate DESC
+        limit #{size}
+        offset #{offset}
+    </select>
+
 </mapper>

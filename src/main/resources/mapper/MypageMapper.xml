@@ -60,7 +60,8 @@
         WHERE username = #{username}
           and state = 0
         ORDER BY record_num DESC
-        limit #{size} offset #{offset}
+            limit #{size}
+        offset #{offset}
     </select>
 
     <!-- 단어 선택 테스트 내역 조회 -->
@@ -79,7 +80,8 @@
         WHERE username = #{username}
           AND state = 0
         ORDER BY ctr_num DESC
-        limit #{size} offset #{offset}
+            limit #{size}
+        offset #{offset}
     </select>
 
     <!-- 단어 선택 테스트 내역 상세 조회 -->
@@ -132,7 +134,7 @@
         update user
         set state = 1
         where username = #{username}
-        AND state = 0
+          AND state = 0
     </update>
 
     <!-- 학습 기록 삭제 -->
@@ -188,6 +190,34 @@
                 now(),
                 'admin')
     </insert>
+
+    <!-- 단어 선택 테스트 삭제-->
+    <update id="deleteChoiceRecord"
+            parameterType="com.project.thejapenproject.mypage.vo.ChoiceRecordDeleteReqVO">
+        UPDATE choice_test_result
+        SET state = 1
+        WHERE ctr_num = #{ctrNum}
+    </update>
+
+    <!-- 단어 즐겨찾기 추가 -->
+    <insert id="registerFavoriteWord"
+            parameterType="com.project.thejapenproject.mypage.vo.UserFavoriteRegisterReqVO">
+        INSERT INTO favorites (username,
+                               word_num,
+                               favorite_regdate)
+        VALUES (#{username},
+                #{wordNum},
+                NOW())
+    </insert>
+
+    <select id="checkFavoriteWord"
+            parameterType="com.project.thejapenproject.mypage.vo.UserFavoriteRegisterReqVO"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM favorites
+        WHERE username = #{username}
+          AND word_num = #{wordNum}
+    </select>
 
 
     <resultMap id="recordDetailsResultMap" type="com.project.thejapenproject.command.RecordDetailsVO">

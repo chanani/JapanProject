@@ -213,7 +213,30 @@ public class StudyServiceImpl implements StudyService {
         return responseData;
     }
 
+    // 즐겨찾기 목록 조회
+    @Override
+    public PageResponse<GetFavoriteListResVO> getFavoriteList(GetFavoriteListReqVO requestVO) {
+        Integer page = requestVO.getPage();
+        Integer size = requestVO.getSize();
+        requestVO.setOffset((page - 1) * size);
 
+        // 목록 조회
+        ArrayList<GetFavoriteListResVO> favoriteList = studyMapper.getFavoriteList(requestVO);
+
+        // 총 데이터 수 계산
+        int totalElements = favoriteList.size() != 0 ? favoriteList.get(0).getTotalElements() : 0;
+        // 총 페이지 수 계산
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        PageResponse<GetFavoriteListResVO> responseData = PageResponse.<GetFavoriteListResVO>builder()
+                .content(favoriteList)
+                .page(page)
+                .size(size)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .build();
+        return responseData;
+    }
 
 
 }

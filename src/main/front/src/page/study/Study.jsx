@@ -313,12 +313,12 @@ const Study = () => {
                                             {hiragana ? (
                                                 <p className="content-and-chinese-content">{word[current]?.wordContent}</p>
                                             ) : (
-                                                <div className="content-block-box"></div>
+                                                <p className="content-and-chinese-content word-blind">{word[current]?.wordContent}</p>
                                             )}
                                             {chinese ? (
                                                 <p>{word[current]?.wordChinese}</p>
                                             ) : (
-                                                <div className="chinese-block-box"></div>
+                                                <p className="word-blind">{word[current]?.wordChinese}</p>
                                             )}
                                         </div>
                                     )
@@ -425,14 +425,14 @@ const Study = () => {
                     </div>
 
                     {/* 학습, 테스트, 카드게임 섹션 */}
-                    <div className="study-page-test-type-box">
+                    <div className="study-page-test-type-box"  >
                         <div className="study-page-choice-box" onClick={moveChoice}>
                             <img src="/svg/choice1.svg" alt=""/>
                             <p>학습</p>
                         </div>
-                        <div className="study-page-test-box">
-                            <img src="/svg/test1.svg" alt="" onClick={moveChoiceTest}/>
-                            <p>테스트</p>
+                        <div className="study-page-test-box" onClick={moveChoiceTest}>
+                            <img src="/svg/test1.svg" alt="" />
+                            <p>선택 테스트</p>
                         </div>
                         <div className="study-page-card-box" onClick={() => toast.error("아직 준비중입니다.")}>
                             <img src="/svg/card1.svg" alt=""/>

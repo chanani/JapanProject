@@ -29,7 +29,7 @@ const FavoritesList = () => {
     };
     // 즐겨찾기 페이지에서 단어 공부 페이지로 이동
     const handleStudy = () => {
-        navigate("/quiz", {state: {arr: word}});
+        navigate("/study", {state: {arr: word}});
     };
     // 페이지 권한 설정 및 데이터 불러오기
     useEffect(() => {

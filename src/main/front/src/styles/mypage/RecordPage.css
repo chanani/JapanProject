@@ -76,6 +76,7 @@
     font-size: 14px;
     align-items: center;
     margin-bottom: 5px;
+    position: relative;
 }
 
 .recordPage-score .score-header > div {
@@ -87,6 +88,13 @@
     font-size: 17px;
     justify-content: space-between;
 
+}
+
+.recordPage-score-delete-btn {
+    position: absolute;
+    top: 4px;
+    right: -2px;
+    cursor: pointer;
 }
 
 /* 페이지 네이션*/

@@ -67,5 +67,6 @@ public interface StudyMapper {
     // 단어 세트 전체 목록 조회
     public ArrayList<SoloStudyGetUserListResVO> getSetListAll(GetSetStudyDataListParamVO requestVO);
 
-
+    // 즐겨찾기 목록 조회
+    ArrayList<GetFavoriteListResVO> getFavoriteList(GetFavoriteListReqVO requestVO);
 }

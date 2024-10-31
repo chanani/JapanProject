@@ -238,5 +238,25 @@ public class StudyController {
                 .build();
     }
 
+    /**
+     * 즐겨찾기 목록 조회 API
+     *
+     * @param requestVO
+     * @return : ResponseData.class(페이지 네이션)
+     * @author : chanhan
+     * @since 2024-10-30 오후 09:16
+     */
+    @PostMapping("/get-favorite-list")
+    public ResponseData getFavoriteList(@Valid @RequestBody GetFavoriteListReqVO requestVO) {
+
+        PageResponse<GetFavoriteListResVO> favoriteList = studyService.getFavoriteList(requestVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(favoriteList)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
 
 }

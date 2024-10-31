@@ -405,6 +405,11 @@
     justify-content: center;
     cursor: pointer;
 }
+.solo-add-word-search-choice-sub-title2 > div > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .solo-add-word-search-word {
     margin-left: 5px;
 }
@@ -443,7 +448,22 @@
     margin : 10px 0 !important;
 }
 
+/* 즐겨찾기 목록 버튼 */
+.solo-add-word-favorite-btn {
+    margin-right: 8px;
+    height: 30px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #4ea8ff;
+    color: white;
+    cursor: pointer;
+}
 
+.solo-add-word-favorite-btn:hover {
+    background-color: #168dff;
+    transition: all .25s cubic-bezier(.47, 0, .745, .715);
+}
 
 
 

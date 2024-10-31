@@ -1,6 +1,7 @@
 package com.project.thejapenproject.controller;
 
 import com.project.thejapenproject.command.*;
+import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
@@ -28,6 +29,7 @@ public class MypageController {
 
     /**
      * 마이페이지 유저 정보 조회 API
+     *
      * @param usernameParamVO
      */
     @GetMapping("/data")
@@ -43,6 +45,7 @@ public class MypageController {
 
     /**
      * 유저 정보 변경 API
+     *
      * @param userInfoModifyReqVO
      */
     @PostMapping("/update")
@@ -153,8 +156,6 @@ public class MypageController {
     }
 
 
-
-
     /**
      * 단계별 학습 API
      **/
@@ -183,6 +184,7 @@ public class MypageController {
 
     /**
      * 이미지 변경 API
+     *
      * @param imageChangeParamVO
      */
     @NoneAuth
@@ -204,6 +206,48 @@ public class MypageController {
                 .code(HttpStatus.OK.value())
                 .message(ErrorCode.SUCCESS.getMessage())
                 .data(fileName)
+                .build();
+    }
+
+    /**
+     * 단어 선택 학습 내역 삭제 API
+     *
+     * @param choiceRecordDeleteReqVO
+     * @return : ResponseData.class
+     * @author : chanhan
+     * @since 2024-10-30 오후 07:30
+     */
+    @PostMapping("/choice-record-delete")
+    public ResponseData choiceRecordDelete(@Valid @RequestBody ChoiceRecordDeleteReqVO choiceRecordDeleteReqVO) {
+
+        mypageService.deleteChoiceRecord(choiceRecordDeleteReqVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message("정상적으로 삭제되었습니다.")
+                .build();
+    }
+
+    /**
+     * 검색페이지에서 즐겨찾기 추가 API
+     *
+     * @param userFavoriteRegisterReqVO
+     * @return : ResponseData.class
+     * @author : chanhan
+     * @since 2024-10-30 오후 08:31
+     */
+    @PostMapping("/search-register-word")
+    public ResponseData choiceRecordDelete(@Valid @RequestBody UserFavoriteRegisterReqVO userFavoriteRegisterReqVO) {
+
+        // 이미 등록되어있을 경우
+        if(mypageService.checkFavoriteWord(userFavoriteRegisterReqVO) > 0){
+            throw new OperationErrorException(ErrorCode.FAIL_TO_REGISTER_FAVORITE);
+        }
+        mypageService.registerFavoriteWord(userFavoriteRegisterReqVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message("정상적으로 삭제되었습니다.")
                 .build();
     }
 

@@ -28,4 +28,14 @@ public interface MypageService {
 
     // 단어 선택 테스트 상새 내역 조회
     ArrayList<ChoiceRecordListDetailResVO> choiceRecordDetailList(ChoiceRecordDetailParamVO choiceRecordDetailParamVO);
+
+    // 단어 선택 테스트 삭제
+    void deleteChoiceRecord(ChoiceRecordDeleteReqVO choiceRecordDeleteReqVO);
+
+    // 검색페이지에서 즐겨찾기 추가
+    int registerFavoriteWord(UserFavoriteRegisterReqVO userFavoriteRegisterReqVO);
+
+    // 즐겨찾기 등록 여부 조회
+    int checkFavoriteWord(UserFavoriteRegisterReqVO userFavoriteRegisterReqVO);
+
 }

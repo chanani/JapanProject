@@ -1,7 +1,6 @@
 package com.project.thejapenproject.mypage.service;
 
 import com.project.thejapenproject.command.*;
-import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.mypage.vo.*;
 import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
@@ -33,4 +32,14 @@ public interface MypageMapper {
 
     // 단어 선택 테스트 상새 내역 조회
     ArrayList<ChoiceRecordListDetailResVO> choiceRecordDetailList(ChoiceRecordDetailParamVO choiceRecordDetailParamVO);
+
+    // 단어 선택 테스트 삭제
+    int deleteChoiceRecord(ChoiceRecordDeleteReqVO choiceRecordDeleteReqVO);
+
+    // 검색페이지에서 즐겨찾기 추가
+    int registerFavoriteWord(UserFavoriteRegisterReqVO userFavoriteRegisterReqVO);
+
+    // 즐겨찾기 등록 여부 조회
+    int checkFavoriteWord(UserFavoriteRegisterReqVO userFavoriteRegisterReqVO);
+
 }

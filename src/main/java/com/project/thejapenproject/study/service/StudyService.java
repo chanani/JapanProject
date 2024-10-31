@@ -49,5 +49,6 @@ public interface StudyService {
     // 세트 목록 전체 조회
     public PageResponse<SoloStudyGetUserListResVO> getSetListAll(GetSetStudyDataListParamVO requestVO);
 
-
+    // 즐겨찾기 목록 조회
+    PageResponse<GetFavoriteListResVO> getFavoriteList(GetFavoriteListReqVO requestVO);
 }

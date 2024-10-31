@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "../../styles/mypage/RecordPage.css";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {useNavigate} from "react-router-dom";
@@ -7,6 +7,8 @@ import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
 import usePagination from "../../hook/usePagination";
 import PageNation from "../../component/PageNation";
+import {FaRegTrashAlt} from "react-icons/fa";
+import axios from "axios";
 
 
 const RecordPage = () => {
@@ -60,23 +62,49 @@ const RecordPage = () => {
 
     // 단어 선택 테스트 결과 상세페이지로 이동하는 핸들러
     const handleChoiceTestResultPage = async (index) => {
-        console.log('choiceData',choiceData[index])
         try {
             let ctr = choiceData[index];
 
             const response = await axiosInstance.get('mypage/choice-record-detail', {
-                    params : {
-                        ctrNum : ctr.ctrNum
+                    params: {
+                        ctrNum: ctr.ctrNum
                     }
                 }
             )
             const answer = response.data.data;
-            navigate("/choice-test", {state: { ctr, answer }});
+            navigate("/choice-test", {state: {ctr, answer}});
             window.scrollTo(0, 0);
         } catch (e) {
             toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
         }
     }
+
+    // 단어 선택 테스트 목록 삭제
+    const choiceTestDeleteHandle = (ctrNum) => {
+        if (window.confirm('테스트 내역을 삭제하시겠습니까?')) {
+            axiosInstance.post('mypage/choice-record-delete', {ctrNum: ctrNum})
+                .then((res) => {
+                    toast.success('정상적으로 삭제가 완료되었습니다.');
+                    getChoiceRecordAPI();
+                })
+                .catch((e) => toast.error('삭제 중 오류가 발생하였습니다.'));
+        }
+    }
+
+    // 단답현 테스트 목록 삭제
+    const sortTestDeleteHandle = (recordNum) => {
+        if (window.confirm('기록을 삭제하시겠습니까 ?')) {
+            axiosInstance.post('mypage/deleteRecord', {
+                recordNum : recordNum
+            })
+                .then((res) => {
+                    if(res.status !== 200) return toast.error('기록 삭제 중 오류가 발생하였습니다. 관리자에게 문의해주세요.');
+                    toast.success('정상적으로 기록이 삭제되었습니다.');
+                    getSortRecordAPI();
+                })
+        }
+    }
+
 
 
     // 단답형 테스트 목록 조회
@@ -139,7 +167,7 @@ const RecordPage = () => {
 
     // 카테고리 변경
     const handleCategoryChange = (keyword) => {
-        if(keyword === 'card') return toast.error('준비 중입니다.');
+        if (keyword === 'card') return toast.error('준비 중입니다.');
         setCategory(keyword);
         setCurrentPage(1);
     }
@@ -190,6 +218,10 @@ const RecordPage = () => {
                                 <div>{username}</div>
                                 <div style={{fontSize: "13px"}}>⏐</div>
                                 <div className="level">{formatStudyTime(item.ctrTime)}</div>
+                                <div className="recordPage-score-delete-btn"><FaRegTrashAlt size={15} onClick={(e) => {
+                                    e.stopPropagation();
+                                    choiceTestDeleteHandle(item.ctrNum);
+                                }}/></div>
                             </div>
                             <div className="score-content">
                                 <div className="point">{item.ctrAnswerCount * 10}점</div>
@@ -204,11 +236,13 @@ const RecordPage = () => {
                         <div className="recordPage-score" key={index}
                              onClick={(event) => handleSortResultPage(index)}>
                             <div className="score-header">
-
-
                                 <div>{username}</div>
                                 <div style={{fontSize: "13px"}}>⏐</div>
                                 <div className="level">{item.recordLevel}단계</div>
+                                <div className="recordPage-score-delete-btn"><FaRegTrashAlt size={15} onClick={(e) => {
+                                    e.stopPropagation();
+                                    sortTestDeleteHandle(item.recordNum);
+                                }}/></div>
                             </div>
                             <div className="score-content">
                                 <div className="point">{item.recordPoint}점</div>

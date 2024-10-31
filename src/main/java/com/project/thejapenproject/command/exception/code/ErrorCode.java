@@ -52,10 +52,11 @@ public enum ErrorCode {
     FAIL_TO_IMAGE(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 수정에 실패하였습니다."),
 
     // record
-    FAIL_TO_REMOVE_RECORD(HttpStatus.INTERNAL_SERVER_ERROR, "학습 기록 삭제에 실패하였습니다."),
+    FAIL_TO_REMOVE_RECORD(HttpStatus.INTERNAL_SERVER_ERROR, "삭제에 실패하였습니다."),
 
     // inquiry
     FAIL_TO_REGISTER_INQUIRY(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 등록에 실패하였습니다."),
+    FAIL_TO_REGISTER_FAVORITE(HttpStatus.INTERNAL_SERVER_ERROR, "이미 즐겨찾기에 추가된 단어입니다."),
     FAIL_TO_REMOVE_INQUIRY(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 삭제에 실패하였습니다."),
     FAIL_TO_ADD_COMMENT(HttpStatus.INTERNAL_SERVER_ERROR, "문의사항 답글 등록에 실패하였습니다."),
 

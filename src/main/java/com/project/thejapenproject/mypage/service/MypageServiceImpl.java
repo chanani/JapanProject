@@ -128,5 +128,25 @@ public class MypageServiceImpl implements MypageService{
         return mypageMapper.choiceRecordDetailList(choiceRecordDetailParamVO);
     }
 
+    // 단어 선택 테스트 삭제
+    @Override
+    public void deleteChoiceRecord(ChoiceRecordDeleteReqVO choiceRecordDeleteReqVO) {
+        if(mypageMapper.deleteChoiceRecord(choiceRecordDeleteReqVO) < 1){
+            throw new OperationErrorException(ErrorCode.FAIL_TO_REMOVE_RECORD);
+        }
+    }
+
+    //검색페이지에서 즐겨찾기 추가
+    @Override
+    public int registerFavoriteWord(UserFavoriteRegisterReqVO userFavoriteRegisterReqVO) {
+        return mypageMapper.registerFavoriteWord(userFavoriteRegisterReqVO);
+    }
+
+    // 즐겨찾기 등록 여부 조회
+    @Override
+    public int checkFavoriteWord(UserFavoriteRegisterReqVO userFavoriteRegisterReqVO) {
+        return mypageMapper.checkFavoriteWord(userFavoriteRegisterReqVO);
+    }
+
 
 }

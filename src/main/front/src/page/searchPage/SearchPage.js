@@ -6,6 +6,8 @@ import moment from "moment";
 import 'moment/locale/ko';
 import {toast} from "react-toastify";
 import NoticeDetailNotUse from "../../component/NoticeDetailNotUse";
+import {axiosInstance} from "../../api";
+import {tokenInfoContext} from "../../component/TokenInfoProvider";
 
 const Search = () => {
     // 검색 종류
@@ -89,6 +91,7 @@ const Search = () => {
             }
         })
             .then((res) => {
+                console.log(res.data.hits.hits);
                 setWordList(res.data.hits.hits);
             })
             .catch((e) => {
@@ -192,6 +195,20 @@ export default Search;
 
 
 const WordComponent = ({wordKeyword, keywordChange, submitHandle, requestWordData, wordList, searchKind}) => {
+    const {username} = useContext(tokenInfoContext);
+    const favoriteHandle = (wordNum) => {
+        if(!window.confirm('즐겨찾기에 추가하시겠습니까?')) return;
+        axiosInstance.post('mypage/search-register-word', {
+            username : username,
+            wordNum : wordNum
+        })
+            .then((res) => {
+                if(res.status !== 200) return toast.error('이미 추가된 단어입니다.');
+                toast.success('즐겨찾기에 추가되었습니다.');
+            })
+            .catch((e) => toast.error('즐겨찾기 추가 중 오류가 발생하였습니다.'))
+    }
+
     return (
         <div style={{marginBottom: "15px"}}>
             {searchKind === "전체" ?
@@ -234,7 +251,8 @@ const WordComponent = ({wordKeyword, keywordChange, submitHandle, requestWordDat
                                 <p>검색된 항목이 없습니다.</p>
                             </div> :
                             wordList.map((item, index) => (
-                                <div className="search-word-all" key={index}>
+                                <div className="search-word-all" key={index}
+                                onClick={() => favoriteHandle(item._id)}>
                                     <div className="search-word-box">
                                         <div className="search-word-content"><h3>{item._source.word_content}</h3></div>
                                         <div className="search-word-meaning"><p>{item._source.word_meaning}</p></div>

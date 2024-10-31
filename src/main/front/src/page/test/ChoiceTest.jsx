@@ -50,7 +50,6 @@ const ChoiceTest = () => {
 
     // 최종 제출 핸들러
     const handleSubmit = () => {
-        console.log("submitState", submitState);
         if (!submitState) {
             let notChoiceAnswer = choiceList.filter(item => item === 0).length;
             if (notChoiceAnswer > 0) return toast.error("정답을 모두 선택해주세요.");
@@ -185,7 +184,6 @@ const ChoiceTest = () => {
         if (ctr == null || answer == null) {
             return getWordListAPI();
         } else {
-            console.log(answer)
             toMyPage();
         }
     }, []);
