@@ -114,4 +114,19 @@
                 )
             </foreach>
     </insert>
+
+    <!-- 단어 단답형 테스트 목록 조회 -->
+    <select id="getSortTestList"
+            parameterType="com.project.thejapenproject.test.vo.param.SortTestListReqVO"
+            resultType="com.project.thejapenproject.test.vo.SortTestListResVO">
+        SELECT word_num,
+               word_meaning,
+               word_chinese,
+               word_content
+        FROM word
+        WHERE state = 0
+        ORDER BY RAND()
+        limit #{questionNum}
+    </select>
+
 </mapper>

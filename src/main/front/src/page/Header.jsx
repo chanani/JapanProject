@@ -29,7 +29,7 @@ function Header() {
     // 학습페이지 Link list
     const studyLink = [["/study", "단어 학습"], ["/choice", "단어 선택 학습"], ["/set-study", '단어 세트 학습'], ["/schoolPage", '단계별 학습']];
     //　테스트 페이지 Link list
-    const testLink = [["/choice-test", "단어 선택 테스트"], ["/test/easy", "단어 단답형 테스트"]];
+    const testLink = [["/choice-test", "단어 선택 테스트"], ["/test/easy", "단어 단답형 테스트(구)"], ["/short-test", "단어 단답형 테스트"]];
     // 마이페이지 Link list
     const myLink = [["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ["/mypage", "나의정보"]];
     // 그 외 페이지 Link list
@@ -124,7 +124,7 @@ function Header() {
         } else {
             return <img
                 className="header-user-icon"
-                src={userIcon ? `/icon-image/${userIcon}` : "/default_icon.svg"}
+                src={userIcon ? `https://lg.thejapan.today/icon-image/${userIcon}` : "/default_icon.svg"}
                 alt="이미지"
                 onError={(e) => {
                     e.target.onerror = null;

@@ -143,7 +143,7 @@ const Mypage = () => {
                             {/* 서버  이미지 */}
                             <img
                                 className="user-icon"
-                                src={userIcon ? `/icon-image/${userIcon}` : "/default_icon.svg"}
+                                src={userIcon ? `https://lg.thejapan.today/icon-image/${userIcon}` : "/default_icon.svg"}
                                 alt="이미지"
                                 onError={(e) => {
                                     e.target.onerror = null;

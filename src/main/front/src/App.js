@@ -39,6 +39,7 @@ import SoloStudy from "./page/study/SoloStudy";
 import SoloAdd from "./page/study/SoloAdd";
 import SetStudy from "./page/study/SetStudy.jsx";
 import ChoiceTest from "./page/test/ChoiceTest";
+import ShortTest from "./page/test/ShortTest";
 
 function App() {
   return (
@@ -91,6 +92,7 @@ function App() {
               <Route path="/solo-study" element={<SoloStudy />} />
               <Route path="/solo-study/add-word" element={<SoloAdd />} />
               <Route path="/choice-test" element={<ChoiceTest />} />
+              <Route path="/short-test" element={<ShortTest />} />
             </Routes>
             <Footer />
           </BrowserRouter>

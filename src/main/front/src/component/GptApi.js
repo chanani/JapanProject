@@ -16,24 +16,17 @@ const GptApi = ({handleQuestion, handleResponse}) => {
         handleQuestion(question); // 질문 전달
         setQuestion('');
 
-        await axios({
-            url: `${process.env.REACT_APP_URL_JAVA}chat-gpt/send`,
-            method: "POST",
-            headers: {
-                Authorization: accessToken
-            },
-            data: {
-                message: question
-            }
+        await axiosInstance.post('chat-gpt/send',{
+            message: question
+        }).then((res) => {
+            content = res.data.choices[0].message.content;
         })
-            .then((res) => {
-                content = res.data.choices[0].message.content;
-            })
             .catch((error) => {
                 toast.error("오류가 발생하였습니다. 관리자에게 문의해주세요.");
             });
         handleQuestion(question);
         handleResponse(content); // 답변 전달
+
 
     }
 

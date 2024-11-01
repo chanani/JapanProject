@@ -9,7 +9,9 @@ import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
 import com.project.thejapenproject.test.service.TestService;
 import com.project.thejapenproject.test.vo.GetTestListResVO;
+import com.project.thejapenproject.test.vo.SortTestListResVO;
 import com.project.thejapenproject.test.vo.TestRecordRegisterReqVO;
+import com.project.thejapenproject.test.vo.param.SortTestListReqVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -86,6 +88,19 @@ public class TestController {
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
                 .message("정상적으로 저장 되었습니다.")
+                .build();
+    }
+
+    @NoneAuth
+    @GetMapping("/sort-test-list")
+    public ResponseData sortTestList(@Valid @ModelAttribute SortTestListReqVO sortTestListReqVO){
+
+        ArrayList<SortTestListResVO> wordList = testService.getSortTestList(sortTestListReqVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(wordList)
+                .message("정상적으로 조회 되었습니다.")
                 .build();
     }
 }

@@ -12,7 +12,7 @@ export const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
     const cookies = new Cookies();
-    const token = cookies.get('accessToken');
+    const token = cookies.get('accessToken') || "";
     if (token) {
         config.headers['Authorization'] = cookies.get('accessToken');
     }

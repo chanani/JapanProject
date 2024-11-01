@@ -6,7 +6,9 @@ import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
 import com.project.thejapenproject.test.vo.GetTestListResVO;
+import com.project.thejapenproject.test.vo.SortTestListResVO;
 import com.project.thejapenproject.test.vo.TestRecordRegisterReqVO;
+import com.project.thejapenproject.test.vo.param.SortTestListReqVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +48,12 @@ public class TestServiceImpl implements TestService{
         if(result < 1 || detailResult < 1){
             throw new OperationErrorException(ErrorCode.FAIL_TO_CHOICE_TEST_REGISTER);
         }
+    }
+
+    // 단어 단답형 테스트 목록 조회
+    @Override
+    public ArrayList<SortTestListResVO> getSortTestList(SortTestListReqVO sortTestListReqVO) {
+        return testMapper.getSortTestList(sortTestListReqVO);
     }
 
 

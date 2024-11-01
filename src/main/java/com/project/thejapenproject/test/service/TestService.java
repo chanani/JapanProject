@@ -4,7 +4,9 @@ import com.project.thejapenproject.command.TestItemVO;
 import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
 import com.project.thejapenproject.test.vo.GetTestListResVO;
+import com.project.thejapenproject.test.vo.SortTestListResVO;
 import com.project.thejapenproject.test.vo.TestRecordRegisterReqVO;
+import com.project.thejapenproject.test.vo.param.SortTestListReqVO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.ArrayList;
@@ -21,4 +23,6 @@ public interface TestService {
     // 선택 단어 테스트 데이터 저장
     public void registerChoiceTest(ChoiceTestSaveReqVO choiceTestSaveReqVO);
 
+    // 단어 단답형 테스트 목록 조회
+    ArrayList<SortTestListResVO> getSortTestList(SortTestListReqVO sortTestListReqVO);
 }
