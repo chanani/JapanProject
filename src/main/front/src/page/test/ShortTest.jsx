@@ -9,7 +9,7 @@ import Audio from "../../component/Audio";
 import {IoClose} from "react-icons/io5";
 import {FaCheck} from "react-icons/fa";
 import {CgMenuRound} from "react-icons/cg";
-import { IoCheckmarkCircleSharp } from "react-icons/io5";
+import {IoCheckmarkCircleSharp} from "react-icons/io5";
 
 const ShortTest = () => {
     const navigator = useNavigate();
@@ -17,7 +17,7 @@ const ShortTest = () => {
     const [submitState, setSubmitState] = useState(false);
     // 1 = 정답, 2 = 오답, 3 = 모르겠음
     const [answerList, setAnswerList] = useState(new Array(10).fill(0)); // 정답 체크 목록 (기본값 0)
-    const [answerInput, setAnswerInput] = useState(new Array(10).fill("")); // 입력한의 답 목록
+    const [answerInput, setAnswerInput] = useState(new Array(20).fill("")); // 입력한의 답 목록
     const [word, setWord] = useState([]); // 조회한 단어 목록
     const contentText = ["너무 잘하셨어요! 학습한 보람이 있네요!", "걱정하지 마세요, 아직 배우고 있잖아요!"];
     const [sideBar, setSideBar] = useState(true); // 사이드 바 여부
@@ -59,7 +59,7 @@ const ShortTest = () => {
     const gradeHandle = () => {
         answerInput.map((item, index) => {
             if (testType === 'meaning') {
-                if (item === word[index].wordMeaning){
+                if (item === word[index].wordMeaning) {
                     setAnswerList((prevAnswer) => {
                         const newAnswer = [...prevAnswer];
                         newAnswer[index] = 1;
@@ -75,7 +75,7 @@ const ShortTest = () => {
             } else if (testType === 'content') {
                 console.log(word[index].wordContent)
                 console.log(word[index].wordChinese)
-                if (item === word[index].wordContent || item === word[index].wordChinese){
+                if (item === word[index].wordContent || item === word[index].wordChinese) {
                     setAnswerList((prevAnswer) => {
                         const newAnswer = [...prevAnswer];
                         newAnswer[index] = 1;
@@ -137,7 +137,7 @@ const ShortTest = () => {
     const getWordListAPI = () => {
         axiosInstance.get('test/sort-test-list', {
             params: {
-                questionNum: 10
+                questionNum: 20
             }
         })
             .then((res) => {
@@ -372,10 +372,29 @@ const ShortTest = () => {
 
                         <div className="choice-test-content-choice-box sort-test-content-input-box">
                             <span>회원님의 답</span>
-                            <input type="text" placeholder="정답을 입력하세요."
+                            <input className={!submitState ? "sort-test-answer-wait-box" : answerList[index] === 1 ? "test-answer-ok-box sort-test-content-answer-input" : "test-answer-fail-box"}
+                                type="text" placeholder="정답을 입력하세요."
                                    onChange={(e) => answerInputChange(index, e)}
-                                   value={answerInput[index]}/>
+                                   value={answerInput[index]}
+                                   disabled={submitState}/>
+
+                            {submitState ?
+                                answerList[index] !== 1 &&
+                                <span>정답</span>
+                                :
+                                ""
+                            }
+                            {submitState ?
+                                answerList[index] !== 1 &&
+                                <input type="text"
+                                       className="sort-test-content-answer-input test-answer-ok-box"
+                                       disabled={true}
+                                       value={testType === 'content' ? word[index].wordContent + (word[index].wordChinese && "(" + word[index].wordChinese + ")") : word[index].wordMeaning}/>
+                                :
+                                ""
+                            }
                         </div>
+
 
                         {!submitState &&
                             <div className="choice-test-content-i-do-not-know-box"
@@ -419,7 +438,7 @@ const ShortTest = () => {
                                             <IoClose color={"#ff0000bf"}/>}
                                 </div>
                                 <div className="choice-test-side-content-test-choice">
-                                    {item !== "" ? <IoCheckmarkCircleSharp color={"rgb(93 136 255"} /> : ""}
+                                    {item !== "" ? <IoCheckmarkCircleSharp color={"rgb(93 136 255"}/> : ""}
                                 </div>
                             </div>
                         ))}
