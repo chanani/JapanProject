@@ -428,27 +428,32 @@
     justify-content: space-between;
     margin-bottom: 40px;
 }
+
 .choice-test-btn-box > button {
     padding: 12px;
     font-size: 16px;
     font-weight: 600;
     border-radius: 8px;
     transition: all .12s cubic-bezier(.47, 0, .745, .715);
-    width : 47%;
+    width: 47%;
 }
+
 .choice-test-btn-home {
     border: 2px solid #d9dde8;
     background-color: white;
     color: #56607c;
 }
+
 .choice-test-btn-home:hover {
     background-color: #e4e5e587;
 }
+
 .choice-test-btn-submit {
     border: 2px solid #4255ff;
     background-color: #4255ff;
     color: white;
 }
+
 .choice-test-btn-submit:hover {
     border: 2px solid #4c16f9;
     background-color: #4c16f9;
@@ -541,12 +546,15 @@
     .choice-test-side-box.side-box-visible {
         transform: translateY(331px);
         transition: all .3s cubic-bezier(.47, 0, .745, .715);
-        overflow: auto;
+        overflow: scroll;
+        max-height: 350px;
     }
 
     .choice-test-side-box.side-box-hidden {
-        transform: translateY(0px);
+        transform: translateY(15px);
         padding-bottom: 10px;
+        max-height: 374px;
+        overflow: scroll;
     }
 
     .choice-test-side-box.side-box-visible:hover {
@@ -625,6 +633,7 @@
         width: 360px;
         transition: transform 0.5s ease-in-out;
         transform: translateY(150%);
+        bottom: 0;
     }
 
     .choice-test-side-toggle-box {
@@ -643,18 +652,21 @@
     }
 
     .choice-test-side-box.side-box-visible {
-        transform: translateY(331px);
+        transform: translateY(342px);
         transition: all .3s cubic-bezier(.47, 0, .745, .715);
+        overflow: scroll;
+        max-height: 360px;
     }
 
     .choice-test-side-box.side-box-hidden {
-        transform: translateY(0px);
+        transform: translateY(15px);
         padding-bottom: 10px;
+        overflow: scroll;
+        max-height: 374px;
     }
 
     .choice-test-side-box.side-box-visible:hover {
         width: 362px;
-        max-height: 630px;
         box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.7), 0 0px 0px rgba(0, 0, 0, 0);
     }
 
@@ -743,7 +755,7 @@
         border-radius: 8px;
         overflow: auto;
         padding-bottom: 10px;
-
+        max-height: 350px;
     }
 
     .choice-test-side-box.side-box-visible:hover {
@@ -752,6 +764,8 @@
 
     .side-box-hidden.side-box-hidden {
         transform: translateX(-150%);
+        max-height: 350px;
+        overflow: hidden;
     }
 
     .choice-test-side-on-btn {
@@ -760,16 +774,19 @@
 
 }
 
-.choice-test-side-box.side-box-visible::-webkit-scrollbar {
-    width: 8px;  /* 스크롤바의 너비 */
+.side-box-visible::-webkit-scrollbar,
+.side-box-hidden::-webkit-scrollbar {
+    width: 5px; /* 스크롤바의 너비 */
 }
 
-.choice-test-side-box.side-box-visible::-webkit-scrollbar-thumb {
+.side-box-visible::-webkit-scrollbar-thumb,
+.side-box-hidden::-webkit-scrollbar-thumb {
     height: 30%; /* 스크롤바의 길이 */
     background: #5b9dfa; /* 스크롤바의 색상 */
     border-radius: 10px;
 }
 
-.choice-test-side-box.side-box-visible::-webkit-scrollbar-track {
-    background: rgba(64, 145, 255, 0.35);  /*스크롤바 뒷 배경 색상*/
+.side-box-visible::-webkit-scrollbar-track,
+.side-box-hidden::-webkit-scrollbar-track {
+    background: rgba(64, 145, 255, 0.35); /*스크롤바 뒷 배경 색상*/
 }

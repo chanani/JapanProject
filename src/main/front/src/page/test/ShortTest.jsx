@@ -17,7 +17,7 @@ const ShortTest = () => {
     const [submitState, setSubmitState] = useState(false);
     // 1 = 정답, 2 = 오답, 3 = 모르겠음
     const [answerList, setAnswerList] = useState(new Array(10).fill(0)); // 정답 체크 목록 (기본값 0)
-    const [answerInput, setAnswerInput] = useState(new Array(30).fill("")); // 입력한의 답 목록
+    const [answerInput, setAnswerInput] = useState(new Array(20).fill("")); // 입력한의 답 목록
     const [word, setWord] = useState([]); // 조회한 단어 목록
     const contentText = ["너무 잘하셨어요! 학습한 보람이 있네요!", "걱정하지 마세요, 아직 배우고 있잖아요!"];
     const [sideBar, setSideBar] = useState(true); // 사이드 바 여부
