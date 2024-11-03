@@ -541,6 +541,7 @@
     .choice-test-side-box.side-box-visible {
         transform: translateY(331px);
         transition: all .3s cubic-bezier(.47, 0, .745, .715);
+        overflow: auto;
     }
 
     .choice-test-side-box.side-box-hidden {
@@ -653,7 +654,7 @@
 
     .choice-test-side-box.side-box-visible:hover {
         width: 362px;
-        height: 351px;
+        max-height: 630px;
         box-shadow: 0px 0px 15px rgba(30, 0, 45, 0.7), 0 0px 0px rgba(0, 0, 0, 0);
     }
 
@@ -696,7 +697,7 @@
         top: 95px;
         left: 10px;
         width: 10%;
-        height: 362px;
+        max-height: 630px;
         transition: transform 0.3s ease-in-out;
         transform: translateX(-150%);
     }
@@ -740,13 +741,13 @@
     .choice-test-side-box.side-box-visible {
         transform: translateY(0px);
         border-radius: 8px;
-        height: auto;
+        overflow: auto;
         padding-bottom: 10px;
+
     }
 
     .choice-test-side-box.side-box-visible:hover {
         width: 10%;
-        height: auto;
     }
 
     .side-box-hidden.side-box-hidden {
@@ -757,4 +758,18 @@
         display: block;
     }
 
+}
+
+.choice-test-side-box.side-box-visible::-webkit-scrollbar {
+    width: 8px;  /* 스크롤바의 너비 */
+}
+
+.choice-test-side-box.side-box-visible::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: #5b9dfa; /* 스크롤바의 색상 */
+    border-radius: 10px;
+}
+
+.choice-test-side-box.side-box-visible::-webkit-scrollbar-track {
+    background: rgba(64, 145, 255, 0.35);  /*스크롤바 뒷 배경 색상*/
 }
