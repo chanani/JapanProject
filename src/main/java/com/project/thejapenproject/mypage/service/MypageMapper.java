@@ -12,12 +12,11 @@ import java.util.ArrayList;
 @Mapper
 public interface MypageMapper {
     public ArrayList<WordVO> favoriteList(String username);
-    public ArrayList<RecordVO> recordList(GetRecordListParamVO getRecordListParamVO);
     public ArrayList<RecordDetailsVO> recordDetails(GetRecordDetailsReqVO getRecordDetailsReqVO);
     public UserMypageResVO myInfo(String username);
     public int modifyInfo(UserInfoModifyReqVO userInfoModifyReqVO);
     public int withdrawal(String username);
-    public int deleteRecord(int recordNum);
+    public int deleteShortRecord(int strNum);
     public ArrayList<WordVO> getSchoolList(int wordWeek);
     public ArrayList getWeekList();
 
@@ -42,4 +41,6 @@ public interface MypageMapper {
     // 즐겨찾기 등록 여부 조회
     int checkFavoriteWord(UserFavoriteRegisterReqVO userFavoriteRegisterReqVO);
 
+    // 단답형 단어 테스트 목록 조회
+    ArrayList<ShortRecordListResVO> shortTestList(GetRecordListParamVO getRecordListParamVO);
 }

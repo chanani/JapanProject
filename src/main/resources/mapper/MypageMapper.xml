@@ -47,19 +47,22 @@
     </select>
 
     <!-- 유저의 학습 목록 조회 -->
-    <select id="recordList"
+    <select id="shortTestList"
             parameterType="com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO"
-            resultType="com.project.thejapenproject.command.RecordVO">
-        SELECT record_num,
-               record_level,
-               record_date,
-               record_point,
-               record_kind,
+            resultType="com.project.thejapenproject.mypage.vo.ShortRecordListResVO">
+        SELECT str_Num,
+               username,
+               str_answer_point,
+               str_total_count,
+               str_answer_count,
+               str_inAnswer_count,
+               str_time,
+               created_at,
                COUNT(*) OVER() AS total_elements
-        FROM record
+        FROM short_test_result
         WHERE username = #{username}
-          and state = 0
-        ORDER BY record_num DESC
+          AND state = 0
+        ORDER BY str_num DESC
             limit #{size}
         offset #{offset}
     </select>
@@ -69,6 +72,7 @@
             parameterType="com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO"
             resultType="com.project.thejapenproject.mypage.vo.ChoiceRecordListResVO">
         SELECT ctr_num,
+               ctr_answer_point,
                username,
                ctr_total_count,
                ctr_answer_count,
@@ -137,12 +141,12 @@
           AND state = 0
     </update>
 
-    <!-- 학습 기록 삭제 -->
-    <update id="deleteRecord"
+    <!-- 단답형 단어 테스트 기록 삭제 -->
+    <update id="deleteShortRecord"
             parameterType="java.lang.Integer">
-        update record
+        update short_test_result
         set state = 1
-        where record_num = #{recordNum}
+        where str_num = #{strNum}
           AND state = 0
     </update>
 

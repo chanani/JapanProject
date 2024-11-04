@@ -85,14 +85,16 @@ public class MypageController {
      * 단답형 학습 기록 조회 API
      *
      * @Param username : username을 통해 목록 조회
+     * @since : 2024-11-04 오후 03:29 repactor 진행
+     * @author : chanhan
      **/
-    @GetMapping("/record")
+    @GetMapping("/short-record")
     public ResponseData recordList(@Valid @ModelAttribute GetRecordListParamVO getRecordListParamVO) {
-        PageResponse<RecordVO> list = mypageService.recordList(getRecordListParamVO);
+        PageResponse<ShortRecordListResVO> shortTestList = mypageService.shortTestList(getRecordListParamVO);
 
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
-                .data(list)
+                .data(shortTestList)
                 .message(ErrorCode.SUCCESS.getMessage())
                 .build();
     }
@@ -115,9 +117,9 @@ public class MypageController {
      *
      * @Param record_num : record 테이블의 PK를 통해 삭제
      **/
-    @PostMapping("/deleteRecord")
+    @PostMapping("/short-record-delete")
     public ResponseEntity<String> deleteRecord(@Valid @RequestBody RecordNumParamVO recordNumParamVO) throws Exception {
-        mypageService.deleteRecord(recordNumParamVO.getRecordNum());
+        mypageService.deleteShortRecord(recordNumParamVO.getStrNum());
         return ResponseEntity.ok("성공");
     }
 
@@ -129,11 +131,11 @@ public class MypageController {
      **/
     @GetMapping("/choice-record")
     public ResponseData choiceRecordList(@Valid @ModelAttribute GetRecordListParamVO getRecordListParamVO) {
-        PageResponse<ChoiceRecordListResVO> list = mypageService.choiceRecordList(getRecordListParamVO);
+        PageResponse<ChoiceRecordListResVO> recordList = mypageService.choiceRecordList(getRecordListParamVO);
 
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
-                .data(list)
+                .data(recordList)
                 .message(ErrorCode.SUCCESS.getMessage())
                 .build();
     }

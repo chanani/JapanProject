@@ -8,15 +8,17 @@ import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.mypage.vo.*;
 import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
 @Service("mypageService")
+@RequiredArgsConstructor
 public class MypageServiceImpl implements MypageService{
-    @Autowired
-    public MypageMapper mypageMapper;
+
+    public final MypageMapper mypageMapper;
 
     // 즐겨찾기 목록
     @Override
@@ -24,28 +26,6 @@ public class MypageServiceImpl implements MypageService{
         return mypageMapper.favoriteList(username);
     }
 
-    // 학습 기록 목록
-    @Override
-    public PageResponse<RecordVO> recordList(GetRecordListParamVO getRecordListParamVO) {
-        Integer page = getRecordListParamVO.getPage();
-        Integer size = getRecordListParamVO.getSize();
-        getRecordListParamVO.setOffset((page - 1) * size);
-
-        ArrayList<RecordVO> recordList = mypageMapper.recordList(getRecordListParamVO);
-        // 총 데이터 수 계산
-        int totalElements = recordList.size() != 0 ? recordList.get(0).getTotalElements() : 0;
-        // 총 페이지 수 계산
-        int totalPages = (int) Math.ceil((double) totalElements / size);
-
-        PageResponse<RecordVO> responseData = PageResponse.<RecordVO>builder()
-                .content(recordList)
-                .page(page)
-                .size(size)
-                .totalElements(totalElements)
-                .totalPages(totalPages)
-                .build();
-        return responseData;
-    }
 
     @Override
     public ArrayList<RecordDetailsVO> recordDetails(GetRecordDetailsReqVO getRecordDetailsReqVO) {
@@ -72,8 +52,8 @@ public class MypageServiceImpl implements MypageService{
 
     // 학습 기록 삭제
     @Override
-    public void deleteRecord(int recordNum) {
-        if(mypageMapper.deleteRecord(recordNum) < 1){
+    public void deleteShortRecord(int strNum) {
+        if(mypageMapper.deleteShortRecord(strNum) < 1){
             throw new RequestParameterException(ErrorCode.FAIL_TO_REMOVE_RECORD);
         }
     }
@@ -146,6 +126,29 @@ public class MypageServiceImpl implements MypageService{
     @Override
     public int checkFavoriteWord(UserFavoriteRegisterReqVO userFavoriteRegisterReqVO) {
         return mypageMapper.checkFavoriteWord(userFavoriteRegisterReqVO);
+    }
+
+    // 단답형 단어 테스트 목록 조회
+    @Override
+    public PageResponse<ShortRecordListResVO> shortTestList(GetRecordListParamVO getRecordListParamVO) {
+        Integer page = getRecordListParamVO.getPage();
+        Integer size = getRecordListParamVO.getSize();
+        getRecordListParamVO.setOffset((page - 1) * size);
+
+        ArrayList<ShortRecordListResVO> recordList = mypageMapper.shortTestList(getRecordListParamVO);
+        // 총 데이터 수 계산
+        int totalElements = recordList.size() != 0 ? recordList.get(0).getTotalElements() : 0;
+        // 총 페이지 수 계산
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        PageResponse<ShortRecordListResVO> responseData = PageResponse.<ShortRecordListResVO>builder()
+                .content(recordList)
+                .page(page)
+                .size(size)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .build();
+        return responseData;
     }
 
 
