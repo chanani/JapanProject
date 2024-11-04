@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public class ChoiceRecordListResVO {
+public class ShortRecordListResVO {
 
-    private String ctrNum;
-    private Integer ctrAnswerPoint;
+    private String strNum;
+    private Integer strAnswerPoint;
     private String userName;
-    private String ctrTotalCount;
-    private String ctrAnswerCount;
-    private String ctrInAnswerCount;
-    private Integer ctrTime;
+    private String strTotalCount;
+    private String strAnswerCount;
+    private String strInAnswerCount;
+    private Integer strTime;
     private String createdAt;
     private Integer totalElements;
 

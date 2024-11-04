@@ -10,26 +10,59 @@ import {IoClose} from "react-icons/io5";
 import {FaCheck} from "react-icons/fa";
 import {CgMenuRound} from "react-icons/cg";
 import {IoCheckmarkCircleSharp} from "react-icons/io5";
+import {ReactComponent as LevelIcon} from "../../svg/level.svg";
+import {ReactComponent as NumberIcon} from "../../svg/number.svg";
 
 const ShortTest = () => {
     const navigator = useNavigate();
+    // 테스트 시작 여부
+    const [starState, setStarState] = useState(false);
+    const [number, setNumber] = useState(0); // 테스트 문제 수
     // 최종 제출 여부
     const [submitState, setSubmitState] = useState(false);
     // 1 = 정답, 2 = 오답, 3 = 모르겠음
-    const [answerList, setAnswerList] = useState(new Array(10).fill(0)); // 정답 체크 목록 (기본값 0)
-    const [answerInput, setAnswerInput] = useState(new Array(20).fill("")); // 입력한의 답 목록
+    const [answerList, setAnswerList] = useState([]); // 정답 체크 목록 (기본값 0)
+    const [answerInput, setAnswerInput] = useState([]); // 입력한의 답 목록
     const [word, setWord] = useState([]); // 조회한 단어 목록
     const contentText = ["너무 잘하셨어요! 학습한 보람이 있네요!", "걱정하지 마세요, 아직 배우고 있잖아요!"];
     const [sideBar, setSideBar] = useState(true); // 사이드 바 여부
     const [studyTime, setStudyTime] = useState(0); // 테스트 시간
     const {username, userRole} = useContext(tokenInfoContext);
     // 테스트 종류 여부 meaning는 뜻풀이, content는 단어 맞추기
-    const [testType, setTestType] = useState("meaning");
+    const [testType, setTestType] = useState("");
 
 
     // 마이페이지에서 전달된 시험 내용 데이터
     const location = useLocation();
     const {ctr, answer} = location.state || {};
+
+    ///////////// 테스트 시작 전
+    // 단어 수 고르기
+    const numberChoiceHandle = (index) => {
+        setNumber(index);
+    }
+
+    // 난이도 고르기
+    const testTypeHandle = (type) => {
+        setTestType(type);
+    }
+
+    // 홈으로 이동 핸들러
+    const handleHome = () => {
+        navigator("/");
+    }
+
+    // 학습 시작하기
+    const testStartHandle = () => {
+        if (testType === "") return toast.error("테스트 방식을 골라주세요.");
+        if (number === 0) return toast.error("단어의 수를 골라주세요.");
+        setAnswerList(new Array(number).fill(0));
+        setAnswerInput(new Array(number).fill(""));
+        setStarState(true);
+    }
+
+    ////////////// 테스트 시작 후
+
 
     // 잘 모르겠음 핸들러
     const handleSetAnswer = (index) => {
@@ -59,35 +92,23 @@ const ShortTest = () => {
     const gradeHandle = () => {
         answerInput.map((item, index) => {
             if (testType === 'meaning') {
-                if (item === word[index].wordMeaning) {
-                    setAnswerList((prevAnswer) => {
-                        const newAnswer = [...prevAnswer];
-                        newAnswer[index] = 1;
-                        return newAnswer;
-                    })
-                } else {
-                    setAnswerList((prevAnswer) => {
-                        const newAnswer = [...prevAnswer];
-                        newAnswer[index] = 2;
-                        return newAnswer;
-                    })
-                }
+                const answerGroup = word[index].wordMeaning.replaceAll(".", "").split(",");
+                const isCorrect = answerGroup.some((meaning) => item === meaning.trim());
+
+                setAnswerList((prevAnswer) => {
+                    const newAnswer = [...prevAnswer];
+                    newAnswer[index] = isCorrect ? 1 : 2;
+                    return newAnswer;
+                });
+
             } else if (testType === 'content') {
-                console.log(word[index].wordContent)
-                console.log(word[index].wordChinese)
-                if (item === word[index].wordContent || item === word[index].wordChinese) {
-                    setAnswerList((prevAnswer) => {
-                        const newAnswer = [...prevAnswer];
-                        newAnswer[index] = 1;
-                        return newAnswer;
-                    })
-                } else {
-                    setAnswerList((prevAnswer) => {
-                        const newAnswer = [...prevAnswer];
-                        newAnswer[index] = 2;
-                        return newAnswer;
-                    })
-                }
+                const isCorrect = item === word[index].wordContent || item === word[index].wordChinese;
+
+                setAnswerList((prevAnswer) => {
+                    const newAnswer = [...prevAnswer];
+                    newAnswer[index] = isCorrect ? 1 : 2; // 정답이면 1, 오답이면 2
+                    return newAnswer;
+                });
             }
         })
     }
@@ -96,52 +117,44 @@ const ShortTest = () => {
     const choiceTestSaveAPI = () => {
         let answerCount = answerList.filter(item => item === 1).length;
         let inAnswerCount = answerList.filter(item => item !== 1).length;
-        let ctrdContent = new Array(10).fill(0);
-        for (let i = 0; i < ctrdContent.length; i++) {
+        let strdContent = new Array(number).fill(0);
+        for (let i = 0; i < strdContent.length; i++) {
             let wordInfo = word[i];
-            // 정답 내용
-            let answerKeyword = wordInfo.wordContent + (wordInfo.wordChinese && "(" + wordInfo.wordChinese + ")");
-            // 정답 번호
-            let answerNumber = wordInfo.wordContentList.findIndex(item => item === answerKeyword);
-            ctrdContent[i] = {
+            strdContent[i] = {
                 wordNum: wordInfo.wordNum,
-                ctrdAnswerContent: wordInfo.wordContent,
-                ctrdAnswerMeaning: wordInfo.wordMeaning,
-                ctrdAnswerChinese: wordInfo.wordChinese,
-                ctrdQuestionOne: wordInfo.wordContentList[0],
-                ctrdQuestionTwo: wordInfo.wordContentList[1],
-                ctrdQuestionThree: wordInfo.wordContentList[2],
-                ctrdQuestionFour: wordInfo.wordContentList[3],
-                ctrdQuestionAnswer: answerNumber + 1,
-                //ctrdChoiceNum: choiceList[i],
-                ctrdResult: answerList[i] === 1 ? 'Y' : 'N'
+                strdAnswerContent: wordInfo.wordContent,
+                strdAnswerMeaning: wordInfo.wordMeaning,
+                strdAnswerChinese: wordInfo.wordChinese,
+                strdChoiceWord: answerInput[i],
+                strdResult: answerList[i] === 1 ? 'Y' : 'N'
             }
         }
 
-        // axiosInstance.post('/test/choice-test-register', {
-        //     username: username,
-        //     ctrTotalCount: word.length,
-        //     ctrAnswerCount: answerCount,
-        //     ctrInAnswerCount: inAnswerCount,
-        //     ctrdContent: ctrdContent,
-        //     ctrTime: studyTime
-        // })
-        //     .then((res) => {
-        //         toast.success('정상적으로 저장되었습니다.');
-        //         navigator("/mypage/record");
-        //     })
-        //     .catch((e) => toast.error('테스트 저장 중 오류가 발생하였습니다.'))
+        axiosInstance.post('/test/short-test-register', {
+            username: username,
+            strAnswerPoint : (answerCount / word.length) * 100,
+            strTotalCount: word.length,
+            strAnswerCount: answerCount,
+            strInAnswerCount: inAnswerCount,
+            strdContent: strdContent,
+            strTime: studyTime,
+            strType : testType
+        })
+            .then((res) => {
+                toast.success('정상적으로 저장되었습니다.');
+                navigator("/mypage/record");
+            })
+            .catch((e) => toast.error('테스트 저장 중 오류가 발생하였습니다.'))
     }
 
     // 단어 목록 조회 API
     const getWordListAPI = () => {
-        axiosInstance.get('test/sort-test-list', {
+        axiosInstance.get('test/short-test-list', {
             params: {
-                questionNum: 20
+                questionNum: number
             }
         })
             .then((res) => {
-                console.log(res.data.data)
                 setWord(res.data.data);
             })
     }
@@ -171,10 +184,6 @@ const ShortTest = () => {
         }
     };
 
-    // 홈으로 이동 핸들러
-    const handleHome = () => {
-        navigator("/");
-    }
 
     // 마이페이지에서 넘어왔을 떄
     const toMyPage = () => {
@@ -217,6 +226,11 @@ const ShortTest = () => {
         })
     }
 
+    // 홈으로
+    const homeHandle = () => {
+        navigator("/");
+    }
+
     // 단어 목록 조회 useEffect
     useEffect(() => {
         if (ctr == null || answer == null) {
@@ -224,7 +238,7 @@ const ShortTest = () => {
         } else {
             toMyPage();
         }
-    }, []);
+    }, [starState]);
 
     // 테스트 시간 계산
     useEffect(() => {
@@ -283,8 +297,8 @@ const ShortTest = () => {
                                 <div className="choice-result-data-graph">
                                     <div className="choice-result-data-graph-svg">
                                         <CircularProgressbar
-                                            value={answerList.filter(item => item === 1).length * 10}
-                                            text={`${answerList.filter(item => item === 1).length * 10}%`}
+                                            value={(answerList.filter(item => item === 1).length / word.length) * 100}
+                                            text={`${(answerList.filter(item => item === 1).length / word.length) * 100}%`}
                                             size={"15px"}
                                             styles={buildStyles({
                                                 textSize: '20px',
@@ -348,7 +362,7 @@ const ShortTest = () => {
                     <div className="choice-test-content-box" key={index}>
                         <div className="choice-test-content-header-box">
                             <div className="choice-test-content-header-left">
-                                <p>뜻</p>
+                                <p>{testType === "content" ? '뜻' : '단어'}</p>
                                 <Audio inputData={item[index]?.wordContent}/>
                             </div>
 
@@ -358,7 +372,9 @@ const ShortTest = () => {
                         </div>
 
                         <div className="choice-test-content-content-box">
-                            <p className="choice-test-content-word-content">{item?.wordMeaning}</p>
+                            <p className="choice-test-content-word-content">
+                                {testType === 'content' ? item?.wordMeaning : item?.wordContent + (item?.wordChinese && "(" + item?.wordChinese + ")")}
+                            </p>
 
 
                             {submitState &&
@@ -455,6 +471,87 @@ const ShortTest = () => {
 
 
             </div>
+
+            {!starState ?
+                <div className="choice-level-number-box-all">
+                    <div className="choice-level-box-all">
+
+                        <div className="choice-level-box-header">
+                            <div>
+                                <p className="choice-level-title">단단형 단어 테스트</p>
+                                <p className="choice-level-title-content">어떻게 테스트를 하고 싶으신가요?</p>
+                            </div>
+
+                            <img src="/svg/choice1.svg" alt="이미지"/>
+                        </div>
+
+                        <div className="choice-level-box-level-box">
+                            <p>풀이 방식을 선택해주세요.</p>
+                            <div className="choice-level-box-level-box-content">
+
+                                <div className={(testType === 'meaning' ? "level-number-on" : "level-number-off")}
+                                     onClick={() => testTypeHandle("meaning")}>
+                                    <span>단어</span>
+                                    <span className="choice-level-box-svg-box"><LevelIcon/></span>
+                                </div>
+
+                                <div className={(testType === 'content' ? "level-number-on" : "level-number-off")}
+                                     onClick={() => testTypeHandle("content")}>
+                                    <span>뜻</span>
+                                    <span className="choice-level-box-svg-box"><LevelIcon/></span>
+                                </div>
+                                <div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="choice-level-box-number-box">
+                            <p>단어의 수를 선택해주세요.</p>
+                            <div className="choice-level-box-number-box-content">
+                                <div className={(number === 10 ? "level-number-on" : "level-number-off")}
+                                     onClick={() => numberChoiceHandle(10)}>
+                                    <span>10개</span>
+                                    <span className="choice-number-box-svg-box"><NumberIcon/></span>
+                                </div>
+
+                                <div className={(number === 20 ? "level-number-on" : "level-number-off")}
+                                     onClick={() => numberChoiceHandle(20)}>
+                                    <span>20개</span>
+                                    <span className="choice-number-box-svg-box"><NumberIcon/></span>
+                                </div>
+
+                                <div className={(number === 30 ? "level-number-on" : "level-number-off")}
+                                     onClick={() => numberChoiceHandle(30)}>
+                                    <span>30개</span>
+                                    <span className="choice-number-box-svg-box"><NumberIcon/></span>
+                                </div>
+
+                                <div className={(number === 40 ? "level-number-on" : "level-number-off")}
+                                     onClick={() => numberChoiceHandle(40)}>
+                                    <span>40개</span>
+                                    <span className="choice-number-box-svg-box"><NumberIcon/></span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div className="choice-level-btn-box">
+                            <button className="choice-level-btn-home"
+                                    onClick={homeHandle}>홈으로
+                            </button>
+                            <button className="choice-level-btn-submit"
+                                    onClick={testStartHandle}>학습 시작하기
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                :
+                ""
+            }
+
         </div>
     )
 }

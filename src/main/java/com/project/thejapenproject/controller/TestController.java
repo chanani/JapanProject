@@ -6,16 +6,12 @@ import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
-import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
+import com.project.thejapenproject.test.vo.*;
 import com.project.thejapenproject.test.service.TestService;
-import com.project.thejapenproject.test.vo.GetTestListResVO;
-import com.project.thejapenproject.test.vo.SortTestListResVO;
-import com.project.thejapenproject.test.vo.TestRecordRegisterReqVO;
-import com.project.thejapenproject.test.vo.param.SortTestListReqVO;
+import com.project.thejapenproject.test.vo.param.ShortTestListReqVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -82,25 +78,40 @@ public class TestController {
      */
     @PostMapping("/choice-test-register")
     public ResponseData choiceTestRegister(@Valid @RequestBody ChoiceTestSaveReqVO choiceTestSaveReqVO){
-        System.out.println("choiceTestSaveReqVO = " + choiceTestSaveReqVO);
         testService.registerChoiceTest(choiceTestSaveReqVO);
-
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
                 .message("정상적으로 저장 되었습니다.")
                 .build();
     }
 
+    /**
+     * 단답형 테스트 문제 목록 API
+     * @param shortTestListReqVO
+     * @return
+     */
     @NoneAuth
-    @GetMapping("/sort-test-list")
-    public ResponseData sortTestList(@Valid @ModelAttribute SortTestListReqVO sortTestListReqVO){
-
-        ArrayList<SortTestListResVO> wordList = testService.getSortTestList(sortTestListReqVO);
-
+    @GetMapping("/short-test-list")
+    public ResponseData shortTestList(@Valid @ModelAttribute ShortTestListReqVO shortTestListReqVO){
+        ArrayList<ShortTestListResVO> wordList = testService.getShortTestList(shortTestListReqVO);
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
                 .data(wordList)
                 .message("정상적으로 조회 되었습니다.")
+                .build();
+    }
+
+    /**
+     * 단답형 단어 테스트 데이터 저장 API
+     * @param shortTestSaveReqVO
+     * @return
+     */
+    @PostMapping("/short-test-register")
+    public ResponseData shortTestRegister(@Valid @RequestBody ShortTestSaveReqVO shortTestSaveReqVO){
+        testService.registerShortTest(shortTestSaveReqVO);
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message("정상적으로 저장 되었습니다.")
                 .build();
     }
 }

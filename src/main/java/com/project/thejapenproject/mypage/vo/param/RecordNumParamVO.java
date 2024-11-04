@@ -14,6 +14,6 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class RecordNumParamVO {
 
-    @NotNull(message = "레코드 번호는 필수입니다.")
-    private Integer recordNum;
+    @NotNull(message = "단답형 문제 번호는 필수입니다.")
+    private Integer strNum;
 }

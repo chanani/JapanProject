@@ -1,11 +1,8 @@
 package com.project.thejapenproject.test.service;
 
 import com.project.thejapenproject.command.TestItemVO;
-import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
-import com.project.thejapenproject.test.vo.GetTestListResVO;
-import com.project.thejapenproject.test.vo.SortTestListResVO;
-import com.project.thejapenproject.test.vo.TestRecordRegisterReqVO;
-import com.project.thejapenproject.test.vo.param.SortTestListReqVO;
+import com.project.thejapenproject.test.vo.*;
+import com.project.thejapenproject.test.vo.param.ShortTestListReqVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,5 +28,11 @@ public interface TestMapper {
     public int registerChoiceTestResultDetail(ChoiceTestSaveReqVO choiceTestSaveReqVO);
 
     // 단어 단답형 테스트 목록 조회
-    ArrayList<SortTestListResVO> getSortTestList(SortTestListReqVO sortTestListReqVO);
+    ArrayList<ShortTestListResVO> getShortTestList(ShortTestListReqVO shortTestListReqVO);
+
+    // 선택 단에 테스트 문제 풀이 테이블에 저장
+    int registerShortTestResult(ShortTestSaveReqVO shortTestSaveReqVO);
+
+    // 선택 단에 테스트 문제 풀이 상세 테이블에 저장
+    int registerShortTestResultDetail(ShortTestSaveReqVO shortTestSaveReqVO);
 }

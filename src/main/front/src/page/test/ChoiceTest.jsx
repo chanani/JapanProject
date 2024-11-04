@@ -89,6 +89,7 @@ const ChoiceTest = () => {
 
         axiosInstance.post('/test/choice-test-register', {
             username: username,
+            ctrAnswerPoint : (answerCount / word.length) * 100,
             ctrTotalCount: word.length,
             ctrAnswerCount: answerCount,
             ctrInAnswerCount: inAnswerCount,
@@ -245,8 +246,8 @@ const ChoiceTest = () => {
                                 <div className="choice-result-data-graph">
                                     <div className="choice-result-data-graph-svg">
                                         <CircularProgressbar
-                                            value={answerList.filter(item => item === 1).length * 10}
-                                            text={`${answerList.filter(item => item === 1).length * 10}%`}
+                                            value={(answerList.filter(item => item === 1).length / word.length) * 100}
+                                            text={`${(answerList.filter(item => item === 1).length / word.length) * 100}%`}
                                             size={"15px"}
                                             styles={buildStyles({
                                                 textSize: '20px',
@@ -292,7 +293,7 @@ const ChoiceTest = () => {
                             </div>
 
                             <div className="choice-result-recommend-link-box"
-                                 onClick={() => handleMovePage("/test/easy")}>
+                                 onClick={() => handleMovePage("/short-test")}>
                                 <div>
                                     <img src="/svg/test1.svg" alt="이미지"/>
                                 </div>

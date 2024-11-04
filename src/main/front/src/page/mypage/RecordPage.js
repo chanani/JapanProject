@@ -15,7 +15,7 @@ const RecordPage = () => {
 
     const {userRole, username} = useContext(tokenInfoContext);
     const navigate = useNavigate();
-    const [sortData, setSortData] = useState([]);
+    const [shortData, setShortData] = useState([]);
     const [choiceData, setChoiceData] = useState([]);
     const [cardData, setCardData] = useState([]);
     const [totalRecord, setTotalRecord] = useState(0);
@@ -40,12 +40,12 @@ const RecordPage = () => {
 
 
     // 단답형 상세페이지로 이동하는 핸들러
-    const handleSortResultPage = async (index) => {
+    const handleShortResultPage = async (index) => {
         try {
-            let num = sortData[index]?.recordNum;
-            let kind = sortData[index]?.recordKind;
-            let level = sortData[index]?.recordLevel;
-            let point = sortData[index]?.recordPoint;
+            let num = shortData[index]?.recordNum;
+            let kind = shortData[index]?.recordKind;
+            let level = shortData[index]?.recordLevel;
+            let point = shortData[index]?.recordPoint;
             const response = await axiosInstance.post('mypage/recordDetails', {
                     username: username,
                     recordNum: num
@@ -91,16 +91,16 @@ const RecordPage = () => {
         }
     }
 
-    // 단답현 테스트 목록 삭제
-    const sortTestDeleteHandle = (recordNum) => {
+    // 단답형 테스트 목록 삭제
+    const shortTestDeleteHandle = (strNum) => {
         if (window.confirm('기록을 삭제하시겠습니까 ?')) {
-            axiosInstance.post('mypage/deleteRecord', {
-                recordNum : recordNum
+            axiosInstance.post('mypage/short-record-delete', {
+                strNum : strNum
             })
                 .then((res) => {
                     if(res.status !== 200) return toast.error('기록 삭제 중 오류가 발생하였습니다. 관리자에게 문의해주세요.');
                     toast.success('정상적으로 기록이 삭제되었습니다.');
-                    getSortRecordAPI();
+                    getShortRecordAPI();
                 })
         }
     }
@@ -108,8 +108,8 @@ const RecordPage = () => {
 
 
     // 단답형 테스트 목록 조회
-    const getSortRecordAPI = () => {
-        axiosInstance.get('mypage/record', {
+    const getShortRecordAPI = () => {
+        axiosInstance.get('mypage/short-record', {
             params: {
                 username: username,
                 page: currentPage,
@@ -117,12 +117,11 @@ const RecordPage = () => {
             }
         })
             .then((res) => {
-                setSortData(res.data.data.content);
+                setShortData(res.data.data.content);
                 setTotalRecord(res.data.data.totalElements); // 전체 데이터
             })
             .catch((error) => {
                 toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
-                setSortData([]); // 데이터 조회 실패 시 빈 배열로 설정
             });
     }
 
@@ -139,6 +138,9 @@ const RecordPage = () => {
                 setChoiceData(res.data.data.content);
                 setTotalRecord(res.data.data.totalElements);
             })
+            .catch((error) => {
+                toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");
+            });
     }
 
     // studyTime을 시, 분, 초 형식으로 변환하는 핸들러
@@ -174,7 +176,7 @@ const RecordPage = () => {
 
     // 카테고리 변경 시 데이터 조회
     useEffect(() => {
-        if (category === 'sort') return getSortRecordAPI();
+        if (category === 'short') return getShortRecordAPI();
         if (category === 'choice') return getChoiceRecordAPI();
         // if (category === 'card') return ;
 
@@ -198,8 +200,8 @@ const RecordPage = () => {
                         단어 선택 테스트
                     </div>
                     <div
-                        className={(category === 'sort' ? "recordPage-category-box-choice" : "recordPage-category-box-not-choice")}
-                        onClick={() => handleCategoryChange('sort')}
+                        className={(category === 'short' ? "recordPage-category-box-choice" : "recordPage-category-box-not-choice")}
+                        onClick={() => handleCategoryChange('short')}
                     >
                         단답형 테스트
                     </div>
@@ -224,29 +226,29 @@ const RecordPage = () => {
                                 }}/></div>
                             </div>
                             <div className="score-content">
-                                <div className="point">{item.ctrAnswerCount * 10}점</div>
+                                <div className="point">{item.ctrAnswerPoint}점</div>
                                 <div className="save-date">{moment(item.createdAt).format('YYYY.MM.DD')} </div>
                             </div>
 
                         </div>
                     ))}
 
-                {category === 'sort' &&
-                    sortData?.map((item, index) => (
+                {category === 'short' &&
+                    shortData?.map((item, index) => (
                         <div className="recordPage-score" key={index}
-                             onClick={(event) => handleSortResultPage(index)}>
+                             onClick={(event) => handleShortResultPage(index)}>
                             <div className="score-header">
                                 <div>{username}</div>
                                 <div style={{fontSize: "13px"}}>⏐</div>
-                                <div className="level">{item.recordLevel}단계</div>
+                                <div className="level">{formatStudyTime(item.strTime)}</div>
                                 <div className="recordPage-score-delete-btn"><FaRegTrashAlt size={15} onClick={(e) => {
                                     e.stopPropagation();
-                                    sortTestDeleteHandle(item.recordNum);
+                                    shortTestDeleteHandle(item.strNum);
                                 }}/></div>
                             </div>
                             <div className="score-content">
-                                <div className="point">{item.recordPoint}점</div>
-                                <div className="save-date">{moment(item.recordDate).format('YYYY.MM.DD')} </div>
+                                <div className="point">{item.strAnswerPoint}점</div>
+                                <div className="save-date">{moment(item.createdAt).format('YYYY.MM.DD')} </div>
                             </div>
 
                         </div>

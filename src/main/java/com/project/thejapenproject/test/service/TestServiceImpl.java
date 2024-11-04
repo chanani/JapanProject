@@ -1,14 +1,10 @@
 package com.project.thejapenproject.test.service;
 
 import com.project.thejapenproject.command.TestItemVO;
-import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
-import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
-import com.project.thejapenproject.test.vo.GetTestListResVO;
-import com.project.thejapenproject.test.vo.SortTestListResVO;
-import com.project.thejapenproject.test.vo.TestRecordRegisterReqVO;
-import com.project.thejapenproject.test.vo.param.SortTestListReqVO;
+import com.project.thejapenproject.test.vo.*;
+import com.project.thejapenproject.test.vo.param.ShortTestListReqVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,8 +48,22 @@ public class TestServiceImpl implements TestService{
 
     // 단어 단답형 테스트 목록 조회
     @Override
-    public ArrayList<SortTestListResVO> getSortTestList(SortTestListReqVO sortTestListReqVO) {
-        return testMapper.getSortTestList(sortTestListReqVO);
+    public ArrayList<ShortTestListResVO> getShortTestList(ShortTestListReqVO shortTestListReqVO) {
+        return testMapper.getShortTestList(shortTestListReqVO);
+    }
+
+    // 단답형 단어 테스트 테이터 저장
+    @Override
+    @Transactional
+    public void registerShortTest(ShortTestSaveReqVO shortTestSaveReqVO) {
+        // 선택 단에 테스트 문제 풀이 테이블에 저장
+        int result = testMapper.registerShortTestResult(shortTestSaveReqVO);
+        // 선택 단에 테스트 문제 풀이 상세 테이블에 저장
+        int detailResult = testMapper.registerShortTestResultDetail(shortTestSaveReqVO);
+
+        if(result < 1 || detailResult < 1){
+            throw new OperationErrorException(ErrorCode.FAIL_TO_CHOICE_TEST_REGISTER);
+        }
     }
 
 
