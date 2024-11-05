@@ -91,8 +91,17 @@ const ShortTest = () => {
     // 채점 핸들러
     const gradeHandle = () => {
         answerInput.map((item, index) => {
+            item = item.replaceAll(".", "")
+                .replaceAll("~","")
+                .replaceAll(" ","")
+                .replaceAll("〜", "");
             if (testType === 'meaning') {
-                const answerGroup = word[index].wordMeaning.replaceAll(".", "").split(",");
+                const answerGroup = word[index].wordMeaning
+                    .replaceAll(".", "")
+                    .replaceAll("~","")
+                    .replaceAll(" ","")
+                    .replaceAll("〜", "")
+                    .split(",");
                 const isCorrect = answerGroup.some((meaning) => item === meaning.trim());
 
                 setAnswerList((prevAnswer) => {
@@ -132,13 +141,13 @@ const ShortTest = () => {
 
         axiosInstance.post('/test/short-test-register', {
             username: username,
-            strAnswerPoint : (answerCount / word.length) * 100,
+            strAnswerPoint: (answerCount / word.length) * 100,
             strTotalCount: word.length,
             strAnswerCount: answerCount,
             strInAnswerCount: inAnswerCount,
             strdContent: strdContent,
             strTime: studyTime,
-            strType : testType
+            strType: testType
         })
             .then((res) => {
                 toast.success('정상적으로 저장되었습니다.');
