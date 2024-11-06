@@ -118,7 +118,7 @@ const Inquiry = () => {
                             :
                             <div className="inquiry-inData-box">
                                 {data?.map((item, index) => (
-                                    <div className="inquiry-data-box" key={index}>
+                                    <div className="inquiry-data-box" key={index} onClick={CheckPasswordHandle}>
                                         <div className="inquiry-content-high-box">
                                             {item.inquiryComment ?
                                                 <p style={{width: "65px", textAlign: "center"}}
@@ -131,7 +131,7 @@ const Inquiry = () => {
                                             <p
                                                 className="inquiry_title"
                                                 id={item.inquiryNum}
-                                                onClick={CheckPasswordHandle}
+
                                             >
                                                 {item.inquirySecret === 'y' ? <FaLock/> : <FaLockOpen/>}
                                                 {item.inquiryTitle}
