@@ -34,7 +34,7 @@ const ShortTest = () => {
 
     // 마이페이지에서 전달된 시험 내용 데이터
     const location = useLocation();
-    const {ctr, answer} = location.state || {};
+    const {sctr, answer} = location.state || {};
 
     ///////////// 테스트 시작 전
     // 단어 수 고르기
@@ -223,7 +223,7 @@ const ShortTest = () => {
             return newWord;
         });
         setWord(newWord);
-        setStudyTime(ctr.ctrTime)
+        setStudyTime(sctr.ctrTime)
     }
 
     // 정답 입력 핸들러
@@ -242,7 +242,7 @@ const ShortTest = () => {
 
     // 단어 목록 조회 useEffect
     useEffect(() => {
-        if (ctr == null || answer == null) {
+        if (sctr == null || answer == null) {
             return getWordListAPI();
         } else {
             toMyPage();

@@ -8,6 +8,7 @@ import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.mypage.vo.*;
 import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
+import com.project.thejapenproject.mypage.vo.param.ShortRecordDetailParamVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -149,6 +150,12 @@ public class MypageServiceImpl implements MypageService{
                 .totalPages(totalPages)
                 .build();
         return responseData;
+    }
+
+    // 단답형 단어 테스트 결과 상세 조회
+    @Override
+    public ArrayList<ShortRecordListDetailResVO> shortRecordDetailList(ShortRecordDetailParamVO shortRecordDetailParamVO) {
+        return mypageMapper.shortRecordDetailList(shortRecordDetailParamVO);
     }
 
 

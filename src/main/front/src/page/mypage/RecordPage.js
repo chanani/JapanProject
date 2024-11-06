@@ -42,18 +42,16 @@ const RecordPage = () => {
     // 단답형 상세페이지로 이동하는 핸들러
     const handleShortResultPage = async (index) => {
         try {
-            let num = shortData[index]?.recordNum;
-            let kind = shortData[index]?.recordKind;
-            let level = shortData[index]?.recordLevel;
-            let point = shortData[index]?.recordPoint;
-            const response = await axiosInstance.post('mypage/recordDetails', {
-                    username: username,
-                    recordNum: num
+            let str = shortData[index];
+            const response = await axiosInstance.get('mypage/short-record-detail', {
+                    params : {
+                        strNum : str.strNum
+                    }
                 }
             )
 
-            const answer = response.data;
-            navigate("/recordDetails", {state: {kind, level, answer, point, num}});
+            const answer = response.data.data;
+            navigate("/short-test", {state: {str, answer}});
             window.scrollTo(0, 0);
         } catch (e) {
             toast.error("데이터 조회에 실패하였습니다. 관리자에게 문의해주세요.");

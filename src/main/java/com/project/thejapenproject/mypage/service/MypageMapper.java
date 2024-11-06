@@ -4,6 +4,7 @@ import com.project.thejapenproject.command.*;
 import com.project.thejapenproject.mypage.vo.*;
 import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
+import com.project.thejapenproject.mypage.vo.param.ShortRecordDetailParamVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -43,4 +44,7 @@ public interface MypageMapper {
 
     // 단답형 단어 테스트 목록 조회
     ArrayList<ShortRecordListResVO> shortTestList(GetRecordListParamVO getRecordListParamVO);
+
+    // 단답형 단어 테스트 결과 상세 조회
+    ArrayList<ShortRecordListDetailResVO> shortRecordDetailList(ShortRecordDetailParamVO shortRecordDetailParamVO);
 }

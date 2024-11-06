@@ -5,6 +5,7 @@ import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.mypage.vo.*;
 import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
+import com.project.thejapenproject.mypage.vo.param.ShortRecordDetailParamVO;
 
 import java.util.ArrayList;
 
@@ -39,4 +40,7 @@ public interface MypageService {
 
     // 단답형 단어 테스트 목록 조회
     PageResponse<ShortRecordListResVO> shortTestList(GetRecordListParamVO getRecordListParamVO);
+
+    // 단답형 단어 테스트 결과 상세 조회
+    ArrayList<ShortRecordListDetailResVO> shortRecordDetailList(ShortRecordDetailParamVO shortRecordDetailParamVO);
 }

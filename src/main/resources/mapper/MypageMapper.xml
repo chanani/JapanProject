@@ -223,6 +223,23 @@
           AND word_num = #{wordNum}
     </select>
 
+    <!-- 단답형 단어 테스트 결과 상세 조회 -->
+    <select id="shortRecordDetailList"
+            parameterType="com.project.thejapenproject.mypage.vo.param.ShortRecordDetailParamVO"
+            resultType="com.project.thejapenproject.mypage.vo.ShortRecordListDetailResVO">
+        SELECT strd_num,
+               word_num,
+               strd_choice_word,
+               strd_answer_content,
+               strd_answer_meaning,
+               strd_answer_chinese,
+               strd_result,
+               created_at
+        FROM short_test_result_detail
+        WHERE str_num = #{strNum}
+          AND state = 0
+        ORDER BY strd_num ASC
+    </select>
 
     <resultMap id="recordDetailsResultMap" type="com.project.thejapenproject.command.RecordDetailsVO">
         <id property="rdNum" column="rd_num"/>

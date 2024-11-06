@@ -253,4 +253,25 @@ public class MypageController {
                 .build();
     }
 
+
+    /**
+     * 단답형 단어 학습 기록 상세 조회 API
+     *
+     * @param shortRecordDetailParamVO
+     * @return : ResponseData.class
+     * @author : chanhan
+     * @since 2024-11-06 오후 08:42
+     */
+    @GetMapping("/short-record-detail")
+    public ResponseData shortRecordDetailList(@Valid @ModelAttribute ShortRecordDetailParamVO shortRecordDetailParamVO) {
+
+        ArrayList<ShortRecordListDetailResVO> recordDetailList = mypageService.shortRecordDetailList(shortRecordDetailParamVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(recordDetailList)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
 }
