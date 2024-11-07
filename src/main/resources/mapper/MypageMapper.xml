@@ -50,13 +50,14 @@
     <select id="shortTestList"
             parameterType="com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO"
             resultType="com.project.thejapenproject.mypage.vo.ShortRecordListResVO">
-        SELECT str_Num,
+        SELECT str_num,
                username,
                str_answer_point,
                str_total_count,
                str_answer_count,
                str_inAnswer_count,
                str_time,
+               str_type,
                created_at,
                COUNT(*) OVER() AS total_elements
         FROM short_test_result

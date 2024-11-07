@@ -34,7 +34,8 @@ const ShortTest = () => {
 
     // 마이페이지에서 전달된 시험 내용 데이터
     const location = useLocation();
-    const {sctr, answer} = location.state || {};
+    const {str, answer} = location.state || {};
+    const [myPage, setMyPage] = useState(0);
 
     ///////////// 테스트 시작 전
     // 단어 수 고르기
@@ -92,14 +93,14 @@ const ShortTest = () => {
     const gradeHandle = () => {
         answerInput.map((item, index) => {
             item = item.replaceAll(".", "")
-                .replaceAll("~","")
-                .replaceAll(" ","")
+                .replaceAll("~", "")
+                .replaceAll(" ", "")
                 .replaceAll("〜", "");
             if (testType === 'meaning') {
                 const answerGroup = word[index].wordMeaning
                     .replaceAll(".", "")
-                    .replaceAll("~","")
-                    .replaceAll(" ","")
+                    .replaceAll("~", "")
+                    .replaceAll(" ", "")
                     .replaceAll("〜", "")
                     .split(",");
                 const isCorrect = answerGroup.some((meaning) => item === meaning.trim());
@@ -196,34 +197,44 @@ const ShortTest = () => {
 
     // 마이페이지에서 넘어왔을 떄
     const toMyPage = () => {
-        setSubmitState(true); // 시험 완료 상태로 변경
+
         // data와 같은 데이터로 초기화
         let newWord = answer.map((item, i) => {
-            let wordContentList = [item.ctrdQuestionOne, item.ctrdQuestionTwo, item.ctrdQuestionThree, item.ctrdQuestionFour];
+            // console.log(item)
             let newWord = {
-                wordChinese: item.ctrdAnswerChinese,
-                wordContent: item.ctrdAnswerContent,
-                wordMeaning: item.ctrdAnswerMeaning,
+                wordChinese: item.strdAnswerChinese,
+                wordContent: item.strdAnswerContent,
+                wordMeaning: item.strdAnswerMeaning,
                 wordNum: item.wordNum,
-                wordContentList: wordContentList,
             }
 
-            answerInput((prevChoiceList) => {
-                const updatedChoiceList = [...prevChoiceList];
-                updatedChoiceList[i] = item.ctrdChoiceNum; // index에 값 추가 또는 업데이트
+            setAnswerInput((prevShortList) => {
+                const updatedChoiceList = [...prevShortList];
+                updatedChoiceList[i] = item.strdChoiceWord; // index에 값 추가 또는 업데이트
                 return updatedChoiceList;
             });
 
             setAnswerList((prevAnswerList) => {
                 const updatedAnswerList = [...prevAnswerList];
-                updatedAnswerList[i] = item.ctrdChoiceNum === item.ctrdQuestionAnswer ? 1 : 2; // index에 값 추가 또는 업데이트
+                if (testType === 'meaning') {
+                    updatedAnswerList[i] = item.strdChoiceWord === item.strdAnswerMeaning ? 1 : 2; // index에 값 추가 또는 업데이트
+
+                } else {
+                    updatedAnswerList[i] = (item.strdChoiceWord === item.strdAnswerChinese) ||
+                    (item.strdChoiceWord === item.strdAnswerContent) ? 1 : 2; // index에 값 추가 또는 업데이트
+
+                }
                 return updatedAnswerList;
             });
 
             return newWord;
         });
+        setSubmitState(true); // 시험 완료 상태로 변경
+        setStarState(true);
+        setTestType(str.strType);
         setWord(newWord);
-        setStudyTime(sctr.ctrTime)
+        setStudyTime(str.strTime);
+        setMyPage(1);
     }
 
     // 정답 입력 핸들러
@@ -242,7 +253,7 @@ const ShortTest = () => {
 
     // 단어 목록 조회 useEffect
     useEffect(() => {
-        if (sctr == null || answer == null) {
+        if (str == null || answer == null) {
             return getWordListAPI();
         } else {
             toMyPage();
@@ -436,15 +447,17 @@ const ShortTest = () => {
                 ))}
 
 
-                <div className="choice-test-btn-box">
+                <div className={"choice-test-btn-box " + (myPage ? "choice-test-my-page" : "")}>
                     <button className="choice-test-btn-home"
                             onClick={handleHome}>
                         홈으로
                     </button>
-                    <button className="choice-test-btn-submit"
-                            onClick={handleSubmit}>
-                        {!submitState ? "제출하기" : "저장하기"}
-                    </button>
+                    {myPage === 0 &&
+                        <button className="choice-test-btn-submit"
+                                onClick={handleSubmit}>
+                            {!submitState ? "제출하기" : "저장하기"}
+                        </button>
+                    }
                 </div>
 
 

@@ -115,6 +115,7 @@ const RecordPage = () => {
             }
         })
             .then((res) => {
+                console.log(res.data.data.content)
                 setShortData(res.data.data.content);
                 setTotalRecord(res.data.data.totalElements); // 전체 데이터
             })

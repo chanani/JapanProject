@@ -30,6 +30,7 @@ const ChoiceTest = () => {
     // 마이페이지에서 전달된 시험 내용 데이터
     const location = useLocation();
     const { ctr, answer } = location.state || {};
+    const [myPage, setMyPage] = useState(0);
 
     // 답 클릭 핸들러(모르겠음은 5로 데이터 전달)
     const handleSetAnswer = (index, answerIndex) => {
@@ -175,9 +176,8 @@ const ChoiceTest = () => {
             return newWord;
         });
         setWord(newWord);
-        setStudyTime(ctr.ctrTime)
-
-
+        setStudyTime(ctr.ctrTime);
+        setMyPage(1);
     }
 
     // 단어 목록 조회 useEffect
@@ -367,15 +367,17 @@ const ChoiceTest = () => {
                 ))}
 
 
-                <div className="choice-test-btn-box">
+                <div className={"choice-test-btn-box " + (myPage ? "choice-test-my-page" : "")}>
                     <button className="choice-test-btn-home"
                             onClick={handleHome}>
                         홈으로
                     </button>
-                    <button className="choice-test-btn-submit"
-                            onClick={handleSubmit}>
-                        {!submitState ? "제출하기" : "저장하기"}
-                    </button>
+                    {myPage === 0 &&
+                        <button className="choice-test-btn-submit"
+                                onClick={handleSubmit}>
+                            {!submitState ? "제출하기" : "저장하기"}
+                        </button>
+                    }
                 </div>
 
 
