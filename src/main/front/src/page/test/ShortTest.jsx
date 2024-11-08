@@ -364,13 +364,13 @@ const ShortTest = () => {
                             </div>
 
                             <div className="choice-result-recommend-link-box"
-                                 onClick={() => handleMovePage("/test/easy")}>
+                                 onClick={() => handleMovePage("/choice-test")}>
                                 <div>
                                     <img src="/svg/test1.svg" alt="이미지"/>
                                 </div>
                                 <div>
-                                    <p className="choice-result-recommend-link-title">단답형 테스트하기</p>
-                                    <p className="choice-result-recommend-link-content">단답형 테스트에 도전해보세요!</p>
+                                    <p className="choice-result-recommend-link-title">단어 선택 테스트하기</p>
+                                    <p className="choice-result-recommend-link-content">단어 선택 테스트에 도전해보세요!</p>
                                 </div>
                             </div>
                         </div>
