@@ -500,7 +500,7 @@ const ShortTest = () => {
 
                         <div className="choice-level-box-header">
                             <div>
-                                <p className="choice-level-title">단단형 단어 테스트</p>
+                                <p className="choice-level-title">단답형 단어 테스트</p>
                                 <p className="choice-level-title-content">어떻게 테스트를 하고 싶으신가요?</p>
                             </div>
 

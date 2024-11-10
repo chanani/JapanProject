@@ -1,51 +1,108 @@
 .favorite-page-all {
   display: flex;
   justify-content: center;
-  padding-top: 40px;
-  background-color: #f6f7fb;
-  padding-bottom: 60px;
-}
-
-.favorite-page-mid{
+  align-items: center;
+  padding: 0 5px;
   background-color: white;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
-  padding: 30px;
+  width: 100%;
 }
 
 .favorite-page-mid .favorite-info{
-  font-size: 23px;
+  font-size: 25px;
+  font-weight: 700;
   margin-bottom: 30px;
-  border-bottom: 1px solid #d2cece;
-  padding-bottom: 10px;
-}
-.favorite-data {
-  overflow: hidden;
-  
+  width: auto;
 }
 
-.favorite-box {
-  border : 1px solid #6CC4A1;
-  border-radius: 8px;
-  padding: 5px 10px 10px 5px;
-  box-shadow: 0 0.125rem 0.25rem #00000014;
-  transition: all .12s cubic-bezier(.47,0,.745,.715);
-  height: 97px;
-  margin-right: 10px; 
-  margin-bottom: 10px; 
-  float: left;
-  
+.favorite-page-mid .favorite-info > p {
+  display: inline-block;
+  border-bottom: 3px solid #2668f1;
 }
 
-.favorite-box:hover{
-  background-color: #9dde8b59;
+
+/* 카테고리 박스 */
+.favorite-page-category-box {
+  display: flex;
+  justify-content: space-between;
+  height: auto;
+  margin-bottom: 5px;
 }
 
-.favorite-data-text {
+.favorite-page-hidden-box {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.favorite-page-hidden-box > div {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 50px;
+  gap: 3px;
+  border-radius: 5px;
+  padding: 8px 7px;
+  transition: all .12s cubic-bezier(.47, 0, .745, .715);
+  cursor: pointer;
+  font-size: 13px;
 }
+
+.favorite-box-hidden-box-show {
+  border: 1px solid #8b8b8b;
+  color: black;
+}
+
+.favorite-box-hidden-box-hidden {
+  color: #d1d1d1;
+  border: 1px solid #d1d1d1;
+}
+
+.favorite-data {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 단어 박스 내용 */
+.favorite-box {
+  border: 1px solid #32b1ea99;
+  border-radius: 5px;
+  padding: 15px;
+  margin-top: 15px;
+  box-shadow: 0px 0px 3px rgba(15, 0, 2, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
+
+}
+
+.favorite-data-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.favorite-data-top-content {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.favorite-data-top-audio-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.favorite-data-middle {
+  border: 1px solid #8282824a;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: #f1f1f14a;
+  margin-bottom: 20px;
+}
+
+.favorite-data-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
 
 .study-play-btn{
   display: flex;
@@ -68,28 +125,25 @@
 /* 600 이하 */
 @media(max-width : 600px){
   .favorite-page-mid{
-    width: 360px;
+    width: 95%;
+    margin-top: 20px;
   }
-  .favorite-box {
-    width: 90px;
-  }
+
 }
 
 /* 600 이상 */
 @media(min-width : 600px){
   .favorite-page-mid{
-    width: 560px;
+    width: 90%;
+    margin-top: 30px;
   }
-  .favorite-box {
-    width: 115px;
-  }
+
 }
  /* 1000 이상 */
 @media(min-width : 1000px){
   .favorite-page-mid{
-    width: 910px;
+    width: 70%;
+    margin-top: 40px;
   }
-  .favorite-box {
-    width: 131px;
-  }
+
 }
