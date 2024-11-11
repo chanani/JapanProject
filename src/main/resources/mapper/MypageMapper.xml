@@ -32,18 +32,20 @@
     <!-- 즐겨찾기 목록 API -->
     <select id="favoriteList"
             resultType="com.project.thejapenproject.command.WordVO">
-        SELECT word_num,
-               word_level,
-               word_meaning,
-               word_content,
-               word_chinese,
-               word_week,
+        SELECT W.word_num,
+               W.word_level,
+               W.word_meaning,
+               W.word_content,
+               W.word_chinese,
+               W.word_week,
+               F.favorite_regdate,
+               F.favorite_memo,
                'true' as word_favorite
-        FROM word
-        where word_num in (SELECT word_num
-                           FROM favorites
-                           where username = #{username}
-                           ORDER BY favorite_regdate)
+        FROM favorites F
+                 JOIN word W
+                      ON F.word_num = W.word_num
+                          AND F.username = #{username}
+                          AND W.state = 0
     </select>
 
     <!-- 유저의 학습 목록 조회 -->
