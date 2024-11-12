@@ -31,7 +31,8 @@
 
     <!-- 즐겨찾기 목록 API -->
     <select id="favoriteList"
-            resultType="com.project.thejapenproject.command.WordVO">
+            parameterType="com.project.thejapenproject.mypage.vo.param.FavoriteListVO"
+            resultType="com.project.thejapenproject.mypage.vo.FavoriteListResVO">
         SELECT W.word_num,
                W.word_level,
                W.word_meaning,
@@ -40,12 +41,27 @@
                W.word_week,
                F.favorite_regdate,
                F.favorite_memo,
-               'true' as word_favorite
+               F.favorite_num,
+               'true' as word_favorite,
+               COUNT(*) OVER() AS total_elements
         FROM favorites F
                  JOIN word W
                       ON F.word_num = W.word_num
                           AND F.username = #{username}
                           AND W.state = 0
+        ORDER BY
+            <choose>
+                <when test='sort == "new"'>
+                    F.favorite_num ASC
+                </when>
+                <when test='sort == "older"'>
+                    F.favorite_num DESC
+                </when>
+                <when test='sort == "random"'>
+                    RAND()
+                </when>
+            </choose>
+        limit #{size} offset #{offset}
     </select>
 
     <!-- 유저의 학습 목록 조회 -->
@@ -243,6 +259,20 @@
           AND state = 0
         ORDER BY strd_num ASC
     </select>
+
+    <!-- 즐겨찾기 메모 등록 -->
+    <update id="updateFavoriteMemo"
+            parameterType="com.project.thejapenproject.mypage.vo.updateFavoriteMemoReqVO">
+        UPDATE favorites
+        SET favorite_memo = #{favoriteMemo}
+        WHERE favorite_num = #{favoriteNum}
+    </update>
+
+
+
+
+
+
 
     <resultMap id="recordDetailsResultMap" type="com.project.thejapenproject.command.RecordDetailsVO">
         <id property="rdNum" column="rd_num"/>

@@ -7,6 +7,7 @@ import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.mypage.vo.*;
 import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
+import com.project.thejapenproject.mypage.vo.param.FavoriteListVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
 import com.project.thejapenproject.mypage.vo.param.ShortRecordDetailParamVO;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +24,28 @@ public class MypageServiceImpl implements MypageService{
 
     // 즐겨찾기 목록
     @Override
-    public ArrayList<WordVO> favoriteList(String username) {
-        return mypageMapper.favoriteList(username);
+    public PageResponse<FavoriteListResVO> favoriteList(FavoriteListVO favoriteListVO) {
+        Integer page = favoriteListVO.getPage();
+        Integer size = favoriteListVO.getSize();
+        favoriteListVO.setOffset((page - 1) * size);
+
+        // 데이터 조회
+        ArrayList<FavoriteListResVO> favoriteList = mypageMapper.favoriteList(favoriteListVO);
+
+        // 총 데이터 수 계산
+        int totalElements = favoriteList.size() != 0 ? favoriteList.get(0).getTotalElements() : 0;
+        // 총 페이지 수 계산
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        PageResponse<FavoriteListResVO> responseData = PageResponse.<FavoriteListResVO>builder()
+                .content(favoriteList)
+                .page(page)
+                .size(size)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .build();
+        return responseData;
+
     }
 
 
@@ -156,6 +177,14 @@ public class MypageServiceImpl implements MypageService{
     @Override
     public ArrayList<ShortRecordListDetailResVO> shortRecordDetailList(ShortRecordDetailParamVO shortRecordDetailParamVO) {
         return mypageMapper.shortRecordDetailList(shortRecordDetailParamVO);
+    }
+
+    // 즐겨찾기 메모 등록
+    @Override
+    public void updateFavoriteMemo(updateFavoriteMemoReqVO updateFavoriteMemoReqVO) {
+        if(mypageMapper.updateFavoriteMemo(updateFavoriteMemoReqVO) < 1){
+            throw new OperationErrorException(ErrorCode.FAIL_TO_UPDATE_FAVORITE_MEMO);
+        }
     }
 
 
