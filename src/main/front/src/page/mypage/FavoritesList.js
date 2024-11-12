@@ -48,6 +48,12 @@ const FavoritesList = () => {
         {value: "random", label: "랜덤"}
     ];
 
+    // 정렬 변경 핸들러
+    const changeSelect = (value) => {
+        setCurrentPage(1);
+        setSelectedValue(value);
+    }
+
     // 즐겨찾기 단어 삭제 핸들러
     const handleFavorite = (index) => {
         if (!window.confirm('즐겨찾기에서 삭제하시겠습니까?')) return;
@@ -68,10 +74,11 @@ const FavoritesList = () => {
 
     // 단어 학습 페이지로 이동
     const handleStudy = () => {
-        setPerPage(1000000000)
-        getFavoriteList();
-        navigate("/study", {state: {arr: word}});
+        getFavoriteList(1000000).then((updatedWord) => {
+            navigate("/study", { state: { arr: updatedWord } });
+        });
     };
+
 
     // 단어 작성 핸들러
     const handleMemoEdit = (index) => {
@@ -98,19 +105,24 @@ const FavoritesList = () => {
     };
 
     // 즐겨찾기 목록 조회  API
-    const getFavoriteList = () => {
-        axiosInstance.post('mypage/favorite', {
+    // 즐겨찾기 목록 조회 API
+    const getFavoriteList = (toStudySize = perPage) => {
+        return axiosInstance.post('mypage/favorite', {
             username: username,
             page: currentPage,
-            size: perPage,
-            sort : selectedValue
+            size: toStudySize,
+            sort: selectedValue,
         })
             .then((res) => {
                 setWord(res.data.content);
                 setTotalData(res.data.totalElements); // 전체 데이터 수
+                return res.data.content; // 업데이트된 데이터를 반환
             })
-            .catch((e) => toast.error('조회 중 오류가 발생하였습니다.'));
-    }
+            .catch((e) => {
+                toast.error('조회 중 오류가 발생하였습니다.');
+                return []; // 오류 발생 시 빈 배열 반환
+            });
+    };
 
     // 페이지 진입 시 조회
     useEffect(() => {
@@ -123,7 +135,7 @@ const FavoritesList = () => {
         }
     }, [currentPage, selectedValue]);
 
-    
+
 
     return (
         <div className="favorite-page-all">
@@ -135,7 +147,7 @@ const FavoritesList = () => {
                 <div className="favorite-page-category-box">
                     <Select
                         className="selectItem"
-                        onChange={(e) => setSelectedValue(e.value)}
+                        onChange={(e) => changeSelect(e.value)}
                         options={selectOptions}
                         placeholder="정렬"
                         value={selectOptions.find(option => option.value === selectedValue)}
