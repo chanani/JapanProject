@@ -68,9 +68,10 @@ public enum ErrorCode {
     FAIL_TO_FAVORITE(HttpStatus.INTERNAL_SERVER_ERROR, "즐겨찾기 추가에 실패하였습니다."),
     FAIL_TO_SET_REGISTER(HttpStatus.INTERNAL_SERVER_ERROR, "단어 세트 등록에 실패하였습니다."),
     FAIL_TO_SET_REMOVE(HttpStatus.INTERNAL_SERVER_ERROR, "단어 세트 삭제에 실패하였습니다."),
-    FAIL_TO_SET_MODIFY(HttpStatus.INTERNAL_SERVER_ERROR, "단어 세트 수정에 실패하였습니다.");
+    FAIL_TO_SET_MODIFY(HttpStatus.INTERNAL_SERVER_ERROR, "단어 세트 수정에 실패하였습니다."),
 
-
+    // myPage
+    FAIL_TO_UPDATE_FAVORITE_MEMO(HttpStatus.INTERNAL_SERVER_ERROR, "즐겨찾기 단어 메모 등록에 실패하였습니다.");
 
     private final HttpStatus errorCode;
     private final String message;

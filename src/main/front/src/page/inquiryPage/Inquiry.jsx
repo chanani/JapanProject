@@ -1,6 +1,6 @@
 import "../../styles/inquiry/Inquiry.css";
 import {useEffect, useState} from "react";
-import {FaArrowLeft, FaArrowRight, FaLock} from "react-icons/fa";
+import {FaLock} from "react-icons/fa";
 import {FaLockOpen} from "react-icons/fa";
 import {GrPowerReset} from "react-icons/gr";
 import {useNavigate} from "react-router-dom";

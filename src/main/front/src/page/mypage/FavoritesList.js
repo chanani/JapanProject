@@ -11,6 +11,8 @@ import Audio from "../../component/Audio";
 import moment from "moment/moment";
 import {IoClose} from "react-icons/io5";
 import {BiSave} from "react-icons/bi";
+import PageNation from "../../component/PageNation";
+import usePagination from "../../hook/usePagination";
 
 const FavoritesList = () => {
     const {userRole, username} = useContext(tokenInfoContext);
@@ -19,6 +21,25 @@ const FavoritesList = () => {
     const [selectedValue, setSelectedValue] = useState("new"); // 정렬 값
     const [editingIndex, setEditingIndex] = useState(null); // 메모 편집 중인 단어 인덱스
     const [memoInput, setMemoInput] = useState(""); // 메모 입력값
+
+    const [totalData, setTotalData] = useState(0);
+    const [perPage, setPerPage] = useState(10); // 보여줄 목록 수
+    const pagesPerRange = 5; // 표시할 페이지 수
+
+    // 페이지 네이션 hook 관리
+    const {
+        currentPage,
+        totalPages,
+        startPage,
+        endPage,
+        handlePageChange,
+        setCurrentPage
+    } = usePagination({
+        totalItems: totalData,
+        itemsPerPage: perPage,
+        pagesPerRange
+    });
+
 
     // 정렬 목록
     const selectOptions = [
@@ -47,6 +68,8 @@ const FavoritesList = () => {
 
     // 단어 학습 페이지로 이동
     const handleStudy = () => {
+        setPerPage(1000000000)
+        getFavoriteList();
         navigate("/study", {state: {arr: word}});
     };
 
@@ -58,13 +81,15 @@ const FavoritesList = () => {
 
     // 메모 저장하기
     const saveMemo = (index) => {
+        if (!!!memoInput) return toast.error("메모를 입력해주세요.");
         const updatedWord = [...word];
-        updatedWord[index].favoriteMemo = memoInput;
+        updatedWord[index].favoriteMemo = memoInput; // 메모 내용
         setWord(updatedWord);
         setEditingIndex(null);
-        axiosInstance.post('/mypage/updateMemo', {
-            wordNum: word[index].wordNum,
-            memo: memoInput
+        let favoriteNum = updatedWord[index].favoriteNum; // 즐겨찾기 항목 번호
+        axiosInstance.post('/mypage/update-favorite-memo', {
+            favoriteNum: favoriteNum,
+            favoriteMemo: memoInput
         })
             .then(() => {
                 toast.success("메모가 저장되었습니다.");
@@ -74,21 +99,31 @@ const FavoritesList = () => {
 
     // 즐겨찾기 목록 조회  API
     const getFavoriteList = () => {
-        axiosInstance.post('mypage/favorite', {username})
+        axiosInstance.post('mypage/favorite', {
+            username: username,
+            page: currentPage,
+            size: perPage,
+            sort : selectedValue
+        })
             .then((res) => {
-                setWord(res.data);
+                setWord(res.data.content);
+                setTotalData(res.data.totalElements); // 전체 데이터 수
             })
             .catch((e) => toast.error('조회 중 오류가 발생하였습니다.'));
     }
 
+    // 페이지 진입 시 조회
     useEffect(() => {
         if (userRole === "none") {
             toast.error("로그인 후 이용해주세요.");
             navigate("/login");
         } else {
             getFavoriteList();
+            window.scroll(0, 0);
         }
-    }, []);
+    }, [currentPage, selectedValue]);
+
+    
 
     return (
         <div className="favorite-page-all">
@@ -111,11 +146,11 @@ const FavoritesList = () => {
                 </div>
 
                 <div className="favorite-data">
-                    {word.map((item, index) => (
+                    {word?.map((item, index) => (
                         <div className="favorite-box" key={index}>
                             <div className="favorite-data-top">
                                 <div className="favorite-data-top-content">
-                                    <p>{item.wordContent}{item.wordChinese && `(${item.wordChinese})`}</p>
+                                    <p>{item?.wordContent}{item?.wordChinese && `(${item?.wordChinese})`}</p>
                                 </div>
                                 <div className="favorite-data-top-audio-box">
                                     <Audio inputData={item.wordContent}/>
@@ -123,7 +158,7 @@ const FavoritesList = () => {
                             </div>
 
                             <div className="favorite-data-middle">
-                                {item.wordMeaning.split(",").map((meaning, i) => (
+                                {item?.wordMeaning.split(",").map((meaning, i) => (
                                     <div key={i}>{i + 1}. {meaning}</div>
                                 ))}
                             </div>
@@ -148,14 +183,14 @@ const FavoritesList = () => {
                                     <hr/>
                                 </div>
                             ) : (
-                                item.favoriteMemo && (
+                                item?.favoriteMemo && (
                                     <div className="favorite-data-memo">
                                         <div>
                                             <span>메모</span>
 
                                         </div>
                                         <input type="text"
-                                               value={item.favoriteMemo}
+                                               value={item?.favoriteMemo}
                                                readOnly={true}
                                                className="favorite-data-memo-input-value"
                                                maxLength={30}/>
@@ -165,7 +200,7 @@ const FavoritesList = () => {
 
                             <div className="favorite-data-bottom">
                                 <div className="favorite-data-bottom-creat-time">
-                                    <p>{moment(item.favoriteRegdate).format('YYYY.MM.DD')} 저장</p>
+                                    <p>{moment(item?.favoriteRegdate).format('YYYY.MM.DD')} 저장</p>
                                 </div>
                                 <div className="favorite-data-bottom-icon-box">
                                     {editingIndex !== index && (
@@ -176,8 +211,21 @@ const FavoritesList = () => {
                             </div>
                         </div>
                     ))}
+
                 </div>
+
+                <PageNation
+                    currentPage={currentPage}
+                    startPage={startPage}
+                    endPage={endPage}
+                    totalPages={totalPages}
+                    handlePageChange={handlePageChange}
+                    pagesPerRange={pagesPerRange}
+                    divMargin={"30px 0"}
+                />
+
             </div>
+
         </div>
     );
 };

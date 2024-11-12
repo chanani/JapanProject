@@ -74,11 +74,11 @@ public class MypageController {
      * @Param map : username을 통해 목록 조회
      **/
     @PostMapping("/favorite")
-    public ResponseEntity<ArrayList<WordVO>> favoriteList(@Valid @RequestBody UsernameParamVO usernameParamVO) {
+    public ResponseEntity<PageResponse<FavoriteListResVO>> favoriteList(@Valid @RequestBody FavoriteListVO favoriteListVO) {
 
-        ArrayList<WordVO> list = mypageService.favoriteList(usernameParamVO.getUsername());
+        PageResponse<FavoriteListResVO> favoriteList = mypageService.favoriteList(favoriteListVO);
 
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(favoriteList);
     }
 
     /**
@@ -270,6 +270,25 @@ public class MypageController {
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())
                 .data(recordDetailList)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
+    /**
+     * 즐겨 찾기 단어 메모 등록 API
+     *
+     * @param updateFavoriteMemoReqVO
+     * @return : ResponseData.class
+     * @author : chanhan
+     * @since 2024-11-12 오후 08:40
+     */
+    @PostMapping("/update-favorite-memo")
+    public ResponseData updateFavoriteMemo(@Valid @RequestBody updateFavoriteMemoReqVO updateFavoriteMemoReqVO) {
+
+        mypageService.updateFavoriteMemo(updateFavoriteMemoReqVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
                 .message(ErrorCode.SUCCESS.getMessage())
                 .build();
     }

@@ -3,6 +3,7 @@ package com.project.thejapenproject.mypage.service;
 import com.project.thejapenproject.command.*;
 import com.project.thejapenproject.mypage.vo.*;
 import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
+import com.project.thejapenproject.mypage.vo.param.FavoriteListVO;
 import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
 import com.project.thejapenproject.mypage.vo.param.ShortRecordDetailParamVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 @Mapper
 public interface MypageMapper {
-    public ArrayList<WordVO> favoriteList(String username);
+    public ArrayList<FavoriteListResVO> favoriteList(FavoriteListVO favoriteListVO);
     public ArrayList<RecordDetailsVO> recordDetails(GetRecordDetailsReqVO getRecordDetailsReqVO);
     public UserMypageResVO myInfo(String username);
     public int modifyInfo(UserInfoModifyReqVO userInfoModifyReqVO);
@@ -47,4 +48,7 @@ public interface MypageMapper {
 
     // 단답형 단어 테스트 결과 상세 조회
     ArrayList<ShortRecordListDetailResVO> shortRecordDetailList(ShortRecordDetailParamVO shortRecordDetailParamVO);
+
+    // 즐겨찾기 메모 등록
+    int updateFavoriteMemo(updateFavoriteMemoReqVO updateFavoriteMemoReqVO);
 }
