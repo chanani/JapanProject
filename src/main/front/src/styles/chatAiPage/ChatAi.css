@@ -1,107 +1,143 @@
 .chat-box-all {
-  padding: 30px 0 30px 0;
+  padding: 20px 0;
   background-color: #f6f7fb;
 }
-.chat-box{
+
+.chat-box {
   margin: 0 auto;
-  border: 1px solid #777;
-  min-height: 530px;
-  padding: 10px;
+  width: 100%;
+  max-width: 970px;
+  border: 1px solid #ddd;
+  min-height: 600px;
+  padding: 15px;
   border-radius: 10px;
-  background-color: white;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+  background-color: #fff;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-header {
   display: flex;
   justify-content: space-between;
-  height: 28px;
+  align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
 }
-.chat-header > a {
-  color: black;
+
+.chat-header h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.icon-btn {
+  cursor: pointer;
+  color: #555;
 }
 
 .text-box {
-  height: 450px;
-  padding: 10px 15px 10px 15px;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 15px;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-  scrollbar-width: none; 
+  gap: 15px;
 }
 
-
-.input-box {
-  border: 1px solid #777;
-  min-height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
+.text-content h4 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
-.gpt-form {
-  display: flex;
-}
-.send-btn {color: #777;}
-.send-btn:hover {color: #8cdac7; }
-.gpt-form > textarea {
-  box-sizing: border-box;
-  max-height: 35px;
-  outline: none;
+.text-content p {
+  margin: 0;
   font-size: 15px;
-  resize: none;
-  border: none;
-  word-spacing: -5px;
-  padding-top: 7px;
+  color: #333;
 }
 
 .wait-question {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-content: center;
+  height: 100%;
   text-align: center;
-}
-.wait-question > p {
-  font-size: 20px;
-  margin-top: 7px;
+  color: #888;
 }
 
-.wait{
-  display: flex;
+.wait {
   justify-content: center;
+  align-items: center;
 }
 
-.text-content > p {
-  margin-bottom: 20px;
+.input-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 10px 0;
+  border-top: 1px solid #ddd;
 }
 
-/* 600 이하 */
-@media(max-width : 600px){
-  .chat-box{
+.gpt-chat-box-all {
+  width: 100%;
+}
+
+
+.gpt-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 900px;
+}
+
+
+.gpt-input {
+  flex-grow: 1;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  outline: none;
+  resize: none; /* 크기 조절 비활성화 */
+  height: 50px; /* 기본 높이 설정 */
+  background-color: #f6f7fb; /* 일관성 있는 배경 색상 */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.gpt-input:focus {
+  border-color: #8cdac7; /* 포커스 시 색상 변화 */
+  box-shadow: 0 0 5px rgba(140, 218, 199, 0.5);
+}
+
+.send-btn {
+  margin-left: 10px;
+  color: #777;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.send-btn:hover {
+  color: #8cdac7;
+  transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .chat-box {
     width: 370px;
   }
-  .gpt-form > textarea {
-    width: 300px;
+}
+
+@media (min-width: 600px) {
+  .chat-box {
+    width: 570px;
   }
 }
 
-/* 600 이상 */
-@media(min-width : 600px){
-  .chat-box{
-    width: 570px;
-  }
-  .gpt-form > textarea {
-    width: 500px;
-  }
-}
- /* 1000 이상 */
-@media(min-width : 1000px){
-  .chat-box{
+@media (min-width: 1000px) {
+  .chat-box {
     width: 970px;
-  }
-  .gpt-form > textarea {
-    width: 900px;
   }
 }

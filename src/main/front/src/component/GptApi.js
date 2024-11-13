@@ -1,54 +1,50 @@
-import axios from "axios";
 import {useContext, useState} from "react";
 import {FaArrowAltCircleUp} from "react-icons/fa";
 import {tokenInfoContext} from "./TokenInfoProvider";
 import {axiosInstance} from "../api";
 import {toast} from "react-toastify";
 
-const GptApi = ({handleQuestion, handleResponse}) => {
+const GptApi = ({ handleQuestion, handleResponse }) => {
     const [question, setQuestion] = useState('');
-    const {userRole, username, accessToken, refreshToken} = useContext(tokenInfoContext);
+    const { userRole, username, accessToken, refreshToken } = useContext(tokenInfoContext);
 
-    // GptApi 호출
     const handleSubmit = async () => {
-        let content = '';
-        if (question === '') return toast.error('질문을 입력해주세요.');
-        handleQuestion(question); // 질문 전달
+        if (question.trim() === '') return toast.error('질문을 입력해주세요.');
+        handleQuestion(question);
         setQuestion('');
 
-        await axiosInstance.post('chat-gpt/send',{
-            message: question
-        }).then((res) => {
-            content = res.data.choices[0].message.content;
-        })
-            .catch((error) => {
-                toast.error("오류가 발생하였습니다. 관리자에게 문의해주세요.");
-            });
-        handleQuestion(question);
-        handleResponse(content); // 답변 전달
-
-
-    }
+        try {
+            const res = await axiosInstance.post('chat-gpt/send', { message: question });
+            const content = res.data.choices[0].message.content;
+            handleResponse(content);
+        } catch (error) {
+            toast.error("오류가 발생하였습니다. 관리자에게 문의해주세요.");
+        }
+    };
 
     const enterHandle = (event) => {
-        if (event.key !== 'Enter') return
-        // handleSubmit();
-    }
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            handleSubmit();
+        }
+    };
 
     return (
-        <div className="gpt-box-all">
+        <div className="gpt-chat-box-all">
             <form className="gpt-form">
-        <textarea value={question}
-                  onChange={(e) => setQuestion(e.target.value)}
-                  onKeyDown={enterHandle}
-                  placeholder="질문을 해주세요 :)"
-        />
-
-                <FaArrowAltCircleUp onClick={handleSubmit} size={33} className="send-btn"/>
-
+                <textarea
+                    className="gpt-input"
+                    rows="2"
+                    value={question}
+                    onChange={(e) => setQuestion(e.target.value)}
+                    onKeyDown={enterHandle}
+                    placeholder="질문을 해주세요 :)"
+                />
+                <FaArrowAltCircleUp onClick={handleSubmit} size={33} className="send-btn" />
             </form>
         </div>
-    )
-}
+    );
+};
+
 
 export default GptApi;
