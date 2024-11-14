@@ -35,17 +35,18 @@
 }
 
 .favorite-page-study-box > div {
-    border : 1px solid #cccccc;
+    border: 1px solid #cccccc;
     border-radius: 5px;
     padding: 6px 10px;
     color: #4a4a4a;
     cursor: pointer;
     transition: all .12s cubic-bezier(.47, 0, .745, .715);
 }
+
 .favorite-page-study-box > div:hover {
     background-color: rgba(40, 135, 244, 0.65);
     color: white;
-    border : 1px solid #f1f1f1;
+    border: 1px solid #f1f1f1;
 }
 
 .favorite-data {
@@ -100,7 +101,7 @@
     flex-direction: column;
 }
 
-.favorite-data-memo  span {
+.favorite-data-memo span {
     font-size: 13px;
     color: #4a4a4a;
 }
@@ -118,10 +119,20 @@
 }
 
 .favorite-data-memo button {
-    border : none;
+    border: none;
     background-color: transparent;
     font-size: 13px;
     cursor: pointer;
+}
+
+.favorite-date-memo-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.favorite-date-memo-title > p {
+    font-size: 10px;
 }
 
 .favorite-data-memo > input {
@@ -131,6 +142,8 @@
     margin-top: 5px;
     outline: none;
 }
+
+
 .favorite-data-memo-input {
     border-bottom: 1px solid #777;
 }

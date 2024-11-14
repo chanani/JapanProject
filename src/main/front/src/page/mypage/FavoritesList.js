@@ -178,7 +178,10 @@ const FavoritesList = () => {
                             {editingIndex === index ? (
                                 <div className="favorite-data-memo">
                                     <div>
-                                        <span>메모</span>
+                                        <article className="favorite-date-memo-title">
+                                            <span>메모</span>
+                                            <p>({memoInput.length}/40)</p>
+                                        </article>
                                         <div>
                                             <BiSave onClick={() => saveMemo(index)}/>
                                             <IoClose onClick={() => setEditingIndex(null)}/>
@@ -189,7 +192,7 @@ const FavoritesList = () => {
                                         type="text"
                                         value={memoInput}
                                         onChange={(e) => setMemoInput(e.target.value)}
-                                        maxLength={20}
+                                        maxLength={40}
                                         className="favorite-data-memo-input"
                                     />
                                     <hr/>
@@ -199,13 +202,12 @@ const FavoritesList = () => {
                                     <div className="favorite-data-memo">
                                         <div>
                                             <span>메모</span>
-
                                         </div>
                                         <input type="text"
                                                value={item?.favoriteMemo}
                                                readOnly={true}
                                                className="favorite-data-memo-input-value"
-                                               maxLength={30}/>
+                                               maxLength={40}/>
                                     </div>
                                 )
                             )}
