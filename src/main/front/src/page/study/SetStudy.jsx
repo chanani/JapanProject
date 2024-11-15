@@ -57,7 +57,7 @@ const SetStudy = () => {
         })
             .then((res) => {
                 navigator('/study', {state: {soloWord: res.data.data}});
-                window.scroll(0,0)
+                window.scroll(0, 0)
             })
             .catch((err) => toast.error(err));
     }
@@ -71,11 +71,28 @@ const SetStudy = () => {
             }
         })
             .then((res) => {
+                console.log(res.data.data.content)
                 setData(res.data.data.content);
                 setTotalData(res.data.data.totalElements)
             })
             .catch((e) => toast.error('조회 중 오류가 발생하였습니다.'));
     }
+
+    // 좋아요 핸들러
+    const likeHandle = (index) => {
+        if (userRole === 'none') return toast.error('로그인 후 이용해주세요.');
+        axiosInstance.get('study/modify-like', {
+            params: {
+                username: username,
+                wsNum: data[index].wsNum
+            }
+        })
+            .then((res) => {
+                getDataAPI();
+            })
+            .catch((e) => toast.error('좋아요 중 오류가 발생했습니다.'));
+    }
+
     // 데이터 조회
     useEffect(() => {
         getDataAPI();
@@ -117,7 +134,11 @@ const SetStudy = () => {
                             </div>
                             <div className="solo-study-setting-box">
                                 <p>{item.wsHits}</p>
-                                <TiHeartOutline size={20}/>
+                                <TiHeartOutline size={20}
+                                                onClick={(event) => {
+                                                    event.stopPropagation();
+                                                    likeHandle(index);
+                                                }}/>
                             </div>
                         </div>
                     ))}

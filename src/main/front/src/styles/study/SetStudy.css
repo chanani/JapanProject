@@ -34,7 +34,9 @@
 }
 
 
-
+.solo-study-setting-box > svg:hover {
+    color: red;
+}
 
 
 
