@@ -69,4 +69,16 @@ public interface StudyMapper {
 
     // 즐겨찾기 목록 조회
     ArrayList<GetFavoriteListResVO> getFavoriteList(GetFavoriteListReqVO requestVO);
+
+    // 단어 세트 목록 좋아요 수정
+    int setStudyModifyLike(SetStudyModifyLikeReqVO requestVO);
+
+    // 좋아요 여부 확인
+    Integer getLikeState(SetStudyModifyLikeReqVO requestVO);
+
+    // 좋아요 등록
+    int setStudyRegisterLike(SetStudyModifyLikeReqVO requestVO);
+
+    // 누적 좋아요 수정
+    int setStudyHitsUpdate(SetStudyModifyLikeReqVO requestVO);
 }

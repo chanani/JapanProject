@@ -51,4 +51,7 @@ public interface StudyService {
 
     // 즐겨찾기 목록 조회
     PageResponse<GetFavoriteListResVO> getFavoriteList(GetFavoriteListReqVO requestVO);
+
+    // 단어 세트 목록 좋아요 수정
+    void setStudyModifyLike(SetStudyModifyLikeReqVO requestVO);
 }

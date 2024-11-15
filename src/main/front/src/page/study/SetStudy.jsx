@@ -81,11 +81,9 @@ const SetStudy = () => {
     // 좋아요 핸들러
     const likeHandle = (index) => {
         if (userRole === 'none') return toast.error('로그인 후 이용해주세요.');
-        axiosInstance.get('study/modify-like', {
-            params: {
-                username: username,
-                wsNum: data[index].wsNum
-            }
+        axiosInstance.post('study/modify-like', {
+            username: username,
+            wsNum: data[index].wsNum
         })
             .then((res) => {
                 getDataAPI();

@@ -258,5 +258,24 @@ public class StudyController {
                 .build();
     }
 
+    /**
+     * 단어 세트 학습 좋아요 API
+     *
+     * @param requestVO
+     * @return : ResponseData.class
+     * @author : chanhan
+     * @since 2024-11-15 오후 11:27
+     */
+    @PostMapping("/modify-like")
+    public ResponseData modifyLike(@Valid @RequestBody SetStudyModifyLikeReqVO requestVO) {
+
+         studyService.setStudyModifyLike(requestVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .message("좋아요 수정이 정상적으로 반영되었습니다.")
+                .build();
+    }
+
 
 }

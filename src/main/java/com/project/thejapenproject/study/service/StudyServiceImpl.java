@@ -238,5 +238,41 @@ public class StudyServiceImpl implements StudyService {
         return responseData;
     }
 
+    // 단어 세트 목록 좋아요 수정
+    @Override
+    @Transactional
+    public void setStudyModifyLike(SetStudyModifyLikeReqVO requestVO) {
+        // 좋아요 누른 상태인지 확인
+        int likeState = studyMapper.getLikeState(requestVO);
+        requestVO.setLikeState(likeState);
+
+        switch (likeState){
+            case 0 : {
+                // 좋아요 누르지 않았을 경우 좋아요 등록
+                if(studyMapper.setStudyRegisterLike(requestVO) < 1){
+                    throw new OperationErrorException(ErrorCode.FAIL_TO_MODIFY_LIKE);
+                }
+                break;
+            }
+            case 1 : {
+                // 좋아요 누른 상태일 경우 취소
+                if(studyMapper.setStudyModifyLike(requestVO) < 1){
+                    throw new OperationErrorException(ErrorCode.FAIL_TO_MODIFY_LIKE);
+                }
+                break;
+            }
+        }
+
+        // 누적 좋아요 업데이트
+        if(studyMapper.setStudyHitsUpdate(requestVO) < 1){
+            throw new OperationErrorException(ErrorCode.FAIL_TO_MODIFY_LIKE);
+        }
+
+
+
+
+
+    }
+
 
 }

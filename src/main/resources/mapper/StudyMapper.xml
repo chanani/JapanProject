@@ -306,4 +306,52 @@
         offset #{offset}
     </select>
 
+    <!-- 좋아요 여부 확인 -->
+    <select id="getLikeState"
+            parameterType="com.project.thejapenproject.study.vo.SetStudyModifyLikeReqVO"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*)
+        FROM word_set_like
+        WHERE state = 0
+        AND username = #{username}
+        AND ws_num = #{wsNum}
+    </select>
+
+    <!-- 단어 세트 목록 좋아요 추가 -->
+    <insert id="setStudyRegisterLike"
+            parameterType="com.project.thejapenproject.study.vo.SetStudyModifyLikeReqVO">
+        INSERT INTO word_set_like (ws_num,
+                                   username)
+        VALUES (#{wsNum},
+                #{username})
+    </insert>
+
+    <!-- 단어 세트 목록 좋아요 수정 -->
+    <update id="setStudyModifyLike"
+            parameterType="com.project.thejapenproject.study.vo.SetStudyModifyLikeReqVO">
+        UPDATE word_set_like
+        SET state      = 1,
+            updated_at = NOW()
+        WHERE username = #{username}
+          AND ws_num = #{wsNum}
+    </update>
+
+    <!-- 단어 세트 목록 누적 좋아요 수정 -->
+    <update id="setStudyHitsUpdate"
+            parameterType="com.project.thejapenproject.study.vo.SetStudyModifyLikeReqVO">
+        UPDATE word_set
+        SET
+            <choose>
+                <when test="likeState == 0">
+                    ws_hits = ws_hits + 1
+                </when>
+                <when test="likeState == 1">
+                    ws_hits = ws_hits - 1
+                </when>
+            </choose>,
+        updated_at = NOW()
+        WHERE username = #{username}
+        AND ws_num = #{wsNum}
+    </update>
+
 </mapper>
