@@ -4,7 +4,7 @@ import {useContext, useEffect, useState} from "react";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {axiosInstance} from "../../api";
 import {toast} from "react-toastify";
-import {TiHeartOutline} from "react-icons/ti";
+import {TiHeartOutline, TiHeartFullOutline} from "react-icons/ti";
 import PageNation from "../../component/PageNation";
 import usePagination from "../../hook/usePagination";
 
@@ -71,9 +71,8 @@ const SetStudy = () => {
             }
         })
             .then((res) => {
-                console.log(res.data.data.content)
                 setData(res.data.data.content);
-                setTotalData(res.data.data.totalElements)
+                setTotalData(res.data.data.totalElements);
             })
             .catch((e) => toast.error('조회 중 오류가 발생하였습니다.'));
     }
@@ -132,11 +131,20 @@ const SetStudy = () => {
                             </div>
                             <div className="solo-study-setting-box">
                                 <p>{item.wsHits}</p>
+                                {!!!item.favorite ?
                                 <TiHeartOutline size={20}
                                                 onClick={(event) => {
                                                     event.stopPropagation();
                                                     likeHandle(index);
                                                 }}/>
+                                    :
+                                <TiHeartFullOutline size={20}
+                                                    onClick={(event) => {
+                                                        event.stopPropagation();
+                                                        likeHandle(index);
+                                                    }}
+                                                    color={"red"}/>
+                                }
                             </div>
                         </div>
                     ))}
