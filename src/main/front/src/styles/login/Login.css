@@ -74,16 +74,10 @@
     height: 45px;
     font-size: 16px;
     margin-bottom: 10px;
+    outline-color : #2fb7f6;
 }
 .login-info .login-input-box > .login-password_input{
     padding: 12px 40px 12px 16px;
-}
-
-.login-info .login-input-box > input:hover {
-    outline: 0.3px solid gray;
-}
-.login-info .login-input-box > input:focus {
-    outline: 1px solid black;
 }
 
 
@@ -129,16 +123,17 @@
 .login-btn-box > button {
     width: 100%;
     border-radius: 8px;
-    background-color: black;
+    background-color: #4255ff;
     color: white;
     height: 48px;
     font-size: 17px;
     border: none;
     margin-bottom: 40px;
+    cursor: pointer;
 }
 
 .login-btn-box > button:hover {
-    background-color: #1b1b1b;
+    background-color: #4c16f9;
 }
 
 .login-hr {
@@ -183,6 +178,7 @@
 .login-join-btn {
     color: #0090d4;
     font-weight: bold;
+    cursor: pointer;
 }
 
 /* 비밀번호 보이기/숨기기 */

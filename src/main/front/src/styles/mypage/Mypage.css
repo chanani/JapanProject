@@ -74,7 +74,7 @@
 .mypage-btn-box-off > button {
     width: 45%;
     border-radius: 8px;
-    background-color: black;
+    background-color: #4255ff;
     color: white;
     height: 48px;
     font-size: 17px;
@@ -84,7 +84,7 @@
 .mypage-btn-box-on > button {
     width: 100%;
     border-radius: 8px;
-    background-color: black;
+    background-color: #4255ff;
     color: white;
     height: 48px;
     font-size: 17px;
@@ -93,7 +93,7 @@
 }
 .mypage-btn-box-on > button:hover,
 .mypage-btn-box-off > button:hover {
-    background-color: #1b1b1b;
+    background-color: #4c16f9;
 }
 
 
@@ -174,7 +174,7 @@
 
 .withdrawal-box > input {
     border: none;
-    color: #A0D995;
+    color: #2eb9f5;
     background-color: white;
     margin-left: 5px;
 }

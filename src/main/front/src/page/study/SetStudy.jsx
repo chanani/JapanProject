@@ -129,7 +129,7 @@ const SetStudy = () => {
                                 <p>{item.username}</p>
 
                             </div>
-                            <div className="solo-study-setting-box">
+                            <div className="solo-study-setting-box set-study-setting-box">
                                 <p>{item.wsHits}</p>
                                 {!!!item.favorite ?
                                 <TiHeartOutline size={20}

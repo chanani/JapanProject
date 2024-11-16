@@ -101,14 +101,15 @@ header .left-menu {
 
 .right-menu > .login-box > .join-btn {
     margin-left: 14px;
-    background-color: black;
+    background-color: #1b86ff;
     color: white;
+    cursor: pointer;
 }
 
 .right-menu > .login-box > .login-btn {
     background-color: white;
     color: black;
-
+    cursor: pointer;
 }
 
 .right-menu > .login-box > button {
@@ -128,7 +129,7 @@ header .left-menu {
 
 .right-menu > .login-box > .join-btn:hover,
 .mobile-login-box > .mobile-join-btn:hover{
-    background-color: #1b1b1b;
+    background-color: #0075ff;
 }
 
 /* 모바일 시 메뉴 버튼 */
