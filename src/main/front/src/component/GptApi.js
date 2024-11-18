@@ -1,15 +1,17 @@
-import {useContext, useState} from "react";
-import {FaArrowAltCircleUp} from "react-icons/fa";
-import {tokenInfoContext} from "./TokenInfoProvider";
-import {axiosInstance} from "../api";
-import {toast} from "react-toastify";
+import { useContext, useState } from "react";
+import { FaArrowAltCircleUp } from "react-icons/fa";
+import { tokenInfoContext } from "./TokenInfoProvider";
+import { axiosInstance } from "../api";
+import { toast } from "react-toastify";
 
 const GptApi = ({ handleQuestion, handleResponse }) => {
     const [question, setQuestion] = useState('');
+    const [isComposing, setIsComposing] = useState(false); // IME 상태 관리
     const { userRole, username, accessToken, refreshToken } = useContext(tokenInfoContext);
 
     const handleSubmit = async () => {
         if (question.trim() === '') return toast.error('질문을 입력해주세요.');
+        console.log("question : ", question);
         handleQuestion(question);
         setQuestion('');
 
@@ -23,7 +25,7 @@ const GptApi = ({ handleQuestion, handleResponse }) => {
     };
 
     const enterHandle = (event) => {
-        if (event.key === 'Enter' && !event.shiftKey) {
+        if (event.key === 'Enter' && !event.shiftKey && !isComposing) {
             event.preventDefault();
             handleSubmit();
         }
@@ -38,13 +40,14 @@ const GptApi = ({ handleQuestion, handleResponse }) => {
                     value={question}
                     onChange={(e) => setQuestion(e.target.value)}
                     onKeyDown={enterHandle}
-                    placeholder="질문을 해주세요 :)"
+                    onCompositionStart={() => setIsComposing(true)} // IME 시작
+                    onCompositionEnd={() => setIsComposing(false)}   // IME 종료
+                    placeholder="질문을 해주세요."
                 />
                 <FaArrowAltCircleUp onClick={handleSubmit} size={33} className="send-btn" />
             </form>
         </div>
     );
 };
-
 
 export default GptApi;

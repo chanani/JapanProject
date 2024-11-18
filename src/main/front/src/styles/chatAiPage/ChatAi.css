@@ -42,7 +42,7 @@
   padding: 15px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  height: 300px;
 }
 
 .text-content h4 {
@@ -52,17 +52,19 @@
 }
 
 .text-content p {
-  margin: 0;
+
   font-size: 15px;
   color: #333;
+  margin-bottom: 5px;
 }
 
 .wait-question {
   display: flex;
   flex-direction: column;
-  height: 100%;
+
   text-align: center;
   color: #888;
+  height: auto;
 }
 
 .wait {
@@ -94,7 +96,7 @@
 
 .gpt-input {
   flex-grow: 1;
-  padding: 12px;
+  padding: 15px 10px;
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 14px;
