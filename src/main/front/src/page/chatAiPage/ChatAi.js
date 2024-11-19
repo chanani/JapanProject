@@ -7,6 +7,8 @@ import {Link, useNavigate} from 'react-router-dom';
 import {FaQuestion} from "react-icons/fa";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {toast} from "react-toastify";
+import { TbLayoutSidebarRightCollapse } from "react-icons/tb";
+import { HiPencilAlt } from "react-icons/hi";
 
 const ChatAi = () => {
 
@@ -34,12 +36,25 @@ const ChatAi = () => {
             navigate("/login");
         }
     });
+
+    // 스크롤 이동
     useEffect(() => {
         if (textBoxRef.current) textBoxRef.current.scrollTop = textBoxRef.current.scrollHeight;
     }, [questions]);
 
     return (
         <div className="chat-box-all">
+
+            <div className={"chat-side-bar"}>
+                <div className={"chat-side-bar-header-box"}>
+                    <TbLayoutSidebarRightCollapse size={27}/>
+                    <HiPencilAlt size={25} onClick={handleClear} className="icon-btn"/>
+                </div>
+                <div className={"chat-side-bar-content-box"}>
+                    asd
+                </div>
+            </div>
+
             <div className="chat-box">
                 <div className="chat-header">
                     <FaRegPenToSquare size={19} onClick={handleClear} className="icon-btn"/>
