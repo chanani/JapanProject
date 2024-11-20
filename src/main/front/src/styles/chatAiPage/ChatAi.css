@@ -130,8 +130,9 @@
 .chat-side-bar {
     border: 1px solid #ddd;
     width: 250px;
-    background-color: gray;
+    background-color: white;
     border-radius: 0 10px 10px 0;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .chat-side-bar-header-box {
@@ -139,11 +140,28 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 12px;
+    padding: 12px 8px 5px 8px;
 }
 
 .chat-side-bar-content-box {
-    padding: 10px 18px;
+    padding: 10px 14px;
+    overflow-y: auto;
+    height: 554px;
+}
+
+.chat-side-bar-content {
+    margin-bottom: 10px;
+}
+
+.chat-side-bar-content > span {
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.chat-side-bar-content > p {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 5px;
 }
 
 

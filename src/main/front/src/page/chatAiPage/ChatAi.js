@@ -7,15 +7,16 @@ import {Link, useNavigate} from 'react-router-dom';
 import {FaQuestion} from "react-icons/fa";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {toast} from "react-toastify";
-import { TbLayoutSidebarRightCollapse } from "react-icons/tb";
-import { HiPencilAlt } from "react-icons/hi";
+import {TbLayoutSidebarRightCollapse} from "react-icons/tb";
+import {HiPencilAlt} from "react-icons/hi";
 
 const ChatAi = () => {
 
-    const { userRole } = useContext(tokenInfoContext);
+    const {userRole} = useContext(tokenInfoContext);
     const navigate = useNavigate();
-    const [questions, setQuestions] = useState([]);
-    const [answers, setAnswers] = useState([]);
+    const [questions, setQuestions] = useState([]); // 질문
+    const [answers, setAnswers] = useState([]); // 답변
+    const [record, setRecord] = useState([]); // 이전 대화 기록
     const textBoxRef = useRef(null);
 
     const handleQuestion = (question) => {
@@ -51,7 +52,25 @@ const ChatAi = () => {
                     <HiPencilAlt size={25} onClick={handleClear} className="icon-btn"/>
                 </div>
                 <div className={"chat-side-bar-content-box"}>
-                    asd
+                    <div className={"chat-side-bar-content"}>
+                        <span>오늘</span>
+                        <p>일본어 질문합니다.</p>
+                        <p>일본어 잘하는 방법</p>
+                        <p>일본 여행 경로</p>
+                    </div>
+                    <div className={"chat-side-bar-content"}>
+                        <span>지난 7일</span>
+                        <p>일본어 질문합니다.</p>
+                        <p>일본어 잘하는 방법</p>
+                        <p>일본 여행 경로</p>
+                    </div>
+                    <div className={"chat-side-bar-content"}>
+                        <span>이 외</span>
+                        <p>일본어 질문합니다.</p>
+                        <p>일본어 잘하는 방법</p>
+                        <p>일본 여행 경로</p>
+                    </div>
+
                 </div>
             </div>
 
@@ -59,12 +78,12 @@ const ChatAi = () => {
                 <div className="chat-header">
                     <FaRegPenToSquare size={19} onClick={handleClear} className="icon-btn"/>
                     <h4>ChatAi</h4>
-                    <Link to={"/"}><MdOutlineSensorDoor size={22} className="icon-btn" /></Link>
+                    <Link to={"/"}><MdOutlineSensorDoor size={22} className="icon-btn"/></Link>
                 </div>
                 <div className={"text-box" + (questions.length === 0 ? " wait" : "")} ref={textBoxRef}>
                     {questions.length === 0 ? (
                         <div className="wait-question">
-                            <p><FaQuestion size={30} /></p>
+                            <p><FaQuestion size={30}/></p>
                             <p>How can I help you today?</p>
                         </div>
                     ) : (
@@ -79,7 +98,7 @@ const ChatAi = () => {
                     )}
                 </div>
                 <div className="input-box">
-                <GptApi handleQuestion={handleQuestion} handleResponse={handleResponse} />
+                    <GptApi handleQuestion={handleQuestion} handleResponse={handleResponse}/>
                 </div>
             </div>
         </div>
