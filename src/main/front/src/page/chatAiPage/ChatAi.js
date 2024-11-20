@@ -18,6 +18,7 @@ const ChatAi = () => {
     const [answers, setAnswers] = useState([]); // 답변
     const [record, setRecord] = useState([]); // 이전 대화 기록
     const textBoxRef = useRef(null);
+    const [sideBar, setSideBar] = useState(true);
 
     const handleQuestion = (question) => {
         setQuestions([...questions, question]);
@@ -29,6 +30,10 @@ const ChatAi = () => {
         setQuestions([]);
         setAnswers([]);
     };
+
+    const sideBarToggle = () => {
+        setSideBar((perv) => !perv);
+    }
 
     // 질문이 추가될 때마다 스크롤을 최하단으로 이동
     useEffect(() => {
@@ -46,45 +51,55 @@ const ChatAi = () => {
     return (
         <div className="chat-box-all">
 
-            <div className={"chat-side-bar"}>
-                <div className={"chat-side-bar-header-box"}>
-                    <TbLayoutSidebarRightCollapse size={27}/>
+            <div className={"chat-side-bar " + (sideBar ? "side-bar-active" : "")}>
+                <div className="chat-side-bar-header-box">
+                    <TbLayoutSidebarRightCollapse size={27} onClick={sideBarToggle}/>
                     <HiPencilAlt size={25} onClick={handleClear} className="icon-btn"/>
                 </div>
-                <div className={"chat-side-bar-content-box"}>
+                <div className={"chat-side-bar-content-box " + (sideBar ? "" : "side-bar-content-active")}>
                     <div className={"chat-side-bar-content"}>
                         <span>오늘</span>
                         <p>일본어 질문합니다.</p>
                         <p>일본어 잘하는 방법</p>
                         <p>일본 여행 경로</p>
                     </div>
-                    <div className={"chat-side-bar-content"}>
+                    <div className="chat-side-bar-content">
                         <span>지난 7일</span>
                         <p>일본어 질문합니다.</p>
                         <p>일본어 잘하는 방법</p>
                         <p>일본 여행 경로</p>
                     </div>
-                    <div className={"chat-side-bar-content"}>
+                    <div className="chat-side-bar-content">
                         <span>이 외</span>
                         <p>일본어 질문합니다.</p>
                         <p>일본어 잘하는 방법</p>
                         <p>일본 여행 경로</p>
                     </div>
-
                 </div>
             </div>
 
+
             <div className="chat-box">
                 <div className="chat-header">
-                    <FaRegPenToSquare size={19} onClick={handleClear} className="icon-btn"/>
+                    {sideBar ?
+                        <div></div>
+                        :
+                        <TbLayoutSidebarRightCollapse size={24}
+                                                      className="icon-btn"
+                        onClick={sideBarToggle}/>
+                    }
                     <h4>ChatAi</h4>
-                    <Link to={"/"}><MdOutlineSensorDoor size={22} className="icon-btn"/></Link>
+                    {sideBar ?
+                        <div></div>
+                        :
+                        <FaRegPenToSquare size={19} onClick={handleClear} className="icon-btn"/>
+                    }
                 </div>
                 <div className={"text-box" + (questions.length === 0 ? " wait" : "")} ref={textBoxRef}>
                     {questions.length === 0 ? (
                         <div className="wait-question">
                             <p><FaQuestion size={30}/></p>
-                            <p>How can I help you today?</p>
+                            <p>무엇을 도와드릴까요?</p>
                         </div>
                     ) : (
                         questions.map((item, index) => (
