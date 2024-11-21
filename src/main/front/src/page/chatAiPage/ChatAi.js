@@ -56,7 +56,7 @@ const ChatAi = () => {
                     <TbLayoutSidebarRightCollapse size={27} onClick={sideBarToggle}/>
                     <HiPencilAlt size={25} onClick={handleClear} className="icon-btn"/>
                 </div>
-                <div className={"chat-side-bar-content-box " + (sideBar ? "" : "side-bar-content-active")}>
+                <div className={"chat-side-bar-content-box " + (sideBar ? "side-bar-content-not-active" : "side-bar-content-active")}>
                     <div className={"chat-side-bar-content"}>
                         <span>오늘</span>
                         <p>일본어 질문합니다.</p>

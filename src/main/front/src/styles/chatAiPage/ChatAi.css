@@ -54,7 +54,6 @@
 }
 
 .text-content p {
-
     font-size: 15px;
     color: #333;
     margin-bottom: 5px;
@@ -129,16 +128,16 @@
 /* 사이드 바 */
 .chat-side-bar {
     border: 1px solid #ddd;
-    width: 0px;
+    width: 0;
     background-color: white;
     border-radius: 0 10px 10px 0;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    transition: width 0.3s ease-in-out;
-}
-.chat-side-bar.side-bar-active {
-    width: 250px;
+    transition: all 0.3s ease-in-out;
 }
 
+.chat-box-all svg {
+    cursor: pointer;
+}
 
 .chat-side-bar-header-box {
     width: 100%;
@@ -153,8 +152,12 @@
     overflow-y: auto;
     height: 554px;
 }
-.side-bar-content-active {
+.chat-side-bar-content-box {
     display: none;
+}
+
+.side-bar-content-not-active {
+    display: block;
 }
 
 .chat-side-bar-content {
@@ -178,16 +181,32 @@
     .chat-box {
         width: 370px;
     }
+    .chat-side-bar.side-bar-active {
+        width: 0;
+    }
+
+    .chat-side-bar-content-box {
+        display: none;
+    }
+
 }
 
 @media (min-width: 600px) {
     .chat-box {
         width: 570px;
     }
+    .chat-side-bar.side-bar-active {
+        width: 210px;
+    }
+
 }
 
 @media (min-width: 1000px) {
     .chat-box {
         width: 970px;
     }
+    .chat-side-bar.side-bar-active {
+        width: 250px;
+    }
+
 }
