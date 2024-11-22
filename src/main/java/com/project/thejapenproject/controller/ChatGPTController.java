@@ -3,6 +3,7 @@ package com.project.thejapenproject.controller;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
+import com.project.thejapenproject.gpt.service.GptService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -27,14 +28,15 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ChatGPTController {
 
+    private final GptService gptService;
+
     @Value("${openai.secret-key}")
     private String key;
-
 
     @NoneCheckToken
     @PostMapping("/send")
     public ResponseEntity<String> send(@RequestBody Map<String, String> map) {
-        if(Objects.isNull(map)) {
+        if (Objects.isNull(map)) {
             throw new RequestParameterException(ErrorCode.WRONG_PARAM);
         }
         RestTemplate restTemplate = new RestTemplate();
@@ -47,10 +49,16 @@ public class ChatGPTController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Authorization", "Bearer " + key);
         ArrayList<Message> list = new ArrayList<>();
-        list.add(new Message("user",map.get("message")));
+        list.add(new Message("user", map.get("message")));
         Body body = new Body("gpt-3.5-turbo", list);
         RequestEntity<Body> httpEntity = new RequestEntity<>(body, httpHeaders, HttpMethod.POST, uri);
         ResponseEntity<String> exchange = restTemplate.exchange(httpEntity, String.class);
+
+        // DB에 내용 저장(ai_record 테이블 순서, 질문, 답변)
+        gptService.registerGptData(map.get("username"),
+                map.get("aiRecordNum"),
+                map.get("message"),
+                exchange.getBody());
 
         return ResponseEntity.ok(exchange.getBody());
     }

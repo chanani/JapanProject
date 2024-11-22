@@ -16,7 +16,11 @@ const GptApi = ({ handleQuestion, handleResponse }) => {
         setQuestion('');
 
         try {
-            const res = await axiosInstance.post('chat-gpt/send', { message: question });
+            const res = await axiosInstance.post('chat-gpt/send', {
+                username : username,
+                message: question,
+                aiRecordNum : 1
+            });
             const content = res.data.choices[0].message.content;
             handleResponse(content);
         } catch (error) {

@@ -51,6 +51,9 @@ public enum ErrorCode {
     // 프로필 이미지 수정
     FAIL_TO_IMAGE(HttpStatus.INTERNAL_SERVER_ERROR, "이미지 수정에 실패하였습니다."),
 
+    // GPT
+    FAIL_TO_GPT_RECORD(HttpStatus.INTERNAL_SERVER_ERROR, "데이터 저장에 실패하였습니다."),
+
     // record
     FAIL_TO_REMOVE_RECORD(HttpStatus.INTERNAL_SERVER_ERROR, "삭제에 실패하였습니다."),
 
