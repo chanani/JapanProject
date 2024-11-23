@@ -52,10 +52,10 @@
         ORDER BY
             <choose>
                 <when test='sort == "new"'>
-                    F.favorite_num ASC
+                    F.favorite_num DESC
                 </when>
                 <when test='sort == "older"'>
-                    F.favorite_num DESC
+                    F.favorite_num ASC
                 </when>
                 <when test='sort == "random"'>
                     RAND()
