@@ -35,6 +35,7 @@ const ChatAi = () => {
     const handleClear = () => {
         setQuestions([]);
         setAnswers([]);
+        setCurrentRecord(0);
     };
 
     // 사이드바 on, off 핸들러
@@ -71,7 +72,7 @@ const ChatAi = () => {
             return navigate("/login");
         }
         recordAPI();
-    }, [userRole]);
+    }, [userRole, currentRecord]);
 
 
     // 질문이 추가될 때마다 스크롤을 최하단으로 이동

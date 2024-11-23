@@ -46,17 +46,6 @@ public class GptServiceImpl implements GptService {
             e.printStackTrace();
         }
 
-        // 조회 후 이미 존재하는 ai_record_num 일경우 detail 데이터만 추가
-
-
-        // ai_record 테이블에 등록
-        if (gptMapper.registerGptData(username,
-                aiRecordNum,
-                message,
-                answer) < 1) {
-            throw new OperationErrorException(ErrorCode.FAIL_TO_GPT_RECORD);
-        }
-
         // ai_record_detail 테이블에 등록
         if (gptMapper.registerGptDataDetail(username,
                 aiRecordNum,
