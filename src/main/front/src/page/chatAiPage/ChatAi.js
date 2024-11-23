@@ -2,8 +2,7 @@ import React, {useState, useEffect, useRef, useContext} from "react";
 import "../../styles/chatAiPage/ChatAi.css";
 import GptApi from "../../component/GptApi";
 import {FaRegPenToSquare} from "react-icons/fa6";
-import {MdOutlineSensorDoor} from "react-icons/md";
-import {Link, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {FaQuestion} from "react-icons/fa";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {toast} from "react-toastify";
@@ -18,8 +17,9 @@ const ChatAi = () => {
     const [questions, setQuestions] = useState([]); // 질문
     const [answers, setAnswers] = useState([]); // 답변
     const [record, setRecord] = useState([]); // 이전 대화 기록
-    const textBoxRef = useRef(null);
-    const [sideBar, setSideBar] = useState(true);
+    const textBoxRef = useRef(null); // 질문 박스
+    const [sideBar, setSideBar] = useState(true); // 사이드 바 활성화 여부
+    const [currentRecord, setCurrentRecord] = useState(0); // 현재 질문 목록 번호
 
     // 질문 저장 핸들러
     const handleQuestion = (question) => {
@@ -42,6 +42,10 @@ const ChatAi = () => {
         setSideBar((perv) => !perv);
     };
 
+    // 현재 진행 중인 질문 목록 번호 핸들러
+    const aiCurrentHandle = (aiRecordNum) => {
+        setCurrentRecord(aiRecordNum);
+    }
     // 이전 대화 목록 조회 API
     const recordAPI = () => {
         axiosInstance.get('chat-gpt/record', {
@@ -50,7 +54,8 @@ const ChatAi = () => {
             }
         })
             .then((res) => {
-                console.log(res.data)
+                setRecord(res.data.data);
+                console.log(res.data.data)
             })
             .catch((e) => toast.error('이전 기록 조회 중 오류가 발생하였습니다.'));
     };
@@ -68,7 +73,6 @@ const ChatAi = () => {
     }, []);
 
 
-
     // 질문이 추가될 때마다 스크롤을 최하단으로 이동
     useEffect(() => {
         if (textBoxRef.current) textBoxRef.current.scrollTop = textBoxRef.current.scrollHeight;
@@ -84,24 +88,45 @@ const ChatAi = () => {
                 </div>
                 <div
                     className={"chat-side-bar-content-box " + (sideBar ? "side-bar-content-not-active" : "side-bar-content-active")}>
-                    <div className={"chat-side-bar-content"}>
-                        <span>오늘</span>
-                        <p>일본어 질문합니다.</p>
-                        <p>일본어 잘하는 방법</p>
-                        <p>일본 여행 경로</p>
-                    </div>
-                    <div className="chat-side-bar-content">
-                        <span>지난 7일</span>
-                        <p>일본어 질문합니다.</p>
-                        <p>일본어 잘하는 방법</p>
-                        <p>일본 여행 경로</p>
-                    </div>
-                    <div className="chat-side-bar-content">
-                        <span>이 외</span>
-                        <p>일본어 질문합니다.</p>
-                        <p>일본어 잘하는 방법</p>
-                        <p>일본 여행 경로</p>
-                    </div>
+                    {record?.some(item => item.createdAt === "오늘") && (
+                        <div className="chat-side-bar-content">
+                            <span>오늘</span>
+                            {record?.filter(item => item.createdAt === "오늘")
+                                .map((item, index) => (
+                                    <p key={index}
+                                    className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
+                                    onClick={(e) => aiCurrentHandle(item.aiRecordNum)}>{item.aiRecordTitle}</p>
+                                ))}
+                        </div>
+                    )}
+                    {record?.some(item => item.createdAt === "지난 7일") && (
+                        <div className="chat-side-bar-content">
+                            <span>지난 7일</span>
+                            {record?.filter(item => item.createdAt === "지난 7일")
+                                .map((item, index) => (
+                                    <p key={index}
+                                       className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
+                                       onClick={(e) => aiCurrentHandle(item.aiRecordNum)}>{item.aiRecordTitle}</p>
+                                ))}
+                        </div>
+                    )}
+
+                    {record?.some(item => item.createdAt === "이 외") && (
+                        <div className="chat-side-bar-content">
+                            <span>이 외</span>
+                            {record?.filter(item => item.createdAt === "이 외")
+                                .map((item, index) => (
+                                    <p key={index}
+                                       className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
+                                       onClick={(e) => aiCurrentHandle(item.aiRecordNum)}>{item.aiRecordTitle}</p>
+                                ))}
+                        </div>
+                    )}
+                    {record.length === 0 &&
+                        <div className={"chat-side-bar-not-content"}>
+                            <p>이전 데이터가 없습니다.</p>
+                        </div>
+                    }
                 </div>
             </div>
 

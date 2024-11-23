@@ -36,7 +36,7 @@
                ai_record_title,
                CASE
                    WHEN created_at >= CURDATE() THEN '오늘'
-                   WHEN created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) THEN '7일 이내'
+                   WHEN created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) THEN '지난 7일'
                    ELSE '이 외'
                    END AS created_at
         FROM ai_record
