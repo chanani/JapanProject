@@ -9,10 +9,11 @@ import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {toast} from "react-toastify";
 import {TbLayoutSidebarRightCollapse} from "react-icons/tb";
 import {HiPencilAlt} from "react-icons/hi";
+import {axiosInstance} from "../../api";
 
 const ChatAi = () => {
 
-    const {userRole} = useContext(tokenInfoContext);
+    const {userRole, username} = useContext(tokenInfoContext);
     const navigate = useNavigate();
     const [questions, setQuestions] = useState([]); // 질문
     const [answers, setAnswers] = useState([]); // 답변
@@ -20,30 +21,55 @@ const ChatAi = () => {
     const textBoxRef = useRef(null);
     const [sideBar, setSideBar] = useState(true);
 
+    // 질문 저장 핸들러
     const handleQuestion = (question) => {
         setQuestions([...questions, question]);
     };
+
+    // 답변 저장 핸들러
     const handleResponse = (answer) => {
         setAnswers([...answers, answer]);
     };
+
+    // 새로운 페이지 생성 핸들러
     const handleClear = () => {
         setQuestions([]);
         setAnswers([]);
     };
 
+    // 사이드바 on, off 핸들러
     const sideBarToggle = () => {
         setSideBar((perv) => !perv);
-    }
+    };
 
-    // 질문이 추가될 때마다 스크롤을 최하단으로 이동
+    // 이전 대화 목록 조회 API
+    const recordAPI = () => {
+        axiosInstance.get('chat-gpt/record', {
+            params: {
+                username: username
+            }
+        })
+            .then((res) => {
+                console.log(res.data)
+            })
+            .catch((e) => toast.error('이전 기록 조회 중 오류가 발생하였습니다.'));
+    };
+
+    // 이전 대화 목록 상세 조회 API
+
+
+    // 권한 확인
     useEffect(() => {
         if (userRole === "none") {
             toast.error("로그인 후 이용해주세요.");
-            navigate("/login");
+            return navigate("/login");
         }
-    });
+        recordAPI();
+    }, []);
 
-    // 스크롤 이동
+
+
+    // 질문이 추가될 때마다 스크롤을 최하단으로 이동
     useEffect(() => {
         if (textBoxRef.current) textBoxRef.current.scrollTop = textBoxRef.current.scrollHeight;
     }, [questions]);
@@ -56,7 +82,8 @@ const ChatAi = () => {
                     <TbLayoutSidebarRightCollapse size={27} onClick={sideBarToggle}/>
                     <HiPencilAlt size={25} onClick={handleClear} className="icon-btn"/>
                 </div>
-                <div className={"chat-side-bar-content-box " + (sideBar ? "side-bar-content-not-active" : "side-bar-content-active")}>
+                <div
+                    className={"chat-side-bar-content-box " + (sideBar ? "side-bar-content-not-active" : "side-bar-content-active")}>
                     <div className={"chat-side-bar-content"}>
                         <span>오늘</span>
                         <p>일본어 질문합니다.</p>
@@ -86,7 +113,7 @@ const ChatAi = () => {
                         :
                         <TbLayoutSidebarRightCollapse size={24}
                                                       className="icon-btn"
-                        onClick={sideBarToggle}/>
+                                                      onClick={sideBarToggle}/>
                     }
                     <h4>ChatAi</h4>
                     {sideBar ?

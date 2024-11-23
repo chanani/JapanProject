@@ -1,22 +1,23 @@
 package com.project.thejapenproject.controller;
 
+import com.project.thejapenproject.command.ResponseData;
+import com.project.thejapenproject.command.UsernameReqVO;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.gpt.service.GptService;
+import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +62,27 @@ public class ChatGPTController {
                 exchange.getBody());
 
         return ResponseEntity.ok(exchange.getBody());
+    }
+
+    /**
+     * Ai 학습 이전 내역 조회 API
+     *
+     * @Param username : username을 통해 목록 조회
+     * @author : chanhan
+     * @since : 2024-11-23 오후 01:48
+     **/
+    @GetMapping("/record")
+    @ResponseBody
+    public ResponseData record(@Valid @ModelAttribute UsernameReqVO usernameReqVO) {
+
+        // 목록 조회
+        ArrayList<AiRecordListResVO> recordList = gptService.getAiRecordList(usernameReqVO.getUsername());
+
+        return ResponseData.builder()
+                .message(recordList.isEmpty() ? "이전 기록이 없습니다." : "정상적으로 조회 되었습니다.")
+                .data(recordList)
+                .code(HttpStatus.OK.value())
+                .build();
     }
 
 

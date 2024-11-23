@@ -29,5 +29,21 @@
              , #{answer})
     </insert>
 
+    <!-- ai 이전 질문 목록 조회 -->
+    <select id="getAiRecordList"
+            resultType="com.project.thejapenproject.gpt.vo.AiRecordListResVO">
+        SELECT ai_record_num,
+               ai_record_title,
+               CASE
+                   WHEN created_at >= CURDATE() THEN '오늘'
+                   WHEN created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) THEN '7일 이내'
+                   ELSE '이 외'
+                   END AS created_at
+        FROM ai_record
+        WHERE state = 0
+          AND username = #{username}
+        ORDER BY ai_record_num DESC
+
+    </select>
 
 </mapper>

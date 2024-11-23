@@ -1,7 +1,10 @@
 package com.project.thejapenproject.gpt.service;
 
+import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.ArrayList;
 
 @Mapper
 public interface GptMapper {
@@ -18,4 +21,6 @@ public interface GptMapper {
                               @Param("message") String message,
                               @Param("answer") String answer);
 
+    // ai 이전 질문 목록 조회
+    ArrayList<AiRecordListResVO> getAiRecordList(String username);
 }
