@@ -2,6 +2,7 @@ package com.project.thejapenproject.gpt.service;
 
 
 import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
+import com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO;
 
 import java.util.ArrayList;
 
@@ -12,4 +13,7 @@ public interface GptService {
 
     // ai 질문 이전 목록 조회
     ArrayList<AiRecordListResVO> getAiRecordList(String username);
+
+    // 질문 그룹 등록
+    int registerRecordGroup(RegisterRecordGroupReqVO registerRecordGroupReqVO);
 }

@@ -2,11 +2,13 @@ package com.project.thejapenproject.controller;
 
 import com.project.thejapenproject.command.ResponseData;
 import com.project.thejapenproject.command.UsernameReqVO;
+import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.gpt.service.GptService;
 import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
+import com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -84,6 +86,32 @@ public class ChatGPTController {
                 .code(HttpStatus.OK.value())
                 .build();
     }
+
+    /**
+     * Ai 학습 첫 질문 시 그룹 생성 API
+     *
+     * @param registerRecordGroupReqVO : 그룹 등록 VO
+     * @return : 생성된 그룹 번호
+     * @author : chanhan
+     * @since : 2024-11-23 오후 05:01
+     **/
+    @PostMapping("/register-record")
+    @ResponseBody
+    public ResponseData registerRecord(@Valid @RequestBody RegisterRecordGroupReqVO registerRecordGroupReqVO) {
+
+        // 질문 그룹 등록
+        if (gptService.registerRecordGroup(registerRecordGroupReqVO) < 0) {
+            throw new OperationErrorException(ErrorCode.FAIL_TO_GPT_RECORD);
+        }
+
+        return ResponseData.builder()
+                .message("정상적으로 등록 되었습니다.")
+                .data(registerRecordGroupReqVO.getAiRecordNum())
+                .code(HttpStatus.OK.value())
+                .build();
+    }
+
+
 
 
     @AllArgsConstructor

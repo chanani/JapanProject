@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
+import com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,5 +72,11 @@ public class GptServiceImpl implements GptService {
     @Override
     public ArrayList<AiRecordListResVO> getAiRecordList(String username) {
         return gptMapper.getAiRecordList(username);
+    }
+
+    // 질문 그룹 등록
+    @Override
+    public int registerRecordGroup(RegisterRecordGroupReqVO registerRecordGroupReqVO) {
+        return gptMapper.registerRecordGroup(registerRecordGroupReqVO);
     }
 }

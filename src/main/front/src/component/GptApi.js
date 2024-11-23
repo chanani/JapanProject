@@ -1,25 +1,37 @@
-import { useContext, useState } from "react";
-import { FaArrowAltCircleUp } from "react-icons/fa";
-import { tokenInfoContext } from "./TokenInfoProvider";
-import { axiosInstance } from "../api";
-import { toast } from "react-toastify";
+import {useContext, useState} from "react";
+import {FaArrowAltCircleUp} from "react-icons/fa";
+import {tokenInfoContext} from "./TokenInfoProvider";
+import {axiosInstance} from "../api";
+import {toast} from "react-toastify";
 
-const GptApi = ({ handleQuestion, handleResponse }) => {
+const GptApi = ({handleQuestion, handleResponse, currentRecord, setCurrentRecord}) => {
     const [question, setQuestion] = useState('');
     const [isComposing, setIsComposing] = useState(false); // IME 상태 관리
-    const { userRole, username, accessToken, refreshToken } = useContext(tokenInfoContext);
+    const {username} = useContext(tokenInfoContext);
 
     const handleSubmit = async () => {
         if (question.trim() === '') return toast.error('질문을 입력해주세요.');
-        console.log("question : ", question);
         handleQuestion(question);
         setQuestion('');
 
+        // 처음으로 질문을 할경우 질문 그룹 생성
+        if(currentRecord === 0) {
+            await axiosInstance.post('chat-gpt/register-record', {
+                username : username,
+                message : question
+            })
+                .then((res) => {
+                    // 생성된 그룹 번호로 등록
+                    setCurrentRecord(res.data.data);
+                })
+                .catch((e) => toast.error('오류가 발생하였습니다. 관리자에게 문의해주세요.'));
+        }
+
         try {
             const res = await axiosInstance.post('chat-gpt/send', {
-                username : username,
+                username: username,
                 message: question,
-                aiRecordNum : 1
+                aiRecordNum: currentRecord
             });
             const content = res.data.choices[0].message.content;
             handleResponse(content);
@@ -48,7 +60,7 @@ const GptApi = ({ handleQuestion, handleResponse }) => {
                     onCompositionEnd={() => setIsComposing(false)}   // IME 종료
                     placeholder="질문을 해주세요."
                 />
-                <FaArrowAltCircleUp onClick={handleSubmit} size={33} className="send-btn" />
+                <FaArrowAltCircleUp onClick={handleSubmit} size={33} className="send-btn"/>
             </form>
         </div>
     );

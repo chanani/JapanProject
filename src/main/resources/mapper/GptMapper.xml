@@ -46,4 +46,14 @@
 
     </select>
 
+    <insert id="registerRecordGroup"
+            parameterType="com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO"
+            useGeneratedKeys="true"
+            keyProperty="aiRecordNum">
+        INSERT INTO ai_record (username,
+                               ai_record_title)
+        VALUES (#{username},
+                #{message})
+    </insert>
+
 </mapper>

@@ -46,6 +46,7 @@ const ChatAi = () => {
     const aiCurrentHandle = (aiRecordNum) => {
         setCurrentRecord(aiRecordNum);
     }
+
     // 이전 대화 목록 조회 API
     const recordAPI = () => {
         axiosInstance.get('chat-gpt/record', {
@@ -70,7 +71,7 @@ const ChatAi = () => {
             return navigate("/login");
         }
         recordAPI();
-    }, []);
+    }, [userRole]);
 
 
     // 질문이 추가될 때마다 스크롤을 최하단으로 이동
@@ -94,8 +95,8 @@ const ChatAi = () => {
                             {record?.filter(item => item.createdAt === "오늘")
                                 .map((item, index) => (
                                     <p key={index}
-                                    className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
-                                    onClick={(e) => aiCurrentHandle(item.aiRecordNum)}>{item.aiRecordTitle}</p>
+                                       className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
+                                       onClick={(e) => aiCurrentHandle(item.aiRecordNum)}>{item.aiRecordTitle}</p>
                                 ))}
                         </div>
                     )}
@@ -165,7 +166,10 @@ const ChatAi = () => {
                     )}
                 </div>
                 <div className="input-box">
-                    <GptApi handleQuestion={handleQuestion} handleResponse={handleResponse}/>
+                    <GptApi handleQuestion={handleQuestion}
+                            handleResponse={handleResponse}
+                            currentRecord={currentRecord}
+                            setCurrentRecord={setCurrentRecord}/>
                 </div>
             </div>
         </div>
