@@ -1,7 +1,9 @@
 package com.project.thejapenproject.gpt.service;
 
+import com.project.thejapenproject.gpt.vo.AiRecordDetailListResVO;
 import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
 import com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO;
+import com.project.thejapenproject.gpt.vo.param.GetRecordDetailReqVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,4 +29,8 @@ public interface GptMapper {
 
     // 질문 그룹 등록
     int registerRecordGroup(RegisterRecordGroupReqVO registerRecordGroupReqVO);
+
+    // ai 질문 이전 상세 목록 조회
+    ArrayList<AiRecordDetailListResVO> getAiRecordDetailList(GetRecordDetailReqVO getRecordDetailReqVO);
+
 }

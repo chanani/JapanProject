@@ -46,6 +46,9 @@ const ChatAi = () => {
     // 현재 진행 중인 질문 목록 번호 핸들러
     const aiCurrentHandle = (aiRecordNum) => {
         setCurrentRecord(aiRecordNum);
+        setQuestions([]);
+        setAnswers([]);
+        recordDetailAPI(aiRecordNum);
     }
 
     // 이전 대화 목록 조회 API
@@ -57,13 +60,28 @@ const ChatAi = () => {
         })
             .then((res) => {
                 setRecord(res.data.data);
-                console.log(res.data.data)
             })
             .catch((e) => toast.error('이전 기록 조회 중 오류가 발생하였습니다.'));
     };
 
     // 이전 대화 목록 상세 조회 API
+    const recordDetailAPI = (aiRecordNum) => {
+        axiosInstance.get('chat-gpt/record-detail', {
+            params: {
+                username: username,
+                aiRecordNum : aiRecordNum,
+            }
+        })
+            .then((res) => {
+                const data = res.data.data; // 조회된 데이터 배열
+                const newQuestions = data.map(item => item.aiRecordSendData); // 질문 데이터 추출
+                const newAnswers = data.map(item => item.aiRecordAnswerData); // 답변 데이터 추출
 
+                setQuestions(newQuestions);
+                setAnswers(newAnswers);
+            })
+            .catch((e) => toast.error('이전 기록 조회 중 오류가 발생하였습니다.'));
+    };
 
     // 권한 확인
     useEffect(() => {

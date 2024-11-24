@@ -14,24 +14,31 @@ const GptApi = ({handleQuestion, handleResponse, currentRecord, setCurrentRecord
         handleQuestion(question);
         setQuestion('');
 
-        // 처음으로 질문을 할경우 질문 그룹 생성
-        if(currentRecord === 0) {
-            await axiosInstance.post('chat-gpt/register-record', {
-                username : username,
-                message : question
-            })
-                .then((res) => {
-                    // 생성된 그룹 번호로 등록
-                    setCurrentRecord(res.data.data);
-                })
-                .catch((e) => toast.error('오류가 발생하였습니다. 관리자에게 문의해주세요.'));
+        // 처음으로 질문을 할 경우 질문 그룹 생성
+        if (currentRecord === 0) {
+            try {
+                const res = await axiosInstance.post('chat-gpt/register-record', {
+                    username: username,
+                    message: question
+                });
+                const newRecord = res.data.data; // 생성된 그룹 번호
+                setCurrentRecord(newRecord); // 상태 업데이트
+                await sendMessage(newRecord); // 상태 업데이트 이후 API 호출
+            } catch (e) {
+                toast.error('오류가 발생하였습니다. 관리자에게 문의해주세요.');
+            }
+        } else {
+            await sendMessage(currentRecord); // 기존 recordNum으로 API 호출
         }
+    };
 
+    // 질문 요청
+    const sendMessage = async (recordNum) => {
         try {
             const res = await axiosInstance.post('chat-gpt/send', {
                 username: username,
                 message: question,
-                aiRecordNum: currentRecord
+                aiRecordNum: recordNum
             });
             const content = res.data.choices[0].message.content;
             handleResponse(content);
@@ -39,6 +46,9 @@ const GptApi = ({handleQuestion, handleResponse, currentRecord, setCurrentRecord
             toast.error("오류가 발생하였습니다. 관리자에게 문의해주세요.");
         }
     };
+
+
+
 
     const enterHandle = (event) => {
         if (event.key === 'Enter' && !event.shiftKey && !isComposing) {

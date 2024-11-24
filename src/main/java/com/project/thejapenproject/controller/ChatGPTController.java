@@ -7,8 +7,10 @@ import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.gpt.service.GptService;
+import com.project.thejapenproject.gpt.vo.AiRecordDetailListResVO;
 import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
 import com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO;
+import com.project.thejapenproject.gpt.vo.param.GetRecordDetailReqVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +59,7 @@ public class ChatGPTController {
         RequestEntity<Body> httpEntity = new RequestEntity<>(body, httpHeaders, HttpMethod.POST, uri);
         ResponseEntity<String> exchange = restTemplate.exchange(httpEntity, String.class);
 
+        System.out.println("number : " + map.get("aiRecordNum"));
         // DB에 내용 저장(ai_record 테이블 순서, 질문, 답변)
         gptService.registerGptData(map.get("username"),
                 map.get("aiRecordNum"),
@@ -111,7 +114,26 @@ public class ChatGPTController {
                 .build();
     }
 
+    /**
+     * Ai 학습 이전 상세 내역 조회 API
+     *
+     * @param getRecordDetailReqVO : username을 통해 목록 조회
+     * @author : chanhan
+     * @since : 2024-11-24 오후 01:48
+     **/
+    @GetMapping("/record-detail")
+    @ResponseBody
+    public ResponseData record(@Valid @ModelAttribute GetRecordDetailReqVO getRecordDetailReqVO) {
 
+        // 목록 조회
+        ArrayList<AiRecordDetailListResVO> recordDetailList = gptService.getAiRecordDetailList(getRecordDetailReqVO);
+
+        return ResponseData.builder()
+                .message("정상적으로 조회 되었습니다.")
+                .data(recordDetailList)
+                .code(HttpStatus.OK.value())
+                .build();
+    }
 
 
     @AllArgsConstructor

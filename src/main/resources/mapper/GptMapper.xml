@@ -46,6 +46,7 @@
 
     </select>
 
+    <!-- 질문 그룹 등록 -->
     <insert id="registerRecordGroup"
             parameterType="com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO"
             useGeneratedKeys="true"
@@ -55,5 +56,19 @@
         VALUES (#{username},
                 #{message})
     </insert>
+
+    <!-- ai 질문 이전 상세 목록 조회 -->
+    <select id="getAiRecordDetailList"
+            parameterType="com.project.thejapenproject.gpt.vo.param.GetRecordDetailReqVO"
+            resultType="com.project.thejapenproject.gpt.vo.AiRecordDetailListResVO">
+        SELECT ai_record_detail_num,
+               ai_record_send_data,
+               ai_record_answer_data
+        FROM ai_record_detail
+        WHERE state = 0
+          AND username = #{username}
+          AND ai_record_num = #{aiRecordNum}
+        ORDER BY ai_record_detail_num ASC
+    </select>
 
 </mapper>
