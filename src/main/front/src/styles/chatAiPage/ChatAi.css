@@ -157,11 +157,11 @@
     display: none;
 }
 
-.chat-side-bar-content-box p {
+.chat-side-bar-content-box div {
     transition: all 0.3s ease;
 }
 
-.chat-side-bar-content p:hover {
+.chat-side-bar-content div:hover {
     background-color: #c0cef6;
     border-radius: 5px;
 }
@@ -185,13 +185,20 @@
     padding-left: 5px;
 }
 
-.chat-side-bar-content > p {
-    font-size: 15px;
+.chat-side-bar-content > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 3px 5px;
+}
+
+.chat-side-bar-content > div > p {
+    font-size: 15px;
     white-space: nowrap; /* 텍스트를 한 줄로 유지 */
     overflow: hidden; /* 넘치는 텍스트를 숨김 */
     text-overflow: ellipsis; /* 넘치는 텍스트를 ...으로 표시 */
     cursor: pointer;
+    width: 80%;
 }
 
 
