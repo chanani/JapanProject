@@ -8,6 +8,7 @@ import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.gpt.vo.AiRecordDetailListResVO;
 import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
 import com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO;
+import com.project.thejapenproject.gpt.vo.RemoveRecordGroupReqVO;
 import com.project.thejapenproject.gpt.vo.param.GetRecordDetailReqVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -75,5 +76,11 @@ public class GptServiceImpl implements GptService {
     @Override
     public ArrayList<AiRecordDetailListResVO> getAiRecordDetailList(GetRecordDetailReqVO getRecordDetailReqVO) {
         return gptMapper.getAiRecordDetailList(getRecordDetailReqVO);
+    }
+
+    // ai 질문 그룹 삭제
+    @Override
+    public int removeRecordAi(RemoveRecordGroupReqVO removeRecordGroupReqVO) {
+        return gptMapper.removeRecordAi(removeRecordGroupReqVO);
     }
 }

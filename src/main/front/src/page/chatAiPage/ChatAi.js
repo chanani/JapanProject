@@ -53,9 +53,16 @@ const ChatAi = () => {
 
     // 기록 삭제 핸들러 & API
     const removeRecordHandle = (aiRecordNum) => {
-        
+        axiosInstance.post('chat-gpt/remove-record', {
+            username: username,
+            aiRecordNum: aiRecordNum
+        })
+            .then((res) => {
+                toast.success('정상적으로 삭제 되었습니다.');
+                recordAPI();
+            })
+            .catch((err) => toast.error('기록 삭제 중 오류가 발생하였습니다.'));
     }
-
 
 
     // 이전 대화 목록 조회 API
@@ -121,8 +128,9 @@ const ChatAi = () => {
                             {record?.filter(item => item.createdAt === "오늘")
                                 .map((item, index) => (
                                     <div className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
-                                         onClick={(e) => aiCurrentHandle(item.aiRecordNum)}>
-                                        <p key={index}>{item.aiRecordTitle}</p>
+                                         onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
+                                         key={index}>
+                                        <p>{item.aiRecordTitle}</p>
                                     </div>
                                 ))}
                         </div>
@@ -134,13 +142,14 @@ const ChatAi = () => {
                             {record?.filter(item => item.createdAt === "지난 7일")
                                 .map((item, index) => (
                                     <div className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
-                                         onClick={(e) => aiCurrentHandle(item.aiRecordNum)}>
-                                        <p key={index}>{item.aiRecordTitle}</p>
+                                         onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
+                                         key={index}>
+                                        <p>{item.aiRecordTitle}</p>
                                         <FaRegTrashAlt size={14}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            removeRecordHandle(item.aiRecordNum);
-                                        }}/>
+                                                       onClick={(e) => {
+                                                           e.stopPropagation();
+                                                           removeRecordHandle(item.aiRecordNum);
+                                                       }}/>
 
                                     </div>
                                 ))}
@@ -153,8 +162,9 @@ const ChatAi = () => {
                             {record?.filter(item => item.createdAt === "이 외")
                                 .map((item, index) => (
                                     <div className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
-                                         onClick={(e) => aiCurrentHandle(item.aiRecordNum)}>
-                                        <p key={index}>{item.aiRecordTitle}</p>
+                                         onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
+                                         key={index}>
+                                        <p>{item.aiRecordTitle}</p>
                                     </div>
                                 ))}
                         </div>

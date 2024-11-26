@@ -3,6 +3,7 @@ package com.project.thejapenproject.gpt.service;
 import com.project.thejapenproject.gpt.vo.AiRecordDetailListResVO;
 import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
 import com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO;
+import com.project.thejapenproject.gpt.vo.RemoveRecordGroupReqVO;
 import com.project.thejapenproject.gpt.vo.param.GetRecordDetailReqVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -32,5 +33,8 @@ public interface GptMapper {
 
     // ai 질문 이전 상세 목록 조회
     ArrayList<AiRecordDetailListResVO> getAiRecordDetailList(GetRecordDetailReqVO getRecordDetailReqVO);
+
+    // ai 질문 그룹 삭제
+    int removeRecordAi(RemoveRecordGroupReqVO removeRecordGroupReqVO);
 
 }

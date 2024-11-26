@@ -10,6 +10,7 @@ import com.project.thejapenproject.gpt.service.GptService;
 import com.project.thejapenproject.gpt.vo.AiRecordDetailListResVO;
 import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
 import com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO;
+import com.project.thejapenproject.gpt.vo.RemoveRecordGroupReqVO;
 import com.project.thejapenproject.gpt.vo.param.GetRecordDetailReqVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -131,6 +132,28 @@ public class ChatGPTController {
         return ResponseData.builder()
                 .message("정상적으로 조회 되었습니다.")
                 .data(recordDetailList)
+                .code(HttpStatus.OK.value())
+                .build();
+    }
+
+    /**
+     * Ai 학습 질문 그룹 삭제 API
+     *
+     * @param removeRecordGroupReqVO : 그룹 삭제 VO
+     * @author : chanhan
+     * @since : 2024-11-26 오후 10:43
+     **/
+    @PostMapping("/remove-record")
+    @ResponseBody
+    public ResponseData removeRecord(@Valid @RequestBody RemoveRecordGroupReqVO removeRecordGroupReqVO) {
+
+        // 질문 그룹 등록
+        if (gptService.removeRecordAi(removeRecordGroupReqVO) < 0) {
+            throw new OperationErrorException(ErrorCode.FAIL_TO_GPT_RECORD);
+        }
+
+        return ResponseData.builder()
+                .message("정상적으로 삭제 되었습니다.")
                 .code(HttpStatus.OK.value())
                 .build();
     }

@@ -71,4 +71,13 @@
         ORDER BY ai_record_detail_num ASC
     </select>
 
+    <!-- ai 질문 그룹 삭제 -->
+    <update id="removeRecordAi"
+            parameterType="com.project.thejapenproject.gpt.vo.RemoveRecordGroupReqVO">
+        UPDATE ai_record
+        SET state      = 1,
+            updated_at = NOW()
+        WHERE username = #{username}
+          AND ai_record_num = #{aiRecordNum}
+    </update>
 </mapper>
