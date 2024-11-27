@@ -169,8 +169,29 @@ public class StudyServiceImpl implements StudyService {
 
     // 단어 셋트 목록 조회
     @Override
-    public ArrayList<SoloStudyGetUserListResVO> getSetList(UsernameReqVO usernameReqVO) {
-        return studyMapper.getSetList(usernameReqVO);
+    public PageResponse<SoloStudyGetUserListResVO> getSetList(GetSetDataReqVO getSetDataReqVO) {
+
+        Integer page = getSetDataReqVO.getPage();
+        Integer size = getSetDataReqVO.getSize();
+        getSetDataReqVO.setOffset((page - 1) * size);
+
+        // 목록 조회
+        ArrayList<SoloStudyGetUserListResVO> setWordList = studyMapper.getSetList(getSetDataReqVO);
+
+
+        // 총 데이터 수 계산
+        int totalElements = setWordList.size() != 0 ? setWordList.get(0).getTotalElements() : 0;
+        // 총 페이지 수 계산
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        PageResponse<SoloStudyGetUserListResVO> responseData = PageResponse.<SoloStudyGetUserListResVO>builder()
+                .content(setWordList)
+                .page(page)
+                .size(size)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .build();
+        return responseData;
     }
 
     // 단어 셋트 목록 상세 조회

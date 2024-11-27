@@ -173,13 +173,13 @@ public class StudyController {
 
     /**
      * 단어 셋트 목록 조회 API
-     * @param usernameReqVO
+     * @param getSetDataReqVO
      * @return
      */
-    @PostMapping("/get-set-data")
-    public ResponseData getWordSetData(@Valid @RequestBody UsernameReqVO usernameReqVO) {
+    @GetMapping("/get-set-data")
+    public ResponseData getWordSetData(@Valid @ModelAttribute GetSetDataReqVO getSetDataReqVO) {
 
-        ArrayList<SoloStudyGetUserListResVO> setList = studyService.getSetList(usernameReqVO);
+        PageResponse<SoloStudyGetUserListResVO> setList = studyService.getSetList(getSetDataReqVO);
 
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())

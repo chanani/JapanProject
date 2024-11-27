@@ -53,7 +53,7 @@ public interface StudyMapper {
     public int wordSetRemove(SoloStudyRemoveReqVO requestVO);
 
     // 단어 세트 목록 조회
-    public ArrayList<SoloStudyGetUserListResVO> getSetList(UsernameReqVO usernameReqVO);
+    public ArrayList<SoloStudyGetUserListResVO> getSetList(GetSetDataReqVO getSetDataReqVO);
 
     // 단어 세트 목록 상세 조회
     public ArrayList<GetWordSetDetailListResVO> getSetDetailList(GetWordSetDetailListReqVO requestVO);

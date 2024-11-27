@@ -174,14 +174,15 @@
 
     <!-- 단어 세트 목록 조회 -->
     <select id="getSetList"
-            parameterType="com.project.thejapenproject.command.UsernameReqVO"
+            parameterType="com.project.thejapenproject.study.vo.GetSetDataReqVO"
             resultType="com.project.thejapenproject.study.vo.SoloStudyGetUserListResVO">
         SELECT WS.username,
                WS.ws_num,
                WS.ws_title,
                WS.ws_hits,
                COUNT(*) AS total_count,
-               I.image_path AS user_icon_path
+               I.image_path AS user_icon_path,
+               COUNT(*) OVER() AS total_elements
         FROM word_set WS
             JOIN word_set_detail WSD
         ON WS.ws_num = WSD.ws_num
@@ -192,6 +193,7 @@
           AND WS.username = #{username}
         GROUP BY WSD.ws_num, I.image_path
         ORDER BY WSD.ws_num DESC
+        limit #{size} offset #{offset}
     </select>
 
     <!-- 단어 세트 목록 상세 조회 -->

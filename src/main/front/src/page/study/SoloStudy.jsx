@@ -5,7 +5,9 @@ import {useContext, useEffect, useState} from "react";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {toast} from "react-toastify";
 import {axiosInstance} from "../../api";
-import {TiHeartOutline, TiHeartFullOutline} from "react-icons/ti";
+import {TiHeartOutline} from "react-icons/ti";
+import PageNation from "../../component/PageNation";
+import usePagination from "../../hook/usePagination";
 
 
 const SoloStudy = () => {
@@ -14,6 +16,24 @@ const SoloStudy = () => {
     const [data, setData] = useState([]); // 세트 단어 목록
     const [choiceModal, setChoiceModal] = useState(false); // 선택창 모달 여부
     const [choiceSetNum, setChoiceSetNum] = useState(0);
+
+    const [totalData, setTotalData] = useState(0);
+    const dataPerPage = 8; // 보여줄 목록 수
+    const pagesPerRange = 10; // 표시할 페이지 수
+
+    // 페이지 네이션 hook 관리
+    const {
+        currentPage,
+        totalPages,
+        startPage,
+        endPage,
+        handlePageChange
+    } = usePagination({
+        totalItems: totalData,
+        itemsPerPage: dataPerPage,
+        pagesPerRange
+    });
+
 
     // 등록 페이지로 이동
     const handleAddPage = () => {
@@ -87,11 +107,17 @@ const SoloStudy = () => {
 
     // 데이터 조회 API
     const getDataAPI = () => {
-        axiosInstance.post('study/get-set-data', {
-            username: username
+        axiosInstance.get('study/get-set-data', {
+            params: {
+                username: username,
+                size : dataPerPage,
+                page : currentPage
+            }
         })
             .then((res) => {
-                setData(res.data.data);
+                console.log(res.data.data)
+                setData(res.data.data.content);
+                setTotalData(res.data.data.totalElements)
             })
             .catch((e) => toast.error('조회 중 오류가 발생하였습니다.'));
     }
@@ -103,7 +129,7 @@ const SoloStudy = () => {
         } else {
             getDataAPI();
         }
-    }, []);
+    }, [currentPage]);
 
 
     return (
@@ -118,6 +144,10 @@ const SoloStudy = () => {
                 </div>
 
                 <div className="solo-study-content-all">
+                    <div className="solo-study-content-add-box"
+                         onClick={handleAddPage}>
+                        <FaPlus size={28} color="rgb(130 129 129)"/>
+                    </div>
                     {data?.map((item, index) => (
                         <div className="solo-study-content-box" key={index}
                              onClick={() => handleOnModal(index)}>
@@ -146,12 +176,19 @@ const SoloStudy = () => {
                             </div>
                         </div>
                     ))}
-                    <div className="solo-study-content-add-box"
-                         onClick={handleAddPage}>
-                        <FaPlus size={28} color="rgb(130 129 129)"/>
-                    </div>
+
 
                 </div>
+
+                <PageNation
+                    currentPage={currentPage}
+                    startPage={startPage}
+                    endPage={endPage}
+                    totalPages={totalPages}
+                    handlePageChange={handlePageChange}
+                    pagesPerRange={pagesPerRange}
+                    divMargin={"30px 0"}
+                />
 
                 <div className='set-study-my-page'>
                     <button onClick={handleListMove}>단어 세트 목록으로</button>

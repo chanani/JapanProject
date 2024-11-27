@@ -38,7 +38,7 @@ public interface StudyService {
     public void removeSoloStudy(SoloStudyRemoveReqVO requestVO);
 
     // 단어 셋트 목록 조회
-    public ArrayList<SoloStudyGetUserListResVO> getSetList(UsernameReqVO usernameReqVO);
+    public PageResponse<SoloStudyGetUserListResVO> getSetList(GetSetDataReqVO getSetDataReqVO);
 
     // 단어 셋트 목록 상세 조회
     public ArrayList<GetWordSetDetailListResVO> getSetDetailList(GetWordSetDetailListReqVO requestVO);
