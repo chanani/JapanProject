@@ -107,6 +107,33 @@
     font-weight: 700;
 }
 
+.my-page-modify-password-back-ground {
+    width: 100vw;
+    height: 100vh;
+    position:fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #3535359e;
+    z-index: 1000;
+}
+.my-page-modify-password {
+    z-index: 3;
+    position:fixed;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    height: auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+}
+
+
 
 
 .id-box,

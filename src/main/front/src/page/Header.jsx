@@ -31,7 +31,7 @@ function Header() {
     //　테스트 페이지 Link list
     const testLink = [["/choice-test", "단어 선택 테스트"], ["/short-test", "단어 단답형 테스트"]];
     // 마이페이지 Link list
-    const myLink = [["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ["/mypage", "나의정보"]];
+    const myLink = [["/mypage", "나의정보"], ["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ];
     // 그 외 페이지 Link list
     const otherLink = [["/chatAi", "Ai학습"], ["/search", "통합검색"], ["/translator", '번역기']];
     // 고객지원 list

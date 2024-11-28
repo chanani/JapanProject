@@ -5,7 +5,7 @@ import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {useNavigate} from "react-router-dom";
 import {axiosInstance} from "../../api";
 import {CiCamera} from "react-icons/ci";
-import FindInfo from "../../component/FindInfo";
+import FindInfo, {PwReset} from "../../component/FindInfo";
 import {Overlap} from "../../hook/Overlap";
 
 const Mypage = () => {
@@ -15,6 +15,7 @@ const Mypage = () => {
     const [form, setForm] = useState(["", "", "", "", "", "", ""]);
     const [pwModifyCheck, setPwModifyCheck] = useState("");
     const [userIcon, setUserIcon] = useState("");
+    const [modifyPassword, setModifyPassword] = useState(false);
 
     // 수정하기 활성화
     const modifyToggleHandle = (event) => {
@@ -84,6 +85,7 @@ const Mypage = () => {
     // 비밀번호 찾기 핸들러
     const pwModifyHandle = () => {
         setPwModifyCheck("PW");
+        setModifyPassword((prev) => !prev);
     }
 
     // 탈퇴 페이지로 이동
@@ -189,9 +191,11 @@ const Mypage = () => {
                                    className='password'
                                    disabled={true}
                             />
+                            {!modify &&
                             <button className="password-change-btn"
                                     onClick={pwModifyHandle}>변경
                             </button>
+                            }
                         </div>
 
                         <div className='email-box'>
@@ -219,7 +223,7 @@ const Mypage = () => {
                     {!modify ?
                         <div className="mypage-btn-box-on">
                             <button onClick={modifyToggleHandle}>수정하기</button>
-                            <FindInfo info="pw" find_check={pwModifyCheck} setFind_check={setPwModifyCheck}/>
+
                             {!modify &&
                                 <div className="withdrawal-box">
                                     <p>The Japan을 더 이상 사용하지 않으신가요?</p>
@@ -234,7 +238,19 @@ const Mypage = () => {
                         </div>
                     }
 
+
                 </div>
+
+                {modifyPassword &&
+                    <div className={"my-page-modify-password-back-ground"}>
+                        <div className={"my-page-modify-password"}>
+                            <PwReset
+                                email={form[3]}
+                                setModifyPassword={setModifyPassword}
+                            ></PwReset>
+                        </div>
+                    </div>
+                }
 
 
             </div>

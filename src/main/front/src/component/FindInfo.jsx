@@ -10,6 +10,7 @@ const FindInfo = ({info, find_check, setFind_check}) => {
     const [email, setEmail] = useState(""); // 이메일
     const [authToken, setAuthToken] = useState(""); // 인증번호
     const [authTokenCheck, setAuthTokenCheck] = useState(""); // 입력하는 인증번호
+
     // 확인 버튼 핸들러
     const resultHandle = () => {
         if (!authToken) return toast.error("이메일 인증을 진행해주세요.");
@@ -19,10 +20,10 @@ const FindInfo = ({info, find_check, setFind_check}) => {
     // 인증번호 전송 API
     const emailAuthAPI = () => {
         if (!email) return toast.error("이메일을 입력해주세요.");
+        toast.success("인증번호가 발송되었습니다.");
         axiosInstance.post('emailAuth', {email})
             .then((res) => {
                 setAuthToken(res.data);
-                toast.success("인증번호가 발송되었습니다.");
             })
             .catch(err => toast.error("등록되지 않은 이메일입니다."))
     }
@@ -144,7 +145,7 @@ export const IdFind = ({email, setFind_check, setResult, setEmail, setAuthToken,
     )
 }
 
-export const PwReset = ({email, setFind_check, setResult, setEmail, setAuthToken, setAuthTokenCheck}) => {
+export const PwReset = ({email, setFind_check, setResult, setEmail, setAuthToken, setAuthTokenCheck, setModifyPassword}) => {
     const [password, setPassword] = useState("");
     const [passwordCheck, setPasswordCheck] = useState("");
 
@@ -172,6 +173,8 @@ export const PwReset = ({email, setFind_check, setResult, setEmail, setAuthToken
     }
     // 창 닫기 핸들러
     const closeHandle = () => {
+        // 마이페이지에서 넘어 왔을 떄 바로 return
+        if(setModifyPassword) return setModifyPassword(false);
         setFind_check("");
         setResult("");
         setEmail("");
