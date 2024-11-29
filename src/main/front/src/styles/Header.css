@@ -24,8 +24,8 @@ header .left-menu {
     align-items: center;
 }
 
-.site-name-box {
-
+header svg {
+    cursor: pointer;
 }
 
 .header-category-box > div {

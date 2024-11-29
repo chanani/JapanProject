@@ -78,6 +78,7 @@ function Header() {
     const handleLogin = () => {
         navigate("/login");
     }
+
     // 로그아웃 핸들러
     const handleLogout = () => {
         axiosInstance.post('logout', {username: username})
