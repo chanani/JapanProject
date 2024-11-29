@@ -33,7 +33,9 @@ footer {
     color: #353535;
 }
 
-
+.footer-content-box > p {
+    cursor: pointer;
+}
 /* 500 이하 */
 @media (max-width: 500px) {
 
