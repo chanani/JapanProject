@@ -33,7 +33,7 @@ function Header() {
     // 마이페이지 Link list
     const myLink = [["/mypage", "나의정보"], ["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ];
     // 그 외 페이지 Link list
-    const otherLink = [["/chatAi", "Ai학습"], ["/search", "통합검색"], ["/translator", '번역기']];
+    const otherLink = [["/chatAi", "Ai학습"], ["/search", "단어검색"], ["/translator", '번역기']];
     // 고객지원 list
     const customerLink = [["/notice", "공지사항"], ["/inquiry", '문의사항']];
     // admin 페이지 Link list

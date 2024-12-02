@@ -10,14 +10,9 @@ import {axiosInstance} from "../../api";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 
 const Search = () => {
-    // 검색 종류
-    const [searchKind, setSearchKind] = useState("전체");
     // 키워드 저정하는 핸들러
     const kindChangeHandle = (event) => {
-        setSearchKind(event.target.innerText);
-        setAllKeyword("");
         setWordKeyword("");
-        setNoticeKeyword("");
     }
 
     // 전체검색 리스트, 검색 요청 문구
@@ -25,34 +20,20 @@ const Search = () => {
     // 단어검색 리스트, 검색 요청 단어
     const [wordList, setWordList] = useState([]);
     const [wordKeyword, setWordKeyword] = useState("");
-    // 공지사항 검색 리스트, 공지사항 요청 단어
-    const [noticeList, setNoticeList] = useState([]);
-    const [noticeKeyword, setNoticeKeyword] = useState("");
     // 전체 단어 변경 핸들러
     const allKeywordChange = (event) => {
         setAllKeyword(event.target.value);
-        setNoticeKeyword(event.target.value);
         setWordKeyword(event.target.value);
     }
     // 검색 단어 변경 핸들러
     const keywordChange = (event) => {
         setWordKeyword(event.target.value);
     }
-    // 검색 공지사항 변경 핸들러
-    const noticeKeywordChange = (event) => {
-        setNoticeKeyword(event.target.value);
-    }
+
     // 검색 버튼 핸들러
     const submitHandle = (event) => {
         if (event.key !== 'Enter') return;
-        if (searchKind === '전체') requestAllData();
-        else if (searchKind === '단어') {
             requestWordData();
-            setNoticeList([]);
-        } else if (searchKind === '공지사항') {
-            requestNoticeData();
-            setWordList([]);
-        }
     }
     // 공지사항, 단어 모두 검색하는 핸들러 당장 사용하지 않을 예정
     const doubleRequest = async () => {
@@ -74,7 +55,6 @@ const Search = () => {
     const requestAllData = () => {
         if (!!!allKeyword) return toast.error("검색어를 입력해주세요.");
         requestWordData();
-        requestNoticeData();
     }
 
     // elasticsearch로 word 데이터 요청
@@ -98,54 +78,19 @@ const Search = () => {
                 toast.error("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
             })
     }
-    // elasticsearch로 notice 데이터 요청
-    const requestNoticeData = async () => {
-        if (!!!noticeKeyword) return toast.error("검색어를 입력해주세요.");
-        await axios.get(`${process.env.REACT_APP_URL_ELASTICSEARCH}notice/_search`, {
-            params: {
-                size: 10000,
-                q: `notice_title:${noticeKeyword} OR notice_content:${noticeKeyword}`
-            },
-            auth: {
-                username: 'elastic',
-                password: 'thejapan'
-            }
-        })
-            .then((res) => {
-                setNoticeList(res.data.hits.hits);
-            })
-            .catch((e) => toast.error("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요."))
-    }
+
 
 
     return (
         <div className="search-box-all">
             <div className="search-box">
 
-                <div className="search-all-box">
-                    <div className="search-all-border">
-                        <input type="text" value={allKeyword} onChange={allKeywordChange} onKeyDown={submitHandle}
-                               disabled={searchKind !== "전체"}/>
-                        <FaSearch onClick={requestAllData} size={23}/>
-                    </div>
-                </div>
+
 
                 <div className="search-header-center">
-                    <div className="search-header-box">
-                        <div onClick={kindChangeHandle}
-                             className={(searchKind === "전체" ? ' search-header-box-check' : "")}>전체
-                        </div>
-                        <div onClick={kindChangeHandle}
-                             className={(searchKind === "단어" ? ' search-header-box-check' : "")}>단어
-                        </div>
-                        <div onClick={kindChangeHandle}
-                             className={(searchKind === "공지사항" ? ' search-header-box-check' : "")}>공지사항
-                        </div>
-                    </div>
+
                 </div>
 
-                {searchKind === "전체" ?
-                    <div className="search-mainAll-box">
 
                         <WordComponent
                             wordKeyword={wordKeyword}
@@ -153,37 +98,7 @@ const Search = () => {
                             submitHandle={submitHandle}
                             requestWordData={requestWordData}
                             wordList={wordList}
-                            searchKind={searchKind}
                         />
-                        <NoticeComponent
-                            noticeKeyword={noticeKeyword}
-                            noticeKeywordChange={noticeKeywordChange}
-                            submitHandle={submitHandle}
-                            requestNoticeData={requestNoticeData}
-                            noticeList={noticeList}
-                            searchKind={searchKind}
-                        />
-                    </div>
-                    :
-                    searchKind === "단어" ?
-                        <WordComponent
-                            wordKeyword={wordKeyword}
-                            keywordChange={keywordChange}
-                            submitHandle={submitHandle}
-                            requestWordData={requestWordData}
-                            wordList={wordList}
-                            searchKind={searchKind}
-                        />
-                        : searchKind === "공지사항" &&
-                        <NoticeComponent
-                            noticeKeyword={noticeKeyword}
-                            noticeKeywordChange={noticeKeywordChange}
-                            submitHandle={submitHandle}
-                            requestNoticeData={requestNoticeData}
-                            noticeList={noticeList}
-                            searchKind={searchKind}
-                        />
-                }
 
             </div>
 
