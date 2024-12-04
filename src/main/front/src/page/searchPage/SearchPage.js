@@ -2,6 +2,8 @@ import {useContext, useEffect, useState} from "react";
 import "../../styles/search/SearchPage.css"
 import axios from "axios";
 import {FaSearch} from "react-icons/fa";
+import { IoSearchOutline } from "react-icons/io5";
+import { GrPowerReset } from "react-icons/gr";
 import 'moment/locale/ko';
 import {toast} from "react-toastify";
 import {axiosInstance} from "../../api";
@@ -75,7 +77,8 @@ const Search = () => {
 
                     <div className="search-input-box">
                         <input type="text" value={wordKeyword} onChange={keywordChange} onKeyDown={submitHandle}/>
-                        <FaSearch onClick={requestWordData}/>
+                        <IoSearchOutline onClick={requestWordData} size={24}/>
+                        <GrPowerReset size={20}/>
                     </div>
                 </div>
 
