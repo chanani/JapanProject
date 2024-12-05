@@ -1,9 +1,8 @@
 import {useContext, useEffect, useState} from "react";
 import "../../styles/search/SearchPage.css"
 import axios from "axios";
-import {FaSearch} from "react-icons/fa";
-import { IoSearchOutline } from "react-icons/io5";
-import { GrPowerReset } from "react-icons/gr";
+import {IoSearchOutline} from "react-icons/io5";
+import {GrPowerReset} from "react-icons/gr";
 import 'moment/locale/ko';
 import {toast} from "react-toastify";
 import {axiosInstance} from "../../api";
@@ -65,6 +64,12 @@ const Search = () => {
             })
     }
 
+    // 검색 키워드 초기화 핸들러
+    const wordResetHandle = () => {
+        setWordKeyword("");
+        setWordList([]);
+    }
+
 
     return (
         <div className="search-box-all">
@@ -78,7 +83,7 @@ const Search = () => {
                     <div className="search-input-box">
                         <input type="text" value={wordKeyword} onChange={keywordChange} onKeyDown={submitHandle}/>
                         <IoSearchOutline onClick={requestWordData} size={24}/>
-                        <GrPowerReset size={20}/>
+                        <GrPowerReset size={20} onClick={wordResetHandle}/>
                     </div>
                 </div>
 
