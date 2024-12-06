@@ -1,24 +1,24 @@
 .search-box-all {
   display: flex;
   justify-content: center;
-  padding: 40px 0;
-  background-color: #f6f7fb;
-}
-
-.search-box {
-  background-color: white;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 6px 6px rgba(0,0,0,0.0);
-  width: 600px;
-  height: auto;
-  padding: 25px 30px 30px 30px;
-}
-
-
-.search-header-center{
-  display: flex;
   align-items: center;
-  justify-content: center;
+  padding: 0 5px;
+  background-color: white;
+  width: 100%;
 }
+
+.search-box > .search-box-title {
+  font-size: 25px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  width: auto;
+}
+
+.search-box > .search-box-title  p {
+  display: inline-block;
+  border-bottom: 3px solid #2668f1;
+}
+
 
 
 
@@ -90,10 +90,8 @@
 /* 600 이하 */
 @media(max-width : 600px){
   .search-box{
-    width: 360px;
-  }
-  .search-word-all {
-    width: 90px;
+    width: 95%;
+    margin-top: 20px;
   }
 
 
@@ -102,10 +100,8 @@
 /* 600 이상 */
 @media(min-width : 600px){
   .search-box{
-    width: 560px;
-  }
-  .search-word-all {
-    width: 115px;
+    width: 90%;
+    margin-top: 30px;
   }
 
 
@@ -113,10 +109,8 @@
  /* 1000 이상 */
 @media(min-width : 1000px){
   .search-box{
-    width: 910px;
-  }
-  .search-word-all {
-    width: 131px;
+    width: 70%;
+    margin-top: 40px;
   }
 
 
