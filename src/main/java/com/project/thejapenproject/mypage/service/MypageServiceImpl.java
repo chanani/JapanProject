@@ -6,10 +6,7 @@ import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.mypage.vo.*;
-import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
-import com.project.thejapenproject.mypage.vo.param.FavoriteListVO;
-import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
-import com.project.thejapenproject.mypage.vo.param.ShortRecordDetailParamVO;
+import com.project.thejapenproject.mypage.vo.param.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -185,6 +182,29 @@ public class MypageServiceImpl implements MypageService{
         if(mypageMapper.updateFavoriteMemo(updateFavoriteMemoReqVO) < 1){
             throw new OperationErrorException(ErrorCode.FAIL_TO_UPDATE_FAVORITE_MEMO);
         }
+    }
+
+    // 단어 목록(검색 포함)
+    @Override
+    public PageResponse<WordSearchListResVO> getWordSearchList(WordListSearchParamVO wordListSearchParamVO) {
+        Integer page = wordListSearchParamVO.getPage();
+        Integer size = wordListSearchParamVO.getSize();
+        wordListSearchParamVO.setOffset((page - 1) * size);
+
+        ArrayList<WordSearchListResVO> wordList = mypageMapper.getWordSearchList(wordListSearchParamVO);
+        // 총 데이터 수 계산
+        int totalElements = wordList.size() != 0 ? wordList.get(0).getTotalElements() : 0;
+        // 총 페이지 수 계산
+        int totalPages = (int) Math.ceil((double) totalElements / size);
+
+        PageResponse<WordSearchListResVO> responseData = PageResponse.<WordSearchListResVO>builder()
+                .content(wordList)
+                .page(page)
+                .size(size)
+                .totalElements(totalElements)
+                .totalPages(totalPages)
+                .build();
+        return responseData;
     }
 
 

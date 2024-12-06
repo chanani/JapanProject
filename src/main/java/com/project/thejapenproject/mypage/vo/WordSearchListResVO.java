@@ -5,27 +5,32 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * 단어 목록 반환 VO
+ *
+ * @author chanhan
+ * @class : WordSearchListResVO
+ * @since 2024-12-06 오후 10:01
+ */
+
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class FavoriteListResVO {
+public class WordSearchListResVO {
 
+    // 단어 번호
     private Integer wordNum;
-    private Integer wordLevel;
+    // 단어 뜻
     private String wordMeaning;
+    // 단어
     private String wordContent;
+    // 한자
     private String wordChinese;
-    private boolean wordFavorite;
-    // 즐겨찾기 주차
+    // 단어 주차
     private String wordWeek;
-    // 즐겨찾기 번호
-    private Integer favoriteNum;
-    // 즐겨찾기 등록일
-    private String favoriteRegdate;
-    // 즐겨찾기 메모
-    private String favoriteMemo;
+
     // 전체 데이터 수
     private Integer totalElements;
 

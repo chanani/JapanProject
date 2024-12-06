@@ -268,6 +268,37 @@
         WHERE favorite_num = #{favoriteNum}
     </update>
 
+    <!-- 단어 목록(검색 포함) 조회 -->
+    <select id="getWordSearchList"
+            parameterType="com.project.thejapenproject.mypage.vo.param.WordListSearchParamVO"
+            resultType="com.project.thejapenproject.mypage.vo.WordSearchListResVO">
+        SELECT word_num,
+               word_meaning,
+               word_content,
+               word_chinese,
+               word_week,
+               COUNT(*) OVER() AS total_elements
+        FROM word
+        WHERE state = 0
+        <if test="keyword != null">
+            AND (word_meaning LIKE '%${keyword}%'
+                OR word_content LIKE '%${keyword}%'
+                OR word_chinese LIKE '%${keyword}%')
+        </if>
+        ORDER BY
+        <choose>
+            <when test='sort == "new"'>
+                word_num DESC
+            </when>
+            <when test='sort == "older"'>
+                word_num ASC
+            </when>
+            <when test='sort == "random"'>
+                RAND()
+            </when>
+        </choose>
+        limit #{size} offset #{offset}
+    </select>
 
 
 

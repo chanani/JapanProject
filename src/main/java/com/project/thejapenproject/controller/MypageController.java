@@ -293,4 +293,25 @@ public class MypageController {
                 .build();
     }
 
+    /**
+     * 단어 검색 API
+     *
+     * @param wordListSearchParamVO : 단어 목록 요청 VO
+     * @return : ResponseData.class
+     * @author : chanhan
+     * @since 2024-12-06 오후 09:53
+     */
+    @GetMapping("/word-list-search")
+    @NoneAuth
+    public ResponseData wordListSearch(@Valid @ModelAttribute WordListSearchParamVO wordListSearchParamVO) {
+
+        PageResponse<WordSearchListResVO> wordList = mypageService.getWordSearchList(wordListSearchParamVO);
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(wordList)
+                .message(ErrorCode.SUCCESS.getMessage())
+                .build();
+    }
+
 }

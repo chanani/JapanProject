@@ -2,10 +2,7 @@ package com.project.thejapenproject.mypage.service;
 
 import com.project.thejapenproject.command.*;
 import com.project.thejapenproject.mypage.vo.*;
-import com.project.thejapenproject.mypage.vo.param.ChoiceRecordDetailParamVO;
-import com.project.thejapenproject.mypage.vo.param.FavoriteListVO;
-import com.project.thejapenproject.mypage.vo.param.GetRecordListParamVO;
-import com.project.thejapenproject.mypage.vo.param.ShortRecordDetailParamVO;
+import com.project.thejapenproject.mypage.vo.param.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -51,4 +48,7 @@ public interface MypageMapper {
 
     // 즐겨찾기 메모 등록
     int updateFavoriteMemo(updateFavoriteMemoReqVO updateFavoriteMemoReqVO);
+
+    // 단어 목록(검색 포함) 조회
+    ArrayList<WordSearchListResVO> getWordSearchList(WordListSearchParamVO wordListSearchParamVO);
 }
