@@ -19,7 +19,10 @@
   border-bottom: 3px solid #2668f1;
 }
 
+.search-favorite-button {
 
+
+}
 
 
 .search-box-title {
@@ -87,11 +90,65 @@
 }
 
 
+/* data box */
+
+.search-favorite-data {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 단어 박스 내용 */
+.search-favorite-box {
+  border: 1px solid #4e4f4f85;
+  border-radius: 5px;
+  padding: 15px 15px 10px 15px;
+  margin-top: 15px;
+  box-shadow: 0px 0px 3px rgba(15, 0, 2, 0.2), 0 0px 0px rgba(0, 0, 0, 0);
+}
+
+.search-favorite-data-top p:hover {
+  cursor: pointer;
+  color: #1e03f1;
+}
+
+.search-favorite-data-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.search-favorite-data-top-content {
+  font-size: 22px;
+  color: #2668f1;
+  transition: all .20s cubic-bezier(.47, 0, .745, .715);
+}
+
+.search-favorite-data-top-audio-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-favorite-data-middle {
+  border: 1px solid #8282824a;
+  border-radius: 3px;
+  padding: 10px;
+  background-color: #f1f1f14a;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+
 /* 600 이하 */
 @media(max-width : 600px){
   .search-box{
     width: 95%;
     margin-top: 20px;
+  }
+
+  .favorite-data-top-content {
+    font-weight: 500;
   }
 
 
@@ -103,7 +160,9 @@
     width: 90%;
     margin-top: 30px;
   }
-
+  .favorite-data-top-content {
+    font-weight: 600;
+  }
 
 }
  /* 1000 이상 */

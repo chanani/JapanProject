@@ -1,7 +1,6 @@
 import {useContext, useEffect, useState} from "react";
 import "../../styles/search/SearchPage.css"
-import axios from "axios";
-import {IoClose, IoSearchOutline} from "react-icons/io5";
+import {IoSearchOutline} from "react-icons/io5";
 import {GrPowerReset} from "react-icons/gr";
 import 'moment/locale/ko';
 import {toast} from "react-toastify";
@@ -32,6 +31,7 @@ const Search = () => {
 
     // 검색된 단어 즐겨 찾기에 저장 핸들러
     const favoriteHandle = (wordNum) => {
+        console.log(wordNum);
         if (userRole === 'none') return toast.error("로그인 후 이용해주세요.");
         if (!window.confirm('즐겨찾기에 추가하시겠습니까?')) return;
         axiosInstance.post('mypage/search-register-word', {
@@ -48,12 +48,12 @@ const Search = () => {
     // 검색 버튼 핸들러
     const submitHandle = (event) => {
         if (event.key !== 'Enter') return;
-        requestWordData();
+        getWordListAPI();
     }
 
 
     // elasticsearch로 word 데이터 요청
-    const requestWordData = async () => {
+    /*const requestWordData = async () => {
         if (!!!wordKeyword) return toast.error("검색어를 입력해주세요.");
         await axios.get(`${process.env.REACT_APP_URL_ELASTICSEARCH}word/_search`, {
             params: {
@@ -73,11 +73,11 @@ const Search = () => {
                 toast.error("검색 중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
             })
     }
-
+*/
     // 검색 키워드 초기화 핸들러
     const wordResetHandle = () => {
         setWordKeyword("");
-        setWordList([]);
+        getWordListAPI();
     }
 
     // 정렬 목록
@@ -112,22 +112,24 @@ const Search = () => {
     const getWordListAPI = () => {
         axiosInstance.get('/mypage/word-list-search',
             {
-                params : {
+                params: {
                     page: currentPage,
-                    size : dataPerPage,
-                    sort : selectedValue,
-                    keyword : wordKeyword
+                    size: dataPerPage,
+                    sort: selectedValue,
+                    keyword: wordKeyword
                 }
             })
             .then((res) => {
                 console.log(res.data);
+                setWordList(res.data.data.content);
+                setTotalData(res.data.data.totalElements);
             })
             .catch(e => toast.error("조회 중 오류가 발생하였습니다."));
     }
 
     useEffect(() => {
         getWordListAPI();
-    }, []);
+    }, [currentPage, selectedValue]);
     return (
         <div className="search-box-all">
             <div className="search-box">
@@ -150,29 +152,34 @@ const Search = () => {
 
                     <div className="search-input-box">
                         <input type="text" value={wordKeyword} onChange={keywordChange} onKeyDown={submitHandle}/>
-                        <IoSearchOutline onClick={requestWordData} size={24}/>
+                        <IoSearchOutline onClick={getWordListAPI} size={24}/>
                         <GrPowerReset size={20} onClick={wordResetHandle}/>
                     </div>
 
                 </div>
 
-                <div className="favorite-data">
+                <div className="search-favorite-data">
                     {wordList?.map((item, index) => (
-                        <div className="favorite-box" key={index}>
-                            <div className="favorite-data-top">
-                                <div className="favorite-data-top-content">
-                                    <p>{item?.wordContent}{item?.wordChinese && `(${item?.wordChinese})`}</p>
+                        <div className="search-favorite-box" key={index}>
+                            <div className="search-favorite-data-top">
+                                <div className="search-favorite-data-top-content">
+                                    <p onClick={() => favoriteHandle(item.wordNum)}>
+                                        {item?.wordContent}{item?.wordChinese && `(${item?.wordChinese})`}
+                                    </p>
                                 </div>
-                                <div className="favorite-data-top-audio-box">
+                                <div className="search-favorite-data-top-audio-box">
+
                                     <Audio inputData={item.wordContent}/>
                                 </div>
                             </div>
 
-                            <div className="favorite-data-middle">
+                            <div className="search-favorite-data-middle">
                                 {item?.wordMeaning.split(",").map((meaning, i) => (
                                     <div key={i}>{i + 1}. {meaning}</div>
                                 ))}
                             </div>
+
+
 
                         </div>
                     ))}
