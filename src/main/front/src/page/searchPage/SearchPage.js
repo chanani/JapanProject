@@ -151,7 +151,11 @@ const Search = () => {
                     />
 
                     <div className="search-input-box">
-                        <input type="text" value={wordKeyword} onChange={keywordChange} onKeyDown={submitHandle}/>
+                        <input type="text"
+                               value={wordKeyword}
+                               onChange={keywordChange}
+                               onKeyDown={submitHandle}
+                        />
                         <IoSearchOutline onClick={getWordListAPI} size={24}/>
                         <GrPowerReset size={20} onClick={wordResetHandle}/>
                     </div>
@@ -178,12 +182,8 @@ const Search = () => {
                                     <div key={i}>{i + 1}. {meaning}</div>
                                 ))}
                             </div>
-
-
-
                         </div>
                     ))}
-
                 </div>
 
                 <PageNation

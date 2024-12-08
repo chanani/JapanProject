@@ -57,7 +57,7 @@ const PageNation = ({
     };
 
     const buttonStyle = {
-        padding: "9px 14px",
+        padding: "5px",
         borderRadius: "100px",
         backgroundColor: "transparent",
         color: "#000",
@@ -73,6 +73,7 @@ const PageNation = ({
             justifyContent: 'center',
             margin: `${divMargin}`,
             alignItems: 'center',
+            gap : "3px",
         }}>
             {renderPageNumbers()}
         </div>
