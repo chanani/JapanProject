@@ -163,27 +163,33 @@ const Search = () => {
                 </div>
 
                 <div className="search-favorite-data">
-                    {wordList?.map((item, index) => (
-                        <div className="search-favorite-box" key={index}>
-                            <div className="search-favorite-data-top">
-                                <div className="search-favorite-data-top-content">
-                                    <p onClick={() => favoriteHandle(item.wordNum)}>
-                                        {item?.wordContent}{item?.wordChinese && `(${item?.wordChinese})`}
-                                    </p>
-                                </div>
-                                <div className="search-favorite-data-top-audio-box">
+                    {wordList.length !== 0 ?
+                        wordList?.map((item, index) => (
+                            <div className="search-favorite-box" key={index}>
+                                <div className="search-favorite-data-top">
+                                    <div className="search-favorite-data-top-content">
+                                        <p onClick={() => favoriteHandle(item.wordNum)}>
+                                            {item?.wordContent}{item?.wordChinese && `(${item?.wordChinese})`}
+                                        </p>
+                                    </div>
+                                    <div className="search-favorite-data-top-audio-box">
 
-                                    <Audio inputData={item.wordContent}/>
+                                        <Audio inputData={item.wordContent}/>
+                                    </div>
+                                </div>
+
+                                <div className="search-favorite-data-middle">
+                                    {item?.wordMeaning.split(",").map((meaning, i) => (
+                                        <div key={i}>{i + 1}. {meaning}</div>
+                                    ))}
                                 </div>
                             </div>
-
-                            <div className="search-favorite-data-middle">
-                                {item?.wordMeaning.split(",").map((meaning, i) => (
-                                    <div key={i}>{i + 1}. {meaning}</div>
-                                ))}
-                            </div>
+                        ))
+                        :
+                        <div className={"search-not-word-list"}>
+                            <p>검색된 결과가 없습니다.</p>
                         </div>
-                    ))}
+                    }
                 </div>
 
                 <PageNation
