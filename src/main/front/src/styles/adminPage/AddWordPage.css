@@ -42,9 +42,11 @@
     width: 100%;
     padding: 30px 10px 10px 10px;
     border: 1px solid #777;
-    margin-bottom: 10px;
-    border-radius: 0 0 5px 5px;
 
+    margin-bottom: 2px;
+    /*
+     border-radius: 0 0 5px 5px;
+   */
 }
 
 .add-box-input-box > div > p {
@@ -85,8 +87,6 @@
 .add-box-input-box > .word-meaning-input-box {
     width: 30%;
 }
-
-
 
 
 /* 목록 추가 버튼 */
@@ -141,6 +141,27 @@
     background-color: #1b1b1b;
 }
 
+/* 예문 박스 */
+.add-example-add-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #777;
+    margin-bottom: 5px;
+    border-radius: 0 0 5px 5px;
+    font-size: 13px;
+    height: 27px;
+    transition: all .15s cubic-bezier(.47, 0, .745, .715);
+    cursor: pointer;
+}
+
+.add-example-add-box:hover {
+    background-color: #efeffd;
+    color: #2f30f6;
+    border: 1px solid rgb(165 164 164);
+}
+
 
 /* 600 까지 */
 @media (max-width: 600px) {
@@ -190,7 +211,6 @@
     .add-box-input-box > .word-week-input-box {
         width: 4%;
     }
-
 
 
 }

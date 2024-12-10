@@ -35,7 +35,8 @@ const AddWordPage = () => {
             wordMeaning: '',
             wordLevel: '',
             wordChinese: '',
-            wordWeek: ''
+            wordWeek: '',
+            examples: [] // 예문 배열 추가
         }]);
         setInputCount(prevCount => prevCount + 1);
     }
@@ -73,6 +74,41 @@ const AddWordPage = () => {
         navigate("/");
     }
 
+    // 예문 추가 핸들러
+    const handleAddExample = (index) => {
+        setList(prevList => {
+            const newList = JSON.parse(JSON.stringify(prevList)); // 깊은 복제
+            if (!newList[index].examples) {
+                newList[index].examples = []; // 예문 배열 초기화
+            }
+            newList[index].examples.push({ text: '', meaning: '' }); // 기본 객체 추가
+            return newList;
+        });
+    };
+
+    // 예문 입력 핸들러
+    const handleChangeExample = (event, wordIndex, exampleIndex, field) => {
+        const { value } = event.target;
+        setList(prevList => {
+            const newList = JSON.parse(JSON.stringify(prevList)); // 깊은 복제
+            newList[wordIndex].examples[exampleIndex][field] = value; // field에 따라 text 또는 meaning 업데이트
+            return newList;
+        });
+    };
+
+    // 예문 삭제 핸들러
+    const handleRemoveExample = (wordIndex, exampleIndex) => {
+        setList(prevList => {
+            const newList = JSON.parse(JSON.stringify(prevList)); // 깊은 복제
+            newList[wordIndex].examples.splice(exampleIndex, 1); // 해당 예문 제거
+            return newList;
+        });
+    };
+
+    useEffect(() => {
+        console.log(list)
+    },[list])
+
     return (
         <div className="add-box-all">
             <div className="add-box">
@@ -85,7 +121,7 @@ const AddWordPage = () => {
                         <div key={index} className="add-box-input">
                             <div className="add-box-head-box">
                                 <p>{index + 1}</p>
-                                <FaRegTrashAlt onClick={() => handleRemoveWord(index)} />
+                                <FaRegTrashAlt onClick={() => handleRemoveWord(index)}/>
 
                             </div>
                             <div className="add-box-input-box">
@@ -145,6 +181,38 @@ const AddWordPage = () => {
                                     <p>주차</p>
                                 </div>
                             </div>
+                            <div className="add-example-box">
+                                {item.examples?.length > 0 && item.examples.map((example, exampleIndex) => (
+                                    <div key={exampleIndex} className="example-input-box">
+                                        {/* 예문 입력 */}
+                                        <input
+                                            type="text"
+                                            value={example.text}
+                                            onChange={(e) => handleChangeExample(e, index, exampleIndex, 'text')}
+                                            placeholder="예문 입력"
+                                        />
+                                        {/* 예문 해석 입력 */}
+                                        <input
+                                            type="text"
+                                            value={example.meaning}
+                                            onChange={(e) => handleChangeExample(e, index, exampleIndex, 'meaning')}
+                                            placeholder="예문 해석 입력"
+                                        />
+                                        <button
+                                            className="remove-example-btn"
+                                            onClick={() => handleRemoveExample(index, exampleIndex)}
+                                        >
+                                            삭제
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="add-example-add-box"
+                                 onClick={() => handleAddExample(index)}
+                            >
+                                <p >예문 추가 +</p>
+                            </div>
+
                         </div>
                     ))}
                     <div className="plus-btn" onClick={handleAddWord}>
@@ -154,11 +222,13 @@ const AddWordPage = () => {
                         <button
                             onClick={handleHome}
                             className="home-btn"
-                        >홈으로</button>
+                        >홈으로
+                        </button>
                         <button
                             onClick={handleSubmit}
                             className="add-word-submit-btn"
-                        >등록하기</button>
+                        >등록하기
+                        </button>
                     </div>
                 </div>
             </div>
