@@ -40,13 +40,9 @@
 
 .add-box-input-box {
     width: 100%;
-    padding: 30px 10px 10px 10px;
+    padding: 15px 10px 10px 10px;
     border: 1px solid #777;
-
     margin-bottom: 2px;
-    /*
-     border-radius: 0 0 5px 5px;
-   */
 }
 
 .add-box-input-box > div > p {
@@ -154,6 +150,7 @@
     height: 27px;
     transition: all .15s cubic-bezier(.47, 0, .745, .715);
     cursor: pointer;
+    background-color: #f0f0f8;
 }
 
 .add-example-add-box:hover {
@@ -162,6 +159,33 @@
     border: 1px solid rgb(165 164 164);
 }
 
+.example-input-box {
+    border: solid 1px #4a4a4a;
+    width: 100%;
+
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+}
+
+.example-input-box input  {
+    border: none;
+    border-bottom: 1.5px solid #777;
+    outline: none;
+    width: 93%;
+    padding: 2px;
+    margin-bottom: 3px;
+    transition: all .15s cubic-bezier(.47, 0, .745, .715);
+    font-size: 15px;
+}
+.example-input-box p {
+    font-size: 13px;
+}
+
+.example-input-box-detail {
+    width : 45%
+}
 
 /* 600 까지 */
 @media (max-width: 600px) {

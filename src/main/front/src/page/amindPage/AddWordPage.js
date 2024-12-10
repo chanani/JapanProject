@@ -81,14 +81,14 @@ const AddWordPage = () => {
             if (!newList[index].examples) {
                 newList[index].examples = []; // 예문 배열 초기화
             }
-            newList[index].examples.push({ text: '', meaning: '' }); // 기본 객체 추가
+            newList[index].examples.push({wordExampleContent: '', wordExampleMeaning: ''}); // 기본 객체 추가
             return newList;
         });
     };
 
     // 예문 입력 핸들러
     const handleChangeExample = (event, wordIndex, exampleIndex, field) => {
-        const { value } = event.target;
+        const {value} = event.target;
         setList(prevList => {
             const newList = JSON.parse(JSON.stringify(prevList)); // 깊은 복제
             newList[wordIndex].examples[exampleIndex][field] = value; // field에 따라 text 또는 meaning 업데이트
@@ -107,7 +107,7 @@ const AddWordPage = () => {
 
     useEffect(() => {
         console.log(list)
-    },[list])
+    }, [list])
 
     return (
         <div className="add-box-all">
@@ -184,33 +184,31 @@ const AddWordPage = () => {
                             <div className="add-example-box">
                                 {item.examples?.length > 0 && item.examples.map((example, exampleIndex) => (
                                     <div key={exampleIndex} className="example-input-box">
-                                        {/* 예문 입력 */}
-                                        <input
-                                            type="text"
-                                            value={example.text}
-                                            onChange={(e) => handleChangeExample(e, index, exampleIndex, 'text')}
-                                            placeholder="예문 입력"
-                                        />
-                                        {/* 예문 해석 입력 */}
-                                        <input
-                                            type="text"
-                                            value={example.meaning}
-                                            onChange={(e) => handleChangeExample(e, index, exampleIndex, 'meaning')}
-                                            placeholder="예문 해석 입력"
-                                        />
-                                        <button
-                                            className="remove-example-btn"
-                                            onClick={() => handleRemoveExample(index, exampleIndex)}
-                                        >
-                                            삭제
-                                        </button>
+                                        <div className={"example-input-box-detail"}>
+                                            <input
+                                                type="text"
+                                                value={example.wordExampleContent}
+                                                onChange={(e) => handleChangeExample(e, index, exampleIndex, 'wordExampleContent')}
+                                            />
+                                            <p>예문</p>
+                                        </div>
+
+                                        <div className={"example-input-box-detail"}>
+                                            <input
+                                                type="text"
+                                                value={example.wordExampleMeaning}
+                                                onChange={(e) => handleChangeExample(e, index, exampleIndex, 'wordExampleMeaning')}
+                                            />
+                                            <p>예문 해석</p>
+                                        </div>
+                                        <FaRegTrashAlt onClick={() => handleRemoveExample(index, exampleIndex)}/>
                                     </div>
                                 ))}
                             </div>
                             <div className="add-example-add-box"
                                  onClick={() => handleAddExample(index)}
                             >
-                                <p >예문 추가 +</p>
+                                <p>예문 추가 +</p>
                             </div>
 
                         </div>
