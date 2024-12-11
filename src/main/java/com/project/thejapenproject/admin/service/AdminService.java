@@ -11,9 +11,11 @@ import java.util.ArrayList;
 public interface AdminService {
 
     // 단어 등록
-    public int addWordList(AddWordReqVO list);
+    public void addWordList(AddWordReqVO list);
 
     // 공지사항 등록
     public int addNotice(AddNoticeReqVO addNoticeReqVO);
+
+    // 주차 단어 등록
     public int addWeekWord(ArrayList<SchoolVO> list);
 }

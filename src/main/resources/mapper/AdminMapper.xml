@@ -43,4 +43,30 @@
              #{item.school_chinese})
         </foreach>
     </insert>
+
+    <!-- 단어 예제 등록 -->
+    <insert id="addWordExample"
+            parameterType="com.project.thejapenproject.admin.vo.AddWordListVO">
+        <selectKey resultType="java.lang.Integer"
+                   order="BEFORE"
+                   keyProperty="wordNum"
+                   keyColumn="word_num">
+            SELECT word_num
+            FROM word
+            WHERE state = 0
+                AND word_meaning = #{wordMeaning}
+                AND word_content = #{wordContent}
+                AND word_level = #{wordLevel}
+                AND word_week = #{wordWeek}
+        </selectKey>
+        INSERT INTO word_example (word_num,
+                                  we_content,
+                                  we_meaning)
+        values
+            <foreach collection="exampleList" item="VO" separator=",">
+                (#{wordNum},
+                 #{VO.wordExampleContent},
+                 #{VO.wordExampleMeaning})
+            </foreach>
+    </insert>
 </mapper>

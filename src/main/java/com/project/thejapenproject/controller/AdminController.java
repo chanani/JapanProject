@@ -6,6 +6,7 @@ import com.project.thejapenproject.admin.vo.AddWordReqVO;
 import com.project.thejapenproject.command.NoticeVO;
 import com.project.thejapenproject.command.SchoolVO;
 import com.project.thejapenproject.command.WordVO;
+import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
@@ -36,7 +37,9 @@ public class AdminController {
      */
     @PostMapping("/addWordList")
     public ResponseEntity<String> addWordList(@Valid @RequestBody AddWordReqVO addWordReqVO){
+        // 단어 등록
         adminService.addWordList(addWordReqVO);
+
         return ResponseEntity.ok("성공");
     }
     @PostMapping("/addNotice")

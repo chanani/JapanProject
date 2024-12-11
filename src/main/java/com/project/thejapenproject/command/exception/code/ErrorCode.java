@@ -74,6 +74,9 @@ public enum ErrorCode {
     FAIL_TO_SET_MODIFY(HttpStatus.INTERNAL_SERVER_ERROR, "단어 세트 수정에 실패하였습니다."),
     FAIL_TO_MODIFY_LIKE(HttpStatus.INTERNAL_SERVER_ERROR, "단어 세트 좋아요 수정에 실패하였습니다."),
 
+    // admin
+    FAIL_TO_ADD_WORD(HttpStatus.INTERNAL_SERVER_ERROR, "단어 등록에 실패하였습니다."),
+
     // myPage
     FAIL_TO_UPDATE_FAVORITE_MEMO(HttpStatus.INTERNAL_SERVER_ERROR, "즐겨찾기 단어 메모 등록에 실패하였습니다.");
 
