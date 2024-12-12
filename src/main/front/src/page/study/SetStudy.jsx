@@ -47,7 +47,8 @@ const SetStudy = () => {
 
     // 나의 학습 관리 페이지로 이동
     const handleSoloStudyPage = () => {
-        navigator("/solo-study")
+        navigator("/solo-study");
+        window.scroll(0,0);
     }
 
     // 학습 페이지로 가기 위해 단어 목록 조회 API

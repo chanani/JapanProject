@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,6 +28,8 @@ public class FavoriteListResVO {
     private String favoriteRegdate;
     // 즐겨찾기 메모
     private String favoriteMemo;
+    // 예문 목록
+    private ArrayList<ExampleInfoVO> exampleList;
     // 전체 데이터 수
     private Integer totalElements;
 

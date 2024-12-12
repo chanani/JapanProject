@@ -300,6 +300,37 @@
         limit #{size} offset #{offset}
     </select>
 
+    <!-- 단어 예문 목록 조회 -->
+    <select id="getExampleList"
+            resultType="com.project.thejapenproject.mypage.vo.ExampleInfoVO">
+        SELECT we_num,
+               word_num,
+               we_meaning,
+               we_content
+        FROM word_example
+        WHERE state = 0
+        AND word_num in (
+            <foreach collection="wordList" item="word" separator=",">
+                #{word.wordNum}
+            </foreach>
+            )
+    </select>
+
+    <!-- 단어 예문 목록 조회(즐겨찾 -->
+    <select id="getExampleListFavorite"
+            resultType="com.project.thejapenproject.mypage.vo.ExampleInfoVO">
+        SELECT we_num,
+        word_num,
+        we_meaning,
+        we_content
+        FROM word_example
+        WHERE state = 0
+        AND word_num in (
+        <foreach collection="favoriteList" item="favorite" separator=",">
+            #{favorite.wordNum}
+        </foreach>
+        )
+    </select>
 
 
 

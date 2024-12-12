@@ -31,7 +31,6 @@ const Search = () => {
 
     // 검색된 단어 즐겨 찾기에 저장 핸들러
     const favoriteHandle = (wordNum) => {
-        console.log(wordNum);
         if (userRole === 'none') return toast.error("로그인 후 이용해주세요.");
         if (!window.confirm('즐겨찾기에 추가하시겠습니까?')) return;
         axiosInstance.post('mypage/search-register-word', {
@@ -120,7 +119,6 @@ const Search = () => {
                 }
             })
             .then((res) => {
-                console.log(res.data);
                 setWordList(res.data.data.content);
                 setTotalData(res.data.data.totalElements);
             })
@@ -183,6 +181,24 @@ const Search = () => {
                                         <div key={i}>{i + 1}. {meaning}</div>
                                     ))}
                                 </div>
+
+                                {/* 예문 */}
+                                {item?.exampleList.length !== 0 &&
+                                    <div className="search-word-data-example">
+                                        {item?.exampleList.map((exampleItem, exampleIndex) => (
+                                            <div key={exampleIndex}
+                                                 className={"search-word-data-example-box"}>
+                                                <div className="search-word-data-example-title-box">
+                                                    <p className={"search-word-data-example-title"}>예문{exampleIndex + 1}</p>
+                                                    <Audio inputData={exampleItem.weContent}/>
+                                                </div>
+                                                <p className={"search-word-data-example-content"}>{exampleItem.weContent}</p>
+                                                <p className={"search-word-data-example-meaning"}>{exampleItem.weMeaning}</p>
+                                            </div>
+                                        ))}
+
+                                    </div>
+                                }
                             </div>
                         ))
                         :

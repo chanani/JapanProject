@@ -114,6 +114,7 @@ const FavoritesList = () => {
             sort: selectedValue,
         })
             .then((res) => {
+                console.log(res.data.content);
                 setWord(res.data.content);
                 setTotalData(res.data.totalElements); // 전체 데이터 수
                 return res.data.content; // 업데이트된 데이터를 반환
@@ -211,6 +212,24 @@ const FavoritesList = () => {
                                     </div>
                                 )
                             )}
+
+                            {/* 예문 */}
+                            {item?.exampleList.length !== 0 &&
+                                <div className="search-word-data-example">
+                                    {item?.exampleList.map((exampleItem, exampleIndex) => (
+                                        <div key={exampleIndex}
+                                             className={"search-word-data-example-box"}>
+                                            <div className="search-word-data-example-title-box">
+                                                <p className={"search-word-data-example-title"}>예문{exampleIndex + 1}</p>
+                                                <Audio inputData={exampleItem.weContent}/>
+                                            </div>
+                                            <p className={"search-word-data-example-content"}>{exampleItem.weContent}</p>
+                                            <p className={"search-word-data-example-meaning"}>{exampleItem.weMeaning}</p>
+                                        </div>
+                                    ))}
+
+                                </div>
+                            }
 
                             <div className="favorite-data-bottom">
                                 <div className="favorite-data-bottom-creat-time">

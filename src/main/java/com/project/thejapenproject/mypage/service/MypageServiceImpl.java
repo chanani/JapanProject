@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Service("mypageService")
 @RequiredArgsConstructor
@@ -28,6 +30,19 @@ public class MypageServiceImpl implements MypageService{
 
         // 데이터 조회
         ArrayList<FavoriteListResVO> favoriteList = mypageMapper.favoriteList(favoriteListVO);
+
+        // 예문 조회
+        ArrayList<ExampleInfoVO> exampleList = mypageMapper.getExampleListFavorite(favoriteList);
+
+        // 단어에 맞는 예문 추가하기
+        favoriteList.forEach(word -> {
+            ArrayList<ExampleInfoVO> examples = (ArrayList<ExampleInfoVO>) exampleList.stream()
+                    .filter(example -> example.getWordNum().equals(word.getWordNum()))
+                    .sorted(Comparator.comparingInt(ExampleInfoVO::getWeNum))
+                    .collect(Collectors.toList());
+            word.setExampleList(new ArrayList<>(examples));
+        });
+
 
         // 총 데이터 수 계산
         int totalElements = favoriteList.size() != 0 ? favoriteList.get(0).getTotalElements() : 0;
@@ -191,7 +206,21 @@ public class MypageServiceImpl implements MypageService{
         Integer size = wordListSearchParamVO.getSize();
         wordListSearchParamVO.setOffset((page - 1) * size);
 
+        // 단어 조회
         ArrayList<WordSearchListResVO> wordList = mypageMapper.getWordSearchList(wordListSearchParamVO);
+
+        // 예문 조회
+        ArrayList<ExampleInfoVO> exampleList = mypageMapper.getExampleList(wordList);
+
+        // 단어에 맞는 예문 추가하기
+        wordList.forEach(word -> {
+            ArrayList<ExampleInfoVO> examples = (ArrayList<ExampleInfoVO>) exampleList.stream()
+                    .filter(example -> example.getWordNum().equals(word.getWordNum()))
+                    .sorted(Comparator.comparingInt(ExampleInfoVO::getWeNum))
+                    .collect(Collectors.toList());
+            word.setExampleList(new ArrayList<>(examples));
+        });
+
         // 총 데이터 수 계산
         int totalElements = wordList.size() != 0 ? wordList.get(0).getTotalElements() : 0;
         // 총 페이지 수 계산

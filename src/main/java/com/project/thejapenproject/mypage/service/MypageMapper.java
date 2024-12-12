@@ -51,4 +51,10 @@ public interface MypageMapper {
 
     // 단어 목록(검색 포함) 조회
     ArrayList<WordSearchListResVO> getWordSearchList(WordListSearchParamVO wordListSearchParamVO);
+
+    // 단어 예문 목록 조회
+    ArrayList<ExampleInfoVO> getExampleList(@Param("wordList") ArrayList<WordSearchListResVO> wordList);
+
+    // 단어 예문 목록 조회(즐겨찾기)
+    ArrayList<ExampleInfoVO> getExampleListFavorite(@Param("favoriteList") ArrayList<FavoriteListResVO> favoriteList);
 }
