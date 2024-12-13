@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service("mypageService")
 @RequiredArgsConstructor
-public class MypageServiceImpl implements MypageService{
+public class MypageServiceImpl implements MypageService {
 
     public final MypageMapper mypageMapper;
 
@@ -79,7 +79,7 @@ public class MypageServiceImpl implements MypageService{
     // 회원 탈퇴
     @Override
     public void withdrawal(String username) {
-        if(mypageMapper.withdrawal(username) < 1){
+        if (mypageMapper.withdrawal(username) < 1) {
             throw new OperationErrorException(ErrorCode.FAILED_TO_WITHDRAWAL);
         }
     }
@@ -87,7 +87,7 @@ public class MypageServiceImpl implements MypageService{
     // 학습 기록 삭제
     @Override
     public void deleteShortRecord(int strNum) {
-        if(mypageMapper.deleteShortRecord(strNum) < 1){
+        if (mypageMapper.deleteShortRecord(strNum) < 1) {
             throw new RequestParameterException(ErrorCode.FAIL_TO_REMOVE_RECORD);
         }
     }
@@ -108,7 +108,7 @@ public class MypageServiceImpl implements MypageService{
         // 기존 이미지 삭제
         mypageMapper.userImageRemove(username);
         // 새로운 이미지 등록
-        if(mypageMapper.userImageChange(fileName, username) < 1){
+        if (mypageMapper.userImageChange(fileName, username) < 1) {
             throw new OperationErrorException(ErrorCode.FAIL_TO_IMAGE);
         }
     }
@@ -145,7 +145,7 @@ public class MypageServiceImpl implements MypageService{
     // 단어 선택 테스트 삭제
     @Override
     public void deleteChoiceRecord(ChoiceRecordDeleteReqVO choiceRecordDeleteReqVO) {
-        if(mypageMapper.deleteChoiceRecord(choiceRecordDeleteReqVO) < 1){
+        if (mypageMapper.deleteChoiceRecord(choiceRecordDeleteReqVO) < 1) {
             throw new OperationErrorException(ErrorCode.FAIL_TO_REMOVE_RECORD);
         }
     }
@@ -194,7 +194,7 @@ public class MypageServiceImpl implements MypageService{
     // 즐겨찾기 메모 등록
     @Override
     public void updateFavoriteMemo(updateFavoriteMemoReqVO updateFavoriteMemoReqVO) {
-        if(mypageMapper.updateFavoriteMemo(updateFavoriteMemoReqVO) < 1){
+        if (mypageMapper.updateFavoriteMemo(updateFavoriteMemoReqVO) < 1) {
             throw new OperationErrorException(ErrorCode.FAIL_TO_UPDATE_FAVORITE_MEMO);
         }
     }
@@ -209,18 +209,20 @@ public class MypageServiceImpl implements MypageService{
         // 단어 조회
         ArrayList<WordSearchListResVO> wordList = mypageMapper.getWordSearchList(wordListSearchParamVO);
 
-        // 예문 조회
-        ArrayList<ExampleInfoVO> exampleList = mypageMapper.getExampleList(wordList);
+        if (!wordList.isEmpty()) {
+            // 예문 조회
+            ArrayList<ExampleInfoVO> exampleList = mypageMapper.getExampleList(wordList);
 
-        // 단어에 맞는 예문 추가하기
-        wordList.forEach(word -> {
-            ArrayList<ExampleInfoVO> examples = (ArrayList<ExampleInfoVO>) exampleList.stream()
-                    .filter(example -> example.getWordNum().equals(word.getWordNum()))
-                    .sorted(Comparator.comparingInt(ExampleInfoVO::getWeNum))
-                    .collect(Collectors.toList());
-            word.setExampleList(new ArrayList<>(examples));
-        });
+            // 단어에 맞는 예문 추가하기
+            wordList.forEach(word -> {
+                ArrayList<ExampleInfoVO> examples = (ArrayList<ExampleInfoVO>) exampleList.stream()
+                        .filter(example -> example.getWordNum().equals(word.getWordNum()))
+                        .sorted(Comparator.comparingInt(ExampleInfoVO::getWeNum))
+                        .collect(Collectors.toList());
+                word.setExampleList(new ArrayList<>(examples));
+            });
 
+        }
         // 총 데이터 수 계산
         int totalElements = wordList.size() != 0 ? wordList.get(0).getTotalElements() : 0;
         // 총 페이지 수 계산
