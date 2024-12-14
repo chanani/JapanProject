@@ -75,7 +75,7 @@ const FavoritesList = () => {
     // 단어 학습 페이지로 이동
     const handleStudy = () => {
         getFavoriteList(1000000).then((updatedWord) => {
-            navigate("/study", { state: { arr: updatedWord } });
+            navigate("/study", {state: {arr: updatedWord}});
         });
     };
 
@@ -137,7 +137,6 @@ const FavoritesList = () => {
     }, [currentPage, selectedValue]);
 
 
-
     return (
         <div className="favorite-page-all">
             <div className="favorite-page-mid">
@@ -176,6 +175,24 @@ const FavoritesList = () => {
                                 ))}
                             </div>
 
+                            {/* 예문 */}
+                            {item?.exampleList.length !== 0 &&
+                                <div className="search-word-data-example">
+                                    {item?.exampleList.map((exampleItem, exampleIndex) => (
+                                        <div key={exampleIndex}
+                                             className={"search-word-data-example-box"}>
+                                            <div className="search-word-data-example-title-box">
+                                                <p className={"search-word-data-example-title"}>예문{exampleIndex + 1}</p>
+                                                <Audio inputData={exampleItem.weContent}/>
+                                            </div>
+                                            <p className={"search-word-data-example-content"}>{exampleItem.weContent}</p>
+                                            <p className={"search-word-data-example-meaning"}>{exampleItem.weMeaning}</p>
+                                        </div>
+                                    ))}
+
+                                </div>
+                            }
+
                             {editingIndex === index ? (
                                 <div className="favorite-data-memo">
                                     <div>
@@ -213,23 +230,7 @@ const FavoritesList = () => {
                                 )
                             )}
 
-                            {/* 예문 */}
-                            {item?.exampleList.length !== 0 &&
-                                <div className="search-word-data-example">
-                                    {item?.exampleList.map((exampleItem, exampleIndex) => (
-                                        <div key={exampleIndex}
-                                             className={"search-word-data-example-box"}>
-                                            <div className="search-word-data-example-title-box">
-                                                <p className={"search-word-data-example-title"}>예문{exampleIndex + 1}</p>
-                                                <Audio inputData={exampleItem.weContent}/>
-                                            </div>
-                                            <p className={"search-word-data-example-content"}>{exampleItem.weContent}</p>
-                                            <p className={"search-word-data-example-meaning"}>{exampleItem.weMeaning}</p>
-                                        </div>
-                                    ))}
 
-                                </div>
-                            }
 
                             <div className="favorite-data-bottom">
                                 <div className="favorite-data-bottom-creat-time">
