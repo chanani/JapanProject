@@ -12,9 +12,13 @@
     font-weight: 700;
     margin-bottom: 30px;
     width: 87px;
-    border-bottom: 3px solid #2668f1;
+
 }
 
+.user-notice-title-box > p {
+    display: inline-block;
+    border-bottom: 3px solid #2668f1;
+}
 .user-notice-detail-box {
 }
 

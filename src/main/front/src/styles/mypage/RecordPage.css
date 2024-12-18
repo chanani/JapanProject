@@ -11,8 +11,11 @@
     font-size: 25px;
     font-weight: 700;
     margin-bottom: 30px;
-    width: 117px;
+}
+
+.recordPage-page-mid .recordPage-info > p {
     border-bottom: 3px solid #2668f1;
+    display: inline-block;
 }
 
 /* 카테고리 박스 */

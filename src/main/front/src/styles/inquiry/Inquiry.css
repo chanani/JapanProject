@@ -13,7 +13,12 @@
     font-weight: 700;
     margin-bottom: 30px;
     width: 87px;
+
+}
+
+.inquiry-title-box > p {
     border-bottom: 3px solid #2668f1;
+    display: inline-block;
 }
 
 .inquiry-content-title {

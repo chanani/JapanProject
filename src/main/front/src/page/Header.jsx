@@ -31,13 +31,13 @@ function Header() {
     //　테스트 페이지 Link list
     const testLink = [["/choice-test", "단어 선택 테스트"], ["/short-test", "단어 단답형 테스트"]];
     // 마이페이지 Link list
-    const myLink = [["/mypage", "나의정보"], ["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습기록"], ];
+    const myLink = [["/mypage", "나의 정보"], ["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습 기록"], ];
     // 그 외 페이지 Link list
-    const otherLink = [["/chatAi", "Ai학습"], ["/search", "단어검색"], ["/translator", '번역기']];
+    const otherLink = [["/chatAi", "Ai 학습"], ["/search", "단어검색"], ["/translator", '번역기']];
     // 고객지원 list
     const customerLink = [["/notice", "공지사항"], ["/inquiry", '문의사항']];
     // admin 페이지 Link list
-    const adminLink = [["/admin/addWord", "단어등록"], ["/admin/addNotice", "공지사항 전달"], ["/addInquiryComment", '문의사항 답글']];
+    const adminLink = [["/admin/addWord", "단어 등록"], ["/admin/addNotice", "공지사항 전달"], ["/addInquiryComment", '문의사항 답글']];
 
     // 알랑 목록 조회 API
     const getNoticeList = () => {

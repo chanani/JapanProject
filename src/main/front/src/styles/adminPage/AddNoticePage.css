@@ -18,6 +18,11 @@
   font-weight: 700;
   margin-bottom: 30px;
   width: 140px;
+
+}
+
+.noticePage-title-box > p {
+  display: inline-block;
   border-bottom: 3px solid #2668f1;
 }
 

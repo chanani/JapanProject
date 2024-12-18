@@ -12,6 +12,10 @@
     font-weight: 700;
     margin-bottom: 30px;
     width: 100px;
+}
+
+.add-box .add-box-title > p {
+    display: inline-block;
     border-bottom: 3px solid #2668f1;
 }
 
@@ -169,7 +173,7 @@
     padding: 8px 10px;
 }
 
-.example-input-box input  {
+.example-input-box input {
     border: none;
     border-bottom: 1.5px solid #777;
     outline: none;
@@ -179,12 +183,13 @@
     transition: all .15s cubic-bezier(.47, 0, .745, .715);
     font-size: 15px;
 }
+
 .example-input-box p {
     font-size: 13px;
 }
 
 .example-input-box-detail {
-    width : 45%
+    width: 45%
 }
 
 /* 600 까지 */

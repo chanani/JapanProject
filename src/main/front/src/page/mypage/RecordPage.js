@@ -188,7 +188,7 @@ const RecordPage = () => {
             <div className="recordPage-page-mid">
 
                 <div className="recordPage-info">
-                    <p>테스트 기록</p>
+                    <p>학습 기록</p>
                 </div>
 
                 <div className="recordPage-category-box">

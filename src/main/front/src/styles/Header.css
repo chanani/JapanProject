@@ -39,6 +39,11 @@ header svg {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+}
+
+.header-category-box img {
+    cursor: pointer;
 }
 
 .header-category-box > div svg {
