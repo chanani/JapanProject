@@ -1,4 +1,4 @@
-import {useContext, useEffect, useState} from "react";
+import {useContext, useEffect, useRef, useState} from "react";
 import "../../styles/mypage/FavoritesList.css";
 import {FaRegTrashAlt} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
@@ -13,6 +13,7 @@ import {IoClose} from "react-icons/io5";
 import {BiSave} from "react-icons/bi";
 import PageNation from "../../component/PageNation";
 import usePagination from "../../hook/usePagination";
+import {useReactToPrint} from 'react-to-print';
 
 const FavoritesList = () => {
     const {userRole, username} = useContext(tokenInfoContext);
@@ -25,6 +26,13 @@ const FavoritesList = () => {
     const [totalData, setTotalData] = useState(0);
     const [perPage, setPerPage] = useState(10); // 보여줄 목록 수
     const pagesPerRange = 5; // 표시할 페이지 수
+
+    // 프린트
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        documentTitle: 'aa',
+    });
 
     // 페이지 네이션 hook 관리
     const {
@@ -114,7 +122,6 @@ const FavoritesList = () => {
             sort: selectedValue,
         })
             .then((res) => {
-                console.log(res.data.content);
                 setWord(res.data.content);
                 setTotalData(res.data.totalElements); // 전체 데이터 수
                 return res.data.content; // 업데이트된 데이터를 반환
@@ -136,6 +143,9 @@ const FavoritesList = () => {
         }
     }, [currentPage, selectedValue]);
 
+    useEffect(() => {
+        console.log(componentRef.current); // `null`이면 올바르게 연결되지 않음
+    }, []);
 
     return (
         <div className="favorite-page-all">
@@ -152,12 +162,17 @@ const FavoritesList = () => {
                         placeholder="정렬"
                         value={selectOptions.find(option => option.value === selectedValue)}
                     />
+
+                    <button onClick={handlePrint} disabled={!word.length}>
+                        프린트 하기
+                    </button>
+
                     <div className="favorite-page-study-box" onClick={handleStudy}>
                         <div>즐겨찾기 단어 학습</div>
                     </div>
                 </div>
 
-                <div className="favorite-data">
+                <div className="favorite-data" ref={componentRef}>
                     {word?.map((item, index) => (
                         <div className="favorite-box" key={index}>
                             <div className="favorite-data-top">
@@ -229,7 +244,6 @@ const FavoritesList = () => {
                                     </div>
                                 )
                             )}
-
 
 
                             <div className="favorite-data-bottom">
