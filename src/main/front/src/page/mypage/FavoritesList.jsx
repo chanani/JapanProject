@@ -1,4 +1,4 @@
-import {useContext, useEffect, useRef, useState} from "react";
+import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import "../../styles/mypage/FavoritesList.css";
 import {FaRegTrashAlt} from "react-icons/fa";
 import {useNavigate} from "react-router-dom";
@@ -28,10 +28,16 @@ const FavoritesList = () => {
     const pagesPerRange = 5; // 표시할 페이지 수
 
     // 프린트
-    const componentRef = useRef();
+    const componentRef = useRef(null);
+
+    const reactToPrintContent = useCallback(() => {
+        return componentRef.current;
+    }, [componentRef.current]);
+
+
     const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
-        documentTitle: 'aa',
+        content: reactToPrintContent,
+        documentTitle: 'title',
     });
 
     // 페이지 네이션 hook 관리
@@ -143,9 +149,7 @@ const FavoritesList = () => {
         }
     }, [currentPage, selectedValue]);
 
-    useEffect(() => {
-        console.log(componentRef.current); // `null`이면 올바르게 연결되지 않음
-    }, []);
+
 
     return (
         <div className="favorite-page-all">
