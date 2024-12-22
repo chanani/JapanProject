@@ -54,6 +54,22 @@
     flex-direction: column;
 }
 
+.favorite-page-category-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.favorite-page-category-right > svg {
+    cursor: pointer;
+    color: gray;
+    transition: all .12s cubic-bezier(.47, 0, .745, .715);
+}
+
+.favorite-page-category-right > svg:hover {
+    color: black;
+}
+
 /* 단어 박스 내용 */
 .favorite-box {
     border: 1px solid #4e4f4f85;

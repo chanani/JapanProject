@@ -14,6 +14,7 @@ import {BiSave} from "react-icons/bi";
 import PageNation from "../../component/PageNation";
 import usePagination from "../../hook/usePagination";
 import {useReactToPrint} from 'react-to-print';
+import {MdLocalPrintshop} from "react-icons/md";
 
 const FavoritesList = () => {
     const {userRole, username} = useContext(tokenInfoContext);
@@ -150,7 +151,6 @@ const FavoritesList = () => {
     }, [currentPage, selectedValue]);
 
 
-
     return (
         <div className="favorite-page-all">
             <div className="favorite-page-mid">
@@ -167,12 +167,16 @@ const FavoritesList = () => {
                         value={selectOptions.find(option => option.value === selectedValue)}
                     />
 
-                    <button onClick={handlePrint} disabled={!word.length}>
-                        프린트 하기
-                    </button>
 
-                    <div className="favorite-page-study-box" onClick={handleStudy}>
-                        <div>즐겨찾기 단어 학습</div>
+                    <div className={"favorite-page-category-right"}>
+                        <MdLocalPrintshop
+                            onClick={handlePrint}
+                            size={23}
+                        />
+
+                        <div className="favorite-page-study-box" onClick={handleStudy}>
+                            <div>즐겨찾기 단어 학습</div>
+                        </div>
                     </div>
                 </div>
 
