@@ -50,64 +50,63 @@
    <th align="center">CATEGORY</th>
    <th align="center" width="142px">STACK</th>
    <th align="center">ETC</th>
-
    <tr>
       <td rowspan="7" align="center">Backend</td>
-      <td> Spring Boot</td>
-      <td> <img src="https://github.com/user-attachments/assets/f1210a0a-6fff-41bd-bce5-7d64e555e394" width="15px" alt="Spring Boot"/>스프링 내용</td>
+      <td> <img src="https://github.com/user-attachments/assets/f1210a0a-6fff-41bd-bce5-7d64e555e394" width="15px" alt="Spring Boot"/> Spring Boot</td>
+      <td> 스프링 내용</td>
    </tr>
    <tr>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/aa3db068-991b-4e2e-b428-677e10379b03" width="15px" alt="MariaDB"/> MySQL</td>
+      <td><img src="https://github.com/user-attachments/assets/4cf9b956-e6e5-4044-a2e0-b696e1b3db92" width="15px" alt="MySQL"/> MySQL</td>
       <td>MySQL 내용</td>
    </tr>
    <tr>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/ec542cc0-63d1-4432-9a8f-032598b7ee6e" width="15px" alt="TypeORM"/> Mybatis</td>
+      <td><img src="https://github.com/user-attachments/assets/5607d802-4d09-4365-814c-0a4cc61a6ec9" width="15px" alt="Mybatis"/> Mybatis</td>
       <td>Mybatis 내용</td>
    </tr>
    <tr>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/9f28e99e-f4c2-4305-96d9-182e49e3da7b" width="15px" alt="Swagger"/> Redis</td>
+      <td><img src="https://github.com/user-attachments/assets/0d546cc5-e50b-4a00-9ec9-cadfa767a84b" width="15px" alt="Redis"/> Redis</td>
       <td>Redis 내용</td>
    </tr>
    <tr>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/9f28e99e-f4c2-4305-96d9-182e49e3da7b" width="15px" alt="Swagger"/> Kafka</td>
+      <td><img src="https://github.com/user-attachments/assets/68ff8a13-2471-4fe2-a967-6003ed424a74" width="15px" alt="Swagger"/> Kafka</td>
       <td>Kafka 내용</td>
    </tr>
    <tr>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/9f28e99e-f4c2-4305-96d9-182e49e3da7b" width="15px" alt="Swagger"/> Swagger</td>
+      <td><img src="https://github.com/user-attachments/assets/6be522ce-1cb2-40f8-b559-f1e01976e44d" width="15px" alt="Swagger"/> Swagger</td>
       <td>Swagger 내용</td>
    </tr>
    <tr>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/6b103b83-6ef2-4482-8d33-c968a5f56514" width="15px" alt="JWT Token"/> JWT Token</td>
+      <td><img src="https://github.com/user-attachments/assets/f1f9f344-f860-4bb6-885b-91e7e6a2cfc2" width="15px" alt="JWT Token"/> JWT Token</td>
       <td>사용자의 인증과 로그인 유지에 대한 메커니즘을 깊게 학습하였고 토큰 탈취 등에 대비한 Refresh Token을 추가하였습니다.</td>
    </tr>
-
    <tr>
       <td rowspan="3" align="center">Frontend</td>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/5e468952-9d18-4907-9974-472f0fc1d22b" width="16px" alt="React.js"/> React.js</td>
+      <td><img src="https://github.com/user-attachments/assets/be4801b7-8f57-4186-9689-96ffba8a8c23" width="16px" alt="React.js"/> React.js</td>
       <td>React 내용 : contextAPI, useEffect 등 </td>
    </tr>
    <tr>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/48b71137-07cc-4f18-97a6-b7c838b96c82" width="15px" alt="ReactQuery"/> Aixos</td>
+      <td><img src="https://github.com/user-attachments/assets/6d26291a-2308-48f4-9006-be0635337695" width="15px" alt="ReactQuery"/> Aixos</td>
       <td>Aixos 엑시오스 관련된 내용 </td>
    </tr>
    <tr>
-      <td>CSS3</td>
+      <td> <img src="https://github.com/user-attachments/assets/d9df2786-d025-4553-a96a-edbece61cf28" width="15px" alt="ReactQuery"/>CSS3</td>
       <td>CSS3 내용</td>
    </tr>
-   
+
    <tr>
       <td rowspan="3" align="center">Deploy</td>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/0cc31e0f-388a-4daa-9fdf-fceb5a7b17ee" width="15px" alt="Linux Ubuntu"/> Ubuntu Linux</td>
+      <td><img src="https://github.com/user-attachments/assets/d56eff15-6497-43be-905c-6785a06229cd" width="15px" alt="Linux Ubuntu"/> Ubuntu Linux</td>
       <td>서버내용</td>
    </tr>
    <tr>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/f773a975-2996-4cd7-a952-99c0932887be" width="15px" alt="PM2"> Nginx</td>
+      <td><img src="https://github.com/user-attachments/assets/855b62f3-5c48-4bd2-afd3-f516d47ebd97" width="15px" alt="PM2"> Nginx</td>
       <td>Nginx 내용</td>
    </tr>
    <tr>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/f773a975-2996-4cd7-a952-99c0932887be" width="15px" alt="PM2"> Jenkins</td>
+      <td><img src="https://github.com/user-attachments/assets/a079d166-457d-43cd-ba82-6dbd3f5806e8" width="15px" alt="PM2"> Jenkins</td>
       <td>Jenkins 내용</td>
    </tr>
 </table>
+
 
 <br/>
