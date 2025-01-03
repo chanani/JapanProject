@@ -95,7 +95,7 @@
 
    <tr>
       <td rowspan="3" align="center">Deploy</td>
-      <td><img src="https://github.com/user-attachments/assets/d56eff15-6497-43be-905c-6785a06229cd" width="15px" alt="Linux Ubuntu"/> Ubuntu Linux</td>
+      <td><img src="https://github.com/user-attachments/assets/d56eff15-6497-43be-905c-6785a06229cd" width="15px" alt="Linux Ubuntu"/> Ubuntu</td>
       <td>서버내용</td>
    </tr>
    <tr>
@@ -110,3 +110,5 @@
 
 
 <br/>
+
+## 😎 서비스 주요기능
