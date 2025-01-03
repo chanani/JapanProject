@@ -17,7 +17,7 @@
 <br/><br/>
 <div align="center">
    <table>
-      <td align="center">
+      <td align="center" width="600px" height="180px">
          <h4>서비스 이용 해보기 👉 <a href="https://lg.thejapan.today/"> [ The Japan 바로가기 ] </a></h4>
          <h6>
             <em>
