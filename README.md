@@ -53,8 +53,8 @@
 
    <tr>
       <td rowspan="7" align="center">Backend</td>
-      <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/5e6ec340-688e-44aa-8a55-27ec80f19eff" width="15px" alt="Nest.js"/> Spring Boot</td>
-      <td>스프링 내용</td>
+      <td> Spring Boot</td>
+      <td> <img src="https://github.com/user-attachments/assets/f1210a0a-6fff-41bd-bce5-7d64e555e394" width="15px" alt="Spring Boot"/>스프링 내용</td>
    </tr>
    <tr>
       <td><img src="https://github.com/zeriong/zete-zustand-reactQuery/assets/115396103/aa3db068-991b-4e2e-b428-677e10379b03" width="15px" alt="MariaDB"/> MySQL</td>
