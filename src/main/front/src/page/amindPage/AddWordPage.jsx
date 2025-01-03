@@ -77,6 +77,7 @@ const AddWordPage = () => {
         try {
             const result = await axiosInstance.post('admin/addWordList', payload)
                 .then((res) => {
+                    if(res.status !== 200) return toast.error("등록 중 오류가 발생하였습니다.")
                     toast.success(`${list.length}건이 정상적으로 등록되었습니다.`);
                     setList([]);
                     setInputCount(1);

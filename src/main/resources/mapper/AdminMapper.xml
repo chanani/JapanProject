@@ -58,6 +58,8 @@
                 AND word_content = #{wordContent}
                 AND word_level = #{wordLevel}
                 AND word_week = #{wordWeek}
+            ORDER BY word_num DESC
+            limit 1
         </selectKey>
         INSERT INTO word_example (word_num,
                                   we_content,
