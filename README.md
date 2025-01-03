@@ -60,7 +60,7 @@
       <td>MySQL 내용</td>
    </tr>
    <tr>
-      <td><img src="https://github.com/user-attachments/assets/5607d802-4d09-4365-814c-0a4cc61a6ec9" width="15px" alt="Mybatis"/> Mybatis</td>
+      <td><img src="https://github.com/user-attachments/assets/75019069-30d9-4cfb-b289-d10b1919044b" width="15px" alt="Mybatis"/> Mybatis</td>
       <td>Mybatis 내용</td>
    </tr>
    <tr>
@@ -89,7 +89,7 @@
       <td>Aixos 엑시오스 관련된 내용 </td>
    </tr>
    <tr>
-      <td> <img src="https://github.com/user-attachments/assets/d9df2786-d025-4553-a96a-edbece61cf28" width="15px" alt="ReactQuery"/>CSS3</td>
+      <td> <img src="https://github.com/user-attachments/assets/d9df2786-d025-4553-a96a-edbece61cf28" width="15px" alt="ReactQuery"/> CSS3</td>
       <td>CSS3 내용</td>
    </tr>
 
