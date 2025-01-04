@@ -4,6 +4,7 @@ import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.utils.Translator;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.apache.http.impl.execchain.RequestAbortedException;
 import org.apache.ibatis.annotations.Param;
@@ -22,6 +23,11 @@ public class TranslatorController {
 
     private final Translator translator;
 
+    @Operation(summary = "번역 API",
+            description = "word = 변경하고 싶은 단어\n\n" +
+                    "from = 기존 언어(국적)\n\n" +
+                    "to = 변경하고 싶은 언어(국적)"
+    )
     @NoneAuth
     @GetMapping("/changeWord")
     public ResponseEntity<String> changeWord(@Param("word") String word,

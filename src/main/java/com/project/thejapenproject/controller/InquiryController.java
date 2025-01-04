@@ -15,6 +15,7 @@ import com.project.thejapenproject.inquiry.vo.InquiryRegisterReqVO;
 import com.project.thejapenproject.inquiry.vo.param.AddCommentParamVO;
 import com.project.thejapenproject.inquiry.vo.param.CheckPasswordParamVO;
 import com.project.thejapenproject.inquiry.vo.param.GetInquiryNumberParamVO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
@@ -34,9 +35,12 @@ public class InquiryController {
     public final InquiryService inquiryService;
 
     /**
-     * 문의내역 추가 API
+     * 문의내역 등록 API
      * ＠Param InquiryVO : 입력한 모든 정보를 VO로 받아 insert
      **/
+    @Operation(summary = "신규 문의 내역 등록 API",
+            description = ""
+    )
     @NoneAuth
     @PostMapping("/insertData")
     public ResponseEntity<String> insertDate(@Valid @RequestBody InquiryRegisterReqVO inquiryRegisterReqVO) {
@@ -47,6 +51,9 @@ public class InquiryController {
     /**
      * 전체 문의내역 조회 API
      **/
+    @Operation(summary = "전체 문의내역 조회 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/getList")
     public ResponseData getList(@Valid @ModelAttribute GetInquiryListReqVO getInquiryListReqVO) {
@@ -66,6 +73,9 @@ public class InquiryController {
      *
      * @Param InquiryVO : 조회에 필요한 게시글의 NUMBER, PW를 VO로 받아 확인
      **/
+    @Operation(summary = "문의내역 접속 시 패드워드 확인 API",
+            description = ""
+    )
     @NoneAuth
     @PostMapping("/checkPassword")
     public ResponseEntity<Boolean> checkPassword(@Valid @RequestBody CheckPasswordParamVO checkPasswordParamVO) {
@@ -83,6 +93,9 @@ public class InquiryController {
      *
      * @Param inquiry_num : 테이블의 PK를 통해 조회
      **/
+    @Operation(summary = "문의내역 상세내역 조회 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/getDetails")
     public ResponseEntity<Object> getDetails(@Valid @ModelAttribute GetInquiryNumberParamVO getInquiryNumberParamVO) {
@@ -96,6 +109,9 @@ public class InquiryController {
      *
      * @Param inquiry_num : 테이블의 PK를 통해 삭제
      **/
+    @Operation(summary = "문의내역 삭제 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/deleteData")
     public ResponseEntity<String> deleteData(@Valid @ModelAttribute GetInquiryNumberParamVO getInquiryNumberParamVO) throws Exception {
@@ -106,6 +122,9 @@ public class InquiryController {
     /**
      * 문의 답글 등록 API
      */
+    @Operation(summary = "문의 답글 등록 API",
+            description = ""
+    )
     @NoneCheckToken
     @PostMapping("/addComment")
     public ResponseEntity<String> addComment(@Valid @RequestBody AddCommentParamVO addCommentParamVO) {

@@ -10,6 +10,8 @@ import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,6 +37,9 @@ public class AdminController {
      * 단어 등록 API
      * @param addWordReqVO : 단어, 뜻, 단계, 한자, 주차까지 등록
      */
+    @Operation(summary = "신규 단어 등록 API",
+            description = ""
+    )
     @PostMapping("/addWordList")
     public ResponseEntity<String> addWordList(@Valid @RequestBody AddWordReqVO addWordReqVO){
         // 단어 등록
@@ -42,6 +47,10 @@ public class AdminController {
 
         return ResponseEntity.ok("성공");
     }
+
+    @Operation(summary = "신규 공지 등록 API",
+            description = "신규 공지 등록 시 현재 접속해있는 모든 사용자에게 알림이 전송됩니다."
+    )
     @PostMapping("/addNotice")
     public ResponseEntity<String> addNotice(@Valid @RequestBody AddNoticeReqVO addNoticeReqVO){
 
@@ -49,6 +58,9 @@ public class AdminController {
         return ResponseEntity.ok("성공");
     }
 
+    @Operation(summary = "신규 주차별 단어 추가 API",
+            description = ""
+    )
     @PostMapping("/addWeekWord")
     public ResponseEntity<String> addWeekWord(@RequestBody ArrayList<SchoolVO> wordList){
         adminService.addWeekWord(wordList);

@@ -12,6 +12,7 @@ import com.project.thejapenproject.gpt.vo.AiRecordListResVO;
 import com.project.thejapenproject.gpt.vo.RegisterRecordGroupReqVO;
 import com.project.thejapenproject.gpt.vo.RemoveRecordGroupReqVO;
 import com.project.thejapenproject.gpt.vo.param.GetRecordDetailReqVO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,9 @@ public class ChatGPTController {
     @Value("${openai.secret-key}")
     private String key;
 
+    @Operation(summary = "GPT OPEN API로 메시지 전달하는 API",
+            description = ""
+    )
     @NoneCheckToken
     @PostMapping("/send")
     public ResponseEntity<String> send(@RequestBody Map<String, String> map) {
@@ -77,6 +81,9 @@ public class ChatGPTController {
      * @author : chanhan
      * @since : 2024-11-23 오후 01:48
      **/
+    @Operation(summary = "Ai 학습 이전 내역 조회 API",
+            description = ""
+    )
     @GetMapping("/record")
     @ResponseBody
     public ResponseData record(@Valid @ModelAttribute UsernameReqVO usernameReqVO) {
@@ -99,6 +106,9 @@ public class ChatGPTController {
      * @author : chanhan
      * @since : 2024-11-23 오후 05:01
      **/
+    @Operation(summary = "Ai 학습 첫 질문 시 그룹 생성 API",
+            description = ""
+    )
     @PostMapping("/register-record")
     @ResponseBody
     public ResponseData registerRecord(@Valid @RequestBody RegisterRecordGroupReqVO registerRecordGroupReqVO) {
@@ -122,6 +132,9 @@ public class ChatGPTController {
      * @author : chanhan
      * @since : 2024-11-24 오후 01:48
      **/
+    @Operation(summary = "Ai 학습 이전 상세 내역 조회 API",
+            description = ""
+    )
     @GetMapping("/record-detail")
     @ResponseBody
     public ResponseData record(@Valid @ModelAttribute GetRecordDetailReqVO getRecordDetailReqVO) {
@@ -143,6 +156,9 @@ public class ChatGPTController {
      * @author : chanhan
      * @since : 2024-11-26 오후 10:43
      **/
+    @Operation(summary = "Ai 학습 질문 그룹 삭제 API",
+            description = ""
+    )
     @PostMapping("/remove-record")
     @ResponseBody
     public ResponseData removeRecord(@Valid @RequestBody RemoveRecordGroupReqVO removeRecordGroupReqVO) {

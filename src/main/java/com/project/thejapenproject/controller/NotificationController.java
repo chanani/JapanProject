@@ -3,6 +3,7 @@ package com.project.thejapenproject.controller;
 import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.kafka.service.NotificationsService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,18 @@ public class NotificationController {
 
     private final NotificationsService notificationService;
 
-
+    @Operation(summary = "클라이언트 구독 API",
+            description = "로그인 시 connect 하여 로그인한 유저 정보를 관리합니다."
+    )
     @NoneAuth
     @GetMapping(value = "/subscribe/{id}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public ResponseEntity<SseEmitter> subscribe(@PathVariable Long id) {
         return ResponseEntity.ok(notificationService.subscribe(id));
     }
 
+    @Operation(summary = "서버의 이벤트를 클라이언트에게 전달하는 API",
+            description = ""
+    )
     @NoneAuth
     @PostMapping("/send-data/{id}")
     public void sendData(@PathVariable Long id) {

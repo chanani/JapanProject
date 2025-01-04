@@ -11,6 +11,7 @@ import com.project.thejapenproject.common.utils.PageResponse;
 import com.project.thejapenproject.study.service.StudyService;
 import com.project.thejapenproject.study.vo.*;
 import com.project.thejapenproject.study.vo.param.*;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,9 @@ public class StudyController {
 
     public final StudyService studyService;
 
+    @Operation(summary = "학습 단어 목록 조회 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/data/{level}/{num}/{username}")
     public ResponseEntity<ArrayList<WordVO>> getWord(@PathVariable Integer level,
@@ -36,6 +40,9 @@ public class StudyController {
         return ResponseEntity.ok(list);
     }
 
+    @Operation(summary = "즐겨 찾기 추가 API",
+            description = ""
+    )
     @NoneCheckToken
     @GetMapping("/addFavorite/{wordNum}/{favorite}/{username}")
     public ResponseEntity<String> changeFavorite(@PathVariable Integer wordNum,
@@ -55,6 +62,9 @@ public class StudyController {
      * @param studyChoiceParamVO
      * @return
      */
+    @Operation(summary = "선택 학습 단어 조회 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/choice")
     public ResponseData choiceGetList(@Valid @ModelAttribute StudyChoiceParamVO studyChoiceParamVO) {
@@ -74,6 +84,9 @@ public class StudyController {
      * @param favoriteVO : 결과 페이지에 있는 단어 목록
      * @return
      */
+    @Operation(summary = "선택 학습 결과 페이지 즐겨찾기 목록 조회 API",
+            description = ""
+    )
     @PostMapping("/choice-result/favoriteCheck")
     public ResponseData resultFavoriteCheck(@Valid @RequestBody ResultFavoriteCheckParamVO favoriteVO) {
         ArrayList<Integer> choiceList = studyService.getFavoriteCheckList(favoriteVO);
@@ -99,6 +112,9 @@ public class StudyController {
      * @param favoriteVO
      * @return
      */
+    @Operation(summary = "선택 학습 페이지 즐겨찾기 추가, 삭제 API",
+            description = ""
+    )
     @GetMapping("/choice-result-addFavorite")
     public ResponseData resultAddFavorite(@Valid @ModelAttribute ResultAddFavoriteParamVO favoriteVO) {
         studyService.resultAddFavorite(favoriteVO);
@@ -114,6 +130,9 @@ public class StudyController {
      * @param searchVO
      * @return
      */
+    @Operation(summary = "셋트 단어 등록 시 단어 조회 API",
+            description = ""
+    )
     @GetMapping("/solo-study-search")
     public ResponseData getSoloStudySearch(@Valid @ModelAttribute SoloStudyGetSearchDataParamVO searchVO) {
 
@@ -131,6 +150,9 @@ public class StudyController {
      * @param requestVO
      * @return
      */
+    @Operation(summary = "단어 셋트 등록 API",
+            description = ""
+    )
     @PostMapping("/solo-study-register")
     public ResponseData registerSoloStudy(@Valid @RequestBody SoloStudyRegisterReqVO requestVO) {
 
@@ -148,6 +170,9 @@ public class StudyController {
      * @param requestVO
      * @return
      */
+    @Operation(summary = "단어 셋트 수정 API",
+            description = ""
+    )
     @PostMapping("/solo-study-modify")
     public ResponseData modifySoloStudy(@Valid @RequestBody SoloStudyModifyReqVO requestVO) {
         studyService.modifySoloStudy(requestVO);
@@ -158,10 +183,13 @@ public class StudyController {
     }
 
     /**
-     * 단어 셋트 수정 API
+     * 단어 셋트 삭제 API
      * @param requestVO
      * @return
      */
+    @Operation(summary = "단어 셋트 삭제 API",
+            description = ""
+    )
     @PostMapping("/solo-study-remove")
     public ResponseData removeSoloStudy(@Valid @RequestBody SoloStudyRemoveReqVO requestVO) {
         studyService.removeSoloStudy(requestVO);
@@ -176,6 +204,9 @@ public class StudyController {
      * @param getSetDataReqVO
      * @return
      */
+    @Operation(summary = "단어 셋트 목록 조회 API",
+            description = ""
+    )
     @GetMapping("/get-set-data")
     public ResponseData getWordSetData(@Valid @ModelAttribute GetSetDataReqVO getSetDataReqVO) {
 
@@ -191,6 +222,9 @@ public class StudyController {
     /**
      * 단어 셋트 전체 목록 조회 API
      */
+    @Operation(summary = "단어 셋트 전체 목록 조회 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/get-set-data-all")
     public ResponseData getWordSetDataAll(@Valid @ModelAttribute GetSetStudyDataListParamVO requestVO) {
@@ -208,6 +242,9 @@ public class StudyController {
      * @param requestVO
      * @return
      */
+    @Operation(summary = "단어 세트 상세 목록 조회 API",
+            description = ""
+    )
     @NoneAuth
     @PostMapping("/get-set-detail-data")
     public ResponseData getWordSetDetailData(@Valid @RequestBody GetWordSetDetailListReqVO requestVO) {
@@ -226,6 +263,9 @@ public class StudyController {
      * @param requestVO
      * @return
      */
+    @Operation(summary = "수정 페이지로 진입 시 데이터 조회 API",
+            description = ""
+    )
     @PostMapping("/get-modify-data")
     public ResponseData getModifyDataList(@Valid @RequestBody GetWordSetDetailListReqVO requestVO) {
 
@@ -246,6 +286,9 @@ public class StudyController {
      * @author : chanhan
      * @since 2024-10-30 오후 09:16
      */
+    @Operation(summary = "즐겨찾기 목록 조회 API",
+            description = ""
+    )
     @PostMapping("/get-favorite-list")
     public ResponseData getFavoriteList(@Valid @RequestBody GetFavoriteListReqVO requestVO) {
 
@@ -266,6 +309,9 @@ public class StudyController {
      * @author : chanhan
      * @since 2024-11-15 오후 11:27
      */
+    @Operation(summary = "단어 세트 학습 좋아요 API",
+            description = ""
+    )
     @PostMapping("/modify-like")
     public ResponseData modifyLike(@Valid @RequestBody SetStudyModifyLikeReqVO requestVO) {
 

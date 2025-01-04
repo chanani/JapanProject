@@ -9,6 +9,7 @@ import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.test.vo.*;
 import com.project.thejapenproject.test.service.TestService;
 import com.project.thejapenproject.test.vo.param.ShortTestListReqVO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class TestController {
      * 테스트 내용 가져오는 API
      * level에 단계 필수 전달.
      */
+    @Operation(summary = "테스트 내용 조회 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/word/{level}")
     public ResponseEntity<ArrayList<GetTestListResVO>> getTestList(@PathVariable Integer level) {
@@ -41,6 +45,9 @@ public class TestController {
     /**
      * 점수 기록 API
      */
+    @Operation(summary = "테스트 점수 기록 API",
+            description = ""
+    )
     @NoneCheckToken
     @PostMapping("/record")
     @Transactional
@@ -76,6 +83,9 @@ public class TestController {
      * @param choiceTestSaveReqVO
      * @return
      */
+    @Operation(summary = "선택 단어 테스트 데이터 저장 API",
+            description = ""
+    )
     @PostMapping("/choice-test-register")
     public ResponseData choiceTestRegister(@Valid @RequestBody ChoiceTestSaveReqVO choiceTestSaveReqVO){
         testService.registerChoiceTest(choiceTestSaveReqVO);
@@ -90,6 +100,9 @@ public class TestController {
      * @param shortTestListReqVO
      * @return
      */
+    @Operation(summary = "단답형 테스트 문제 목록 조회 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/short-test-list")
     public ResponseData shortTestList(@Valid @ModelAttribute ShortTestListReqVO shortTestListReqVO){
@@ -106,6 +119,9 @@ public class TestController {
      * @param shortTestSaveReqVO
      * @return
      */
+    @Operation(summary = "단답형 단어 테스트 데이터 저장 API",
+            description = ""
+    )
     @PostMapping("/short-test-register")
     public ResponseData shortTestRegister(@Valid @RequestBody ShortTestSaveReqVO shortTestSaveReqVO){
         testService.registerShortTest(shortTestSaveReqVO);

@@ -15,6 +15,7 @@ import com.project.thejapenproject.notice.vo.GetNoticeDetailResVO;
 import com.project.thejapenproject.notice.vo.param.GetNoticeDetailReqVO;
 import com.project.thejapenproject.user.service.UserService;
 import com.project.thejapenproject.utils.MailSend;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,10 @@ public class MainController {
     private final UserService userService;
     private final AuthService authService;
 
+
+    @Operation(summary = "로그인 API",
+            description = "access token, refresh token, username 반환"
+    )
     @NoneAuth
     @PostMapping("/login")
     public Object login(@Valid @RequestBody LoginReqVO loginReqVO) throws Exception {
@@ -48,7 +53,9 @@ public class MainController {
         }
     }
 
-
+    @Operation(summary = "로그아웃 API",
+            description = ""
+    )
     @NoneCheckToken
     @PostMapping("/logout")
     public Object logout(@Valid @RequestBody LogoutReqVO logoutReqVO) throws Exception {
@@ -60,6 +67,9 @@ public class MainController {
                 .build();
     }
 
+    @Operation(summary = "회원가입 API",
+            description = ""
+    )
     @NoneAuth
     @PostMapping("/join")
     public Object join(@RequestBody Map<String, String> map) throws Exception {
@@ -85,6 +95,9 @@ public class MainController {
                 .build();
     }
 
+    @Operation(summary = "엑세스 토큰 재발급 요청 API",
+            description = "refresh token을 통해 access token 요청"
+    )
     @NoneAuth
     @PostMapping("/refresh")
     public Object refresh(@RequestBody RequestUserLogin requestUserLogin) throws Exception {
@@ -104,6 +117,10 @@ public class MainController {
      * @param kind      : email, username, phone 중 1개로 넘어오는 중복체크 종류
      * @param attribute : 중복 체크 확인할 값
      **/
+    @Operation(summary = "이메일, 연락처, 아이디 중복 체크 API",
+            description = "kind 변수에 email & username & phone을 전달해주세요.\n\n" +
+                    "attribute에는 체크하고 싶은 값을 전달해주세요."
+    )
     @NoneAuth
     @GetMapping("/check/{kind}/{attribute}")
     public ResponseEntity<String> checkEmail(@PathVariable("kind") String kind,
@@ -123,6 +140,9 @@ public class MainController {
     /**
      * @param mailAuthReqVO : 이메일 인증을 위해 넘어오는 값
      **/
+    @Operation(summary = "이메일 인증 번호 요청 API",
+            description = ""
+    )
     @NoneAuth
     @PostMapping("/emailAuth")
     public ResponseEntity<String> emailAuth(@Valid @RequestBody MailAuthReqVO mailAuthReqVO) throws Exception {
@@ -156,6 +176,9 @@ public class MainController {
         }
     }
 
+    @Operation(summary = "아이디 찾기 API",
+            description = ""
+    )
     @NoneAuth
     @PostMapping("/findId")
     public ResponseEntity<String> findId(@Valid @RequestBody MailAuthReqVO mailAuthReqVO) {
@@ -167,6 +190,9 @@ public class MainController {
         }
     }
 
+    @Operation(summary = "비밀번호 변경 API",
+            description = ""
+    )
     @NoneAuth
     @PostMapping("/passwordChange")
     public ResponseEntity<String> passwordChange(@Valid @RequestBody PasswordChangeReqVO passwordChangeReqVO) throws NoSuchAlgorithmException {
@@ -177,6 +203,9 @@ public class MainController {
         }
     }
 
+    @Operation(summary = "회원의 아이콘 조회 API",
+            description = ""
+    )
     @PostMapping("/user-icon")
     @NoneCheckToken
     public ResponseData getUserIcon(@Valid @RequestBody GetUserIconReqVO getUserIconReqVO) {

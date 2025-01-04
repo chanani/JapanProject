@@ -10,6 +10,7 @@ import com.project.thejapenproject.notice.service.NoticeService;
 import com.project.thejapenproject.notice.vo.GetListReqVO;
 import com.project.thejapenproject.notice.vo.GetNoticeDetailResVO;
 import com.project.thejapenproject.notice.vo.param.GetNoticeDetailReqVO;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,9 @@ public class NoticeController {
      * @param getListReqVO
      * @return
      */
+    @Operation(summary = "공지사항 목록 조회 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/getList")
     public ResponseData getList(@Valid @ModelAttribute GetListReqVO getListReqVO) {
@@ -49,6 +53,9 @@ public class NoticeController {
      * @param username
      * @return
      */
+    @Operation(summary = "알람에 공지사항 목록 조회 API",
+            description = ""
+    )
     @GetMapping("/alarmList/{username}")
     public ResponseEntity<ArrayList<NoticeVO>> alarmList(@PathVariable("username") String username) {
         return ResponseEntity.ok(noticeService.alarmList(username));
@@ -57,6 +64,9 @@ public class NoticeController {
     /**
      * 공지사항 알람 리스트 조회 API
      */
+    @Operation(summary = "공지사항 알람 리스트 조회 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/noticeCheck/{noticeNum}/{username}")
     public ResponseEntity<String> noticeCheck(@PathVariable("noticeNum") Integer notice_num,
@@ -72,6 +82,9 @@ public class NoticeController {
      * @param getNoticeDetailReqVO
      * @return
      */
+    @Operation(summary = "공지사항 상세 목록 조회 API",
+            description = ""
+    )
     @NoneAuth
     @GetMapping("/get-detail")
     public ResponseData getNoticeDetail(@Valid @ModelAttribute GetNoticeDetailReqVO getNoticeDetailReqVO){
