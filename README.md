@@ -58,11 +58,11 @@
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/4cf9b956-e6e5-4044-a2e0-b696e1b3db92" width="15px" alt="MySQL"/> MySQL</td>
-      <td>MySQL 내용</td>
+      <td>데이터베이스 테이블 설계 시 정규화를 고려하여 데이터를 구조화하였으며, 트랜잭션 관리를 통해 데이터의 무결성을 유지하였습니다.</td>
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/75019069-30d9-4cfb-b289-d10b1919044b" width="15px" alt="Mybatis"/> Mybatis</td>
-      <td>Mybatis 내용</td>
+      <td> MyBatis의 동적 쿼리 기능을 활용하여 다양한 조건의 데이터를 효율적조회 하며 코드 가독성을 높이기 위해 지속적으로 리팩토링을 진행했습니다.</td>
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/0d546cc5-e50b-4a00-9ec9-cadfa767a84b" width="15px" alt="Redis"/> Redis</td>
@@ -70,7 +70,7 @@
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/68ff8a13-2471-4fe2-a967-6003ed424a74" width="15px" alt="Swagger"/> Kafka</td>
-      <td>Kafka 내용</td>
+      <td> 메시지 큐를 활용해 안정적인 알림 기능 구조를 설계하였습니다.</td>
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/6be522ce-1cb2-40f8-b559-f1e01976e44d" width="15px" alt="Swagger"/> Swagger</td>
@@ -97,15 +97,15 @@
    <tr>
       <td rowspan="3" align="center">Deploy</td>
       <td><img src="https://github.com/user-attachments/assets/d56eff15-6497-43be-905c-6785a06229cd" width="15px" alt="Linux Ubuntu"/> Ubuntu</td>
-      <td>서버내용</td>
+      <td> Ubuntu 서버에서 Spring Boot와 Nginx를 배포하여 안정적인 애플리케이션 운영 환경을 조성하였습니다.</td>
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/855b62f3-5c48-4bd2-afd3-f516d47ebd97" width="15px" alt="PM2"> Nginx</td>
-      <td>Nginx 내용</td>
+      <td> SSL 인증서를 사용하여 HTTPS를 활성화하고, 데이터 보안을 강화하였습니다.</td>
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/a079d166-457d-43cd-ba82-6dbd3f5806e8" width="15px" alt="PM2"> Jenkins</td>
-      <td>Jenkins 내용</td>
+      <td> Jenkins를 통해 코드 푸시 후 빌드와 배포 과정을 자동화하였습니다.</td>
    </tr>
 </table>
 
