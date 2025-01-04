@@ -54,7 +54,7 @@
    <tr>
       <td rowspan="7" align="center">Backend</td>
       <td> <img src="https://github.com/user-attachments/assets/f1210a0a-6fff-41bd-bce5-7d64e555e394" width="15px" alt="Spring Boot"/> Spring Boot</td>
-      <td> 스프링 내용</td>
+      <td> 스프링 프레임워크 기반의 간소화된 개발 환경을 사용하여 REST API와 비즈니스 로직을 효율적으로 구현하였습니다.</td>
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/4cf9b956-e6e5-4044-a2e0-b696e1b3db92" width="15px" alt="MySQL"/> MySQL</td>
@@ -66,7 +66,7 @@
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/0d546cc5-e50b-4a00-9ec9-cadfa767a84b" width="15px" alt="Redis"/> Redis</td>
-      <td>Redis 내용</td>
+      <td> 사용 빈도가 높은 데이터의 캐싱과 세션 관리를 위해 Redis를 선택하였습니다.</td>
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/68ff8a13-2471-4fe2-a967-6003ed424a74" width="15px" alt="Swagger"/> Kafka</td>
@@ -74,24 +74,24 @@
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/6be522ce-1cb2-40f8-b559-f1e01976e44d" width="15px" alt="Swagger"/> Swagger</td>
-      <td>Swagger 내용</td>
+      <td> 개발 중인 API 명세서를 자동으로 생성하고, 클라이언트 요청에 맞는 응답을 검증하기 위해 Swagger를 선택했습니다.</td>
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/f1f9f344-f860-4bb6-885b-91e7e6a2cfc2" width="15px" alt="JWT Token"/> JWT Token</td>
-      <td>사용자의 인증과 로그인 유지에 대한 메커니즘을 깊게 학습하였고 토큰 탈취 등에 대비한 Refresh Token을 추가하였습니다.</td>
+      <td>인증 및 권한 관리를 위해 JWT를 사용하였으며, Refresh Token을 추가하여 보안성을 강화하였습니다.</td>
    </tr>
    <tr>
       <td rowspan="3" align="center">Frontend</td>
       <td><img src="https://github.com/user-attachments/assets/be4801b7-8f57-4186-9689-96ffba8a8c23" width="16px" alt="React.js"/> React.js</td>
-      <td>React 내용 : contextAPI, useEffect 등 </td>
+      <td>Context API를 활용한 상태 관리, React Router를 통한 </td>
    </tr>
    <tr>
       <td><img src="https://github.com/user-attachments/assets/6d26291a-2308-48f4-9006-be0635337695" width="15px" alt="ReactQuery"/> Aixos</td>
-      <td>Aixos 엑시오스 관련된 내용 </td>
+      <td> 처음으로 Interceptor를 제작하고 활용하여 요청과 응답 시 공통 처리가 필요한 데이터를 자동으로 추가하여 보안을 강화할 수 있었습니다.</td>
    </tr>
    <tr>
       <td> <img src="https://github.com/user-attachments/assets/d9df2786-d025-4553-a96a-edbece61cf28" width="15px" alt="ReactQuery"/> CSS3</td>
-      <td>CSS3 내용</td>
+      <td> CSS3를 활용하여 반응형 디자인을 구현했으며, 유연한 레이아웃과 애니메이션 효과를 추가하여 사용자 경험을 개선하였습니다.</td>
    </tr>
 
    <tr>
