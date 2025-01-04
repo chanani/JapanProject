@@ -1,7 +1,7 @@
-# 🌎The Japan 일본어 학습 서비스
+# 🌎 The Japan 일본어 학습 서비스
 
    <h4>
-      일본어를 공부하고 싶은데 시작하기 어려우신가요?<br/>
+      일본어 공부하고 싶은데 시작하기 어려우신가요?<br/>
    </h4>
 
 <blockquote>
@@ -12,9 +12,10 @@
    </p>
 </blockquote>
 
-`📖 원하는 수준의 단어 학습` &nbsp; `📚 남들과 공유할 수 있는 나의 단어장` &nbsp; `🤖AI(Chat GPT)를 통한 질문과 학습`
+`📖 맞춤 단어 학습` &nbsp; `📚 공유 가능한 나만의 단어장` &nbsp; `🤖 질문하며 AI와 학습`
 
 <br/><br/>
+
 <div align="center">
    <table>
       <td align="center" width="600px" height="180px">
@@ -23,7 +24,7 @@
             <em>
                <strong>
                   &nbsp;&nbsp;&nbsp;
-                  📢 일부 기능은 로그인 후 이용 할 수 있습니다..
+                  📢 일부 기능은 로그인 후 이용 할 수 있습니다.
                   &nbsp;&nbsp;&nbsp;&nbsp;
                </strong>
             </em>
