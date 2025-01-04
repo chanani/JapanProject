@@ -1,5 +1,6 @@
 package com.project.thejapenproject.mypage.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,23 +15,40 @@ import java.util.ArrayList;
 @Builder
 public class FavoriteListResVO {
 
+    @Schema(description = "단어 번호")
     private Integer wordNum;
+
+    @Schema(description = "레벨")
     private Integer wordLevel;
+
+    @Schema(description = "뜻")
     private String wordMeaning;
+
+    @Schema(description = "내용")
     private String wordContent;
+
+    @Schema(description = "한자")
     private String wordChinese;
+
+    @Schema(description = "즐겨 찾기 여부")
     private boolean wordFavorite;
-    // 즐겨찾기 주차
+
+    @Schema(description = "단어 주차")
     private String wordWeek;
-    // 즐겨찾기 번호
+
+    @Schema(description = "즐겨찾기 번호")
     private Integer favoriteNum;
-    // 즐겨찾기 등록일
+
+    @Schema(description = "즐겨찾기 등록일")
     private String favoriteRegdate;
-    // 즐겨찾기 메모
+
+    @Schema(description = "즐겨찾기 메모")
     private String favoriteMemo;
-    // 예문 목록
+
+    @Schema(description = "예문 목록")
     private ArrayList<ExampleInfoVO> exampleList;
-    // 전체 데이터 수
+
+    @Schema(description = "전체 데이터 수")
     private Integer totalElements;
 
 }

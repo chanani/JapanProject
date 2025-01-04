@@ -1,5 +1,6 @@
 package com.project.thejapenproject.test.vo.param;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,8 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class ShortTestListReqVO {
 
-    @NotNull(message = "문제수는 필수입니다.")
+    @Schema(description = "문제 수", example = "10")
+    @NotNull(message = "문제 수는 필수입니다.")
     private Integer questionNum;
 
 

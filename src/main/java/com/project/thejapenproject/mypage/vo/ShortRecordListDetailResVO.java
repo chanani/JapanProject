@@ -1,5 +1,6 @@
 package com.project.thejapenproject.mypage.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,13 +19,28 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ShortRecordListDetailResVO {
 
-    private Integer strdNum; // 문제 고유번호
-    private Integer wordNum; // 단어 번호
-    private String strdChoiceWord; // 입력한 답
-    private String strdAnswerContent; // 정답 단어
-    private String strdAnswerMeaning; // 정답 뜻
-    private String strdAnswerChinese; // 정답 한자
-    private String strdResult; // 정답 여부
+    @Schema(description = "문제 고유번호")
+    private Integer strdNum;
+
+    @Schema(description = "단어 번호")
+    private Integer wordNum;
+
+    @Schema(description = "입력한 답")
+    private String strdChoiceWord;
+
+    @Schema(description = "정답 단어")
+    private String strdAnswerContent;
+
+    @Schema(description = "정답 뜻")
+    private String strdAnswerMeaning;
+
+    @Schema(description = "정답 한자")
+    private String strdAnswerChinese;
+
+    @Schema(description = "정답 여부")
+    private String strdResult;
+
+    @Schema(description = "등록일")
     private String createdAt;
 
 }

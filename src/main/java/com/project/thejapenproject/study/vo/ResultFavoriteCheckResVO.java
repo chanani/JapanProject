@@ -1,5 +1,6 @@
 package com.project.thejapenproject.study.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +14,6 @@ import java.util.ArrayList;
 @Builder
 public class ResultFavoriteCheckResVO {
 
-    // 단어 번호
+    @Schema(description = "단어 번호")
     private Integer wordNum;
-
-
 }

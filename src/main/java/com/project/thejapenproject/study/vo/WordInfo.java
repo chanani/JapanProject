@@ -1,5 +1,6 @@
 package com.project.thejapenproject.study.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,14 +12,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class WordInfo {
 
-
-    // 히라가나
+    @Schema(description = "단어 내용")
     private String wordContent;
 
-    // 히라가나
+    @Schema(description = "단어 뜻")
     private String wordMeaning;
 
-    // 한자
+    @Schema(description = "단어 한자")
     private String wordChinese;
 }
 

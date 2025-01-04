@@ -1,5 +1,6 @@
 package com.project.thejapenproject.admin.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,10 +21,10 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class WordExampleInfoVO {
 
-    // 예제
+    @Schema(description = "예문", example = "私は猫です。")
     private String wordExampleContent;
 
-    // 예제 풀이
+    @Schema(description = "예문 풀이", example = "저는 고양이입니다.")
     private String wordExampleMeaning;
 
 

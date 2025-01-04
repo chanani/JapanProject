@@ -1,5 +1,6 @@
 package com.project.thejapenproject.study.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,19 +22,19 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class GetFavoriteListResVO {
 
-    // 단어 번호
+    @Schema(description = "단어 번호")
     private Integer wordNum;
 
-    // 단어 뜻
+    @Schema(description = "단어 뜻")
     private String wordMeaning;
 
-    // 단어 한자
+    @Schema(description = "단어 한자")
     private String wordChinese;
 
-    // 단어 내용
+    @Schema(description = "단어 내용")
     private String wordContent;
 
-    // 토탈 수
+    @Schema(description = "총 데이터 수")
     private Integer totalElements;
 
 }

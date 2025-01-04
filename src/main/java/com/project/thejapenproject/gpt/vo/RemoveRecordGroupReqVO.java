@@ -1,5 +1,6 @@
 package com.project.thejapenproject.gpt.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,11 +23,12 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class RemoveRecordGroupReqVO {
 
-    // 아이디
+    @Schema(description = "아이디", example = "chanhan")
     @NotBlank(message = "유저 아이디는 필수입니다.")
     private String username;
 
-    // 질문 그룹 번호
+    @Schema(description = "질문 그룹 번호", example = "1")
     @NotNull(message = "질문 번호는 필수입니다.")
     private Integer aiRecordNum;
+
 }

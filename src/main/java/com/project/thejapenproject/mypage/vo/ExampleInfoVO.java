@@ -1,5 +1,6 @@
 package com.project.thejapenproject.mypage.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,12 +21,16 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class ExampleInfoVO {
 
-    // 예문 번호
+    @Schema(description = "예문 번호")
     private Integer weNum;
-    // 단어 번호
+
+    @Schema(description = "단어 번호")
     private Integer wordNum;
-    // 예문 내용
+
+    @Schema(description = "예문 내용")
     private String weContent;
-    // 예문 뜻
+
+    @Schema(description = "예문 뜻")
     private String weMeaning;
+
 }

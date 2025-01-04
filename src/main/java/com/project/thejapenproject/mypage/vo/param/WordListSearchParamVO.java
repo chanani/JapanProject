@@ -1,5 +1,6 @@
 package com.project.thejapenproject.mypage.vo.param;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,19 +24,23 @@ import javax.validation.constraints.Pattern;
 @Builder
 public class WordListSearchParamVO {
 
+    @Schema(description = "페이지 수", example = "1")
     @NotNull(message = "페이지 수는 필수입니다.")
     private Integer page = 1;
 
+    @Schema(description = "목록 수", example = "10")
     @NotNull(message = "목록 수는 필수입니다.")
     private Integer size = 10;
 
-    // 정렬 기준
+    @Schema(description = "정렬 기준", example = "new")
     @NotBlank(message = "정렬 기준은 필수입니다.")
     @Pattern(regexp = "new|older|random", message = "new 또는 older 또는 random 만 전달 가능합니다.")
     private String sort;
 
-    // 키워드
+    @Schema(description = "검색 키워드", example = "고양이")
     private String keyword;
 
+    @Schema(description = "offset", hidden = true)
     private Integer offset;
+
 }

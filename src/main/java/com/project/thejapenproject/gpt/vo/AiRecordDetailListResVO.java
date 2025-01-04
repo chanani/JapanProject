@@ -1,5 +1,6 @@
 package com.project.thejapenproject.gpt.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,13 +20,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AiRecordDetailListResVO {
 
-    // 상세 기록 테이블 상세 번호
+    @Schema(description = "상세 기록 테이블 상세 번호", example = "1")
     private Integer aiRecordDetailNum;
 
-    // 질문
+    @Schema(description = "질문", example = "질문할께요")
     private String aiRecordSendData;
 
-    // 답변
+    @Schema(description = "답변", example = "답변합니다.")
     private String aiRecordAnswerData;
-
 }

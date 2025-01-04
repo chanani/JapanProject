@@ -1,5 +1,6 @@
 package com.project.thejapenproject.gpt.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,16 +22,15 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class RegisterRecordGroupReqVO {
 
-    // 아이디
+    @Schema(description = "아이디", example = "chanhan")
     @NotBlank(message = "유저 아이디는 필수입니다.")
     private String username;
 
-    // 제목
+    @Schema(description = "제목", example = "메시지 등록합니다.")
     @NotBlank(message = "메시지는 필수입니다.")
     private String message;
 
-    // 반환할 그룹 고유번호
+    @Schema(description = "반환할 그룹 고유번호")
     private Integer aiRecordNum;
-
 
 }

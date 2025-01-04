@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Data
 public class TestItemVO {
 
+
     private String dataValue;
     private String result_check;
     private Integer word_num;

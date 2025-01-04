@@ -1,5 +1,6 @@
 package com.project.thejapenproject.study.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,13 +12,28 @@ import lombok.NoArgsConstructor;
 @Builder
 public class SoloStudyGetUserListResVO {
 
-    private String userIconPath; // 유저 아이콘 정보
-    private String wsTitle; // 제목
-    private Integer wsHits; // 좋아요 수
-    private Integer totalCount; // 단어 수
-    private Integer wsNum; // 단어 세트 고유 번호
-    private String username; // 유저 아이디
-    private Integer totalElements; // 총 게시글 수
-    private boolean favorite; // 단어 세트 목록 좋아요 여부
+    @Schema(description = "유저 아이콘 정보")
+    private String userIconPath;
+
+    @Schema(description = "제목")
+    private String wsTitle;
+
+    @Schema(description = "좋아요 수")
+    private Integer wsHits;
+
+    @Schema(description = "단어 수")
+    private Integer totalCount;
+
+    @Schema(description = "단어 세트 고유 번호")
+    private Integer wsNum;
+
+    @Schema(description = "아이디")
+    private String username;
+
+    @Schema(description = "총 데이터 수")
+    private Integer totalElements;
+
+    @Schema(description = "단어 세트 목록 좋아요 여부")
+    private boolean favorite;
 
 }

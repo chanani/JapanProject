@@ -1,5 +1,6 @@
 package com.project.thejapenproject.study.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,12 +22,14 @@ import javax.validation.constraints.NotNull;
 @Builder
 public class SetStudyModifyLikeReqVO {
 
+    @Schema(description = "아이디", example = "chanhan")
     @NotBlank(message = "유저 아이디는 필수입니다.")
     private String username;
 
+    @Schema(description = "단어 세트 번호", example = "1")
     @NotNull(message = "단어 세트 번호는 필수입니다.")
     private Integer wsNum;
 
-    // 좋아요 여부
+    @Schema(description = "좋아요 여부", example = "1")
     private Integer likeState;
 }

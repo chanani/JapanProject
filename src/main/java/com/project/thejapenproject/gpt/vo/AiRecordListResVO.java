@@ -1,5 +1,6 @@
 package com.project.thejapenproject.gpt.vo;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,11 +20,14 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AiRecordListResVO {
 
-    // 기록 테이블 상세 번호
+    @Schema(description = "기록 테이블 상세 번호")
     private Integer aiRecordNum;
-    // 제목
+
+    @Schema(description = "제목")
     private String aiRecordTitle;
-    // 등록 기간(오늘, 지난 7일, 이 외로 반환)
+
+    @Schema(description = "등록 기간(오늘, 지난 7일, 이 외로 반환)")
     private String createdAt;
+
 
 }
