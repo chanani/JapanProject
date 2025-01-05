@@ -1,6 +1,8 @@
 import '../styles/Footer.css';
 import {useNavigate} from "react-router-dom";
 import Inquiry from "./inquiryPage/Inquiry";
+import {axiosInstance} from "../api";
+import {toast} from "react-toastify";
 
 function Footer() {
     const navigator = useNavigate();
@@ -10,6 +12,18 @@ function Footer() {
         navName += event.target.className;
         navigator(navName);
         window.scrollTo(0, 0);
+    }
+
+    const jenkinsTest = () => {
+        axiosInstance.get("/admin/jenkins-test")
+            .then((res) => {
+                console.log(res)
+                toast.success(res.data.message)
+            })
+            .catch(e => {
+                console.log(e)
+                toast.error("호출 에러")
+            });
     }
 
     return (
@@ -32,7 +46,7 @@ function Footer() {
                     <p>이메일 : theholidaynight@gmail.com</p>
                 </div>
             </div>
-
+            <button onClick={jenkinsTest}>jenkins test</button>
         </footer>
     );
 }

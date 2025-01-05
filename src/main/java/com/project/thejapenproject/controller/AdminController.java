@@ -4,17 +4,20 @@ import com.project.thejapenproject.admin.service.AdminService;
 import com.project.thejapenproject.admin.vo.AddNoticeReqVO;
 import com.project.thejapenproject.admin.vo.AddWordReqVO;
 import com.project.thejapenproject.command.NoticeVO;
+import com.project.thejapenproject.command.ResponseData;
 import com.project.thejapenproject.command.SchoolVO;
 import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.RequestParameterException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
+import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -65,5 +68,14 @@ public class AdminController {
     public ResponseEntity<String> addWeekWord(@RequestBody ArrayList<SchoolVO> wordList){
         adminService.addWeekWord(wordList);
         return ResponseEntity.ok("성공");
+    }
+
+    @GetMapping("/jenkins-test")
+    @NoneAuth
+    public ResponseData jenkinsTest(){
+        return ResponseData.builder()
+                .message("빌드 성공")
+                .code(HttpStatus.OK.value())
+                .build();
     }
 }
