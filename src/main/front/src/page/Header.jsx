@@ -220,7 +220,7 @@ function Header() {
             <div className="right-menu">
                 {userRole === 'none' ?
                     <div className="login-box">
-                        <button className="login-btn" onClick={handleLogin}>로그인</button>
+                        <button className="login-btn" onClick={handleLogin}>로그인테스트</button>
                         <button className="join-btn" onClick={handleJoin}>회원가입</button>
                     </div>
                     :
