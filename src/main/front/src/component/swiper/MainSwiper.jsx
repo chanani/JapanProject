@@ -8,7 +8,7 @@ import 'swiper/css/navigation';
 
 import '../../styles/component/swiper/MainSwiper.css';
 
-import mainImage1 from '../../image/mainImage1.png';
+import mainImage1 from '../../image/main/swiper_image1.jpg';
 
 
 // import required modules
