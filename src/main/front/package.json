@@ -38,6 +38,7 @@
     "ress": "^5.0.2",
     "sass": "^1.77.4",
     "styled-components": "^6.1.13",
+    "swiper": "^11.2.3",
     "web-vitals": "^2.1.4",
     "yup": "^1.4.0"
   },
