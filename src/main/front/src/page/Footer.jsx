@@ -46,7 +46,6 @@ function Footer() {
                     <p>이메일 : theholidaynight@gmail.com</p>
                 </div>
             </div>
-            <button onClick={jenkinsTest}>jenkins test</button>
         </footer>
     );
 }
