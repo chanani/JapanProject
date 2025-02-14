@@ -9,6 +9,7 @@ import 'swiper/css/navigation';
 import '../../styles/component/swiper/MainSwiper.css';
 
 import mainImage1 from '../../image/main/swiper_image1.jpg';
+import mainImage2 from '../../image/main/swiper_image2.jpg';
 
 
 // import required modules
@@ -25,8 +26,7 @@ export default function MainSwiper() {
             >
 
                 <SwiperSlide><img src={mainImage1}/></SwiperSlide>
-                <SwiperSlide>Slide 2</SwiperSlide>
-                <SwiperSlide>Slide 3</SwiperSlide>
+                <SwiperSlide><img src={mainImage2}/></SwiperSlide>
             </Swiper>
         </>
     );
