@@ -16,6 +16,7 @@ import com.project.thejapenproject.user.service.UserService;
 import com.project.thejapenproject.utils.MailSend;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -228,9 +229,9 @@ public class MainController {
     )
     @NoneAuth
     @GetMapping("/get-favorite-notes")
-    public ResponseData getFavoriteNotes() {
-
-        ArrayList<FavoriteNotesListResVO> returnData = studyService.getFavoriteNoteList();
+    public ResponseData getFavoriteNotes(@Param("username") String username) {
+        System.out.println("username = " + username);
+        ArrayList<FavoriteNotesListResVO> returnData = studyService.getFavoriteNoteList(username);
 
         return ResponseData.builder()
                 .code(HttpStatus.OK.value())

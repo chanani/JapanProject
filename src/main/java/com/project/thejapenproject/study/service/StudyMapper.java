@@ -84,7 +84,7 @@ public interface StudyMapper {
     int setStudyHitsUpdate(SetStudyModifyLikeReqVO requestVO);
 
     // 인기 단어장 목록 조회
-    ArrayList<FavoriteNotesListResVO> getFavoriteNoteList();
+    ArrayList<FavoriteNotesListResVO> getFavoriteNoteList(@Param("username") String username);
 
 
 }

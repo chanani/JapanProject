@@ -295,8 +295,8 @@ public class StudyServiceImpl implements StudyService {
 
     // 인기 단어장 목록 조회
     @Override
-    public ArrayList<FavoriteNotesListResVO> getFavoriteNoteList() {
-        return studyMapper.getFavoriteNoteList();
+    public ArrayList<FavoriteNotesListResVO> getFavoriteNoteList(String username) {
+        return studyMapper.getFavoriteNoteList(username);
     }
 
 

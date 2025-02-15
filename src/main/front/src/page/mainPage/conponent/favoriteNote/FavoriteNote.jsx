@@ -1,30 +1,8 @@
 import './FavoriteNote.css';
 import { IoIosArrowForward } from "react-icons/io";
-import {useEffect, useState} from "react";
-import {axiosInstance} from "../../../../api";
-import {toast} from "react-toastify";
-
+import FavoriteNoteList from "./FavoriteNoteList";
 
 const FavoriteNote = () => {
-
-    // 단어장 목록
-    const [favoriteNote, setFavoriteNote] = useState([]);
-
-    // 단어장 목록 조회 API
-    const getFavoriteNotesAPI = () => {
-        axiosInstance.get("/get-favorite-notes")
-            .then((res) => {
-                console.log(res);
-            })
-            .catch(e => {
-                toast.error("단어장 목록을 불러오는 중 오류가 발생하였습니다.")
-            })
-    }
-
-
-    useEffect(() => {
-        getFavoriteNotesAPI();
-    }, [])
 
     return (
         <div className={"main-favorite-note-container"}>
@@ -35,6 +13,10 @@ const FavoriteNote = () => {
                     <IoIosArrowForward />
                 </div>
             </div>
+
+            <FavoriteNoteList />
+
+
         </div>
     )
 }

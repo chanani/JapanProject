@@ -9,12 +9,13 @@
 
 
 /* 나의 학습으로 box */
-.set-study-my-page{
+.set-study-my-page {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 50px 0 30px 0;
 }
+
 .set-study-my-page button {
     width: 60%;
     height: 50px;
@@ -39,14 +40,12 @@
 }
 
 
-
 /* 500 이하 */
 @media (max-width: 500px) {
     .set-study-all {
         width: 95%;
         margin-top: 20px;
     }
-
 
 
 }
@@ -57,7 +56,6 @@
         width: 90%;
         margin-top: 30px;
     }
-
 
 
 }

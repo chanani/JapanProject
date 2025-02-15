@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .main-favorite-note-title-box {
@@ -50,6 +51,9 @@
     .main-favorite-note-more {
         font-size: 12px;
     }
+    .main-favorite-note-more {
+        padding-right: 15px;
+    }
 }
 
 /* 500 이상 */
@@ -59,7 +63,7 @@
     }
 
     .main-favorite-note-title-box {
-        width: 500px;
+        width: 480px;
     }
 
     .main-favorite-note-title {
@@ -68,6 +72,7 @@
     .main-favorite-note-more {
         font-size: 14px;
     }
+
 }
 
 /* 1000 이상 */
@@ -77,7 +82,7 @@
     }
 
     .main-favorite-note-title-box {
-        width: 1000px;
+        width: 980px;
     }
 
     .main-favorite-note-title {

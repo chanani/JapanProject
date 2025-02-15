@@ -57,7 +57,7 @@ public interface StudyService {
     void setStudyModifyLike(SetStudyModifyLikeReqVO requestVO);
 
     // 인기 단어장 목록 조회
-    ArrayList<FavoriteNotesListResVO> getFavoriteNoteList();
+    ArrayList<FavoriteNotesListResVO> getFavoriteNoteList(String username);
 
 
 }
