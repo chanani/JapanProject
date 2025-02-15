@@ -3,6 +3,7 @@ package com.project.thejapenproject.study.service;
 import com.project.thejapenproject.command.UsernameReqVO;
 import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.common.utils.PageResponse;
+import com.project.thejapenproject.mainpage.vo.FavoriteNotesListResVO;
 import com.project.thejapenproject.study.vo.*;
 import com.project.thejapenproject.study.vo.param.*;
 import org.apache.ibatis.annotations.Mapper;
@@ -81,4 +82,9 @@ public interface StudyMapper {
 
     // 누적 좋아요 수정
     int setStudyHitsUpdate(SetStudyModifyLikeReqVO requestVO);
+
+    // 인기 단어장 목록 조회
+    ArrayList<FavoriteNotesListResVO> getFavoriteNoteList();
+
+
 }

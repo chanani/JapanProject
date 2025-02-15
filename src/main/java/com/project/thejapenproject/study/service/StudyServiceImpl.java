@@ -5,6 +5,7 @@ import com.project.thejapenproject.command.WordVO;
 import com.project.thejapenproject.command.exception.OperationErrorException;
 import com.project.thejapenproject.command.exception.code.ErrorCode;
 import com.project.thejapenproject.common.utils.PageResponse;
+import com.project.thejapenproject.mainpage.vo.FavoriteNotesListResVO;
 import com.project.thejapenproject.study.vo.*;
 import com.project.thejapenproject.study.vo.param.*;
 import com.project.thejapenproject.test.vo.ChoiceTestSaveReqVO;
@@ -20,6 +21,7 @@ import java.util.stream.IntStream;
 
 @Service("studyService")
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class StudyServiceImpl implements StudyService {
 
     public final StudyMapper studyMapper;
@@ -267,17 +269,17 @@ public class StudyServiceImpl implements StudyService {
         int likeState = studyMapper.getLikeState(requestVO);
         requestVO.setLikeState(likeState);
 
-        switch (likeState){
-            case 0 : {
+        switch (likeState) {
+            case 0: {
                 // 좋아요 누르지 않았을 경우 좋아요 등록
-                if(studyMapper.setStudyRegisterLike(requestVO) < 1){
+                if (studyMapper.setStudyRegisterLike(requestVO) < 1) {
                     throw new OperationErrorException(ErrorCode.FAIL_TO_MODIFY_LIKE);
                 }
                 break;
             }
-            case 1 : {
+            case 1: {
                 // 좋아요 누른 상태일 경우 취소
-                if(studyMapper.setStudyModifyLike(requestVO) < 1){
+                if (studyMapper.setStudyModifyLike(requestVO) < 1) {
                     throw new OperationErrorException(ErrorCode.FAIL_TO_MODIFY_LIKE);
                 }
                 break;
@@ -285,14 +287,16 @@ public class StudyServiceImpl implements StudyService {
         }
 
         // 누적 좋아요 업데이트
-        if(studyMapper.setStudyHitsUpdate(requestVO) < 1){
+        if (studyMapper.setStudyHitsUpdate(requestVO) < 1) {
             throw new OperationErrorException(ErrorCode.FAIL_TO_MODIFY_LIKE);
         }
 
+    }
 
-
-
-
+    // 인기 단어장 목록 조회
+    @Override
+    public ArrayList<FavoriteNotesListResVO> getFavoriteNoteList() {
+        return studyMapper.getFavoriteNoteList();
     }
 
 

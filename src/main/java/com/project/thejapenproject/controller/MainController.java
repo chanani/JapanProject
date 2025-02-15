@@ -7,12 +7,11 @@ import com.project.thejapenproject.common.annotation.NoneAuth;
 import com.project.thejapenproject.common.annotation.NoneCheckToken;
 import com.project.thejapenproject.common.jwt.SHA512;
 import com.project.thejapenproject.common.jwt.service.AuthService;
-import com.project.thejapenproject.mainpage.vo.LoginReqVO;
-import com.project.thejapenproject.mainpage.vo.LogoutReqVO;
-import com.project.thejapenproject.mainpage.vo.MailAuthReqVO;
-import com.project.thejapenproject.mainpage.vo.PasswordChangeReqVO;
+import com.project.thejapenproject.mainpage.vo.*;
 import com.project.thejapenproject.notice.vo.GetNoticeDetailResVO;
 import com.project.thejapenproject.notice.vo.param.GetNoticeDetailReqVO;
+import com.project.thejapenproject.study.service.StudyService;
+import com.project.thejapenproject.study.vo.SetStudyModifyLikeReqVO;
 import com.project.thejapenproject.user.service.UserService;
 import com.project.thejapenproject.utils.MailSend;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +32,7 @@ public class MainController {
 
     private final UserService userService;
     private final AuthService authService;
-
+    private final StudyService studyService;
 
     @Operation(summary = "로그인 API",
             description = "access token, refresh token, username 반환"
@@ -214,6 +213,29 @@ public class MainController {
                 .code(HttpStatus.OK.value())
                 .message(ErrorCode.SUCCESS.getMessage())
                 .data(image_path)
+                .build();
+    }
+
+    /**
+     * 인기 단어장 목록 조회 API
+     *
+     * @return : ResponseData.class
+     * @author : chanhan
+     * @since 2025-02-15 오후 01:35
+     */
+    @Operation(summary = "인기 단어장 목록 조회 API",
+            description = ""
+    )
+    @NoneAuth
+    @GetMapping("/get-favorite-notes")
+    public ResponseData getFavoriteNotes() {
+
+        ArrayList<FavoriteNotesListResVO> returnData = studyService.getFavoriteNoteList();
+
+        return ResponseData.builder()
+                .code(HttpStatus.OK.value())
+                .data(returnData)
+                .message("인기 단어장 목록이 조회되었습니다.")
                 .build();
     }
 }

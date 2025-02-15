@@ -15,8 +15,6 @@ import java.util.ArrayList;
  * @class : WordSearchListResVO
  * @since 2024-12-06 오후 10:01
  */
-
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

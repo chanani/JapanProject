@@ -363,4 +363,31 @@
         AND ws_num = #{wsNum}
     </update>
 
+    <!-- 인기 단어장 목록 조회 -->
+    <select id="getFavoriteNoteList"
+            resultType="com.project.thejapenproject.mainpage.vo.FavoriteNotesListResVO">
+        SELECT WS.username,
+               WS.ws_num,
+               WS.ws_title,
+               WS.ws_hits,
+               COUNT(*)     AS total_count,
+               I.image_path AS user_icon_path,
+               CASE
+                   WHEN WSL.ws_num IS NULL THEN 0
+                   ELSE 1
+                   END      AS favorite
+        FROM word_set WS
+                 JOIN word_set_detail WSD
+                      ON WS.ws_num = WSD.ws_num
+                 JOIN image I
+                      ON (WS.username = I.username AND I.state = 0)
+                 LEFT JOIN word_set_like WSL
+                           ON WS.ws_num = WSL.ws_num
+                               AND WSL.state = 0
+        WHERE WS.state = 0
+          AND WSD.state = 0
+        GROUP BY WSD.ws_num, I.image_path
+        ORDER BY WS.ws_hits DESC, WSD.ws_num DESC
+        limit 10
+    </select>
 </mapper>
