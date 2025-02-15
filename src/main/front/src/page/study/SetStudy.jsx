@@ -101,10 +101,10 @@ const SetStudy = () => {
             <div className="set-study-all">
 
                 <div className="solo-study-header-sub-title">
-                    <p>단어 세트 학습</p>
+                    <p>단어장</p>
                 </div>
                 <div className="solo-study-header">
-                    <p>단어 세트 전체 목록</p>
+                    <p>모두의 단어장 목록</p>
                 </div>
 
                 <div className="solo-study-content-all">
@@ -164,7 +164,7 @@ const SetStudy = () => {
 
 
                 <div className='set-study-my-page'>
-                    <button onClick={handleSoloStudyPage}>나의 학습 관리</button>
+                    <button onClick={handleSoloStudyPage}>나의 단어장 관리</button>
                 </div>
 
 

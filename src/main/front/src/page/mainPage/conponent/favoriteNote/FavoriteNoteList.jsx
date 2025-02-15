@@ -29,7 +29,7 @@ const FavoriteNoteList = () => {
             wsNum: favoriteNote[index].wsNum
         })
             .then((res) => {
-                favoriteNote();
+                getFavoriteNotesAPI();
             })
             .catch((e) => toast.error('좋아요 중 오류가 발생했습니다.'));
     }
@@ -67,6 +67,7 @@ const FavoriteNoteList = () => {
             })
     }
 
+    // 목록 조회 useEffect
     useEffect(() => {
         getFavoriteNotesAPI();
     }, [])

@@ -13,6 +13,8 @@ import {IoPlayCircle, IoStopCircle} from "react-icons/io5";
 import {IoIosArrowUp, IoIosArrowDown} from "react-icons/io";
 import {FaExchangeAlt} from "react-icons/fa";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
+import {useDialog} from "../../hook/UseDialog.jsx";
+
 
 const Study = () => {
     const location = useLocation();
@@ -34,6 +36,7 @@ const Study = () => {
     const [listChangeBtn, setListChangeBtn] = useState(false) // 단어 목록 숨김 버튼 false 뜻
     const [studyLevel, setStudyLevel] = useState(1); // 테스트 레벨
     const [soloStudyState, setSoloStudyState] = useState(false); // 세트 학습에서 왔는지 여부
+    const {openConfirm} = useDialog();
 
     // 단위 뒤집는 핸들러
     const handleMeaning = () => {
@@ -108,6 +111,7 @@ const Study = () => {
             clearInterval(autoPlayInterval);
         };
     }, [play, word?.length]);
+
     // 키보드 입력 감지
     useEffect(() => {
         const handleKeyDown = (event) => {
@@ -177,8 +181,10 @@ const Study = () => {
         navigator("/choice");
     }
     // 단어 선택 테스트로 이동
-    const moveChoiceTest = () => {
-        navigator("/choice-test")
+    const moveChoiceTest = async () => {
+        const isConfirmed = await openConfirm("단어 선택 테스트를 진행하시겠습니까?");
+        if (!isConfirmed) return;
+        navigator("/choice-test");
     }
 
     // 단어 및 즐겨찾기 가져오기

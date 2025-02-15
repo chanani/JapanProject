@@ -207,7 +207,6 @@ public class MainController {
             description = ""
     )
     @PostMapping("/user-icon")
-    @NoneCheckToken
     public ResponseData getUserIcon(@Valid @RequestBody GetUserIconReqVO getUserIconReqVO) {
         String image_path = userService.getUserIcon(getUserIconReqVO);
         return ResponseData.builder()
@@ -230,7 +229,6 @@ public class MainController {
     @NoneAuth
     @GetMapping("/get-favorite-notes")
     public ResponseData getFavoriteNotes(@Param("username") String username) {
-        System.out.println("username = " + username);
         ArrayList<FavoriteNotesListResVO> returnData = studyService.getFavoriteNoteList(username);
 
         return ResponseData.builder()

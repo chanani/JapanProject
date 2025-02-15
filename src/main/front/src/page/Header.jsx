@@ -31,7 +31,7 @@ function Header() {
     //　테스트 페이지 Link list
     const testLink = [["/choice-test", "단어 선택 테스트"], ["/short-test", "단어 단답형 테스트"]];
     // 마이페이지 Link list
-    const myLink = [["/mypage", "나의 정보"], ["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습 기록"], ];
+    const myLink = [["/mypage", "나의 정보"], ["/mypage/favorites", "즐겨찾기 목록"], ["/mypage/record", "학습 기록"],];
     // 그 외 페이지 Link list
     const otherLink = [["/chatAi", "Ai 학습"], ["/search", "단어검색"], ["/translator", '번역기']];
     // 고객지원 list
@@ -95,8 +95,12 @@ function Header() {
     }
     // 이미지 불러오는 핸들러
     const userIconHandler = () => {
+        console.log('username = ', username);
+
         axiosInstance.post('/user-icon', {username: username})
             .then((res) => {
+                console.log('res.data = ', res.data);
+                console.log('res.data.data = ', res.data.data);
                 setUserIcon(res.data.data);
             })
             .catch((e) => toast.error("이미지 불러오는 중 오류가 발생하였습니다."));

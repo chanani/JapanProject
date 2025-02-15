@@ -1,0 +1,101 @@
+.OverlaySection {
+  position: fixed;
+  z-index: 1202;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.OverlaySection .modal_wrapper {
+  z-index: 3000;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  /* overflow: hidden; */
+}
+
+.modal_wrapper .modal_content {
+  overflow: auto;
+  max-height: 800px;
+}
+
+/* 모달 해더 */
+.modal_wrapper .ModalHeader {
+  /* /* box-sizing: border-box; */
+  width: 100%;
+}
+.modal_wrapper .ModalHeader .title {
+  padding-top: 24px;
+  padding-bottom: 0;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  color: var(--brand-1);
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1.5;
+}
+.modal_wrapper .ModalHeader .btn_close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  cursor: pointer;
+  margin: 0;
+  border: 0;
+  outline: none;
+  background: none;
+  padding: 10px;
+}
+
+/* modal header backgroud style */
+.modal_wrapper .ModalHeader.hasBackground {
+  color: white;
+  background-color: var(--brand-1);
+  border-radius: 10px 10px 0 0;
+}
+.modal_wrapper .ModalHeader.hasBackground .title {
+  padding-left: 24px;
+  padding-right: 12px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.modal_wrapper .ModalHeader.hasBackground .btn_close {
+  top: 0;
+  right: 0;
+}
+
+.modal_wrapper .ModalHeader .btn_close img {
+  width: 100%;
+}
+
+/* 모달 컨텐츠 */
+.modal_wrapper .modal_content {
+  padding-top: 20px;
+  padding-bottom: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  overflow: auto;
+  max-height: 800px;
+  min-height: 150px;
+}
+
+@media screen and (max-width: 1024px) {
+  .OverlaySection .modal_wrapper {
+    width: 90% !important;
+    overflow: auto;
+  }
+  .modal_wrapper .modal_content {
+    padding: 5% 5%;
+    max-height: 540px;
+  }
+}

@@ -137,10 +137,10 @@ const SoloStudy = () => {
             <div className="solo-study-all">
 
                 <div className="solo-study-header-sub-title">
-                    <p>학습</p>
+                    <p>단어장</p>
                 </div>
                 <div className="solo-study-header">
-                    <p>내가 만드는 학습</p>
+                    <p>나의 단어장</p>
                 </div>
 
                 <div className="solo-study-content-all">
@@ -191,7 +191,7 @@ const SoloStudy = () => {
                 />
 
                 <div className='set-study-my-page'>
-                    <button onClick={handleListMove}>단어 세트 목록으로</button>
+                    <button onClick={handleListMove}>모두의 단어장으로</button>
                 </div>
 
                 {choiceModal &&
