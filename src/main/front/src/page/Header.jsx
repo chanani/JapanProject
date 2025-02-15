@@ -27,7 +27,7 @@ function Header() {
 
 
     // 학습페이지 Link list
-    const studyLink = [["/study", "단어 학습"], ["/choice", "단어 선택 학습"], ["/set-study", '단어 세트 학습'], ["/schoolPage", '단계별 학습']];
+    const studyLink = [["/study", "단어 학습"], ["/choice", "단어 선택 학습"], ["/set-study", '모두의 단어장'], ["/schoolPage", '단계별 학습']];
     //　테스트 페이지 Link list
     const testLink = [["/choice-test", "단어 선택 테스트"], ["/short-test", "단어 단답형 테스트"]];
     // 마이페이지 Link list

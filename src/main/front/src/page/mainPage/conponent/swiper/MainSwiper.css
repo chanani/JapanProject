@@ -1,0 +1,70 @@
+.main-image-container {
+    background-color: #358ef3;
+}
+
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    /* Center slide text vertically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    object-fit: cover;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+    --swiper-theme-color: white;
+}
+
+/* 500 이하 */
+@media (max-width: 500px) {
+    .swiper {
+        width: 380px;
+        height: 105px;
+    }
+    .swiper-slide img {
+        width: 380px;
+        height: 105px;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+        --swiper-navigation-size: 20px;
+    }
+}
+
+
+
+/* 500 이상 */
+@media (min-width: 500px) {
+    .swiper {
+        width: 500px;
+        height: 140px;
+    }
+    .swiper-slide img {
+        width: 500px;
+        height: 140px;
+    }
+}
+
+
+/* 1000 이상 */
+@media (min-width: 1000px) {
+    .swiper {
+        width: 1000px;
+        height: 280px;
+    }
+
+    .swiper-slide img {
+        width: 1000px;
+        height: 280px;
+    }
+}
+

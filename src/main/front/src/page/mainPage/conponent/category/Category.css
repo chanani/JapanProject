@@ -1,0 +1,107 @@
+.category-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.category-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 13px;
+}
+
+.category-icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dce1e5;
+    transition: background-color .3s;
+    cursor: pointer;
+}
+.category-icon-box:hover {
+    background-color: #e1e1e1;
+}
+
+.category-title-box > p {
+    line-height: 1.5;
+    color: #0f1317;
+    letter-spacing: -0.01em;
+}
+
+
+
+/* 500 이하 */
+@media (max-width: 500px) {
+    .category-container {
+        padding: 20px 0;
+        gap: 15px;
+    }
+
+    .category-icon-box {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+    }
+
+    .category-icon-box > img {
+        width: 40%;
+        height: 40%;
+    }
+    .category-title-box > p {
+        font-size: 11px;
+        font-weight: 500;
+    }
+}
+
+
+
+/* 500 이상 */
+@media (min-width: 500px) {
+    .category-container {
+        padding: 30px 0;
+        gap: 20px;
+    }
+
+    .category-icon-box {
+        width: 50px;
+        height: 50px;
+        border-radius: 15px;
+    }
+
+    .category-icon-box > img {
+        width: 40%;
+        height: 40%;
+    }
+    .category-title-box > p {
+        font-size: 13px;
+        font-weight: 500;
+    }
+}
+
+
+/* 1000 이상 */
+@media (min-width: 1000px) {
+    .category-container {
+        padding: 40px 0;
+        gap: 50px;
+    }
+
+    .category-icon-box {
+        width: 72px;
+        height: 72px;
+        border-radius: 24px;
+    }
+
+    .category-icon-box > img {
+        width: 40%;
+        height: 40%;
+    }
+    .category-title-box > p {
+        font-size: 16px;
+        font-weight: 500;
+    }
+}
+
+
