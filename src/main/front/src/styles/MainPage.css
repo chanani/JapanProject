@@ -1,32 +1,33 @@
-/* 500 이하 */
-@media(max-width : 500px){
-  img {
-    height: 200px;
-    width: 100%;
-  }
+body {
+    background-color: white !important;
 }
+.main-page {
+
+}
+
+.main-favorite-note-title {
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #0f1317;
+    letter-spacing: -0.01em;
+    word-break: keep-all;
+}
+
+
+/* 500 이하 */
+@media (max-width: 500px) {
+
+}
+
 
 /* 500 이상 */
-@media(min-width : 500px){
-  img {
-    height: 250px;
-    width: 100%;
-  }
+@media (min-width: 500px) {
 
-  .image1 {
-    height: 400px;
-  }
 }
 
-/* 1000 이상 */
-@media(min-width : 1000px){
-  img {
-    height: 500px;
-    width: 100%;
-  }
 
-  .image1 {
-    height: 800px;
-  }
+/* 1000 이상 */
+@media (min-width: 1000px) {
 }
 
