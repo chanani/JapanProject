@@ -104,7 +104,7 @@ const ShortTest = () => {
                     .replaceAll("〜", "")
                     .split(",");
                 const isCorrect = answerGroup.some((meaning) => item === meaning.trim());
-
+                console.log("isCorrect = ", isCorrect);
                 setAnswerList((prevAnswer) => {
                     const newAnswer = [...prevAnswer];
                     newAnswer[index] = isCorrect ? 1 : 2;
@@ -113,6 +113,7 @@ const ShortTest = () => {
 
             } else if (testType === 'content') {
                 const isCorrect = item === word[index].wordContent || item === word[index].wordChinese;
+                console.log("isCorrect = ", isCorrect);
 
                 setAnswerList((prevAnswer) => {
                     const newAnswer = [...prevAnswer];
@@ -216,8 +217,18 @@ const ShortTest = () => {
 
             setAnswerList((prevAnswerList) => {
                 const updatedAnswerList = [...prevAnswerList];
+
                 if (testType === 'meaning') {
-                    updatedAnswerList[i] = item.strdChoiceWord === item.strdAnswerMeaning ? 1 : 2; // index에 값 추가 또는 업데이트
+                    const answerGroup = item.strdAnswerMeaning
+                        .replaceAll(".", "")
+                        .replaceAll("~", "")
+                        .replaceAll(" ", "")
+                        .replaceAll("〜", "")
+                        .split(",");
+
+                    const isCorrect = answerGroup.some((meaning) => item.strdChoiceWord.replaceAll(" ", "") === meaning.replaceAll(" ", "").trim());
+
+                    updatedAnswerList[i] =  isCorrect ? 1 : 2; // index에 값 추가 또는 업데이트
 
                 } else {
                     updatedAnswerList[i] = (item.strdChoiceWord === item.strdAnswerChinese) ||
@@ -409,7 +420,9 @@ const ShortTest = () => {
                         <div className="choice-test-content-choice-box sort-test-content-input-box">
                             <span>회원님의 답</span>
                             <input
-                                className={!submitState ? "sort-test-answer-wait-box" : answerList[index] === 1 ? "test-answer-ok-box sort-test-content-answer-input" : "test-answer-fail-box"}
+                                className={!submitState ? "sort-test-answer-wait-box"
+                                    : answerList[index] === 1 ? "test-answer-ok-box sort-test-content-answer-input"
+                                        : "test-answer-fail-box"}
                                 type="text" placeholder="정답을 입력하세요."
                                 onChange={(e) => answerInputChange(index, e)}
                                 value={answerInput[index]}

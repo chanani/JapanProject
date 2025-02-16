@@ -178,12 +178,12 @@ const Study = () => {
     }
     // 선택 학습으로 이동
     const moveChoice = () => {
+        if(!window.confirm("선택 학습을 진행하시겠습니까?")) return;
         navigator("/choice");
     }
     // 단어 선택 테스트로 이동
     const moveChoiceTest = async () => {
-        const isConfirmed = await openConfirm("단어 선택 테스트를 진행하시겠습니까?");
-        if (!isConfirmed) return;
+        if (!window.confirm("단어 선택 테스트를 진행하시겠습니까?")) return;
         navigator("/choice-test");
     }
 
@@ -431,13 +431,13 @@ const Study = () => {
                     </div>
 
                     {/* 학습, 테스트, 카드게임 섹션 */}
-                    <div className="study-page-test-type-box"  >
+                    <div className="study-page-test-type-box">
                         <div className="study-page-choice-box" onClick={moveChoice}>
                             <img src="/svg/choice1.svg" alt=""/>
                             <p>학습</p>
                         </div>
                         <div className="study-page-test-box" onClick={moveChoiceTest}>
-                            <img src="/svg/test1.svg" alt="" />
+                            <img src="/svg/test1.svg" alt=""/>
                             <p>선택 테스트</p>
                         </div>
                         <div className="study-page-card-box" onClick={() => toast.error("아직 준비중입니다.")}>

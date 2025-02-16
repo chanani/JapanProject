@@ -68,6 +68,7 @@
     margin-bottom: 15px;
     box-shadow: 0 0.125rem 0.25rem #00000014;
     transition: all .12s cubic-bezier(.47, 0, .745, .715);
+    cursor: pointer;
 }
 
 .recordPage-score:hover {
