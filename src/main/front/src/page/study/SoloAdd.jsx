@@ -224,7 +224,6 @@ const SoloAdd = () => {
             size : dataPerPage,
         })
             .then((res) => {
-                console.log(res.data);
                 setSearchData(res.data.data.content);
                 setTotalSearchData(res.data.data.totalElements);
                 setFavoriteState(true);

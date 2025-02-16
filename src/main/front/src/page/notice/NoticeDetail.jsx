@@ -4,6 +4,9 @@ import {toast} from "react-toastify";
 import {useLocation, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import { IoChevronBackOutline } from "react-icons/io5";
+import moment from "moment/moment";
+import {formatDate, getCurrentDate} from "../../util/DateFormatUtil";
+
 
 const
     NoticeDetail = () => {
@@ -16,7 +19,8 @@ const
     const getNoticeDetail = () => {
         axiosInstance.get(`/notice/get-detail?noticeNum=${noticeDetailNo}`)
             .then((res) => {
-                setNoticeDetail(res.data.data)
+                console.log(res.data.data)
+                setNoticeDetail(res.data.data);
             })
             .catch(err => toast.error("공지사항 조회 중 오류가 발생하였습니다."));
     }
@@ -48,6 +52,10 @@ const
 
                 <div className="notice-detail-title-box">
                     <p>{noticeDetail[1]?.noticeTitle}</p>
+                </div>
+
+                <div className="notice-detail-date-box">
+                    <p>{formatDate(noticeDetail[1]?.noticeRegDate)}</p>
                 </div>
 
                 <div className="notice-detail-content-box">

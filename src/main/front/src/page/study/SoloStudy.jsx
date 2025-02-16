@@ -115,7 +115,6 @@ const SoloStudy = () => {
             }
         })
             .then((res) => {
-                console.log(res.data.data)
                 setData(res.data.data.content);
                 setTotalData(res.data.data.totalElements)
             })

@@ -127,9 +127,6 @@ const AddWordPage = () => {
         });
     };
 
-    useEffect(() => {
-        console.log(list)
-    }, [list])
 
     return (
         <div className="add-box-all">

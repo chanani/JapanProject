@@ -41,7 +41,6 @@ axiosInstance.interceptors.response.use((response) => {
                 {headers: {'Authorization': `${cookies.accessToken}`},}
             );
             const {data} = response;
-            console.log("data : ", data)
             setTokenCookies({
                 refreshToken: data.data.refreshToken,
                 accessToken : data.data.accessToken,

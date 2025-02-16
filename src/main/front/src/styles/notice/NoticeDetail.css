@@ -74,6 +74,10 @@
     background-color: #f5f5f5;
 }
 
+.notice-detail-date-box {
+    color: #a8a7a7;
+}
+
 /* 600 까지 */
 @media (max-width: 600px) {
 
@@ -84,7 +88,10 @@
     .notice-detail-title-box {
         font-size: 25px;
         font-weight: 700;
-        margin-bottom: 15px;
+    }
+
+    .notice-detail-date-box {
+        font-size: 14px;
     }
 }
 
@@ -98,8 +105,11 @@
     .notice-detail-title-box {
         font-size: 33px;
         font-weight: 700;
-        margin-bottom: 15px;
     }
+    .notice-detail-date-box {
+        font-size: 15px;
+    }
+
 }
 
 /* 1000 이상 */
@@ -112,6 +122,9 @@
     .notice-detail-title-box {
         font-size: 33px;
         font-weight: 700;
-        margin-bottom: 15px;
+    }
+
+    .notice-detail-date-box {
+        font-size: 16px;
     }
 }

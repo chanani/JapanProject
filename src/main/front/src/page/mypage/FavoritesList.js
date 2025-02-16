@@ -114,7 +114,6 @@ const FavoritesList = () => {
             sort: selectedValue,
         })
             .then((res) => {
-                console.log(res.data.content);
                 setWord(res.data.content);
                 setTotalData(res.data.totalElements); // 전체 데이터 수
                 return res.data.content; // 업데이트된 데이터를 반환

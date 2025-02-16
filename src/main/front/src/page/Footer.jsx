@@ -17,11 +17,9 @@ function Footer() {
     const jenkinsTest = () => {
         axiosInstance.get("/admin/jenkins-test")
             .then((res) => {
-                console.log(res)
                 toast.success(res.data.message)
             })
             .catch(e => {
-                console.log(e)
                 toast.error("호출 에러")
             });
     }

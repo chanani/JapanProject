@@ -30,7 +30,6 @@ const Withdrawal = () => {
     const withdrawalAPI = () => {
         axiosInstance.post('mypage/withdrawal', {username})
             .then((res) => {
-                console.log(res);
                 if(res.status === 200){
                     toast.success('정상적으로 탈퇴가 진행되었습니다.');
                     cookies.remove('accessToken');

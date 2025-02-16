@@ -95,12 +95,8 @@ function Header() {
     }
     // 이미지 불러오는 핸들러
     const userIconHandler = () => {
-        console.log('username = ', username);
-
         axiosInstance.post('/user-icon', {username: username})
             .then((res) => {
-                console.log('res.data = ', res.data);
-                console.log('res.data.data = ', res.data.data);
                 setUserIcon(res.data.data);
             })
             .catch((e) => toast.error("이미지 불러오는 중 오류가 발생하였습니다."));

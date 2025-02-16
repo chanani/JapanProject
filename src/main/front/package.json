@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
     "base-64": "^1.0.0",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
     "lexical": "^0.16.0",
     "lodash": "^4.17.21",
