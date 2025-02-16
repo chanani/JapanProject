@@ -7,7 +7,6 @@ import {FaQuestion, FaRegTrashAlt} from "react-icons/fa";
 import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {toast} from "react-toastify";
 import {TbLayoutSidebarRightCollapse} from "react-icons/tb";
-import {HiPencilAlt} from "react-icons/hi";
 import {axiosInstance} from "../../api";
 
 const ChatAi = () => {
@@ -18,7 +17,7 @@ const ChatAi = () => {
     const [answers, setAnswers] = useState([]); // 답변
     const [record, setRecord] = useState([]); // 이전 대화 기록
     const textBoxRef = useRef(null); // 질문 박스
-    const [sideBar, setSideBar] = useState(true); // 사이드 바 활성화 여부
+    const [sideBar, setSideBar] = useState(false); // 사이드 바 활성화 여부
     const [currentRecord, setCurrentRecord] = useState(0); // 현재 질문 목록 번호
 
     // 질문 저장 핸들러
@@ -53,7 +52,7 @@ const ChatAi = () => {
 
     // 기록 삭제 핸들러 & API
     const removeRecordHandle = (aiRecordNum) => {
-        if(!window.confirm("이전 기록을 정말 삭제하시겠습니까?")) return;
+        if (!window.confirm("이전 기록을 정말 삭제하시겠습니까?")) return;
 
         axiosInstance.post('chat-gpt/remove-record', {
             username: username,
@@ -117,95 +116,91 @@ const ChatAi = () => {
     return (
         <div className="chat-box-all">
 
-            <div className={"chat-side-bar " + (sideBar ? "side-bar-active" : "")}>
-                <div className="chat-side-bar-header-box">
-                    <TbLayoutSidebarRightCollapse size={27} onClick={sideBarToggle}/>
-                    <HiPencilAlt size={25} onClick={handleClear} className="icon-btn"/>
-                </div>
-                <div
-                    className={"chat-side-bar-content-box " + (sideBar ? "side-bar-content-not-active" : "side-bar-content-active")}>
-                    {record?.some(item => item.createdAt === "오늘") && (
-                        <div className="chat-side-bar-content">
-                            <span>오늘</span>
-                            {record?.filter(item => item.createdAt === "오늘")
-                                .map((item, index) => (
-                                    <div className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
-                                         onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
-                                         key={index}>
-                                        <p>{item.aiRecordTitle}</p>
-                                        <FaRegTrashAlt size={14}
-                                                       onClick={(e) => {
-                                                           e.stopPropagation();
-                                                           removeRecordHandle(item.aiRecordNum);
-                                                       }}/>
-                                    </div>
-                                ))}
-                        </div>
-                    )}
+            <div className={(sideBar ? "chat-side-bar-back-ground" : "")}>
+                <div className={"chat-side-bar " + (sideBar ? "side-bar-active" : "")}>
+                    <div className="chat-side-bar-header-box">
+                        <TbLayoutSidebarRightCollapse size={27} onClick={sideBarToggle}/>
+                    </div>
+                    <div
+                        className={"chat-side-bar-content-box " + (sideBar ? "side-bar-content-not-active" : "side-bar-content-active")}>
+                        {record?.some(item => item.createdAt === "오늘") && (
+                            <div className="chat-side-bar-content">
+                                <span>오늘</span>
+                                {record?.filter(item => item.createdAt === "오늘")
+                                    .map((item, index) => (
+                                        <div
+                                            className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
+                                            onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
+                                            key={index}>
+                                            <p>{item.aiRecordTitle}</p>
+                                            <FaRegTrashAlt size={14}
+                                                           onClick={(e) => {
+                                                               e.stopPropagation();
+                                                               removeRecordHandle(item.aiRecordNum);
+                                                           }}/>
+                                        </div>
+                                    ))}
+                            </div>
+                        )}
 
-                    {record?.some(item => item.createdAt === "지난 7일") && (
-                        <div className="chat-side-bar-content">
-                            <span>지난 7일</span>
-                            {record?.filter(item => item.createdAt === "지난 7일")
-                                .map((item, index) => (
-                                    <div className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
-                                         onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
-                                         key={index}>
-                                        <p>{item.aiRecordTitle}</p>
+                        {record?.some(item => item.createdAt === "지난 7일") && (
+                            <div className="chat-side-bar-content">
+                                <span>지난 7일</span>
+                                {record?.filter(item => item.createdAt === "지난 7일")
+                                    .map((item, index) => (
+                                        <div
+                                            className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
+                                            onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
+                                            key={index}>
+                                            <p>{item.aiRecordTitle}</p>
 
-                                        <FaRegTrashAlt size={14}
-                                                       onClick={(e) => {
-                                                           e.stopPropagation();
-                                                           removeRecordHandle(item.aiRecordNum);
-                                                       }}/>
+                                            <FaRegTrashAlt size={14}
+                                                           onClick={(e) => {
+                                                               e.stopPropagation();
+                                                               removeRecordHandle(item.aiRecordNum);
+                                                           }}/>
 
-                                    </div>
-                                ))}
-                        </div>
-                    )}
+                                        </div>
+                                    ))}
+                            </div>
+                        )}
 
-                    {record?.some(item => item.createdAt === "이 외") && (
-                        <div className="chat-side-bar-content">
-                            <span>이 외</span>
-                            {record?.filter(item => item.createdAt === "이 외")
-                                .map((item, index) => (
-                                    <div className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
-                                         onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
-                                         key={index}>
-                                        <p>{item.aiRecordTitle}</p>
-                                        <FaRegTrashAlt size={14}
-                                                       onClick={(e) => {
-                                                           e.stopPropagation();
-                                                           removeRecordHandle(item.aiRecordNum);
-                                                       }}/>
-                                    </div>
-                                ))}
-                        </div>
-                    )}
-                    {record.length === 0 &&
-                        <div className={"chat-side-bar-not-content"}>
-                            <p>이전 데이터가 없습니다.</p>
-                        </div>
-                    }
+                        {record?.some(item => item.createdAt === "이 외") && (
+                            <div className="chat-side-bar-content">
+                                <span>이 외</span>
+                                {record?.filter(item => item.createdAt === "이 외")
+                                    .map((item, index) => (
+                                        <div
+                                            className={(currentRecord === item.aiRecordNum ? 'chat-current-record' : '')}
+                                            onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
+                                            key={index}>
+                                            <p>{item.aiRecordTitle}</p>
+                                            <FaRegTrashAlt size={14}
+                                                           onClick={(e) => {
+                                                               e.stopPropagation();
+                                                               removeRecordHandle(item.aiRecordNum);
+                                                           }}/>
+                                        </div>
+                                    ))}
+                            </div>
+                        )}
+                        {record.length === 0 &&
+                            <div className={"chat-side-bar-not-content"}>
+                                <p>이전 데이터가 없습니다.</p>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
 
-
             <div className="chat-box">
                 <div className="chat-header">
-                    {sideBar ?
-                        <div></div>
-                        :
-                        <TbLayoutSidebarRightCollapse size={24}
-                                                      className="icon-btn"
-                                                      onClick={sideBarToggle}/>
-                    }
+
+                    <TbLayoutSidebarRightCollapse size={24}
+                                                  className="icon-btn pc-icon-btn"
+                                                  onClick={sideBarToggle}/>
                     <h4>ChatAi</h4>
-                    {sideBar ?
-                        <div></div>
-                        :
-                        <FaRegPenToSquare size={19} onClick={handleClear} className="icon-btn"/>
-                    }
+                    <FaRegPenToSquare size={19} onClick={handleClear} className="icon-btn"/>
                 </div>
                 <div className={"text-box" + (questions.length === 0 ? " wait" : "")} ref={textBoxRef}>
                     {questions.length === 0 ? (
