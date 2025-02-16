@@ -359,8 +359,7 @@
                 </when>
             </choose>,
         updated_at = NOW()
-        WHERE username = #{username}
-        AND ws_num = #{wsNum}
+        WHERE ws_num = #{wsNum}
     </update>
 
     <!-- 인기 단어장 목록 조회 -->

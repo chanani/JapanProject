@@ -175,7 +175,6 @@ const ChoiceTest = () => {
 
             return newWord;
         });
-        console.log(newWord)
         setWord(newWord);
         setStudyTime(ctr.ctrTime);
         setMyPage(1);

@@ -104,7 +104,6 @@ const ShortTest = () => {
                     .replaceAll("〜", "")
                     .split(",");
                 const isCorrect = answerGroup.some((meaning) => item === meaning.trim());
-                console.log("isCorrect = ", isCorrect);
                 setAnswerList((prevAnswer) => {
                     const newAnswer = [...prevAnswer];
                     newAnswer[index] = isCorrect ? 1 : 2;
@@ -113,7 +112,6 @@ const ShortTest = () => {
 
             } else if (testType === 'content') {
                 const isCorrect = item === word[index].wordContent || item === word[index].wordChinese;
-                console.log("isCorrect = ", isCorrect);
 
                 setAnswerList((prevAnswer) => {
                     const newAnswer = [...prevAnswer];
@@ -201,7 +199,6 @@ const ShortTest = () => {
 
         // data와 같은 데이터로 초기화
         let newWord = answer.map((item, i) => {
-            // console.log(item)
             let newWord = {
                 wordChinese: item.strdAnswerChinese,
                 wordContent: item.strdAnswerContent,
