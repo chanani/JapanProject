@@ -53,6 +53,8 @@ const ChatAi = () => {
 
     // 기록 삭제 핸들러 & API
     const removeRecordHandle = (aiRecordNum) => {
+        if(!window.confirm("이전 기록을 정말 삭제하시겠습니까?")) return;
+
         axiosInstance.post('chat-gpt/remove-record', {
             username: username,
             aiRecordNum: aiRecordNum
@@ -131,6 +133,11 @@ const ChatAi = () => {
                                          onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
                                          key={index}>
                                         <p>{item.aiRecordTitle}</p>
+                                        <FaRegTrashAlt size={14}
+                                                       onClick={(e) => {
+                                                           e.stopPropagation();
+                                                           removeRecordHandle(item.aiRecordNum);
+                                                       }}/>
                                     </div>
                                 ))}
                         </div>
@@ -145,6 +152,7 @@ const ChatAi = () => {
                                          onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
                                          key={index}>
                                         <p>{item.aiRecordTitle}</p>
+
                                         <FaRegTrashAlt size={14}
                                                        onClick={(e) => {
                                                            e.stopPropagation();
@@ -165,6 +173,11 @@ const ChatAi = () => {
                                          onClick={(e) => aiCurrentHandle(item.aiRecordNum)}
                                          key={index}>
                                         <p>{item.aiRecordTitle}</p>
+                                        <FaRegTrashAlt size={14}
+                                                       onClick={(e) => {
+                                                           e.stopPropagation();
+                                                           removeRecordHandle(item.aiRecordNum);
+                                                       }}/>
                                     </div>
                                 ))}
                         </div>

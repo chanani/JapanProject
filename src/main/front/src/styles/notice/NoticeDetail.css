@@ -4,6 +4,7 @@
     align-items: center;
     color: #717680;
     margin-bottom: 14px;
+    cursor: pointer;
 }
 .history-back-box:hover {
     color: #1b1b1b;
@@ -37,6 +38,7 @@
     padding: 14px 0;
     font-size: 16px;
     font-weight: 700;
+    cursor: pointer;
 }
 .notice-other-title {
     color: #3b4859;
@@ -58,6 +60,7 @@
 /* 목록으로 버튼 box */
 .notice-list-btn-box {
     margin : 40px 0;
+    cursor: pointer;
 }
 
 .notice-list-btn-box > button {
