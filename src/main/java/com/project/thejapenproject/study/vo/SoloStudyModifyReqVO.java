@@ -28,6 +28,10 @@ public class SoloStudyModifyReqVO {
     @NotBlank(message = "제목은 필수입니다.")
     private String setTitle;
 
+    @Schema(description = "비공계 여부", example = "1")
+    // @NotBlank(message = "비공개 여부는 필수입니다.")
+    private Boolean wsSecret;
+
     @Schema(description = "단어 목록")
     @NotNull(message = "단어 목록는 필수입니다.")
     private ArrayList<WordInfo> wordList;

@@ -87,4 +87,7 @@ public interface StudyMapper {
     ArrayList<FavoriteNotesListResVO> getFavoriteNoteList(@Param("username") String username);
 
 
+    // 단어장 정보 변경
+    int wordSetModify(SoloStudyModifyReqVO requestVO);
+
 }

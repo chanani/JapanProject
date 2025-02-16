@@ -237,7 +237,8 @@
     <!-- 단어 세트 수정 시 상세 내역 삭제 -->
     <delete id="wordSetDetailDelete"
             parameterType="com.project.thejapenproject.study.vo.SoloStudyModifyReqVO">
-        DELETE FROM word_set_detail
+        UPDATE word_set_detail
+        SET state = 1
         WHERE ws_num = #{wsNum}
     </delete>
 
@@ -398,4 +399,17 @@
         ORDER BY WS.ws_hits DESC, WSD.ws_num DESC
         limit 6
     </select>
+
+    <!-- 단어장 정보 변경 -->
+    <update id="wordSetModify"
+            parameterType="com.project.thejapenproject.study.vo.SoloStudyModifyReqVO">
+        UPDATE word_set
+        SET ws_title   = #{setTitle},
+            <if test='wsSecret != null'>
+                ws_secret = #{wsSecret},
+            </if>
+            updated_at = NOW()
+        WHERE state = 0
+          AND ws_num = #{wsNum}
+    </update>
 </mapper>

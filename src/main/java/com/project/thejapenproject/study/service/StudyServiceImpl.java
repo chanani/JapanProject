@@ -152,10 +152,15 @@ public class StudyServiceImpl implements StudyService {
 
     // 단어 세트 수정
     @Override
+    @Transactional
     public void modifySoloStudy(SoloStudyModifyReqVO requestVO) {
         // 단어 세트 수정 시 상세 내역 삭제
         int detailDeleteResult = studyMapper.wordSetDetailDelete(requestVO);
         int detailModifyResult = studyMapper.wordSetDetailModify(requestVO);
+
+        // 제목 수정
+        studyMapper.wordSetModify(requestVO);
+
         if (detailModifyResult < 1 || detailDeleteResult < 1) {
             throw new OperationErrorException(ErrorCode.FAIL_TO_SET_MODIFY);
         }
