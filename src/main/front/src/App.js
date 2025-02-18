@@ -42,11 +42,15 @@ import ChoiceTest from "./page/test/ChoiceTest";
 import ShortTest from "./page/test/ShortTest";
 import {Provider} from "react-redux";
 import store from './store/main';
+import ConfirmDiaLog from "./component/dialog/ConfirmDialog";
+import AlertDialog from "./component/dialog/AlertDialog";
 
 function App() {
     return (
         <Provider store={store}>
             <TokenInfoProvider>
+                <AlertDialog/>
+                <ConfirmDiaLog/>
                 <ThemeProvider theme={theme}>
                     <CssBaseline/>
 
@@ -101,6 +105,7 @@ function App() {
                     </BrowserRouter>
                 </ThemeProvider>
             </TokenInfoProvider>
+
         </Provider>
 
     );

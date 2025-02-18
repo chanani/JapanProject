@@ -5,7 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 
 import {useDispatch, useSelector} from "react-redux";
-import {closeConfirmDialog} from "@/store/modules/dialogSlice";
+import {closeConfirmDialog} from "../../store/modules/dialogSlice";
 import {Button} from "@mui/material";
 
 export default function ConfirmDiaLog() {

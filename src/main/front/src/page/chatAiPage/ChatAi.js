@@ -8,6 +8,8 @@ import {tokenInfoContext} from "../../component/TokenInfoProvider";
 import {toast} from "react-toastify";
 import {TbLayoutSidebarRightCollapse} from "react-icons/tb";
 import {axiosInstance} from "../../api";
+import {useDialog} from "../../hook/UseDialog.jsx";
+
 
 const ChatAi = () => {
 
@@ -19,7 +21,7 @@ const ChatAi = () => {
     const textBoxRef = useRef(null); // 질문 박스
     const [sideBar, setSideBar] = useState(false); // 사이드 바 활성화 여부
     const [currentRecord, setCurrentRecord] = useState(0); // 현재 질문 목록 번호
-
+    const {openConfirm} = useDialog();
     // 질문 저장 핸들러
     const handleQuestion = (question) => {
         setQuestions([...questions, question]);
@@ -52,7 +54,7 @@ const ChatAi = () => {
 
     // 기록 삭제 핸들러 & API
     const removeRecordHandle = (aiRecordNum) => {
-        if (!window.confirm("이전 기록을 정말 삭제하시겠습니까?")) return;
+        if (!openConfirm.confirm("이전 기록을 정말 삭제하시겠습니까?")) return;
 
         axiosInstance.post('chat-gpt/remove-record', {
             username: username,

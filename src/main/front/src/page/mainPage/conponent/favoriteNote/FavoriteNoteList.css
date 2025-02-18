@@ -4,7 +4,6 @@
 
 .main-favorite-note-content-all {
     display: grid;
-    gap: 15px;
     margin-bottom: 30px;
 }
 
@@ -214,6 +213,9 @@
     .main-favorite-note-write {
         font-size: 12px;
     }
+    .main-favorite-note-content-all {
+        gap: 7px;
+    }
 }
 
 /* 500 이상 */
@@ -235,6 +237,10 @@
     }
     .main-favorite-note-content-title {
         font-size: 16px;
+    }
+
+    .main-favorite-note-content-all {
+        gap: 15px;
     }
 
 }

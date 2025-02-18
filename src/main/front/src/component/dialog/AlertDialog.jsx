@@ -5,7 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import {useDispatch, useSelector} from "react-redux";
-import {closeAlertDialog} from "@/store/modules/dialogSlice";
+import {closeAlertDialog} from "../../store/modules/dialogSlice";
 
 export default function AlertDialog() {
   const dispatch = useDispatch();
