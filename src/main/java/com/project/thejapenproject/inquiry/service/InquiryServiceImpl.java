@@ -13,10 +13,12 @@ import com.project.thejapenproject.inquiry.vo.param.AddCommentParamVO;
 import com.project.thejapenproject.inquiry.vo.param.CheckPasswordParamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
 @Service
+@Transactional(readOnly = true)
 public class InquiryServiceImpl implements InquiryService {
 
     @Autowired
@@ -75,6 +77,7 @@ public class InquiryServiceImpl implements InquiryService {
 
     // 문의사항 답글 등록
     @Override
+    @Transactional
     public void addComment(AddCommentParamVO addCommentParamVO) {
         if(inquiryMapper.addComment(addCommentParamVO) < 1){
             throw new OperationErrorException(ErrorCode.FAIL_TO_ADD_COMMENT);

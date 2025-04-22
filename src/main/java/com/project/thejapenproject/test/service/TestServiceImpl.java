@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 
 @Service("testService")
+@Transactional(readOnly = true)
 public class TestServiceImpl implements TestService{
 
     @Autowired
@@ -23,6 +24,7 @@ public class TestServiceImpl implements TestService{
     }
 
     @Override
+    @Transactional
     public int insertRecord(TestRecordRegisterReqVO testRecordRegisterReqVO) {
         return testMapper.insertRecord(testRecordRegisterReqVO);
     }

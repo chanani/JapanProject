@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class GptServiceImpl implements GptService {
 
     private final GptMapper gptMapper;
@@ -68,6 +69,7 @@ public class GptServiceImpl implements GptService {
 
     // 질문 그룹 등록
     @Override
+    @Transactional
     public int registerRecordGroup(RegisterRecordGroupReqVO registerRecordGroupReqVO) {
         return gptMapper.registerRecordGroup(registerRecordGroupReqVO);
     }
@@ -80,6 +82,7 @@ public class GptServiceImpl implements GptService {
 
     // ai 질문 그룹 삭제
     @Override
+    @Transactional
     public int removeRecordAi(RemoveRecordGroupReqVO removeRecordGroupReqVO) {
         return gptMapper.removeRecordAi(removeRecordGroupReqVO);
     }

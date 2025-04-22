@@ -6,10 +6,12 @@ import com.project.thejapenproject.notice.vo.GetListReqVO;
 import com.project.thejapenproject.notice.vo.GetNoticeDetailResVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 
 @Service("noticeService")
+@Transactional(readOnly = true)
 public class NoticeServiceImpl implements NoticeService {
 
     @Autowired
@@ -48,6 +50,7 @@ public class NoticeServiceImpl implements NoticeService {
 
     // 확인한 공지사항 체크하기
     @Override
+    @Transactional
     public int noticeCheck(Integer noticeNum, String username) {
         if (noticeMapper.checkList(noticeNum, username) == false) {
             return noticeMapper.noticeCheck(noticeNum, username);

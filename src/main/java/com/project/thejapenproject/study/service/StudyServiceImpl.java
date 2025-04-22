@@ -96,6 +96,7 @@ public class StudyServiceImpl implements StudyService {
 
     // 선택 학습 결과 페이지 즐겨찾기 추가 및 삭제
     @Override
+    @Transactional
     public void resultAddFavorite(ResultAddFavoriteParamVO favoriteVO) {
         Integer currentCheck = studyMapper.currentFavoriteCheck(favoriteVO);
         if (currentCheck == 0) {

@@ -56,7 +56,6 @@ public class AdminController {
     )
     @PostMapping("/addNotice")
     public ResponseEntity<String> addNotice(@Valid @RequestBody AddNoticeReqVO addNoticeReqVO){
-
         adminService.addNotice(addNoticeReqVO);
         return ResponseEntity.ok("성공");
     }

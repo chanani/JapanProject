@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Repository
 @RequiredArgsConstructor
 public class EmitterRepository {
+
     // 모든 Emitters를 저장하는 ConcurrentHashMap
     private final Map<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
 

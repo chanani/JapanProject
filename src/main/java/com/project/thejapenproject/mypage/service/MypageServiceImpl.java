@@ -10,6 +10,7 @@ import com.project.thejapenproject.mypage.vo.param.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 
 @Service("mypageService")
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MypageServiceImpl implements MypageService {
 
     public final MypageMapper mypageMapper;
@@ -78,6 +80,7 @@ public class MypageServiceImpl implements MypageService {
 
     // 회원 탈퇴
     @Override
+    @Transactional
     public void withdrawal(String username) {
         if (mypageMapper.withdrawal(username) < 1) {
             throw new OperationErrorException(ErrorCode.FAILED_TO_WITHDRAWAL);
@@ -86,6 +89,7 @@ public class MypageServiceImpl implements MypageService {
 
     // 학습 기록 삭제
     @Override
+    @Transactional
     public void deleteShortRecord(int strNum) {
         if (mypageMapper.deleteShortRecord(strNum) < 1) {
             throw new RequestParameterException(ErrorCode.FAIL_TO_REMOVE_RECORD);
@@ -104,6 +108,7 @@ public class MypageServiceImpl implements MypageService {
 
     // 프로필 이미지 수정
     @Override
+    @Transactional
     public void userImageChange(String fileName, String username) {
         // 기존 이미지 삭제
         mypageMapper.userImageRemove(username);
@@ -144,6 +149,7 @@ public class MypageServiceImpl implements MypageService {
 
     // 단어 선택 테스트 삭제
     @Override
+    @Transactional
     public void deleteChoiceRecord(ChoiceRecordDeleteReqVO choiceRecordDeleteReqVO) {
         if (mypageMapper.deleteChoiceRecord(choiceRecordDeleteReqVO) < 1) {
             throw new OperationErrorException(ErrorCode.FAIL_TO_REMOVE_RECORD);
@@ -152,6 +158,7 @@ public class MypageServiceImpl implements MypageService {
 
     //검색페이지에서 즐겨찾기 추가
     @Override
+    @Transactional
     public int registerFavoriteWord(UserFavoriteRegisterReqVO userFavoriteRegisterReqVO) {
         return mypageMapper.registerFavoriteWord(userFavoriteRegisterReqVO);
     }
@@ -193,6 +200,7 @@ public class MypageServiceImpl implements MypageService {
 
     // 즐겨찾기 메모 등록
     @Override
+    @Transactional
     public void updateFavoriteMemo(updateFavoriteMemoReqVO updateFavoriteMemoReqVO) {
         if (mypageMapper.updateFavoriteMemo(updateFavoriteMemoReqVO) < 1) {
             throw new OperationErrorException(ErrorCode.FAIL_TO_UPDATE_FAVORITE_MEMO);

@@ -5,16 +5,14 @@ import com.project.thejapenproject.command.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("userService")
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService{
 
-    @Autowired
     public final UserMapper usermapper;
-
-    public UserServiceImpl(UserMapper usermapper) {
-        this.usermapper = usermapper;
-    }
 
     @Override
     public UserVO login(String username, String password) {
@@ -22,6 +20,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public int join(UserVO userVO) {
         return usermapper.join(userVO);
     }
@@ -42,6 +41,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public int passwordChange(String email, String password) {
         return usermapper.passwordChange(email, password);
     }

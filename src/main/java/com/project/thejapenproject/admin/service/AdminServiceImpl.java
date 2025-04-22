@@ -31,7 +31,6 @@ public class AdminServiceImpl implements AdminService {
 
         // 예제 있을 경우 예제 등록
         for (AddWordListVO addWordListVO : list.getList()) {
-            System.out.println("addWordListVO = " + addWordListVO);
             if (addWordListVO.getExampleList() != null &&
                     !addWordListVO.getExampleList().isEmpty()) {
                 if (adminMapper.addWordExample(addWordListVO) < 1) {
@@ -42,11 +41,13 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public int addNotice(AddNoticeReqVO addNoticeReqVO) {
         return adminMapper.addNotice(addNoticeReqVO);
     }
 
     @Override
+    @Transactional
     public int addWeekWord(ArrayList<SchoolVO> list) {
         return adminMapper.addWeekWord(list);
     }

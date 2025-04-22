@@ -13,7 +13,7 @@ function MainPage() {
     const check = async () => {
         const isConfirmed = await openConfirm("안녕하세요~~");
         if(!isConfirmed) return;
-        console.log("ggggggggggggg");
+        console.log("컨펌 성공");
     }
     return (
         <div className={"main-page"}>
@@ -22,7 +22,6 @@ function MainPage() {
             </div>
             <Category/>
             <FavoriteNote/>
-            <button onClick={check}>ggg</button>
         </div>
 
     );

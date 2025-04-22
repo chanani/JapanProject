@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 @EnableKafka
 public class ProducerService {
 
-    @Autowired
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     // Producer -> kafka 메시지 전

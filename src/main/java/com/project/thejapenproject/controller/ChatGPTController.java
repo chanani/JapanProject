@@ -64,7 +64,6 @@ public class ChatGPTController {
         RequestEntity<Body> httpEntity = new RequestEntity<>(body, httpHeaders, HttpMethod.POST, uri);
         ResponseEntity<String> exchange = restTemplate.exchange(httpEntity, String.class);
 
-        System.out.println("number : " + map.get("aiRecordNum"));
         // DB에 내용 저장(ai_record 테이블 순서, 질문, 답변)
         gptService.registerGptData(map.get("username"),
                 map.get("aiRecordNum"),
