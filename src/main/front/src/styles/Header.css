@@ -68,7 +68,7 @@ header svg {
     box-shadow: rgba(75, 81, 91, 0.12) 0px 14px 32px 0px, rgba(75, 81, 91, 0.06) 0px 10px 14px 0px, rgba(75, 81, 91, 0.03) 0px 0px 0px 1px, rgba(75, 81, 91, 0.2) 0px 0px 1px 0px;
     opacity: 0;
     pointer-events: none;
-    z-index: 1000 ;
+    z-index: 1000;
     display: flex;
     flex-direction: column;
 }
@@ -128,12 +128,12 @@ header svg {
 }
 
 .right-menu > .login-box > .login-btn:hover,
-.mobile-login-box > .mobile-login-btn:hover{
+.mobile-login-box > .mobile-login-btn:hover {
     border: 1px #979494 solid;
 }
 
 .right-menu > .login-box > .join-btn:hover,
-.mobile-login-box > .mobile-join-btn:hover{
+.mobile-login-box > .mobile-join-btn:hover {
     background-color: #0075ff;
 }
 
@@ -142,14 +142,8 @@ header svg {
     font-size: 16px;
     border: none;
     background-color: transparent;
+    cursor: pointer;
 }
-
-
-
-
-
-
-
 
 
 /* 모바일에서 사이드 바 */
@@ -158,10 +152,11 @@ header svg {
     position: fixed;
     top: 0;
     left: 0;
-    width:100vw;
+    width: 100vw;
     height: 100vh;
     display: flex;
 }
+
 .mobile-side-bar {
     display: none;
 }
@@ -182,9 +177,8 @@ header svg {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding : 10px 0;
+    padding: 10px 0;
 }
-
 
 
 .mobile-category-detail {
@@ -243,9 +237,6 @@ header svg {
 }
 
 
-
-
-
 .mobile-size-close-box {
     padding: 20px;
 }
@@ -263,6 +254,7 @@ header svg {
     body {
         padding-top: 48px;
     }
+
     header {
         height: 48px;
         padding: 8px 16px;
@@ -277,6 +269,7 @@ header svg {
         transform: translate(-50%, 0);
         overflow: hidden;
     }
+
     .header-logo {
         width: 180px;
         height: 157px;
@@ -296,7 +289,6 @@ header svg {
     .right-menu {
         display: none;
     }
-
 
 
     .mobile-side-bar > .mobile-size-bar-category {
@@ -307,8 +299,9 @@ header svg {
     .mobile-side-bar > .mobile-size-close-box {
         width: 35%;
     }
+
     .show-box {
-        display : block;
+        display: block;
 
     }
 
@@ -316,10 +309,12 @@ header svg {
         left: -133px;
         top: 30px;
     }
+
     .header-category-box > div > p {
         margin: 0;
     }
-    .header-user-icon{
+
+    .header-user-icon {
         width: 35px;
         height: 35px;
         border-radius: 50%;
@@ -327,12 +322,12 @@ header svg {
 }
 
 
-
 /* 500 이상 */
 @media (min-width: 500px) {
     body {
         padding-top: 48px;
     }
+
     header {
         height: 48px;
         padding: 8px 16px;
@@ -347,13 +342,14 @@ header svg {
         transform: translate(-50%, 0);
         overflow: hidden;
     }
+
     .header-logo {
         width: 180px;
         height: 157px;
         position: absolute;
         top: -38px;
         left: -10px;
-
+        cursor: pointer;
     }
 
     .mobile-left-box,
@@ -367,6 +363,7 @@ header svg {
     .right-menu {
         display: none;
     }
+
     .mobile-side-bar > .mobile-size-bar-category {
         width: 45%;
 
@@ -375,18 +372,21 @@ header svg {
     .mobile-side-bar > .mobile-size-close-box {
         width: 55%;
     }
+
     .show-box {
-        display : block;
+        display: block;
     }
 
     .header-category-box > div > .mypage-detail {
         left: -114px;
         top: 30px;
     }
+
     .header-category-box > div > p {
         margin: 0;
     }
-    .header-user-icon{
+
+    .header-user-icon {
         width: 35px;
         height: 35px;
         border-radius: 50%;
@@ -400,10 +400,12 @@ header svg {
     body {
         padding-top: 72px;
     }
+
     header {
         height: 72px;
         padding: 0 32px 0 135px;
     }
+
     .site-name-box {
         width: 180px;
         height: 72px;
@@ -413,6 +415,7 @@ header svg {
         transform: translate(0, 0);
         overflow: hidden;
     }
+
     .header-logo {
         width: 180px;
         height: 157px;
@@ -433,15 +436,18 @@ header svg {
     }
 
     .show-box {
-        display : none;
+        display: none;
     }
+
     .header-category-box > div > p {
         margin: 0 0 0 30px;
     }
+
     .no-margin > div > p {
         margin: 0;
     }
-    .header-user-icon{
+
+    .header-user-icon {
         width: 50px;
         height: 50px;
         border-radius: 50%;

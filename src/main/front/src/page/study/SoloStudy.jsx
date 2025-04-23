@@ -159,7 +159,7 @@ const SoloStudy = () => {
                             <div className="solo-study-write">
                                 <img
                                     className="header-user-icon"
-                                    src={`https://lg.thejapan.today/icon-image/${item?.userIconPath}`}
+                                    src={`${process.env.REACT_APP_URL_IMAGE_JAVA}icon-image/${item?.userIconPath}`}
                                     alt="이미지"
                                     onError={(e) => {
                                         e.target.onerror = null;

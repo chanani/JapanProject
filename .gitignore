@@ -43,3 +43,5 @@ application.properties
 application.yml
 application-server.yml
 application-local.yml
+
+/src/main/front/build

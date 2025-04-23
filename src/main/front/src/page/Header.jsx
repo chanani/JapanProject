@@ -115,7 +115,7 @@ function Header() {
         if (process.env.REACT_APP_URL_JAVA === 'http://localhost:8889/') {
             return <img
                 className="header-user-icon"
-                src={userIcon ? `https://lg.thejapan.today/icon-image/${userIcon}` : "/default_icon.svg"}
+                src={userIcon ? `${process.env.REACT_APP_URL_IMAGE_JAVA}icon-image/${userIcon}` : "/default_icon.svg"}
                 alt="이미지"
                 onError={(e) => {
                     e.target.onerror = null;
@@ -125,7 +125,7 @@ function Header() {
         } else {
             return <img
                 className="header-user-icon"
-                src={userIcon ? `https://lg.thejapan.today/icon-image/${userIcon}` : "/default_icon.svg"}
+                src={userIcon ? `${process.env.REACT_APP_URL_IMAGE_JAVA}icon-image/${userIcon}` : "/default_icon.svg"}
                 alt="이미지"
                 onError={(e) => {
                     e.target.onerror = null;
