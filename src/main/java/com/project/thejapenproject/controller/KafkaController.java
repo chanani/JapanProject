@@ -26,7 +26,7 @@ public class KafkaController {
     @PostMapping("/send")
     public ResponseEntity<String> send(@RequestBody Map<String, String> map){
         String message = map.get("message");
-        producerService.commentNotificationCreate(message);
+        // producerService.commentNotificationCreate(message);
         return ResponseEntity.ok("성공");
     }
 

@@ -62,7 +62,7 @@ dependencies {
     implementation 'org.projectreactor:reactor-spring:1.0.1.RELEASE'
 
     // Kafka
-    implementation 'org.springframework.kafka:spring-kafka'
+    //implementation 'org.springframework.kafka:spring-kafka'
 
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
