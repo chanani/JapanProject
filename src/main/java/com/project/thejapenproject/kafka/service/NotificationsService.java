@@ -1,8 +1,6 @@
 package com.project.thejapenproject.kafka.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.kafka.annotation.EnableKafka;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
